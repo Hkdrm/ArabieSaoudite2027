@@ -43,6 +43,7 @@ js/trip.js    onglet Départ / Retour (vols)
 ```
 
 ## Crédits
+- Photo de l'écran d'ouverture : « The Kaaba during Hajj » © **Adli Wahid**, licence **CC BY-SA 4.0**, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:The_Kaaba_during_Hajj.jpg). Recadrée, retouchée et floutée (`img/`, voir `img/LICENSE.txt`) ; ces versions modifiées restent sous CC BY-SA 4.0.
 Écran d'ouverture (Kaaba et anneaux de calligraphie qui tournent) : police **Aref Ruqaa** (SIL Open Font License 1.1, voir `fonts/OFL.txt`), sous-ensemble des glyphes utilisés.
 
 ## Avertissement

@@ -7,7 +7,7 @@
     set(k, v) { try { localStorage.setItem('omra:' + k, JSON.stringify(v)); } catch {} },
   };
 
-  const APP_VERSION = '2026-11-14.18';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
+  const APP_VERSION = '2026-11-14.19';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
 
   /* ---------- état ---------- */
   const detect = () => { const l = (navigator.language || 'fr').slice(0, 2); return LANGS[l] ? l : 'fr'; };
@@ -397,7 +397,8 @@
           <form class="row" id="ef" style="margin-top:10px"><input class="grow" name="l" placeholder="${t('label')}" required><input name="a" type="number" step="0.01" placeholder="${t('amount')}" style="width:100px" required><select name="c"><option>SAR</option><option ${S.cur !== 'SAR' ? 'selected' : ''}>${S.cur !== 'SAR' ? S.cur : 'EUR'}</option></select><button>${t('add')}</button></form></div>
         <div id="syncBox"></div>
         <div class="card"><h3>💾 ${t('backup')}</h3><div class="row"><button class="ghost" id="exp">${t('export')}</button><button class="ghost" id="imp">${t('import')}</button><input type="file" id="file" accept="application/json" hidden></div>
-          <p class="muted" style="margin-top:10px">v${APP_VERSION}</p></div>`;
+          <p class="muted" style="margin-top:10px">v${APP_VERSION}</p>
+          <p class="muted" style="font-size:12px">Crédits : photo de l'écran d'ouverture © Adli Wahid, <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a> (<a href="https://commons.wikimedia.org/wiki/File:The_Kaaba_during_Hajj.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>), recadrée et retouchée. Police Aref Ruqaa (SIL OFL). Cartes © OpenStreetMap.</p></div>`;
       if (window.Omra && window.Omra.syncCard) window.Omra.syncCard($('#syncBox', el));
       $$('[data-ck]', el).forEach(c => c.onchange = () => { S.checks[c.dataset.ck] = c.checked; save('checks'); const y = scrollY; draw(); scrollTo(0, y); });
       $$('[data-cdel]', el).forEach(b => b.onclick = () => { S.custom = S.custom.filter(x => x.id !== b.dataset.cdel); save('custom'); draw(); });
