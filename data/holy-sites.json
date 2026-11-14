@@ -36,7 +36,7 @@
      "name_ar": "الحجر الأسود",
      "lng": 39.826255,
      "lat": 21.422498,
-     "desc_fr": "Coin est de la Kaaba. Le tawaf commence et se termine face à la Pierre Noire : on la touche ou on l'embrasse si c'est possible sans bousculer ; sinon, on la salue de la main en disant « Bismillah, Allahu akbar » sans s'arrêter. Entre la Pierre Noire et la porte de la Kaaba se trouve le Multazam, où l'on aime invoquer Allah quand la foule le permet."
+     "desc_fr": "Coin est de la Kaaba. Le tawaf commence et se termine face à la Pierre Noire : on la touche ou on l'embrasse si c'est possible sans bousculer ; sinon, on lève la main vers elle en disant « Allahu akbar » (formule du guide officiel de Nusuk), sans s'arrêter. Entre la Pierre Noire et la porte de la Kaaba se trouve le Multazam, où l'on aime invoquer Allah quand la foule le permet."
     },
     {
      "id": "yamani",
@@ -685,7 +685,7 @@
      "name_ar": "الروضة الشريفة",
      "lng": 39.611208,
      "lat": 24.467541,
-     "desc_fr": "Espace entre l'ancienne maison du Prophète ﷺ et son minbar, recouvert de tapis verts. La visite se fait selon un programme et une réservation (Nusuk) : suivez les horaires officiels, distincts pour hommes et femmes."
+     "desc_fr": "Espace entre l'ancienne maison du Prophète ﷺ et son minbar, recouvert de tapis verts. La visite se fait sur permis via l'application officielle Nusuk (service « Permis de visite de la Rawdah »). Les modalités et créneaux pour les femmes sont distincts : vérifiez-les dans Nusuk avant de venir."
     },
     {
      "id": "tomb",

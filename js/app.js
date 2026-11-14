@@ -7,7 +7,7 @@
     set(k, v) { try { localStorage.setItem('omra:' + k, JSON.stringify(v)); } catch {} },
   };
 
-  const APP_VERSION = '2026-11-14.42';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
+  const APP_VERSION = '2026-11-14.43';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
 
   /* ---------- état ---------- */
   const detect = () => { const l = (navigator.language || 'fr').slice(0, 2); return LANGS[l] ? l : 'fr'; };
@@ -222,7 +222,11 @@
   /* ---------- Guide Omra ---------- */
   views.omra = el => {
     const MAP_STEPS = ['ihram', 'haram', 'tawaf', 'maqam', 'sai', 'halq'];
-    el.innerHTML = `<h2>${t('omra_title')}</h2><p class="muted">⚠️ ${t('omra_disclaimer')}</p><div id="holyWrap"></div><div id="omraSteps"></div>`;
+    el.innerHTML = `<h2>${t('omra_title')}</h2><p class="muted">⚠️ ${t('omra_disclaimer')}</p>
+      <details class="card"><summary><b>📎 ${t('off_title')}</b></summary><p class="muted" style="margin:8px 0">${t('off_note')}</p>
+        ${[['off_guide', 'https://umrah.nusuk.sa/Journey'], ['off_nusuk', 'https://www.nusuk.sa/'], ['off_permit', 'https://my.gov.sa/en/services/24401'], ['off_rawdah', 'https://my.gov.sa/en/services/24395'],
+          ['off_v_haram', 'https://www.visitsaudi.com/en/makkah/attractions/al-masjed-al-haram'], ['off_v_nabawi', 'https://www.visitsaudi.com/en/madinah/attractions/the-prophet-mosque']].map(([k, u]) => `<div class="item"><a class="tx" href="${u}" target="_blank" rel="noopener">${t(k)} ↗</a></div>`).join('')}</details>
+      <div id="holyWrap"></div><div id="omraSteps"></div>`;
     const ctrl = window.Omra && window.Omra.holy ? window.Omra.holy.mount($('#holyWrap', el)) : null;
     const box = $('#omraSteps', el);
     const draw = () => {
