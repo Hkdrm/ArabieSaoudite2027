@@ -1813,6 +1813,40 @@
         "local_specificity",
         "product_to_look_for"
       ]
+    },
+    {
+      "id": "ajwatech-ajwa-date-icecream",
+      "name_fr": "Ajwatech (عجوتك) — glace à la datte Ajwa",
+      "city": "madinah",
+      "category": "food",
+      "subcategory": "date_icecream",
+      "area": "Deux adresses signalées : AlHaram (King Fahd Rd, Bada'ah) et Quba (Al Usbah)",
+      "description_fr": "Glacier spécialisé dans une glace à base de dattes Ajwa de Médine. Expérience gourmande typique à ajouter au circuit des découvertes locales.",
+      "practical_notes_fr": "AlHaram : King Fahd Road, Bada'ah, Madinah 42311. Quba : Qiba Road, Al Usbah, Madinah 42315. Téléphone +966 53 138 8370. Horaires variables selon point de vente, prix à confirmer. Possible candidat à la vidéo Short mentionnée par l'utilisateur, mais lien exact non identifié : ne pas attribuer au créateur sans preuve.",
+      "source": {
+        "creator": "Recherche d'adresses publiques — Short Junaid non identifié",
+        "channel": "https://ajwatech.sa/",
+        "videos": [],
+        "references": [
+          "https://ajwatech.sa/",
+          "https://www.halalcompanion.com/madinah/places-to-eat/ajwatech",
+          "https://www.bizmideast.com/SA/%D8%A7%D9%8A%D8%B3-%D9%83%D8%B1%D9%8A%D9%85-%D8%B9%D8%AC%D9%88%D8%AA%D9%83-%D9%82%D8%A8%D8%A7%D8%A1-053-138-8370"
+        ]
+      },
+      "verification": {
+        "source_detail": "Public business listings and specialty retailer; YouTube short not yet confirmed",
+        "independently_verified": true,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "glace_aux_dattes",
+        "ajwa",
+        "specialite_locale",
+        "dessert"
+      ]
     }
   ],
   "updated": "2026-11-14"
