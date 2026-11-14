@@ -262,3 +262,7 @@ Object.assign(I18N.ar, { step_route: '١. تواريخك', airports_opt: 'الم
 Object.assign(I18N.fr, { cal_start: '👆 Touchez votre date de départ.', cal_end: '👆 Touchez maintenant votre date de retour.', cal_again: 'Touchez une autre date pour recommencer.' });
 Object.assign(I18N.en, { cal_start: '👆 Tap your departure date.', cal_end: '👆 Now tap your return date.', cal_again: 'Tap another date to start over.' });
 Object.assign(I18N.ar, { cal_start: '👆 المس تاريخ المغادرة.', cal_end: '👆 والآن المس تاريخ العودة.', cal_again: 'المس تاريخًا آخر للبدء من جديد.' });
+
+Object.assign(I18N.fr, { validate_dates: 'Valider les dates', edit_dates: 'Modifier les dates', cancel: 'Annuler', dates_ok: 'Dates validées ✓' });
+Object.assign(I18N.en, { validate_dates: 'Confirm dates', edit_dates: 'Edit dates', cancel: 'Cancel', dates_ok: 'Dates confirmed ✓' });
+Object.assign(I18N.ar, { validate_dates: 'تأكيد التواريخ', edit_dates: 'تعديل التواريخ', cancel: 'إلغاء', dates_ok: 'تم تأكيد التواريخ ✓' });

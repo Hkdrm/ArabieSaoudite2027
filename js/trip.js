@@ -27,6 +27,8 @@
     if (!J.from) set('from', 'GVA');                       // départ par défaut : Genève
     const base = J.date1 ? day(J.date1) : new Date();
     const view = { y: base.getFullYear(), m: base.getMonth() };   // mois affiché
+    const draft = { d1: J.date1 || '', d2: J.date2 || '' };       // sélection en cours : enregistrée seulement après « Valider »
+    let editing = !ok();                                          // calendrier ouvert tant que les dates ne sont pas validées
 
     const links = () => {
       const f = J.from || 'GVA', to = J.to, d1 = J.date1, d2 = J.date2;
@@ -58,11 +60,11 @@
       let cells = wd.map(w => `<div class="cal-wd">${esc(w)}</div>`).join('') + '<div></div>'.repeat(offset);
       for (let d = 1; d <= n; d++) {
         const s = iso(view.y, view.m, d);
-        const cls = [s === J.date1 || s === J.date2 ? 'sel' : '', J.date1 && J.date2 && s > J.date1 && s < J.date2 ? 'range' : '', s === today ? 'today' : ''].join(' ');
+        const cls = [s === draft.d1 || s === draft.d2 ? 'sel' : '', draft.d1 && draft.d2 && s > draft.d1 && s < draft.d2 ? 'range' : '', s === today ? 'today' : ''].join(' ');
         cells += `<button type="button" class="cal-day ${cls}" data-d="${s}" ${s < today ? 'disabled' : ''}>${d}</button>`;
       }
       const prev = S.lang === 'ar' ? '›' : '‹', next = S.lang === 'ar' ? '‹' : '›';
-      const hint = !J.date1 ? t('cal_start') : !J.date2 ? t('cal_end') : t('cal_again');
+      const hint = !draft.d1 ? t('cal_start') : !draft.d2 ? t('cal_end') : t('cal_again');
       return `<div class="cal"><div class="cal-head"><button type="button" class="ghost sm" id="calPrev" aria-label="prev">${prev}</button>
         <b>${esc(first.toLocaleDateString(loc(), { month: 'long', year: 'numeric' }))}</b>
         <button type="button" class="ghost sm" id="calNext" aria-label="next">${next}</button></div>
@@ -70,19 +72,24 @@
     };
 
     const pick = s => {
-      if (!J.date1 || J.date2) { set('date1', s); set('date2', ''); }                  // nouveau départ
-      else if (s > J.date1) set('date2', s);                                             // retour valide : strictement après le départ
-      else { set('date1', s); A.toast(t('err_return')); }                               // retour avant/le jour du départ : on déplace le départ
-      S.trip = { start: '', end: '' }; save('trip');
+      if (!draft.d1 || draft.d2) { draft.d1 = s; draft.d2 = ''; }                         // nouveau départ
+      else if (s > draft.d1) draft.d2 = s;                                                  // retour : strictement après le départ
+      else { draft.d1 = s; A.toast(t('err_return')); }                                     // avant / même jour : on déplace le départ
     };
+    const draftOk = () => draft.d1 && draft.d2 && draft.d2 > draft.d1;
+    const draftLine = () => !draft.d1 ? '' : `<div style="margin-top:8px"><b>🛫 ${esc(fmtDate(draft.d1))}</b>${draft.d2 ? `<br><b>🛬 ${esc(fmtDate(draft.d2))}</b> <span class="muted">(${Math.round((day(draft.d2) - day(draft.d1)) / 864e5)} ${t('nights')})</span>` : ''}</div>`;
 
     const draw = () => {
       const valid = ok();
-      const past = J.date1 && J.date1 < todayStr() ? `<p class="muted">ℹ️ ${t('warn_past')}</p>` : '';
+      const past = J.date1 && J.date1 < todayStr() && !editing ? `<p class="muted">ℹ️ ${t('warn_past')}</p>` : '';
       el.innerHTML = `<h2>${t('trip_title')}</h2><datalist id="apts">${Object.entries(AIRPORTS).map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join('')}</datalist>
         <div id="sum">${summary()}</div>
-        <div class="card"><h3>${t('step_route')}</h3>${calendar()}${past}
-          ${J.date1 || J.date2 ? `<div style="margin-top:8px"><button type="button" class="ghost sm" id="clrDates">${t('reset_dates')}</button></div>` : ''}</div>
+        ${editing ? `<div class="card"><h3>${t('step_route')}</h3>${calendar()}${draftLine()}
+          <div class="row" style="margin-top:12px"><button type="button" id="okDates" ${draftOk() ? '' : 'disabled'}>✓ ${t('validate_dates')}</button>
+            ${ok() ? `<button type="button" class="ghost" id="cancelDates">${t('cancel')}</button>` : ''}
+            ${draft.d1 ? `<button type="button" class="ghost sm" id="clrDates">${t('reset_dates')}</button>` : ''}</div></div>`
+        : `<div class="card"><h3>${t('step_route')} ✓</h3>${past}<div class="row"><button type="button" class="ghost" id="editDates">✏️ ${t('edit_dates')}</button>
+            <button type="button" class="ghost sm" id="clrDates">${t('reset_dates')}</button></div></div>`}
         ${valid ? `<div class="card"><h3>${t('step_flights')}</h3>
           <p>${t('have_flight')}</p>
           <div class="row"><div class="grow"><label>🛫 ${t('no_out')}</label><input id="noOut" value="${esc(J.noOut || '')}" placeholder="SV 124" style="width:100%;text-transform:uppercase"></div>
@@ -106,17 +113,28 @@
           : `<p class="muted">${t('pick_dates')}</p>`}`;
 
       $$('.cal-day', el).forEach(b => b.onclick = () => { pick(b.dataset.d); const d = day(b.dataset.d); view.y = d.getFullYear(); view.m = d.getMonth(); draw(); });
-      $('#calPrev', el).onclick = () => { view.m--; if (view.m < 0) { view.m = 11; view.y--; } draw(); };
-      $('#calNext', el).onclick = () => { view.m++; if (view.m > 11) { view.m = 0; view.y++; } draw(); };
+      const pv = $('#calPrev', el), nx = $('#calNext', el);
+      if (pv) pv.onclick = () => { view.m--; if (view.m < 0) { view.m = 11; view.y--; } draw(); };
+      if (nx) nx.onclick = () => { view.m++; if (view.m > 11) { view.m = 0; view.y++; } draw(); };
+      const okB = $('#okDates', el);
+      if (okB) okB.onclick = () => {
+        if (!draftOk()) return;
+        set('date1', draft.d1); set('date2', draft.d2); S.trip = { start: '', end: '' }; save('trip');
+        editing = false; A.toast(t('dates_ok')); draw();
+      };
+      const cn = $('#cancelDates', el);
+      if (cn) cn.onclick = () => { draft.d1 = J.date1; draft.d2 = J.date2; editing = false; draw(); };
+      const ed = $('#editDates', el);
+      if (ed) ed.onclick = () => { draft.d1 = J.date1 || ''; draft.d2 = J.date2 || ''; if (J.date1) { const d = day(J.date1); view.y = d.getFullYear(); view.m = d.getMonth(); } editing = true; draw(); };
       const bindAirport = (id, key) => { const i = $(id, el); if (i) i.onchange = e => { e.target.value = iata(e.target.value); set(key, e.target.value); draw(); }; };
       bindAirport('#from', 'from'); bindAirport('#to', 'to'); bindAirport('#rfrom', 'retFrom'); bindAirport('#rto', 'retTo');
       const cd = $('#clrDates', el);
-      if (cd) cd.onclick = () => { set('date1', ''); set('date2', ''); S.trip = { start: '', end: '' }; save('trip'); draw(); };
+      if (cd) cd.onclick = () => { set('date1', ''); set('date2', ''); draft.d1 = ''; draft.d2 = ''; S.trip = { start: '', end: '' }; save('trip'); editing = true; draw(); };
       const ca = $('#clrAll', el);
       if (ca) ca.onclick = () => {
         if (!confirm(t('confirm_reset_all'))) return;
         for (const k of Object.keys(J)) delete J[k];
-        J.from = 'GVA';
+        J.from = 'GVA'; draft.d1 = ''; draft.d2 = ''; editing = true;
         S.trip = { start: '', end: '' }; save('trip'); save('journey'); draw();
       };
       $$('[data-orig]', el).forEach(b => b.onclick = () => { set('from', b.dataset.orig); draw(); });

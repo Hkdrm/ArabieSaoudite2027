@@ -68,3 +68,4 @@ body{overscroll-behavior-y:contain}
 .cal-day.range{background:rgba(11,107,79,.2)}
 .cal-day.sel{background:var(--g);color:#fff;font-weight:700}
 .cal-day:disabled{opacity:.3;cursor:default}
+button:disabled{opacity:.4;cursor:default}
