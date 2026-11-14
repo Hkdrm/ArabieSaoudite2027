@@ -3939,15 +3939,17 @@
       "city": "madinah",
       "category": "calligraphy",
       "subcategory": "calligraphy_training",
-      "area": "Médine, lieu précis selon session",
-      "description_fr": "Centre Prince Mohammed bin Salman pour la calligraphie arabe, proposant en 2026 des cours Naskh, Thuluth, Ruq'ah et Diwani à Médine.",
-      "practical_notes_fr": "Ne pas confondre les formations de Médine avec l'événement ponctuel de la Maison de la Culture de Riyad. Inscriptions et dates 2027 à confirmer.",
+      "area": "First Ring / King Faisal Road, Al Suqya, Médine 42315",
+      "description_fr": "Centre mondial Prince Mohammed bin Salman de calligraphie arabe (Dar Al-Qalam) : musée permanent, ateliers, salles d’exposition et bibliothèque sur les traditions de l'écriture arabe.",
+      "practical_notes_fr": "Site officiel et agence de presse saoudienne confirment un musée permanent avec plus de 56 pièces et des espaces de formation. Les cours 2027 doivent être réservés selon calendrier ; horaires et entrée à reconfirmer.",
       "source": {
         "creator": "Ministère saoudien de la Culture",
         "channel": null,
         "videos": [],
         "references": [
-          "https://www.moc.gov.sa/en/Modules/Pages/Initiative/Arabic_calligraphy_training_courses_2026"
+          "https://www.moc.gov.sa/en/Modules/Pages/Initiative/Arabic_calligraphy_training_courses_2026",
+          "https://www.spa.gov.sa/en/N2634820",
+          "https://visitmadinahsa.com/en/map?route=museums"
         ]
       },
       "verification": {
@@ -3960,8 +3962,8 @@
       },
       "audit": {
         "reviewed_on": "2026-11-14",
-        "review_type": "source_verification",
-        "note": "Vérification de l'existence documentaire, non de l'accès, d'une session 2027, ni du GPS exact."
+        "review_type": "official_web_crosscheck",
+        "note": "Institution et emplacement attestés par source institutionnelle."
       }
     },
     {
@@ -4086,6 +4088,100 @@
         "reviewed_on": "2026-11-14",
         "review_type": "source_verification",
         "note": "Vérification de l'existence documentaire, non de l'accès, d'une session 2027, ni du GPS exact."
+      }
+    },
+    {
+      "id": "madinah-alassaf-calligrapher",
+      "name_fr": "Alassaf Calligrapher — الخطاط العساف للأختام والدروع",
+      "city": "madinah",
+      "category": "calligraphy",
+      "subcategory": "custom_gifts_stamps",
+      "area": "6480 Al Akhnas Bin Shuraiq, Ad Difa, Madinah 42374",
+      "description_fr": "Atelier et boutique du calligraphe Alassaf spécialisé dans les tampons, plaques commémoratives et objets personnalisés, dont certains tableaux en marbre.",
+      "practical_notes_fr": "Services de personnalisation attestés sur la boutique en ligne. La réalisation d'un tableau manuscrit sur place, le délai et les prix doivent être confirmés auprès de l'atelier.",
+      "source": {
+        "creator": "Boutique Alassaf et fiche commerciale locale",
+        "channel": "https://mahally.com/ar/stores/402335966/about/",
+        "videos": [],
+        "references": [
+          "https://mahally.com/ar/stores/402335966/about/"
+        ]
+      },
+      "verification": {
+        "source_detail": "Boutique Alassaf et fiche commerciale locale",
+        "independently_verified": true,
+        "location_verified": true,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "business_and_web_crosscheck",
+        "note": "Prestations détaillées, horaires et disponibilité en 2027 à contrôler."
+      }
+    },
+    {
+      "id": "madinah-hadaya-al-badr",
+      "name_fr": "Hadayat Al-Badr — هدايا البدر",
+      "city": "madinah",
+      "category": "calligraphy",
+      "subcategory": "personalized_name_jewelry",
+      "area": "Passage piéton de la zone centrale, Bada'ah, Madinah 42311",
+      "description_fr": "Boutique de souvenirs où un avis client signale la réalisation rapide de colliers personnalisés avec un prénom en arabe.",
+      "practical_notes_fr": "Personnalisation attestée uniquement par un témoignage client ; orthographe arabe, prix et disponibilité de ce service à confirmer directement. Pas nécessairement de calligraphie manuscrite.",
+      "source": {
+        "creator": "Fiche commerce et avis client",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.google.com/maps/search/?api=1&query=%D9%87%D8%AF%D8%A7%D9%8A%D8%A7+%D8%A7%D9%84%D8%A8%D8%AF%D8%B1+%D8%A8%D8%B6%D8%A7%D8%B9%D8%A9+%D8%A7%D9%84%D9%85%D8%AF%D9%8A%D9%86%D8%A9"
+        ]
+      },
+      "verification": {
+        "source_detail": "Fiche commerce et avis client",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "business_and_web_crosscheck",
+        "note": "Prestations détaillées, horaires et disponibilité en 2027 à contrôler."
+      }
+    },
+    {
+      "id": "madinah-arts-center-king-fahd",
+      "name_fr": "Al-Madinah Arts Center — centre d'arts de Médine",
+      "city": "madinah",
+      "category": "calligraphy",
+      "subcategory": "art_gallery",
+      "area": "Quartier patrimonial du King Fahd Central Park, Médine 42383",
+      "description_fr": "Centre artistique situé dans le quartier patrimonial au King Fahd Central Park, présentant notamment des expositions d'artistes locaux. La calligraphie peut dépendre de la programmation.",
+      "practical_notes_fr": "Expositions variables : vérifier si des œuvres calligraphiques sont présentées pendant le séjour. Centre à vocation artistique, non atelier de commande personnalisée garanti.",
+      "source": {
+        "creator": "Portail officiel Visit Madinah et reportage culturel",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://visitmadinahsa.com/sa-en/destinations/The-Heritage-Quarter",
+          "https://www.listmag.com/en/see-do/art-culture/best-museums-in-medina-madinah"
+        ]
+      },
+      "verification": {
+        "source_detail": "Portail officiel Visit Madinah et reportage culturel",
+        "independently_verified": true,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "business_and_web_crosscheck",
+        "note": "Prestations détaillées, horaires et disponibilité en 2027 à contrôler."
       }
     }
   ],
