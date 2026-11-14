@@ -32,6 +32,22 @@
   /* Recherche Google du vol À SA DATE (affiche l'état/les horaires du vol ce jour-là) */
   const verifyUrl = (no, date) => `https://www.google.com/search?q=${encodeURIComponent('vol ' + no.replace(/\s+/g, '') + ' ' + day(date).toLocaleDateString('fr', { day: 'numeric', month: 'long', year: 'numeric' }))}`;
 
+  const routeCache = new Map();
+  async function lookupRoute(no) {
+    const cs = (no || '').replace(/\s+/g, '').toUpperCase();
+    if (routeCache.has(cs)) return routeCache.get(cs);
+    const ctl = new AbortController(), tm = setTimeout(() => ctl.abort(), 7000);
+    let out = null;
+    try {
+      const r = await fetch(`https://api.adsbdb.com/v0/callsign/${encodeURIComponent(cs)}`, { signal: ctl.signal });
+      const d = await r.json(), f = d && d.response && d.response.flightroute;
+      if (f && f.origin && f.destination) out = { from: f.origin.iata_code, to: f.destination.iata_code, fromCity: f.origin.municipality, toCity: f.destination.municipality, airline: f.airline && f.airline.name };
+    } catch (e) { return null; }                       // hors ligne / service indisponible : on ne met pas en cache
+    finally { clearTimeout(tm); }
+    routeCache.set(cs, out);
+    return out;
+  }
+
   A.views.trip = el => {
     S.journey = S.journey || {};
     const J = S.journey;
@@ -40,6 +56,7 @@
     if (!J.from) J.from = 'GVA';                                // départ par défaut : Genève
     let mode = saved() ? 'card' : 'dates';                        // dates → flights → card
     let editLeg = null;                                           // 'out' | 'ret' : panneau de détails ouvert
+    const rt = { out: null, ret: null };                          // routes trouvées (adsbdb)
     const form = { d1: J.date1 || '', d2: J.date2 || '', noOut: J.noOut || '', noRet: J.noRet || '', ref: J.ref || '', linkOut: J.linkOut || '', linkRet: J.linkRet || '' };
     const base = form.d1 ? day(form.d1) : new Date();
     const view = { y: base.getFullYear(), m: base.getMonth() };
@@ -94,7 +111,7 @@
       const o = k === 'out', no = o ? form.noOut : form.noRet, link = o ? form.linkOut : form.linkRet;
       return `<div class="legbox"><div class="legdate">${o ? '🛫 ' + t('outbound') : '🛬 ' + t('inbound')} · <b>${esc(fmtDate(date))}</b></div>
         <label>${t('flight_no')} *</label><input id="f${o ? 'NoOut' : 'NoRet'}" value="${esc(no)}" placeholder="${o ? 'SV 124' : 'SV 125'}" autocapitalize="characters" style="width:100%;text-transform:uppercase">
-        <p class="err" id="e${o ? 'Out' : 'Ret'}">${bad(no) ? t('flight_fmt') : ''}</p><p class="muted detect" id="d${o ? 'Out' : 'Ret'}">${detect(no, date)}</p>
+        <p class="err" id="e${o ? 'Out' : 'Ret'}">${bad(no) ? t('flight_fmt') : ''}</p><p class="muted detect" id="d${o ? 'Out' : 'Ret'}">${detect(no, date)}</p><p class="muted detect" id="r${o ? 'Out' : 'Ret'}"></p>
         <label>${t('airline_link')}</label><input id="f${o ? 'LinkOut' : 'LinkRet'}" inputmode="url" autocapitalize="off" value="${esc(link)}" placeholder="https://…" style="width:100%"></div>`;
     };
     const drawFlights = () => {
@@ -106,13 +123,28 @@
         <p style="margin:14px 0 0"><a href="https://www.google.com/travel/flights?q=${encodeURIComponent(`Flights from ${J.from || 'GVA'} to Saudi Arabia on ${form.d1} through ${form.d2}`)}" target="_blank" rel="noopener">🔍 ${t('search_hint')} ↗</a></p></div>
         <div class="stickybar"><button type="button" class="ghost" id="back">${t('back')}</button><button type="button" id="saveTrip" style="flex:1" ${numsOk() ? '' : 'disabled'}>✓ ${t('save_trip')}</button></div>
         <p style="text-align:center"><button type="button" class="ghost sm" id="skipNums">${t('no_ticket_yet')}</button></p>`;
+      const routeLine = (r, k) => {
+        const warn = k === 'out' && (J.from || 'GVA') === 'GVA' && r.from !== 'GVA' ? `<br>⚠️ ${t('route_not_gva').replace('{city}', esc(r.fromCity || r.from))}` : '';
+        return `📍 ${esc(r.fromCity || '')} (${esc(r.from)}) → ${esc(r.toCity || '')} (${esc(r.to)}) <span class="muted">· ${t('route_usual')}</span>${warn}`;
+      };
+      const lookupInto = async k => {
+        const no = k === 'out' ? form.noOut : form.noRet, box = $('#r' + (k === 'out' ? 'Out' : 'Ret'), el);
+        if (!box) return;
+        if (!FLIGHT_RE.test((no || '').trim())) { box.innerHTML = ''; rt[k] = null; return; }
+        box.textContent = t('route_loading');
+        const r = await lookupRoute(no);
+        if ((k === 'out' ? form.noOut : form.noRet) !== no || !document.body.contains(box)) return;      // saisie modifiée entre-temps
+        rt[k] = r; box.innerHTML = r ? routeLine(r, k) : t('route_unknown');
+      };
+      const timers = {}, schedule = k => { clearTimeout(timers[k]); timers[k] = setTimeout(() => lookupInto(k), 600); };
       const upd = () => {
         $('#saveTrip', el).disabled = !numsOk();
         $('#eOut', el).textContent = bad(form.noOut) ? t('flight_fmt') : ''; $('#eRet', el).textContent = bad(form.noRet) ? t('flight_fmt') : '';
         $('#dOut', el).innerHTML = detect(form.noOut, form.d1); $('#dRet', el).innerHTML = detect(form.noRet, form.d2);
       };
-      $('#fNoOut', el).oninput = e => { form.noOut = e.target.value.toUpperCase(); upd(); };
-      $('#fNoRet', el).oninput = e => { form.noRet = e.target.value.toUpperCase(); upd(); };
+      $('#fNoOut', el).oninput = e => { form.noOut = e.target.value.toUpperCase(); upd(); schedule('out'); };
+      $('#fNoRet', el).oninput = e => { form.noRet = e.target.value.toUpperCase(); upd(); schedule('ret'); };
+      lookupInto('out'); lookupInto('ret');                       // numéros déjà saisis : on affiche leur route tout de suite
       $('#fLinkOut', el).oninput = e => { form.linkOut = e.target.value; };
       $('#fLinkRet', el).oninput = e => { form.linkRet = e.target.value; };
       $('#fRef', el).oninput = e => { form.ref = e.target.value; };
@@ -120,6 +152,10 @@
       const commit = withNums => {
         Object.assign(J, { date1: form.d1, date2: form.d2, ref: form.ref.trim(), noOut: withNums ? form.noOut.trim() : '', noRet: withNums ? form.noRet.trim() : '',
           linkOut: safeUrl(form.linkOut), linkRet: safeUrl(form.linkRet) });
+        if (withNums) {                                               // aéroports trouvés d'après le numéro de vol
+          const ap = (k, r) => { if (!r) return; if (k === 'out') { J.from = r.from; J.to = r.to; } else { J.retFrom = r.from; J.retTo = r.to; } J.names = { ...(J.names || {}), [r.from]: r.fromCity, [r.to]: r.toCity }; };
+          ap('out', rt.out); ap('ret', rt.ret);
+        }
         save('journey'); S.trip = { start: '', end: '' }; save('trip');
         mode = 'card'; A.toast(t('dates_ok')); draw(); scrollTo(0, 0);
       };
@@ -135,6 +171,7 @@
     };
     const keys = k => k === 'out' ? { no: 'noOut', from: 'from', to: 'to', dep: 'depOut', arr: 'arrOut', term: 'termOut', link: 'linkOut' }
                                   : { no: 'noRet', from: 'retFrom', to: 'retTo', dep: 'depRet', arr: 'arrRet', term: 'termRet', link: 'linkRet' };
+    const nameOf = c => (J.names && J.names[c]) || AIRPORTS[c] || '';
     const chip = date => { const d = daysTo(date); return d > 0 ? `J-${d}` : d === 0 ? t('today') : t('past_lbl'); };
 
     const legCard = k => {
@@ -154,8 +191,8 @@
         <button type="button" id="legOk" style="margin-top:10px">${t('done_btn')}</button></div>` : '';
       return `<div class="card flight"><div class="row"><span class="pill">${o ? '🛫 ' + t('outbound') : '🛬 ' + t('inbound')}</span>
           <b class="grow" style="font-size:18px">${L.no ? esc(L.no) : `<a href="#" data-edit="${k}">＋ ${t('add_flight_no')}</a>`}</b><span class="pill">${esc(chip(L.date))}</span></div>
-        <div class="route"><div><div class="code">${esc(L.from || '—')}</div><div class="time">${esc(L.dep || '--:--')}</div></div><div class="plane">✈️</div>
-          <div style="text-align:end"><div class="code">${esc(L.to || '—')}</div><div class="time">${esc(L.arr || '--:--')}</div></div></div>
+        <div class="route"><div><div class="code">${esc(L.from || '—')}</div><div class="cname">${esc(nameOf(L.from))}</div><div class="time">${esc(L.dep || '--:--')}</div></div><div class="plane">✈️</div>
+          <div style="text-align:end"><div class="code">${esc(L.to || '—')}</div><div class="cname">${esc(nameOf(L.to))}</div><div class="time">${esc(L.arr || '--:--')}</div></div></div>
         <div class="muted">📅 ${esc(fmtDate(L.date))}${L.term ? ' · ' + t('terminal') + ' ' + esc(L.term) : ''}</div>
         <div class="row" style="margin-top:10px">${info}${open}<button type="button" class="ghost sm" data-edit="${k}">✏️ ${t('details')}</button></div>${panel}</div>`;
     };

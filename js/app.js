@@ -7,7 +7,7 @@
     set(k, v) { try { localStorage.setItem('omra:' + k, JSON.stringify(v)); } catch {} },
   };
 
-  const APP_VERSION = '2026-11-14.24';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
+  const APP_VERSION = '2026-11-14.26';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
 
   /* ---------- état ---------- */
   const detect = () => { const l = (navigator.language || 'fr').slice(0, 2); return LANGS[l] ? l : 'fr'; };
@@ -276,21 +276,54 @@
 
   /* ---------- Explorer (carte + recherche + filtres + GPS + itinéraires) ---------- */
   views.explore = (el, arg) => {
-    let cat = 'all', city = 'all', q = '', near = false, layer = null, routeLayer = null, meLayer = null, firstFix = true, lastR = null;
+    let cat = 'all', city = 'all', q = '', near = false, firstFix = true, lastR = null, ready = false;
+    const queue = [], whenReady = f => (ready ? f() : queue.push(f));
+    let markers = [], meMarker = null, destMarker = null;
+    const prefs = store.get('mappref', {});
+    let mlang = prefs.lang || (S.lang === 'ar' ? 'ar' : S.lang), mbase = prefs.base || 'plan';
+    const savePrefs = () => store.set('mappref', { lang: mlang, base: mbase });
     const cities = [...new Set(PLACES.map(p => p.city))];
     el.innerHTML = `<h2>${t('explore_title')}</h2>
       <div class="card muted">⚠️ ${t('warn_unverified')}</div>
       <div class="row" style="margin-bottom:8px"><input id="q" class="grow" type="search" placeholder="${esc(t('search'))}">
         <select id="cty"><option value="all">${t('all_cities')}</option>${cities.map(c => `<option value="${c}">${esc(cityName(c))}</option>`).join('')}</select>
         <button class="ghost" id="nearBtn" title="${t('follow_me')}">📍 ${t('follow_me')}</button></div>
-      <div class="chips" id="chips"></div><div id="map"></div><div id="routeBar"></div><div class="card" id="list"></div>`;
-    const LF = window.L;
+      <div class="chips" id="chips"></div>
+      <div class="row" style="margin-bottom:8px"><div class="grow"><label>🌐 ${t('map_lang_label')}</label><select id="mlang" style="width:100%">
+          ${[['fr', 'Français'], ['en', 'English'], ['ar', 'العربية'], ['local', t('ml_local')]].map(([k, v]) => `<option value="${k}" ${mlang === k ? 'selected' : ''}>${esc(v)}</option>`).join('')}</select></div>
+        <div class="grow"><label>🗺️ ${t('map_style_label')}</label><select id="mbase" style="width:100%"><option value="plan" ${mbase === 'plan' ? 'selected' : ''}>${t('base_plan')}</option><option value="sat" ${mbase === 'sat' ? 'selected' : ''}>${t('base_sat')}</option></select></div></div>
+      <div id="map"></div><div id="routeBar"></div><div class="card" id="list"></div>`;
+    const ML = window.maplibregl;
+    let map = null;
 
+    /* ---- langue des noms sur la carte : on remplace le champ de texte des étiquettes (name:fr / name:en / name:ar / name) ---- */
+    const LANG_EXPR = {
+      fr: ['coalesce', ['get', 'name:fr'], ['get', 'name:en'], ['get', 'name_en'], ['get', 'name:latin'], ['get', 'name']],
+      en: ['coalesce', ['get', 'name:en'], ['get', 'name_en'], ['get', 'name:latin'], ['get', 'name']],
+      ar: ['coalesce', ['get', 'name:ar'], ['get', 'name']],
+      local: ['get', 'name'],
+    };
+    const applyLang = () => whenReady(() => {
+      map.getStyle().layers.forEach(l => {
+        if (l.type === 'symbol' && l.layout && l.layout['text-field'] && /name/.test(JSON.stringify(l.layout['text-field']))) map.setLayoutProperty(l.id, 'text-field', LANG_EXPR[mlang] || LANG_EXPR.fr);
+      });
+    });
+    const OVERLAY = ['sat', 'acc', 'route-casing', 'route-line'];
+    const applyBase = () => whenReady(() => {
+      const sat = mbase === 'sat';
+      if (map.getLayer('sat')) map.setLayoutProperty('sat', 'visibility', sat ? 'visible' : 'none');
+      // en mode satellite : on masque le dessin vectoriel (routes, zones) pour ne garder que l'image + les étiquettes
+      map.getStyle().layers.forEach(l => { if (['fill', 'line', 'fill-extrusion'].includes(l.type) && !OVERLAY.includes(l.id)) map.setLayoutProperty(l.id, 'visibility', sat ? 'none' : 'visible'); });
+    });
+
+    const circlePoly = (lng, lat, r) => {
+      const pts = []; for (let i = 0; i <= 64; i++) { const a = i / 64 * 2 * Math.PI; pts.push([lng + r * Math.cos(a) / (111320 * Math.cos(lat * Math.PI / 180)), lat + r * Math.sin(a) / 110540]); }
+      return { type: 'Feature', geometry: { type: 'Polygon', coordinates: [pts] } };
+    };
     const showMe = (lat, lng, acc) => {
-      if (!mapObj || !meLayer) return;
-      meLayer.clearLayers();
-      LF.circle([lat, lng], { radius: acc || 30, color: '#2b6cb0', weight: 1, fillColor: '#2b6cb0', fillOpacity: 0.12 }).addTo(meLayer);
-      LF.circleMarker([lat, lng], { radius: 8, color: '#fff', weight: 3, fillColor: '#2b6cb0', fillOpacity: 1 }).addTo(meLayer);
+      if (!map) return;
+      if (!meMarker) { const e = document.createElement('div'); e.className = 'medot'; meMarker = new ML.Marker({ element: e }).setLngLat([lng, lat]).addTo(map); } else meMarker.setLngLat([lng, lat]);
+      whenReady(() => { const src = map.getSource('acc'); if (src) src.setData(circlePoly(lng, lat, acc || 30)); });
     };
     const getPos = () => new Promise(res => {
       if (!navigator.geolocation) return res(null);
@@ -298,6 +331,7 @@
         S.here = { lat: pos.coords.latitude, lng: pos.coords.longitude }; save('here'); showMe(S.here.lat, S.here.lng, pos.coords.accuracy); res(S.here);
       }, () => res(null), { enableHighAccuracy: true, timeout: 12000, maximumAge: 15000 });
     });
+    const fitTo = (pts, maxZoom = 14) => { if (!map || !pts.length) return; const bb = new ML.LngLatBounds(); pts.forEach(c => bb.extend(c)); map.fitBounds(bb, { padding: 40, maxZoom, duration: 600 }); };
 
     const render = (fit = true) => {
       $('#chips', el).innerHTML = ['all', ...CATEGORIES].map(c => `<button class="chip ${c === cat ? 'on' : ''}" data-cat="${c}">${t(c === 'all' ? 'all' : 'c_' + c)}</button>`).join('');
@@ -312,26 +346,30 @@
           <a href="${gmaps(p)}" target="_blank" rel="noopener">Google Maps</a><a href="${appleMaps(p)}" target="_blank" rel="noopener">Plans</a></div></div>`).join('') : `<p class="muted">${t('no_results')}</p>`;
       $$('[data-cat]', el).forEach(b => b.onclick = () => { cat = b.dataset.cat; render(); });
       $$('[data-route]', el).forEach(b => b.onclick = () => routeTo(PLACES.find(x => x.id === b.dataset.route)));
-      if (mapObj && layer) {
-        layer.clearLayers();
-        ps.forEach(p => LF.circleMarker([p.lat, p.lng], { radius: 9, color: '#fff', weight: 2, fillColor: catColor[p.c], fillOpacity: 1 })
-          .bindPopup(`<b>${esc(L(p.n))}</b><br><span dir="rtl">${esc(p.n.ar)}</span><br><a href="#/place/${p.id}">${t('nav_explore')} →</a> · <a href="#/explore/to-${p.id}">🧭 ${t('route_btn')}</a><br><a href="${gmaps(p)}" target="_blank" rel="noopener">Google Maps ↗</a> · <a href="${appleMaps(p)}" target="_blank" rel="noopener">Plans ↗</a>`).addTo(layer));
-        if (fit && ps.length) mapObj.fitBounds(LF.latLngBounds(ps.map(p => [p.lat, p.lng])).pad(0.2), { maxZoom: 14 });
+      if (map) {
+        markers.forEach(m => m.remove()); markers = [];
+        ps.forEach(p => {
+          const e = document.createElement('div'); e.className = 'mk'; e.style.background = catColor[p.c];
+          const pop = new ML.Popup({ offset: 12, maxWidth: '260px' }).setHTML(`<b>${esc(L(p.n))}</b><br><span dir="rtl">${esc(p.n.ar)}</span><br><a href="#/place/${p.id}">${t('nav_explore')} →</a> · <a href="#/explore/to-${p.id}">🧭 ${t('route_btn')}</a><br><a href="${gmaps(p)}" target="_blank" rel="noopener">Google Maps ↗</a> · <a href="${appleMaps(p)}" target="_blank" rel="noopener">Plans ↗</a>`);
+          markers.push(new ML.Marker({ element: e }).setLngLat([p.lng, p.lat]).setPopup(pop).addTo(map));
+        });
+        if (fit) fitTo(ps.map(p => [p.lng, p.lat]));
       }
     };
 
-    /* Itinéraire depuis la position GPS (calcul routier OSRM). Trop loin (> 800 km) : distance à vol d'oiseau + liens Google/Plans. */
+    /* Itinéraire depuis la position GPS (calcul routier OSM). Trop loin (> 800 km) : distance à vol d'oiseau + liens Google/Plans. */
+    const setRoute = geom => whenReady(() => { const src = map.getSource('route'); if (src) src.setData(geom ? { type: 'Feature', geometry: geom } : { type: 'FeatureCollection', features: [] }); });
+    const clearRoute = () => { setRoute(null); if (destMarker) { destMarker.remove(); destMarker = null; } };
     const routeTo = async p => {
       const bar = $('#routeBar', el);
       const links = `<a class="btn alt" href="${gmaps(p)}" target="_blank" rel="noopener">Google Maps ↗</a> <a class="btn alt" href="${appleMaps(p)}" target="_blank" rel="noopener">Plans ↗</a>`;
       toast(t('locating'));
       const me = await getPos();
       if (!me) { bar.innerHTML = `<div class="card"><b>🧭 ${esc(L(p.n))}</b><p class="muted">${t('geo_error')}</p><div class="row">${links}</div></div>`; return; }
-      if (routeLayer) routeLayer.clearLayers();
+      clearRoute();
       const crow = km(me, p);
       let rt = null, foot = null;
       if (crow <= 800) {
-        // Calcul d'itinéraire (OSM) : voiture et marche en parallèle, avec serveur de secours et délai maximal de 9 s.
         const fetchRoute = async (base) => {
           const ctl = new AbortController(), tm = setTimeout(() => ctl.abort(), 9000);
           try {
@@ -343,54 +381,63 @@
         [rt, foot] = await Promise.all([
           firstOf(['https://routing.openstreetmap.de/routed-car', 'https://router.project-osrm.org']),
           firstOf(['https://routing.openstreetmap.de/routed-foot'])]);
-        if (!rt) rt = foot;                                    // à défaut de route voiture, on trace la route à pied
+        if (!rt) rt = foot;
       }
       const head = `<b>🧭 ${esc(L(p.n))}</b> <button type="button" class="danger" id="routeClear" style="float:inline-end">✕</button>`;
-      if (rt && mapObj && routeLayer) {
-        const geo = LF.geoJSON(rt.geometry, { style: { color: '#2b6cb0', weight: 6, opacity: 0.85 } }).addTo(routeLayer);
-        LF.circleMarker([p.lat, p.lng], { radius: 11, color: '#fff', weight: 3, fillColor: '#e53e3e', fillOpacity: 1 }).addTo(routeLayer);
-        mapObj.fitBounds(geo.getBounds().pad(0.15));
+      if (map) destMarker = new ML.Marker({ color: '#e53e3e' }).setLngLat([p.lng, p.lat]).addTo(map);
+      if (rt) {
+        setRoute(rt.geometry); fitTo(rt.geometry.coordinates);
         const kmv = rt.distance / 1000, drive = Math.max(1, Math.round(rt.duration / 60)), walk = foot ? Math.max(1, Math.round(foot.duration / 60)) : Math.round(kmv / 5 * 60);
         bar.innerHTML = `<div class="card">${head}<p style="margin:6px 0">🚗 <b>${nf(Math.round(kmv * 10) / 10)} ${t('km')}</b> · ${fmtDur(drive)} <span class="muted">(${t('route_drive')})</span><br>
           🚶 ${foot ? '' : '≈ '}${fmtDur(walk)} <span class="muted">(${foot ? t('route_walk_real') : t('route_walk')})</span></p><div class="row">${links}</div></div>`;
       } else {
-        if (mapObj && routeLayer) {
-          LF.polyline([[me.lat, me.lng], [p.lat, p.lng]], { color: '#2b6cb0', weight: 3, dashArray: '6 8' }).addTo(routeLayer);
-          mapObj.fitBounds(LF.latLngBounds([[me.lat, me.lng], [p.lat, p.lng]]).pad(0.2));
-        }
+        setRoute({ type: 'LineString', coordinates: [[me.lng, me.lat], [p.lng, p.lat]] }); fitTo([[me.lng, me.lat], [p.lng, p.lat]]);
         bar.innerHTML = `<div class="card">${head}<p style="margin:6px 0">${crow > 800 ? `${t('route_far')} <b>${nf(Math.round(crow))} ${t('km')}</b> ${t('route_crow')}` : t('route_err')}</p><div class="row">${links}</div></div>`;
       }
-      const c = $('#routeClear', el); if (c) c.onclick = () => { bar.innerHTML = ''; if (routeLayer) routeLayer.clearLayers(); };
+      const c = $('#routeClear', el); if (c) c.onclick = () => { bar.innerHTML = ''; clearRoute(); };
       bar.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     };
 
     /* Suivi de ma position (point bleu) : se met à jour tout seul ; trie la liste par distance. */
     const follow = () => {
       if (!navigator.geolocation) return toast(t('geo_error'));
-      if (geoWatch != null) { if (S.here && mapObj) mapObj.flyTo([S.here.lat, S.here.lng], 15); return; }
+      if (geoWatch != null) { if (S.here && map) map.flyTo({ center: [S.here.lng, S.here.lat], zoom: 15 }); return; }
       toast(t('locating'));
       geoWatch = navigator.geolocation.watchPosition(pos => {
         S.here = { lat: pos.coords.latitude, lng: pos.coords.longitude }; save('here');
         showMe(S.here.lat, S.here.lng, pos.coords.accuracy);
-        if (firstFix) { firstFix = false; near = true; lastR = S.here; render(false); if (mapObj) mapObj.flyTo([S.here.lat, S.here.lng], 14); }
-        else if (!lastR || km(lastR, S.here) > 0.05) { lastR = S.here; render(false); }          // liste mise à jour si on a bougé de > 50 m
+        if (firstFix) { firstFix = false; near = true; lastR = S.here; render(false); if (map) map.flyTo({ center: [S.here.lng, S.here.lat], zoom: 14 }); }
+        else if (!lastR || km(lastR, S.here) > 0.05) { lastR = S.here; render(false); }
       }, () => { toast(t('geo_error')); if (geoWatch != null) { navigator.geolocation.clearWatch(geoWatch); geoWatch = null; } }, { enableHighAccuracy: true, maximumAge: 5000, timeout: 20000 });
     };
 
-    if (LF && navigator.onLine !== false) {
-      mapObj = LF.map('map').setView([23.5, 42], 5);
-      const osmfr = LF.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', { maxZoom: 20, subdomains: 'abc',
-        attribution: '&copy; <a href="https://www.openstreetmap.fr">OpenStreetMap France</a> | &copy; contributeurs <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' });
-      const osm = LF.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; contributeurs <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' });
-      const sat = LF.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, attribution: 'Imagerie &copy; Esri, Maxar, Earthstar Geographics' });
-      osmfr.addTo(mapObj);
-      LF.control.layers({ [t('map_layer_fr')]: osmfr, [t('map_layer_local')]: osm, [t('map_layer_sat')]: sat }, null, { collapsed: true }).addTo(mapObj);
-      layer = LF.layerGroup().addTo(mapObj); routeLayer = LF.layerGroup().addTo(mapObj); meLayer = LF.layerGroup().addTo(mapObj);
-      if (S.here) showMe(S.here.lat, S.here.lng, 0);
-    } else { $('#map', el).outerHTML = `<div class="card muted">${t('map_offline')}</div>`; }
+    /* ---- carte vectorielle OpenFreeMap (MapLibre) ---- */
+    if (ML && navigator.onLine !== false) {
+      try {
+        try { ML.setRTLTextPlugin('https://cdn.jsdelivr.net/npm/@mapbox/mapbox-gl-rtl-text@0.2.3/mapbox-gl-rtl-text.min.js', true); } catch (e) { /* déjà chargé */ }
+        map = new ML.Map({ container: 'map', style: 'https://tiles.openfreemap.org/styles/liberty', center: [42, 23.5], zoom: 4, attributionControl: { compact: true } });
+        map.addControl(new ML.NavigationControl({ showCompass: false }), 'top-right');
+        mapObj = map; window.Omra.map = map;                       // (exposé pour les tests)
+        map.on('load', () => {
+          const first = map.getStyle().layers.find(l => l.type === 'symbol');
+          map.addSource('sat', { type: 'raster', tileSize: 256, maxzoom: 19, tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'], attribution: 'Imagerie &copy; Esri, Maxar, Earthstar Geographics' });
+          map.addLayer({ id: 'sat', type: 'raster', source: 'sat', layout: { visibility: 'none' } }, first && first.id);     // sous les étiquettes
+          map.addSource('acc', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
+          map.addLayer({ id: 'acc', type: 'fill', source: 'acc', paint: { 'fill-color': '#2b6cb0', 'fill-opacity': 0.14 } });
+          map.addSource('route', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
+          map.addLayer({ id: 'route-casing', type: 'line', source: 'route', layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#fff', 'line-width': 9 } });
+          map.addLayer({ id: 'route-line', type: 'line', source: 'route', layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#2b6cb0', 'line-width': 6 } });
+          ready = true; applyLang(); applyBase(); queue.splice(0).forEach(f => f());
+          if (S.here) showMe(S.here.lat, S.here.lng, 0);
+        });
+      } catch (e) { map = null; mapObj = null; }
+    }
+    if (!map) $('#map', el).outerHTML = `<div class="card muted">${t('map_offline')}</div>`;
     $('#q', el).oninput = e => { q = e.target.value; render(); };
     $('#cty', el).onchange = e => { city = e.target.value; render(); };
     $('#nearBtn', el).onclick = follow;
+    $('#mlang', el).onchange = e => { mlang = e.target.value; savePrefs(); applyLang(); };
+    $('#mbase', el).onchange = e => { mbase = e.target.value; savePrefs(); applyBase(); };
     render();
     const target = arg && /^to-/.test(arg) ? PLACES.find(x => 'to-' + x.id === arg) : null;
     if (target) routeTo(target);

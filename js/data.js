@@ -308,3 +308,13 @@ Object.assign(I18N.ar, { follow_me: 'موقعي', route_btn: 'المسار', rou
 Object.assign(I18N.fr, { route_walk_real: 'à pied' });
 Object.assign(I18N.en, { route_walk_real: 'on foot' });
 Object.assign(I18N.ar, { route_walk_real: 'سيرًا' });
+
+/* ---- Langue / style de la carte ---- */
+Object.assign(I18N.fr, { map_lang_label: 'Langue de la carte', map_style_label: 'Fond', ml_local: 'Noms locaux', base_plan: 'Plan', base_sat: 'Satellite' });
+Object.assign(I18N.en, { map_lang_label: 'Map language', map_style_label: 'Style', ml_local: 'Local names', base_plan: 'Map', base_sat: 'Satellite' });
+Object.assign(I18N.ar, { map_lang_label: 'لغة الخريطة', map_style_label: 'النمط', ml_local: 'الأسماء المحلية', base_plan: 'خريطة', base_sat: 'قمر صناعي' });
+
+/* ---- Route du vol trouvée d'après le numéro ---- */
+Object.assign(I18N.fr, { route_usual: 'route habituelle de ce vol', route_loading: 'Recherche de la route…', route_unknown: "Route introuvable pour ce vol : renseignez les aéroports dans « Détails ».", route_not_gva: 'Ce vol part habituellement de {city}, pas de Genève.' });
+Object.assign(I18N.en, { route_usual: 'usual route of this flight', route_loading: 'Looking up the route…', route_unknown: 'Route not found for this flight: enter the airports in “Details”.', route_not_gva: 'This flight usually departs from {city}, not Geneva.' });
+Object.assign(I18N.ar, { route_usual: 'المسار المعتاد لهذه الرحلة', route_loading: 'جارٍ البحث عن المسار…', route_unknown: 'لم يُعثر على مسار هذه الرحلة: أدخل المطارات في «التفاصيل».', route_not_gva: 'تقلع هذه الرحلة عادة من {city} وليس من جنيف.' });

@@ -90,3 +90,9 @@ button:disabled{opacity:.4;cursor:default}
 .acts a,.acts button{font-size:12px;padding:6px 8px;border-radius:8px;text-align:center;text-decoration:none;font-weight:600}
 .acts a{border:1px solid var(--g);color:var(--g);background:transparent}
 #routeBar .card{border-color:#2b6cb0}
+.mk{width:18px;height:18px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.45);cursor:pointer}
+.medot{width:16px;height:16px;border-radius:50%;background:#2b6cb0;border:3px solid #fff;box-shadow:0 0 0 3px rgba(43,108,176,.35)}
+.maplibregl-popup-content{color:#222;font:14px/1.4 system-ui,sans-serif;border-radius:12px}
+.maplibregl-popup-content a{color:#0b6b4f;font-weight:600}
+#map{position:relative;overflow:hidden}
+.flight .cname{font-size:12px;color:var(--mut);max-width:110px;line-height:1.2}
