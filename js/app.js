@@ -7,7 +7,7 @@
     set(k, v) { try { localStorage.setItem('omra:' + k, JSON.stringify(v)); } catch {} },
   };
 
-  const APP_VERSION = '2026-11-14.38';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
+  const APP_VERSION = '2026-11-14.40';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
 
   /* ---------- état ---------- */
   const detect = () => { const l = (navigator.language || 'fr').slice(0, 2); return LANGS[l] ? l : 'fr'; };
@@ -71,6 +71,7 @@
   let timer = null, mapObj = null, orient = null, geoWatch = null;
   function route() {
     clearInterval(timer); timer = null;
+    document.body.style.overflow = '';                      // une fiche ouverte (Explorer) ne doit pas bloquer le défilement ailleurs
     if (orient) { window.removeEventListener('deviceorientationabsolute', orient, true); window.removeEventListener('deviceorientation', orient, true); orient = null; }
     if (mapObj) { mapObj.remove(); mapObj = null; }
     if (geoWatch != null && navigator.geolocation) { navigator.geolocation.clearWatch(geoWatch); geoWatch = null; }
@@ -304,7 +305,7 @@
 
   /* ---------- Explorer : lieux + bons plans réunis, filtrés par ville / type / catégorie ; carte, GPS activable ---------- */
   views.explore = (el, arg) => {
-    let city = 'all', tab = '', limit = 8, q = '', posOn = false, far = false, firstFix = true, lastR = null, ready = false;
+    let city = 'all', tab = '', limit = 10, q = '', posOn = false, far = false, firstFix = true, lastR = null, ready = false;
     const queue = [], whenReady = f => (ready ? f() : queue.push(f));
     let markers = [], meMarker = null, destMarker = null;
     const prefs = store.get('mappref', {});
@@ -383,21 +384,72 @@
     const aSearch = i => `https://maps.apple.com/?q=${encodeURIComponent([i.name, i.area, cityName(i.city)].filter(Boolean).join(' '))}`;
     const vids = i => httpsOnly(((i.kind === 'find' ? i.r : i.disc) || {}).source && ((i.kind === 'find' ? i.r : i.disc).source.videos || (i.kind === 'find' ? i.r : i.disc).source.references)).slice(0, 3);
 
-    const placeCard = i => {
-      const p = i.p, d = (posOn && !far && S.here) ? km(S.here, p) : null, v = vids(i);
-      return `<div class="item"><div class="tx"><a href="#/place/${p.id}" style="color:var(--tx);font-size:16px">${S.fav.includes(p.id) ? '★ ' : ''}${S.visited[p.id] ? '✓ ' : ''}${esc(i.name)}</a>
-        <div class="muted" dir="rtl" style="text-align:start">${esc(i.ar)}</div>
-        <span class="pill">${t('c_' + p.c)}</span> <span class="pill">${esc(cityName(p.city))}</span>${d != null && d < NEAR_KM ? ` <span class="pill">${t('distance_km')} ${nf(Math.round(d * 10) / 10)} ${t('km')}</span>` : ''}${v.length ? ' <span class="pill">🎬</span>' : ''}</div>
-        <div class="acts"><button type="button" data-route="${p.id}">🧭 ${t('route_btn')}</button>
-          <a href="${gmaps(p)}" target="_blank" rel="noopener">Google Maps</a><a href="${appleMaps(p)}" target="_blank" rel="noopener">Plans</a></div></div>`;
+    const CAT_ICON = { holy: '🕋', sira: '📜', heritage: '🏛️', nature: '🌿', miqat: '🕌', airport: '✈️', 'f:history': '📜', 'f:museum': '🏛️', 'f:shopping': '🛍️', 'f:transport': '🚌', 'f:umrah': '🕋', 'f:services': '🛎️',
+      'f:nature': '🌿', 'f:food': '🍽️', 'f:leisure': '🎡', 'f:perfume': '🧴', 'f:cafe_tea': '☕', 'f:dates': '🌴', 'f:calligraphy': '🖋️', 'f:regional_products': '🧺' };
+    const itemById = id => items.find(i => i.id === id);
+
+    /* carte compacte (2 colonnes) : icône, titre, ville · quartier — un toucher ouvre la fiche */
+    const tile = i => {
+      const sub = i.kind === 'place' ? cityName(i.city) : [cityName(i.city), i.area].filter(Boolean).join(' · ');
+      const d = i.kind === 'place' && posOn && !far && S.here ? km(S.here, i.p) : null;
+      return `<button type="button" class="pcard" data-open="${esc(i.id)}"><span class="ic">${CAT_ICON[i.cat] || '📍'}${i.kind === 'place' && S.fav.includes(i.id) ? ' ★' : ''}${i.kind === 'place' && S.visited[i.id] ? ' ✓' : ''}</span>
+        <span class="tt">${esc(i.name)}</span><span class="sub">📍 ${esc(sub)}${d != null && d < NEAR_KM ? ` · ${nf(Math.round(d * 10) / 10)} ${t('km')}` : ''}</span></button>`;
     };
-    const findCard = i => {
-      const r = i.r, v = vids(i), ok = r.verification && r.verification.independently_verified;
-      return `<div class="item find"><div class="tx"><b>${esc(i.name)}</b> <span class="pill ${ok ? 'ok' : ''}">${ok ? '✓ ' + t('disc_verified') : t('disc_pending')}</span>
-        <div class="muted">📍 ${esc(cityName(i.city))}${i.area ? ' · ' + esc(i.area) : ''}</div>
-        ${i.text ? `<div>${esc(i.text)}</div>` : ''}${r.practical_notes_fr ? `<div class="muted">💡 ${esc(r.practical_notes_fr)}</div>` : ''}
-        ${v.length ? `<div class="row" style="margin-top:6px">${v.map((u, k) => `<a class="btn ghost sm" target="_blank" rel="noopener noreferrer" href="${esc(u)}">🎬 ${t('disc_video')}${v.length > 1 ? ' ' + (k + 1) : ''}</a>`).join('')}</div>` : ''}</div>
-        <div class="acts"><a href="${gSearch(i)}" target="_blank" rel="noopener">Google Maps</a><a href="${aSearch(i)}" target="_blank" rel="noopener">Plans</a></div></div>`;
+
+    /* fiche détaillée en feuille (bottom sheet) avec onglets : Infos / Pratique / Vidéos et sources */
+    let sheet = null, sheetKey = null;
+    const closeSheet = () => { if (sheet) { sheet.remove(); sheet = null; } document.body.style.overflow = ''; document.removeEventListener('keydown', onKey); };
+    const onKey = e => { if (e.key === 'Escape') closeSheet(); };
+    const row = (ic, label, val) => val ? `<div class="srow"><span>${ic}</span><div><b>${esc(label)}</b><div>${val}</div></div></div>` : '';
+    const srcBtns = urls => urls.map((u, k) => `<a class="btn ghost sm" target="_blank" rel="noopener noreferrer" href="${esc(u)}">🎬 ${t('disc_video')}${urls.length > 1 ? ' ' + (k + 1) : ''}</a>`).join(' ');
+    const sheetTabs = i => {
+      const out = [];
+      if (i.kind === 'place') {
+        const p = i.p, d = i.disc;
+        out.push(['info', t('sh_info'), `<p>${esc(i.text)}</p>` + (p.facts || []).map(f => `<div class="dua" style="border-inline-start-color:${f.s === 'fact' ? 'var(--g)' : '#d69e2e'}"><span class="pill">${f.s === 'fact' ? '✔ ' + t('fact') : '❓ ' + t('trad')}</span><div>${esc(L(f.t))}</div></div>`).join('') +
+          (d && d.description_fr ? `<p class="muted">🛍️ ${esc(d.description_fr)}</p>` : '')]);
+        const tips = (p.tips || []).map(x => `<p>💡 ${esc(L(x))}</p>`).join('') + (d && d.practical_notes_fr ? `<p>💡 ${esc(d.practical_notes_fr)}</p>` : '');
+        out.push(['prat', t('sh_practical'), row('💶', t('price'), p.free ? t('free') : t('paid')) + row('⏱️', t('duration'), p.mins ? p.mins + ' ' + t('min') : '') + row('🕒', t('hours'), esc(L(p.hours))) + row('🚪', t('access'), esc(L(p.access))) +
+          row('📍', 'GPS', `${p.lat.toFixed(5)}, ${p.lng.toFixed(5)}`) + (p.approx ? `<p class="muted">⚠️ ${t('approx_coord')}</p>` : '') + tips]);
+        const v = vids(i);
+        out.push(['src', t('sh_sources'), (v.length ? `<div class="row">${srcBtns(v)}</div>` : '') + `<p class="muted">${p.ver ? t('verified_on') + ' ' + esc(p.ver) : '⚠️ ' + t('not_verified')} · ${t('reliability')} : ${t('rel_' + p.rel)}</p>` + ((p.src && p.src.length) ? `<p class="muted">${t('sources')} : ${esc(p.src.join(' · '))}</p>` : '')]);
+      } else {
+        const r = i.r, v = vids(i), vf = r.verification || {};
+        out.push(['info', t('sh_info'), `<p>${esc(i.text)}</p>` + row('📍', t('city'), esc(cityName(i.city)) + (i.area ? ' · ' + esc(i.area) : '')) + row('🏷️', t('sh_category'), esc(catLabel(i.cat)))]);
+        const off = /^https:\/\//.test(r.official_url || '') ? `<a class="btn ghost sm" target="_blank" rel="noopener noreferrer" href="${esc(r.official_url)}">🌐 ${t('sh_official')}</a>` : '';
+        const prat = (r.practical_notes_fr ? `<p>💡 ${esc(r.practical_notes_fr)}</p>` : '') + (r.cost ? row('💶', t('price'), esc(typeof r.cost === 'string' ? r.cost : JSON.stringify(r.cost))) : '') + (off ? `<div class="row">${off}</div>` : '');
+        if (prat) out.push(['prat', t('sh_practical'), prat]);
+        out.push(['src', t('sh_sources'), (r.source && r.source.creator ? `<p class="muted">${t('sources')} : ${esc(r.source.creator)}</p>` : '') + (v.length ? `<div class="row">${srcBtns(v)}</div>` : '') +
+          `<p class="muted">${vf.independently_verified ? '✓ ' + t('disc_verified') : '⚠️ ' + t('disc_pending')}${vf.location_verified ? '' : ' · ' + t('sh_loc_unverified')}</p>`]);
+      }
+      return out;
+    };
+    const openSheet = (i, tabKey, noAnim) => {
+      if (!i) return;
+      closeSheet(); sheetKey = i.id;
+      const tabsDef = sheetTabs(i), cur = tabsDef.find(x => x[0] === tabKey) ? tabKey : tabsDef[0][0];
+      const isPlace = i.kind === 'place', p = i.p;
+      const fav = isPlace && S.fav.includes(p.id), vis = isPlace && !!S.visited[p.id];
+      sheet = document.createElement('div'); sheet.className = 'sheet' + (noAnim ? ' noanim' : ''); sheet.setAttribute('role', 'dialog'); sheet.setAttribute('aria-modal', 'true');
+      sheet.innerHTML = `<div class="sheet-in"><div class="sheet-hd"><div class="row" style="justify-content:space-between;flex-wrap:nowrap;align-items:flex-start"><div><h3 style="margin:0;font-size:20px">${CAT_ICON[i.cat] || '📍'} ${esc(i.name)}</h3>
+          ${isPlace ? `<div dir="rtl" style="font:22px/1.5 'Amiri','Noto Naskh Arabic',serif;text-align:start">${esc(i.ar)}</div>` : ''}
+          <div class="muted" style="margin-top:2px">📍 ${esc(cityName(i.city))}${i.area ? ' · ' + esc(i.area) : ''} · ${esc(catLabel(i.cat))}</div></div>
+          <button type="button" class="danger" id="shClose" aria-label="${esc(t('cancel'))}">✕</button></div>
+          <div class="tabs" role="tablist" style="margin-top:8px">${tabsDef.map(x => `<button type="button" class="tab ${x[0] === cur ? 'on' : ''}" role="tab" data-st="${x[0]}">${esc(x[1])}</button>`).join('')}</div></div>
+        <div class="sheet-body">${tabsDef.find(x => x[0] === cur)[2]}</div>
+        <div class="sheet-ft">${isPlace ? `<button type="button" id="shRoute">🧭 ${t('route_btn')}</button>` : ''}
+          <a class="btn alt" href="${isPlace ? gmaps(p) : gSearch(i)}" target="_blank" rel="noopener">Google Maps</a><a class="btn alt" href="${isPlace ? appleMaps(p) : aSearch(i)}" target="_blank" rel="noopener">Plans</a>
+          ${isPlace ? `<button type="button" class="ghost" id="shFav">${fav ? '★' : '☆'} ${t('fav')}</button><button type="button" class="ghost" id="shVis">${vis ? '✓ ' + t('visited') : t('mark_visited')}</button><a class="btn ghost" id="shFull" href="#/place/${p.id}">${t('sh_full')} →</a>` : ''}</div></div>`;
+      el.appendChild(sheet); document.body.style.overflow = 'hidden'; document.addEventListener('keydown', onKey);
+      sheet.addEventListener('click', e => { if (e.target === sheet) closeSheet(); });
+      $('#shClose', sheet).onclick = closeSheet;
+      $$('[data-st]', sheet).forEach(bt => bt.onclick = () => openSheet(i, bt.dataset.st, true));
+      if (isPlace) {
+        $('#shRoute', sheet).onclick = () => { closeSheet(); routeTo(p); };
+        $('#shFav', sheet).onclick = () => { S.fav = fav ? S.fav.filter(x => x !== p.id) : [...S.fav, p.id]; save('fav'); openSheet(i, cur, true); render(false); };
+        $('#shVis', sheet).onclick = () => { if (vis) delete S.visited[p.id]; else S.visited[p.id] = new Date().toISOString().slice(0, 10); save('visited'); openSheet(i, cur, true); render(false); };
+        $('#shFull', sheet).onclick = () => closeSheet();
+      }
     };
 
     const render = (fit = true) => {
@@ -423,15 +475,14 @@
       shown.forEach(i => {
         const hd = tab === 'all' ? (i.kind === 'place' ? 'places' : i.cat) : null;
         if (hd && hd !== lastCat) { html += `<h4 class="subh">${esc(tabLabel(hd))} · ${byTab[hd].length}</h4>`; lastCat = hd; }
-        html += i.kind === 'place' ? placeCard(i) : findCard(i);
+        html += tile(i);
       });
-      if (seq.length > shown.length) html += `<button type="button" class="ghost" id="moreBtn" style="width:100%;margin-top:10px">${t('ex_more')} (${seq.length - shown.length})</button>`;
-      if (!seq.length) html = `<p class="muted">${t('no_results')}</p>`;
-      $('#list', el).innerHTML = html ? `<div class="card" style="padding:6px 14px">${html}</div>` : '';
+      if (seq.length > shown.length) html += `<button type="button" class="ghost" id="moreBtn" style="grid-column:1/-1">${t('ex_more')} (${seq.length - shown.length})</button>`;
+      $('#list', el).innerHTML = seq.length ? `<div class="cards">${html}</div>` : `<p class="muted">${t('no_results')}</p>`;
       /* événements */
-      $$('[data-tab]', el).forEach(bt => bt.onclick = () => { tab = bt.dataset.tab; limit = 8; render(false); const act = $('#tabs .tab.on', el); if (act && act.scrollIntoView) act.scrollIntoView({ inline: 'center', block: 'nearest' }); });
-      const more = $('#moreBtn', el); if (more) more.onclick = () => { limit += 8; render(false); };
-      $$('[data-route]', el).forEach(bt => bt.onclick = () => routeTo(PLACES.find(x => x.id === bt.dataset.route)));
+      $$('[data-tab]', el).forEach(bt => bt.onclick = () => { tab = bt.dataset.tab; limit = 10; render(false); const act = $('#tabs .tab.on', el); if (act && act.scrollIntoView) act.scrollIntoView({ inline: 'center', block: 'nearest' }); });
+      const more = $('#moreBtn', el); if (more) more.onclick = () => { limit += 10; render(false); };
+      $$('[data-open]', el).forEach(bt => bt.onclick = () => openSheet(itemById(bt.dataset.open)));
       /* carte : les lieux de la ville (les bons plans n'ont pas de coordonnées) */
       if (map) {
         const pl = base.filter(i => i.kind === 'place');
@@ -538,8 +589,8 @@
       } catch (e) { map = null; mapObj = null; }
     }
     if (!map) $('#map', el).outerHTML = `<div class="card muted">${t('map_offline')}</div>`;
-    $('#citySel', el).onchange = e => { city = e.target.value; tab = ''; limit = 8; render(); };
-    $('#q', el).oninput = e => { q = e.target.value; limit = 8; tab = q.trim() ? 'all' : ''; render(); };
+    $('#citySel', el).onchange = e => { city = e.target.value; tab = ''; limit = 10; render(); };
+    $('#q', el).oninput = e => { q = e.target.value; limit = 10; tab = q.trim() ? 'all' : ''; render(); };
     $('#posBtn', el).onclick = () => (posOn ? stopFollow() : startFollow());
     const panel = $('#mapPanel', el); $('#setBtn', el).onclick = () => { panel.hidden = !panel.hidden; }; $('#setClose', el).onclick = () => { panel.hidden = true; };
     $('#mlang', el).onchange = e => { mlang = e.target.value; savePrefs(); applyLang(); };

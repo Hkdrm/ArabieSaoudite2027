@@ -392,3 +392,8 @@ Object.assign(I18N.ar, { map_settings_short: 'إعدادات الخريطة' });
 Object.assign(I18N.fr, { ex_tab_places: 'Lieux', ex_more: 'Voir plus' });
 Object.assign(I18N.en, { ex_tab_places: 'Places', ex_more: 'Show more' });
 Object.assign(I18N.ar, { ex_tab_places: 'أماكن', ex_more: 'عرض المزيد' });
+
+/* ---- Explorer : cartes 2 colonnes + fiche détaillée à onglets ---- */
+Object.assign(I18N.fr, { sh_info: 'Infos', sh_practical: 'Pratique', sh_sources: 'Vidéos et sources', sh_category: 'Catégorie', sh_official: 'Site officiel', sh_loc_unverified: 'adresse non confirmée', sh_full: 'Fiche complète' });
+Object.assign(I18N.en, { sh_info: 'Info', sh_practical: 'Practical', sh_sources: 'Videos & sources', sh_category: 'Category', sh_official: 'Official site', sh_loc_unverified: 'address not confirmed', sh_full: 'Full page' });
+Object.assign(I18N.ar, { sh_info: 'معلومات', sh_practical: 'عملي', sh_sources: 'فيديوهات ومصادر', sh_category: 'الفئة', sh_official: 'الموقع الرسمي', sh_loc_unverified: 'العنوان غير مؤكد', sh_full: 'الصفحة الكاملة' });
