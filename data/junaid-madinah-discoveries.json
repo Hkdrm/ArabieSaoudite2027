@@ -362,7 +362,8 @@
         "creator": "Junaid Hussain",
         "channel": "https://www.youtube.com/@junaidhussainmadinah",
         "videos": [
-          "https://www.youtube.com/watch?v=_-nKoB0ym0s"
+          "https://www.youtube.com/watch?v=_-nKoB0ym0s",
+          "https://www.youtube.com/watch?v=4YlxWutCPhc"
         ]
       },
       "verification": {
@@ -763,7 +764,8 @@
         "creator": "Junaid Hussain",
         "channel": "https://www.youtube.com/@junaidhussainmadinah",
         "videos": [
-          "https://www.youtube.com/watch?v=_-nKoB0ym0s"
+          "https://www.youtube.com/watch?v=_-nKoB0ym0s",
+          "https://www.youtube.com/watch?v=oi22D2aTZi8"
         ],
         "references": [
           "https://linktr.ee/madin2h_rose0",
@@ -822,7 +824,8 @@
         "channel": "https://www.youtube.com/@junaidhussainmadinah",
         "videos": [
           "https://www.youtube.com/watch?v=9anXxSSjQfo",
-          "https://www.youtube.com/watch?v=lupj2JIwBhY"
+          "https://www.youtube.com/watch?v=lupj2JIwBhY",
+          "https://www.youtube.com/watch?v=qIntmJAqtQM"
         ]
       },
       "verification": {
@@ -1713,6 +1716,9 @@
         "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
         "references": [
           "https://www.spa.gov.sa/en/N2035544"
+        ],
+        "videos": [
+          "https://www.youtube.com/watch?v=8Q5Ffgme7jA"
         ]
       },
       "verification": {
@@ -1983,7 +1989,8 @@
         "creator": "Junaid Hussain",
         "channel": "https://www.youtube.com/@junaidhussainmadinah",
         "videos": [
-          "https://www.youtube.com/watch?v=xdBC4uFf5eg"
+          "https://www.youtube.com/watch?v=xdBC4uFf5eg",
+          "https://www.youtube.com/watch?v=l5pBGzzQf1w"
         ],
         "references": [
           "https://sakina.global/en/sightsee/video/junaidhussainmadinah/viral-madinah-fries-near-masjid-an-nabawi-gate-340",
@@ -2300,6 +2307,96 @@
         "reviewed_on": "2026-11-14",
         "review_type": "web_crosscheck",
         "note": "À vérifier avant visite"
+      }
+    },
+    {
+      "verification": {
+        "source_detail": "video_title_only",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "title_only",
+        "note": "Vidéo identifiée; adresse précise non extraite"
+      },
+      "id": "madinah-breakfast-date-farm",
+      "name_fr": "Petit déjeuner traditionnel dans une palmeraie",
+      "city": "madinah",
+      "category": "food",
+      "subcategory": "date_farm_breakfast",
+      "area": "Palmeraie de Médine — exploitation non identifiée",
+      "description_fr": "Short de Junaid consacré à un petit déjeuner traditionnel dans une ferme de dattiers.",
+      "practical_notes_fr": "Adresse, réservation et possibilité de visite non connues; classement comme idée à investiguer, pas adresse validée.",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=OfYe5slIC6E"
+        ]
+      }
+    },
+    {
+      "verification": {
+        "source_detail": "video_title_only",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "title_only",
+        "note": "Vidéo identifiée; adresse précise non extraite"
+      },
+      "id": "madinah-water-not-zamzam",
+      "name_fr": "Distinguer l'eau locale de l'eau de Zamzam",
+      "city": "madinah",
+      "category": "umrah",
+      "subcategory": "practical_advice",
+      "area": "Médine / commerces et points d'eau",
+      "description_fr": "Short de Junaid avertissant que toute eau distribuée ou vendue à Médine n'est pas nécessairement de l'eau de Zamzam.",
+      "practical_notes_fr": "Conseil identifié par titre uniquement; vérifier directement les indications officielles et l'étiquetage plutôt que de supposer l'origine de l'eau.",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=3vWqjnq6N7M"
+        ]
+      }
+    },
+    {
+      "verification": {
+        "source_detail": "video_title_only",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "title_only",
+        "note": "Vidéo identifiée; adresse précise non extraite"
+      },
+      "id": "madinah-wudu-around-nabawi",
+      "name_fr": "Emplacements pour les ablutions près de Nabawi",
+      "city": "madinah",
+      "category": "services",
+      "subcategory": "ablutions",
+      "area": "Autour de Masjid Nabawi",
+      "description_fr": "Short de Junaid sur l'emplacement des espaces d'ablutions autour de la mosquée.",
+      "practical_notes_fr": "Vidéo identifiée mais liste exacte des accès non transcrite; ne pas inventer de numéro de porte.",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=jPO2w1u_9iw"
+        ]
       }
     }
   ],
