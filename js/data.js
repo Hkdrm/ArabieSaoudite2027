@@ -274,3 +274,14 @@ Object.assign(I18N.en, { my_trip: 'My trip', flights_h: 'My flights', dates_h: '
   details: 'Details', flight_info: 'Flight info', add_flight_no: 'Add flight number', done_btn: 'OK', past_lbl: 'Past', search_hint: 'No flight yet? See flights for these dates', flight_no: 'Flight no.' });
 Object.assign(I18N.ar, { my_trip: 'رحلتي', flights_h: 'رحلاتي', dates_h: 'التواريخ', save_trip: 'حفظ رحلتي', edit_trip: 'تعديل الرحلة', delete_trip: 'حذف', confirm_delete_trip: 'حذف هذه الرحلة (الرحلات والتواريخ والحجز)؟',
   details: 'التفاصيل', flight_info: 'معلومات الرحلة', add_flight_no: 'إضافة رقم الرحلة', done_btn: 'تم', past_lbl: 'انتهت', search_hint: 'لا رحلة بعد؟ شاهد الرحلات لهذه التواريخ', flight_no: 'رقم الرحلة' });
+
+/* ---- Parcours guidé : « Avez-vous déjà votre billet ? » ---- */
+Object.assign(I18N.fr, { ask_title: 'Avez-vous déjà votre billet ?', ask_sub: "Le numéro de vol se trouve sur votre billet ou dans l'e-mail de confirmation.", yes_ticket: "✅ Oui, j'ai mon billet", no_ticket: '🔍 Non, pas encore',
+  ticket_title: 'Votre billet', ticket_hint: 'Saisissez le numéro de vol (ex. SV 124). Vous pouvez laisser un champ vide.', dates_title: 'Vos dates de voyage', step_word: 'Étape', next: 'Suivant',
+  search_after: 'Une fois le vol réservé, revenez ici ajouter le numéro de vol depuis la carte.' });
+Object.assign(I18N.en, { ask_title: 'Do you already have your ticket?', ask_sub: 'The flight number is on your ticket or in the confirmation email.', yes_ticket: '✅ Yes, I have my ticket', no_ticket: '🔍 Not yet',
+  ticket_title: 'Your ticket', ticket_hint: 'Enter the flight number (e.g. SV 124). You may leave a field empty.', dates_title: 'Your travel dates', step_word: 'Step', next: 'Next',
+  search_after: 'Once booked, come back and add the flight number from the card.' });
+Object.assign(I18N.ar, { ask_title: 'هل لديك تذكرتك بالفعل؟', ask_sub: 'رقم الرحلة موجود على التذكرة أو في رسالة التأكيد.', yes_ticket: '✅ نعم، لدي تذكرتي', no_ticket: '🔍 ليس بعد',
+  ticket_title: 'تذكرتك', ticket_hint: 'أدخل رقم الرحلة (مثل SV 124). يمكنك ترك حقل فارغًا.', dates_title: 'تواريخ سفرك', step_word: 'الخطوة', next: 'التالي',
+  search_after: 'بعد الحجز، عد وأضف رقم الرحلة من البطاقة.' });

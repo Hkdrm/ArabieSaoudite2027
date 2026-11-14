@@ -26,7 +26,8 @@
     delete J.date2Rejected;
     const saved = () => !!(J.date1 && J.date2 && J.date2 > J.date1);
     if (!J.from) J.from = 'GVA';                                // départ par défaut : Genève
-    let mode = saved() ? 'card' : 'form';
+    let mode = saved() ? 'card' : 'ask';                          // ask → numbers (si billet) → dates → card
+    let has = !!(J.noOut || J.noRet) || !saved();                  // a un billet ?
     let editLeg = null;                                           // 'out' | 'ret' : panneau de détails ouvert
     const form = { noOut: J.noOut || '', noRet: J.noRet || '', ref: J.ref || '', d1: J.date1 || '', d2: J.date2 || '' };
     const base = form.d1 ? day(form.d1) : new Date();
@@ -57,33 +58,53 @@
       else { form.d1 = s; A.toast(t('err_return')); }
     };
 
-    const drawForm = () => {
-      const hint = !form.d1 ? t('cal_start') : !form.d2 ? t('cal_end') : '';
-      const chosen = form.d1 ? `<div style="margin-top:8px"><b>🛫 ${esc(fmtDate(form.d1))}</b>${form.d2 ? `<br><b>🛬 ${esc(fmtDate(form.d2))}</b> <span class="muted">(${nights(form.d1, form.d2)} ${t('nights')})</span>` : ''}</div>` : '';
-      const gf = formOk() && !form.noOut && !form.noRet
-        ? `<p style="margin:10px 0 0"><a href="https://www.google.com/travel/flights?q=${encodeURIComponent(`Flights from ${J.from || 'GVA'} to Saudi Arabia on ${form.d1} through ${form.d2}`)}" target="_blank" rel="noopener">${t('search_hint')} ↗</a></p>` : '';
-      el.innerHTML = `<h2>${t('my_trip')}</h2>
-        <div class="card"><h3>✈️ ${t('flights_h')}</h3>
-          <div class="row"><div class="grow"><label>🛫 ${t('no_out')}</label><input id="fNoOut" value="${esc(form.noOut)}" placeholder="SV 124" autocapitalize="characters" style="width:100%;text-transform:uppercase"></div>
-            <div class="grow"><label>🛬 ${t('no_ret')}</label><input id="fNoRet" value="${esc(form.noRet)}" placeholder="SV 125" autocapitalize="characters" style="width:100%;text-transform:uppercase"></div></div>
-          <div style="margin-top:8px"><label>${t('booking_ref')} <span class="muted">(${t('local_only')})</span></label><input id="fRef" value="${esc(form.ref)}" style="width:100%"></div></div>
-        <div class="card"><h3>📅 ${t('dates_h')}</h3>${calendar()}<p class="muted" style="margin:8px 0 0">${hint}</p>${chosen}${gf}</div>
-        <div class="stickybar"><button type="button" id="saveTrip" style="flex:1" ${formOk() ? '' : 'disabled'}>✓ ${t('save_trip')}</button>
+    const dots = (i, n) => n > 1 ? `<div class="steps">${[...Array(n)].map((_, k) => `<span class="${k < i ? 'on' : ''}"></span>`).join('')}</div><p class="muted" style="text-align:center;margin:0 0 8px">${t('step_word')} ${i}/${n}</p>` : '';
+
+    /* écran 0 : « Avez-vous déjà votre billet ? » */
+    const drawAsk = () => {
+      el.innerHTML = `<h2>${t('my_trip')}</h2><div class="card mini" style="text-align:center">
+        <div style="font-size:56px">🎫</div><h3 style="font-size:20px">${t('ask_title')}</h3><p class="muted">${t('ask_sub')}</p>
+        <div class="form" style="margin-top:14px"><button type="button" id="yes" style="padding:14px">${t('yes_ticket')}</button>
+          <button type="button" class="ghost" id="no" style="padding:14px">${t('no_ticket')}</button></div></div>`;
+      $('#yes', el).onclick = () => { has = true; mode = 'numbers'; draw(); };
+      $('#no', el).onclick = () => { has = false; mode = 'dates'; draw(); };
+    };
+
+    /* écran 1 : numéros de vol (si billet) */
+    const drawNumbers = () => {
+      el.innerHTML = `<h2>${t('my_trip')}</h2>${dots(1, 2)}<div class="card mini"><h3>✈️ ${t('ticket_title')}</h3><p class="muted">${t('ticket_hint')}</p>
+        <label>🛫 ${t('no_out')}</label><input id="fNoOut" value="${esc(form.noOut)}" placeholder="SV 124" autocapitalize="characters" style="width:100%;text-transform:uppercase;margin-bottom:10px">
+        <label>🛬 ${t('no_ret')}</label><input id="fNoRet" value="${esc(form.noRet)}" placeholder="SV 125" autocapitalize="characters" style="width:100%;text-transform:uppercase;margin-bottom:10px">
+        <label>${t('booking_ref')} <span class="muted">(${t('local_only')})</span></label><input id="fRef" value="${esc(form.ref)}" style="width:100%"></div>
+        <div class="stickybar"><button type="button" class="ghost" id="back">${t('back')}</button><button type="button" id="next" style="flex:1">${t('next')} →</button>
           ${saved() ? `<button type="button" class="ghost" id="cancelTrip">${t('cancel')}</button>` : ''}</div>`;
-      $$('.cal-day', el).forEach(b => b.onclick = () => { pick(b.dataset.d); const d = day(b.dataset.d); view.y = d.getFullYear(); view.m = d.getMonth(); draw(); });
-      $('#calPrev', el).onclick = () => { view.m--; if (view.m < 0) { view.m = 11; view.y--; } draw(); };
-      $('#calNext', el).onclick = () => { view.m++; if (view.m > 11) { view.m = 0; view.y++; } draw(); };
       $('#fNoOut', el).oninput = e => { form.noOut = e.target.value.toUpperCase(); };
       $('#fNoRet', el).oninput = e => { form.noRet = e.target.value.toUpperCase(); };
       $('#fRef', el).oninput = e => { form.ref = e.target.value; };
+      $('#back', el).onclick = () => { mode = 'ask'; draw(); };
+      $('#next', el).onclick = () => { mode = 'dates'; draw(); };
+      const cn = $('#cancelTrip', el); if (cn) cn.onclick = () => { mode = 'card'; draw(); };
+    };
+
+    /* écran 2 : dates (calendrier) + enregistrer */
+    const drawDates = () => {
+      const hint = !form.d1 ? t('cal_start') : !form.d2 ? t('cal_end') : '';
+      const chosen = form.d1 ? `<div style="margin-top:8px"><b>🛫 ${esc(fmtDate(form.d1))}</b>${form.d2 ? `<br><b>🛬 ${esc(fmtDate(form.d2))}</b> <span class="muted">(${nights(form.d1, form.d2)} ${t('nights')})</span>` : ''}</div>` : '';
+      const find = formOk() && !has
+        ? `<div style="margin-top:12px"><a class="btn" href="https://www.google.com/travel/flights?q=${encodeURIComponent(`Flights from ${J.from || 'GVA'} to Saudi Arabia on ${form.d1} through ${form.d2}`)}" target="_blank" rel="noopener">🔍 ${t('search_hint')} ↗</a>
+           <p class="muted" style="margin:6px 0 0">${t('search_after')}</p></div>` : '';
+      el.innerHTML = `<h2>${t('my_trip')}</h2>${has ? dots(2, 2) : ''}<div class="card mini"><h3>📅 ${t('dates_title')}</h3>${calendar()}<p class="muted" style="margin:8px 0 0">${hint}</p>${chosen}${find}</div>
+        <div class="stickybar"><button type="button" class="ghost" id="back">${t('back')}</button><button type="button" id="saveTrip" style="flex:1" ${formOk() ? '' : 'disabled'}>✓ ${t('save_trip')}</button></div>`;
+      $$('.cal-day', el).forEach(b => b.onclick = () => { pick(b.dataset.d); const d = day(b.dataset.d); view.y = d.getFullYear(); view.m = d.getMonth(); draw(); });
+      $('#calPrev', el).onclick = () => { view.m--; if (view.m < 0) { view.m = 11; view.y--; } draw(); };
+      $('#calNext', el).onclick = () => { view.m++; if (view.m > 11) { view.m = 0; view.y++; } draw(); };
+      $('#back', el).onclick = () => { mode = has ? 'numbers' : 'ask'; draw(); };
       $('#saveTrip', el).onclick = () => {
         if (!formOk()) return;
         Object.assign(J, { date1: form.d1, date2: form.d2, noOut: form.noOut.trim(), noRet: form.noRet.trim(), ref: form.ref.trim() });
         save('journey'); S.trip = { start: '', end: '' }; save('trip');
         mode = 'card'; A.toast(t('dates_ok')); draw(); scrollTo(0, 0);
       };
-      const cn = $('#cancelTrip', el);
-      if (cn) cn.onclick = () => { mode = 'card'; draw(); };
     };
 
     /* ---------- écran 2 : cartes de vol ---------- */
@@ -137,18 +158,18 @@
       $('#editTrip', el).onclick = () => {
         Object.assign(form, { noOut: J.noOut || '', noRet: J.noRet || '', ref: J.ref || '', d1: J.date1 || '', d2: J.date2 || '' });
         const b = form.d1 ? day(form.d1) : new Date(); view.y = b.getFullYear(); view.m = b.getMonth();
-        mode = 'form'; editLeg = null; draw();
+        mode = 'numbers'; has = true; editLeg = null; draw();
       };
       $('#delTrip', el).onclick = () => {
         if (!confirm(t('confirm_delete_trip'))) return;
         for (const k of Object.keys(J)) delete J[k];
         J.from = 'GVA'; S.trip = { start: '', end: '' }; save('trip'); save('journey');
         Object.assign(form, { noOut: '', noRet: '', ref: '', d1: '', d2: '' });
-        mode = 'form'; editLeg = null; draw();
+        mode = 'ask'; has = true; editLeg = null; draw();
       };
     };
 
-    const draw = () => (mode === 'card' && saved() ? drawCard() : drawForm());
+    const draw = () => (mode === 'card' && saved() ? drawCard() : mode === 'numbers' ? drawNumbers() : mode === 'dates' ? drawDates() : drawAsk());
     draw();
   };
 })();
