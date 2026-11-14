@@ -38,7 +38,7 @@
     root.innerHTML = `<div class="card holy"><h3>🗺️ ${t('holy_title')}</h3><p class="muted" style="margin:0 0 8px;font-size:13px">${t('holy_sub')}</p>
       <div class="tabs" id="hSites" role="tablist"></div><div class="chips" id="hLayers"></div>
       <div id="hMapWrap" style="position:relative"><div id="hMap" style="height:340px;border-radius:14px;overflow:hidden;border:1px solid var(--bd)"></div>
-        <div class="mapbtns"><button type="button" class="chip mapbtn" id="hBase"></button></div></div>
+        <div class="mapbtns"><button type="button" class="chip mapbtn" id="hBase"></button><button type="button" class="chip mapbtn" id="hFull" aria-label="${t('holy_full')}">⛶ ${t('holy_full')}</button></div></div>
       <div id="hList" style="margin-top:10px"></div>
       <p class="muted" style="font-size:11px;margin:8px 0 0">${t('holy_note')}</p></div>`;
 
@@ -114,6 +114,11 @@
       $$('[data-layer]', root).forEach(b => b.onclick = () => { const c = b.dataset.layer; layers.has(c) ? layers.delete(c) : layers.add(c); limit = 12; refresh(false); });
       $$('[data-f]', root).forEach(b => b.onclick = () => openFeature(b.dataset.f));
       const mo = $('#hMore', root); if (mo) mo.onclick = () => { limit += 12; ui(); };
+      $('#hFull', root).onclick = () => {
+        const w = $('#hMapWrap', root), on = !w.classList.contains('hfull'); w.classList.toggle('hfull', on);
+        document.body.style.overflow = on ? 'hidden' : ''; $('#hFull', root).textContent = on ? '✕ ' + t('holy_close') : '⛶ ' + t('holy_full');
+        setTimeout(() => map && map.resize(), 50); setTimeout(() => map && map.resize(), 350);
+      };
       $('#hBase', root).onclick = () => { base = base === 'sat' ? 'plan' : 'sat'; $('#hBase', root).textContent = base === 'sat' ? '🗺️ ' + t('holy_plan') : '🛰️ ' + t('holy_sat'); applyBase(); };
     };
     const refresh = (cam = true) => { ui(); renderMarkers(); overlays(); if (cam) camera(); };

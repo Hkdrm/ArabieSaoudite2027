@@ -419,3 +419,7 @@ Object.assign(I18N.en, { off_title: 'Official sources', off_note: "The official 
 Object.assign(I18N.ar, { off_title: 'المصادر الرسمية', off_note: 'قُرئ دليل العمرة الرسمي من نسك للتحقق من خطوات هذا التبويب. رفضت الصفحات الأخرى القراءة الآلية: راجعها بنفسك أو في تطبيق نسك لأن التصاريح والشروط تتغير.',
   off_guide: 'دليل العمرة الرسمي (نسك)', off_nusuk: 'نسك، المنصة الرسمية للحج والعمرة', off_permit: 'تصريح العمرة (خدمة حكومية)', off_rawdah: 'تصريح زيارة الروضة (خدمة رسمية)', off_v_haram: 'زوروا السعودية: المسجد الحرام', off_v_nabawi: 'زوروا السعودية: المسجد النبوي',
   holy_note: 'المواقع: © المساهمون في OpenStreetMap؛ قد تتغير مع أعمال التوسعة. ترقيم الأبواب مأخوذ من OpenStreetMap ولم يمكن تأكيده بقائمة رسمية. تذكيرات عملية فقط: لأي حكم شرعي راجع أهل العلم.' });
+
+Object.assign(I18N.fr, { holy_full: 'Plein écran', holy_close: 'Fermer' });
+Object.assign(I18N.en, { holy_full: 'Full screen', holy_close: 'Close' });
+Object.assign(I18N.ar, { holy_full: 'ملء الشاشة', holy_close: 'إغلاق' });
