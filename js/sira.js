@@ -41,7 +41,7 @@
     };
 
     /* ---------- carte ---------- */
-    const mkEl = (c, i) => { const e = document.createElement('div'); e.className = 'sm' + (done()[c.id] ? ' done' : '') + (c.approx ? ' approx' : ''); e.style.setProperty('--ec', D.eras[c.era].c); e.textContent = done()[c.id] ? '✓' : String(chapters.indexOf(c) + 1); e.title = L(c.n); e.onclick = ev => { ev.stopPropagation(); select(c.id, true); }; return e; };
+    const mkEl = (c, i) => { const e = document.createElement('div'); e.className = 'sm' + (done()[c.id] ? ' done' : '') + (c.approx ? ' approx' : ''); e.style.setProperty('--ec', D.eras[c.era].c); e.textContent = done()[c.id] ? '✓' : String(chapters.indexOf(c) + 1); e.title = L(c.n); e.onclick = ev => { ev.stopPropagation(); select(c.id, true, true); }; return e; };
     const draw = () => {
       if (!map) return;
       Object.values(markers).forEach(m => m.remove()); markers = {};
@@ -118,7 +118,17 @@
       }
       renderList();
     };
-    const select = (id, fly) => {
+    let pop = null;
+    const showPop = c => {
+      if (!map) return; if (pop) pop.remove();
+      const n = chapters.indexOf(c) + 1, box = document.createElement('div');
+      box.innerHTML = `<div style="display:flex;gap:8px;align-items:center"><span class="snum" style="--ec:${D.eras[c.era].c}">${n}</span><b>${esc(L(c.n))}</b></div>
+        <div class="muted" style="margin:4px 0">${esc(L(D.eras[c.era]))} · ${esc(L(c.year))}</div><div>${esc(L(c.sum))}</div>${c.approx ? `<div class="muted">⚠️ ${t('holy_approx')}</div>` : ''}
+        <button type="button" class="btn" style="margin-top:8px;padding:6px 12px">${t('sira_read')}</button>`;
+      $('button', box).onclick = () => { open = c.id; ui(); pop && pop.remove(); const x = $('#sc-' + c.id, el); x && x.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+      pop = new ML.Popup({ offset: 18, maxWidth: '270px', closeButton: true }).setLngLat([c.lng, c.lat]).setDOMContent(box).addTo(map);
+    };
+    const select = (id, fly, fromMap) => {
       open = id; if (!id) { renderList(); return; }
       const c = chapters.find(x => x.id === id); if (era !== 'all' && c.era !== era) { era = 'all'; draw(); }
       ui();
@@ -126,8 +136,9 @@
         map.flyTo({ center: [c.lng, c.lat], zoom: c.hijra && c.id === 'route' ? 7 : (c.id === 'badr' || c.id === 'khaybar' || c.id === 'hegra' || c.id === 'tabuk' || c.id === 'taif' ? 9 : 13.5), duration: 1400 });
         Object.values(markers).forEach(m => m.getElement().classList.remove('hl')); if (markers[id]) markers[id].getElement().classList.add('hl');
         if (c.hijra) animateHijra();
+        showPop(c);
       }
-      const n = $('#sc-' + id, el); if (n && fly && story == null) setTimeout(() => n.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 80);
+      const n = $('#sc-' + id, el); if (n && fly && story == null && !fromMap) setTimeout(() => n.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 80);
     };
 
     /* ---------- mode récit : une étape après l'autre ---------- */
