@@ -388,3 +388,7 @@ Object.assign(I18N.ar, { map_settings: 'إعدادات الخريطة (اللغ�
 Object.assign(I18N.fr, { map_settings_short: 'Réglages de la carte' });
 Object.assign(I18N.en, { map_settings_short: 'Map settings' });
 Object.assign(I18N.ar, { map_settings_short: 'إعدادات الخريطة' });
+
+Object.assign(I18N.fr, { ex_tab_places: 'Lieux', ex_more: 'Voir plus' });
+Object.assign(I18N.en, { ex_tab_places: 'Places', ex_more: 'Show more' });
+Object.assign(I18N.ar, { ex_tab_places: 'أماكن', ex_more: 'عرض المزيد' });

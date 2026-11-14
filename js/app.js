@@ -7,7 +7,7 @@
     set(k, v) { try { localStorage.setItem('omra:' + k, JSON.stringify(v)); } catch {} },
   };
 
-  const APP_VERSION = '2026-11-14.35';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
+  const APP_VERSION = '2026-11-14.36';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
 
   /* ---------- état ---------- */
   const detect = () => { const l = (navigator.language || 'fr').slice(0, 2); return LANGS[l] ? l : 'fr'; };
@@ -304,7 +304,7 @@
 
   /* ---------- Explorer : lieux + bons plans réunis, filtrés par ville / type / catégorie ; carte, GPS activable ---------- */
   views.explore = (el, arg) => {
-    let city = 'all', type = 'all', cat = 'all', q = '', posOn = false, far = false, firstFix = true, lastR = null, ready = false;
+    let city = 'all', tab = '', limit = 8, q = '', posOn = false, far = false, firstFix = true, lastR = null, ready = false;
     const queue = [], whenReady = f => (ready ? f() : queue.push(f));
     let markers = [], meMarker = null, destMarker = null;
     const prefs = store.get('mappref', {});
@@ -313,14 +313,15 @@
     const CITY_ORDER = Object.keys(CITIES).filter(c => PLACES.some(p => p.city === c));
     el.innerHTML = `<h2>${t('explore_title')}</h2>
       <input id="q" class="grow" type="search" placeholder="${esc(t('search'))}" style="width:100%;margin-bottom:8px">
-      <div class="chips" id="cityChips"></div><div class="chips" id="typeChips"></div><div class="chips" id="catChips"></div>
+      <div class="chips" id="cityChips"></div>
       <div id="mapWrap"><div id="map"></div>
         <div class="mapbtns"><button type="button" class="chip mapbtn" id="posBtn"></button><button type="button" class="chip mapbtn" id="setBtn" aria-label="${esc(t('map_settings'))}" title="${esc(t('map_settings'))}">⚙️</button></div>
         <div class="mappanel" id="mapPanel" hidden><div class="row" style="justify-content:space-between;flex-wrap:nowrap;margin-bottom:8px"><b>⚙️ ${t('map_settings_short')}</b><button type="button" class="danger" id="setClose" aria-label="OK">✕</button></div>
           <label>🌐 ${t('map_lang_label')}</label><select id="mlang" style="width:100%;margin-bottom:8px">${[['fr', 'Français'], ['en', 'English'], ['ar', 'العربية'], ['local', t('ml_local')]].map(([k, v]) => `<option value="${k}" ${mlang === k ? 'selected' : ''}>${esc(v)}</option>`).join('')}</select>
           <label>🗺️ ${t('map_style_label')}</label><select id="mbase" style="width:100%"><option value="plan" ${mbase === 'plan' ? 'selected' : ''}>${t('base_plan')}</option><option value="sat" ${mbase === 'sat' ? 'selected' : ''}>${t('base_sat')}</option></select></div></div>
-      <p class="muted" id="posInfo" style="font-size:12px;margin:4px 0 6px"></p>
-      <div id="routeBar"></div><p class="muted" id="count" aria-live="polite" style="margin:8px 0 4px"></p><div id="list"></div>`;
+      <p class="muted" id="posInfo" style="font-size:12px;margin:4px 0 0"></p>
+      <div class="tabs" id="tabs" role="tablist"></div>
+      <div id="routeBar"></div><div id="list"></div>`;
     const ML = window.maplibregl;
     let map = null;
 
@@ -369,7 +370,7 @@
       ((DISC && DISC.records) || []).forEach(r => {
         const ex = byId.get(r.id);
         if (ex) ex.disc = r;                                                   // même lieu dans les deux catalogues : une seule fiche
-        else items.push({ kind: 'find', id: 'd-' + r.id, r, city: r.city, cat: r.category === 'history' ? 'sira' : r.category === 'nature' ? 'nature' : 'f:' + r.category, name: r.name_fr, text: r.description_fr || '', area: r.area || '' });   // « Histoire » et « Nature » = mêmes catégories que les lieux
+        else items.push({ kind: 'find', id: 'd-' + r.id, r, city: r.city, cat: 'f:' + r.category, name: r.name_fr, text: r.description_fr || '', area: r.area || '' });
       });
       return items;
     };
@@ -377,7 +378,6 @@
     const catLabel = c => c.startsWith('f:') ? ((DISC && DISC.categories && DISC.categories[c.slice(2)]) || c.slice(2)) : t('c_' + c);
     const hay = i => norm([i.name, i.ar || '', i.text, i.area || '', cityName(i.city), i.kind === 'find' ? (i.r.practical_notes_fr || '') : '', catLabel(i.cat)].join(' '));
     const matchQ = i => !q || hay(i).includes(norm(q));
-    const matchType = i => type === 'all' || (type === 'places' ? i.kind === 'place' : i.kind === 'find');
     const NEAR_KM = 300;                                                       // au-delà, les distances n'ont pas de sens (on n'est pas sur place)
 
     const gSearch = i => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([i.name, i.area, cityName(i.city)].filter(Boolean).join(' '))}`;
@@ -402,51 +402,50 @@
     };
 
     const render = (fit = true) => {
-      /* chips Ville (compteurs selon type + recherche) */
-      const byCity = {}; items.filter(i => matchType(i) && matchQ(i)).forEach(i => { byCity[i.city] = (byCity[i.city] || 0) + 1; });
-      const totalCity = Object.values(byCity).reduce((a, b) => a + b, 0);
+      /* chips Ville (compteurs selon la recherche) */
+      const byCity = {}; items.filter(matchQ).forEach(i => { byCity[i.city] = (byCity[i.city] || 0) + 1; });
+      const totalCity = Object.values(byCity).reduce((x, y) => x + y, 0);
       $('#cityChips', el).innerHTML = `<button type="button" class="chip ${city === 'all' ? 'on' : ''}" data-city="all">🌍 ${t('ex_all_cities')} · ${totalCity}</button>` +
         CITY_ORDER.filter(c => byCity[c] || c === city).map(c => `<button type="button" class="chip ${city === c ? 'on' : ''}" data-city="${c}">${esc(cityName(c))} · ${byCity[c] || 0}</button>`).join('');
-      /* chips Type (compteurs selon ville + recherche) */
-      const cn = { all: 0, places: 0, finds: 0 };
-      items.filter(i => (city === 'all' || i.city === city) && matchQ(i)).forEach(i => { cn.all++; cn[i.kind === 'place' ? 'places' : 'finds']++; });
-      $('#typeChips', el).innerHTML = [['all', t('ex_type_all')], ['places', '📍 ' + t('ex_type_places')], ['finds', '🛍️ ' + t('ex_type_finds')]].map(([k, l]) => `<button type="button" class="chip ${type === k ? 'on' : ''}" data-type="${k}">${esc(l)} · ${cn[k]}</button>`).join('');
-      /* chips Catégorie (celles présentes dans la sélection) */
-      const base = items.filter(i => (city === 'all' || i.city === city) && matchType(i) && matchQ(i));
-      const byCat = {}; base.forEach(i => { byCat[i.cat] = (byCat[i.cat] || 0) + 1; });
-      if (cat !== 'all' && !byCat[cat]) cat = 'all';
-      $('#catChips', el).innerHTML = Object.keys(byCat).length > 1 ? `<button type="button" class="chip ${cat === 'all' ? 'on' : ''}" data-cat="all">${t('all')} · ${base.length}</button>` +
-        Object.entries(byCat).sort((a, b) => b[1] - a[1]).map(([c, n]) => `<button type="button" class="chip ${cat === c ? 'on' : ''}" data-cat="${esc(c)}">${esc(catLabel(c))} · ${n}</button>`).join('') : '';
-      /* résultats */
-      const res = base.filter(i => cat === 'all' || i.cat === cat);
-      const places = res.filter(i => i.kind === 'place'), finds = res.filter(i => i.kind === 'find');
-      if (posOn && !far && S.here) places.sort((a, b) => km(S.here, a.p) - km(S.here, b.p)); else places.sort((a, b) => a.name.localeCompare(b.name));
-      let html = '';
-      if (places.length) html += `<div class="card"><h3>📍 ${t('ex_type_places')} · ${places.length}</h3>${places.map(placeCard).join('')}</div>`;
-      if (finds.length) {
-        const groups = {}; finds.forEach(i => (groups[i.cat] = groups[i.cat] || []).push(i));
-        html += `<div class="card"><h3>🛍️ ${t('ex_type_finds')} · ${finds.length}</h3>` +
-          Object.entries(groups).sort((a, b) => b[1].length - a[1].length).map(([c, arr]) => `${cat === 'all' && Object.keys(groups).length > 1 ? `<h4 class="subh">${esc(catLabel(c))} · ${arr.length}</h4>` : ''}${arr.sort((a, b) => a.name.localeCompare(b.name)).map(findCard).join('')}`).join('') + '</div>';
-      }
-      if (!res.length) html = `<div class="card"><p class="muted">${t('no_results')}</p></div>`;
-      $('#list', el).innerHTML = html;
-      $('#count', el).textContent = `${res.length} ${t('ex_results')}${city !== 'all' ? ' · ' + cityName(city) : ''}`;
+      /* onglets sous la carte : « Lieux » puis une catégorie de bons plans par onglet */
+      const base = items.filter(i => (city === 'all' || i.city === city) && matchQ(i));
+      const byTab = {}; base.forEach(i => { const k = i.kind === 'place' ? 'places' : i.cat; (byTab[k] = byTab[k] || []).push(i); });
+      const keys = Object.keys(byTab).sort((x, y) => (x === 'places' ? -1 : y === 'places' ? 1 : byTab[y].length - byTab[x].length));
+      if ((tab !== 'all' && !byTab[tab]) || (tab === 'all' && keys.length <= 1)) tab = keys[0] || 'all';      // pas d'onglet « Tout » s'il n'y a qu'une catégorie
+      const tabLabel = k => (k === 'places' ? '📍 ' + t('ex_tab_places') : k === 'all' ? t('ex_type_all') : catLabel(k));
+      $('#tabs', el).innerHTML = keys.length ? [...keys, ...(keys.length > 1 ? ['all'] : [])].map(k => `<button type="button" class="tab ${tab === k ? 'on' : ''}" role="tab" aria-selected="${tab === k}" data-tab="${esc(k)}">${esc(tabLabel(k))} <span class="tn">${k === 'all' ? base.length : byTab[k].length}</span></button>`).join('') : '';
+      /* contenu de l'onglet actif */
+      const cur = tab === 'all' ? base : (byTab[tab] || []);
+      const places = cur.filter(i => i.kind === 'place'), finds = cur.filter(i => i.kind === 'find');
+      if (posOn && !far && S.here) places.sort((x, y) => km(S.here, x.p) - km(S.here, y.p)); else places.sort((x, y) => x.name.localeCompare(y.name));
+      finds.sort((x, y) => x.cat.localeCompare(y.cat) || x.name.localeCompare(y.name));
+      const seq = [...places, ...finds], shown = seq.slice(0, limit);
+      let html = '', lastCat = null;
+      shown.forEach(i => {
+        const hd = tab === 'all' ? (i.kind === 'place' ? 'places' : i.cat) : null;
+        if (hd && hd !== lastCat) { html += `<h4 class="subh">${esc(tabLabel(hd))} · ${byTab[hd].length}</h4>`; lastCat = hd; }
+        html += i.kind === 'place' ? placeCard(i) : findCard(i);
+      });
+      if (seq.length > shown.length) html += `<button type="button" class="ghost" id="moreBtn" style="width:100%;margin-top:10px">${t('ex_more')} (${seq.length - shown.length})</button>`;
+      if (!seq.length) html = `<p class="muted">${t('no_results')}</p>`;
+      $('#list', el).innerHTML = html ? `<div class="card" style="padding:6px 14px">${html}</div>` : '';
       /* événements */
-      $$('[data-city]', el).forEach(b => b.onclick = () => { city = b.dataset.city; cat = 'all'; render(); });
-      $$('[data-type]', el).forEach(b => b.onclick = () => { type = b.dataset.type; cat = 'all'; render(); });
-      $$('[data-cat]', el).forEach(b => b.onclick = () => { cat = b.dataset.cat; render(); });
-      $$('[data-route]', el).forEach(b => b.onclick = () => routeTo(PLACES.find(x => x.id === b.dataset.route)));
-      /* carte : uniquement les lieux (les bons plans n'ont pas de coordonnées) */
+      $$('[data-city]', el).forEach(bt => bt.onclick = () => { city = bt.dataset.city; tab = ''; limit = 8; render(); });
+      $$('[data-tab]', el).forEach(bt => bt.onclick = () => { tab = bt.dataset.tab; limit = 8; render(false); const act = $('#tabs .tab.on', el); if (act && act.scrollIntoView) act.scrollIntoView({ inline: 'center', block: 'nearest' }); });
+      const more = $('#moreBtn', el); if (more) more.onclick = () => { limit += 8; render(false); };
+      $$('[data-route]', el).forEach(bt => bt.onclick = () => routeTo(PLACES.find(x => x.id === bt.dataset.route)));
+      /* carte : les lieux de la ville (les bons plans n'ont pas de coordonnées) */
       if (map) {
+        const pl = base.filter(i => i.kind === 'place');
         markers.forEach(m => m.remove()); markers = [];
-        places.forEach(i => {
+        pl.forEach(i => {
           const p = i.p, e = document.createElement('div'); e.className = 'mk'; e.style.background = catColor[p.c];
           const pop = new ML.Popup({ offset: 12, maxWidth: '260px' }).setHTML(`<b>${esc(i.name)}</b><br><span dir="rtl">${esc(i.ar)}</span><br><a href="#/place/${p.id}">${t('nav_explore')} →</a> · <a href="#/explore/to-${p.id}">🧭 ${t('route_btn')}</a><br><a href="${gmaps(p)}" target="_blank" rel="noopener">Google Maps ↗</a> · <a href="${appleMaps(p)}" target="_blank" rel="noopener">Plans ↗</a>`);
           markers.push(new ML.Marker({ element: e }).setLngLat([p.lng, p.lat]).setPopup(pop).addTo(map));
         });
         if (fit) {
-          if (places.length) fitTo(places.map(i => [i.p.lng, i.p.lat]));
-          else if (city !== 'all' && CITIES[city]) map.flyTo({ center: [CITIES[city].lng, CITIES[city].lat], zoom: 11 });      // ville sans lieu géolocalisé : on la montre quand même
+          if (pl.length) fitTo(pl.map(i => [i.p.lng, i.p.lat]));
+          else if (city !== 'all' && CITIES[city]) map.flyTo({ center: [CITIES[city].lng, CITIES[city].lat], zoom: 11 });
         }
       }
       posUi();
@@ -457,7 +456,7 @@
       const b = $('#posBtn', el), info = $('#posInfo', el); if (!b) return;
       b.classList.toggle('on', posOn);
       b.textContent = `📍 ${posOn ? t('pos_on') : t('pos_off')}`;
-      info.textContent = !posOn ? t('pos_hint_off') : far && S.here ? t('pos_far').replace('{km}', nf(Math.round(Math.min(...PLACES.map(p => km(S.here, p)))))) : S.here ? t('pos_active') : t('locating');
+      info.textContent = !posOn ? '' : far && S.here ? t('pos_far').replace('{km}', nf(Math.round(Math.min(...PLACES.map(p => km(S.here, p)))))) : S.here ? t('pos_active') : t('locating');
     };
     const stopFollow = () => {
       if (geoWatch != null && navigator.geolocation) { navigator.geolocation.clearWatch(geoWatch); geoWatch = null; }
@@ -541,7 +540,7 @@
       } catch (e) { map = null; mapObj = null; }
     }
     if (!map) $('#map', el).outerHTML = `<div class="card muted">${t('map_offline')}</div>`;
-    $('#q', el).oninput = e => { q = e.target.value; render(); };
+    $('#q', el).oninput = e => { q = e.target.value; limit = 8; tab = q.trim() ? 'all' : ''; render(); };
     $('#posBtn', el).onclick = () => (posOn ? stopFollow() : startFollow());
     const panel = $('#mapPanel', el); $('#setBtn', el).onclick = () => { panel.hidden = !panel.hidden; }; $('#setClose', el).onclick = () => { panel.hidden = true; };
     $('#mlang', el).onchange = e => { mlang = e.target.value; savePrefs(); applyLang(); };
