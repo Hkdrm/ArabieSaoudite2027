@@ -7,7 +7,7 @@
     set(k, v) { try { localStorage.setItem('omra:' + k, JSON.stringify(v)); } catch {} },
   };
 
-  const APP_VERSION = '2026-11-14.5';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
+  const APP_VERSION = '2026-11-14.7';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
 
   /* ---------- état ---------- */
   const detect = () => { const l = (navigator.language || 'fr').slice(0, 2); return LANGS[l] ? l : 'fr'; };
@@ -27,7 +27,12 @@
     cur: store.get('cur', 'EUR'),
     fav: store.get('fav', []), visited: store.get('visited', {}), notes: store.get('notes', {}), vids: store.get('vids', {}), here: store.get('here', null), flights: store.get('flights', {}),
   };
-  const save = (k) => store.set(k, S[k]);
+  const hooks = { onSave: () => {} };
+  const SYNC_KEYS = ['lang', 'city', 'method', 'trip', 'plan', 'checks', 'custom', 'cnt', 'exp', 'budget', 'rate', 'cur', 'fav', 'visited', 'notes', 'vids', 'flights'];
+  const save = (k) => {
+    store.set(k, S[k]);
+    if (k !== 'geo' && k !== 'here') { store.set('ts', Date.now()); hooks.onSave(k); }
+  };
   const t = k => (I18N[S.lang] && I18N[S.lang][k]) ?? I18N.fr[k] ?? k;
   const L = o => (o && (o[S.lang] || o.fr || o.en)) || '';
   const nf = n => new Intl.NumberFormat(S.lang === 'ar' ? 'ar-SA-u-nu-latn' : S.lang, { maximumFractionDigits: 2 }).format(n);
@@ -378,8 +383,10 @@
           ${S.budget ? `<progress max="${S.budget}" value="${Math.min(spent, S.budget)}"></progress>` : ''}
           ${S.exp.length ? S.exp.map(e => `<div class="item"><span class="tx">${esc(e.label)}</span><b>${nf(e.amount)} ${e.cur}</b><button class="danger" data-edel="${e.id}">✕</button></div>`).join('') : `<p class="muted">${t('no_exp')}</p>`}
           <form class="row" id="ef" style="margin-top:10px"><input class="grow" name="l" placeholder="${t('label')}" required><input name="a" type="number" step="0.01" placeholder="${t('amount')}" style="width:100px" required><select name="c"><option>SAR</option><option ${S.cur !== 'SAR' ? 'selected' : ''}>${S.cur !== 'SAR' ? S.cur : 'EUR'}</option></select><button>${t('add')}</button></form></div>
+        <div id="syncBox"></div>
         <div class="card"><h3>💾 ${t('backup')}</h3><div class="row"><button class="ghost" id="exp">${t('export')}</button><button class="ghost" id="imp">${t('import')}</button><input type="file" id="file" accept="application/json" hidden></div>
           <p class="muted" style="margin-top:10px">v${APP_VERSION}</p></div>`;
+      if (window.Omra && window.Omra.syncCard) window.Omra.syncCard($('#syncBox', el));
       $$('[data-ck]', el).forEach(c => c.onchange = () => { S.checks[c.dataset.ck] = c.checked; save('checks'); const y = scrollY; draw(); scrollTo(0, y); });
       $$('[data-cdel]', el).forEach(b => b.onclick = () => { S.custom = S.custom.filter(x => x.id !== b.dataset.cdel); save('custom'); draw(); });
       $('#cf', el).onsubmit = e => { e.preventDefault(); S.custom.push({ id: 'c' + Date.now(), label: new FormData(e.target).get('l').trim() }); save('custom'); draw(); };
@@ -403,7 +410,8 @@
   };
 
   /* ---------- démarrage ---------- */
-  window.Omra = { $, $$, esc, S, save, t, views };
+  window.Omra = { $, $$, esc, S, save, t, views, store, toast, hooks, SYNC_KEYS, refresh: () => { applyLang(); route(); }, syncCard: null };
+  if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
   applyLang(); document.addEventListener('DOMContentLoaded', route);
   /* Mises à jour automatiques : vérification à l'ouverture et au retour au premier plan,
      rechargement dès qu'une nouvelle version du service worker prend le relais. */

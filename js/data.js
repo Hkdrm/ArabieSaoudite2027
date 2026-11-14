@@ -204,3 +204,29 @@ Object.assign(I18N.ar, {
 Object.assign(I18N.fr, { nav_trip: 'Vols', trip_title: 'Départ / Retour', outbound: 'Aller', inbound: 'Retour', add_leg: 'Ajouter un vol (escale)', airline: 'Compagnie', flight_no: 'N° de vol', from: 'De (IATA)', to: 'Vers (IATA)', f_date: 'Date', dep_time: 'Départ', arr_time: 'Arrivée', terminal: 'Terminal', booking_ref: 'Référence de réservation', local_only: 'Stocké uniquement sur cet appareil.', track: 'Suivre le vol', no_flight: 'Aucun vol renseigné.', remove: 'Supprimer', next_flight: 'Prochain vol', leg: 'Vol', f_notes: 'Notes (bagages, siège, transfert…)' });
 Object.assign(I18N.en, { nav_trip: 'Flights', trip_title: 'Outbound / Return', outbound: 'Outbound', inbound: 'Return', add_leg: 'Add a flight (connection)', airline: 'Airline', flight_no: 'Flight no.', from: 'From (IATA)', to: 'To (IATA)', f_date: 'Date', dep_time: 'Departure', arr_time: 'Arrival', terminal: 'Terminal', booking_ref: 'Booking reference', local_only: 'Stored on this device only.', track: 'Track flight', no_flight: 'No flight entered.', remove: 'Remove', next_flight: 'Next flight', leg: 'Flight', f_notes: 'Notes (baggage, seat, transfer…)' });
 Object.assign(I18N.ar, { nav_trip: 'الرحلات', trip_title: 'الذهاب / العودة', outbound: 'الذهاب', inbound: 'العودة', add_leg: 'إضافة رحلة (توقف)', airline: 'شركة الطيران', flight_no: 'رقم الرحلة', from: 'من (IATA)', to: 'إلى (IATA)', f_date: 'التاريخ', dep_time: 'الإقلاع', arr_time: 'الوصول', terminal: 'الصالة', booking_ref: 'رقم الحجز', local_only: 'محفوظ على هذا الجهاز فقط.', track: 'تتبع الرحلة', no_flight: 'لم تُدخل رحلة.', remove: 'حذف', next_flight: 'الرحلة القادمة', leg: 'رحلة', f_notes: 'ملاحظات (الأمتعة، المقعد، النقل…)' });
+
+/* ---- Sauvegarde automatique (GitHub Gist) ---- */
+Object.assign(I18N.fr, {
+  sync_title: 'Sauvegarde automatique', sync_off_msg: 'Non activée : vos données restent sur ce téléphone seulement.',
+  sync_steps: '1. Ouvrez le lien ci-dessous (connecté à GitHub).<br>2. Laissez uniquement « gist » coché, expiration « No expiration », puis « Generate token ».<br>3. Copiez le jeton (ghp_…) et collez-le ici.<br>Gardez-le dans un gestionnaire de mots de passe : il sert à restaurer vos données après une réinstallation.',
+  sync_link: 'Créer le jeton sur GitHub', token_ph: 'Collez le jeton ghp_…', sync_enable: 'Activer', sync_on: 'Sauvegarde automatique activée', last_sync: 'Dernière sauvegarde',
+  sync_now: 'Sauvegarder maintenant', restore: 'Restaurer', sync_disable: 'Désactiver', sync_err: 'Échec de la synchronisation (réessai automatique).', token_bad: 'Jeton refusé par GitHub.',
+  restore_confirm: 'Une sauvegarde plus récente existe. La restaurer remplacera les données de cet appareil. Restaurer ?', restored: 'Données restaurées', saved: 'Sauvegardé ✓',
+  sync_excl: 'Non envoyés : références de réservation et position. Les autres données vont dans un gist privé (lien non public) de votre compte.', sync_none: 'Aucune sauvegarde trouvée.',
+});
+Object.assign(I18N.en, {
+  sync_title: 'Automatic backup', sync_off_msg: 'Not enabled: your data stays on this phone only.',
+  sync_steps: '1. Open the link below (signed in to GitHub).<br>2. Keep only “gist” ticked, expiration “No expiration”, then “Generate token”.<br>3. Copy the token (ghp_…) and paste it here.<br>Keep it in a password manager: it restores your data after a reinstall.',
+  sync_link: 'Create the token on GitHub', token_ph: 'Paste the ghp_… token', sync_enable: 'Enable', sync_on: 'Automatic backup enabled', last_sync: 'Last backup',
+  sync_now: 'Back up now', restore: 'Restore', sync_disable: 'Disable', sync_err: 'Sync failed (will retry automatically).', token_bad: 'Token rejected by GitHub.',
+  restore_confirm: 'A newer backup exists. Restoring will replace this device\'s data. Restore?', restored: 'Data restored', saved: 'Saved ✓',
+  sync_excl: 'Not sent: booking references and location. Everything else goes to a private (unlisted) gist in your account.', sync_none: 'No backup found.',
+});
+Object.assign(I18N.ar, {
+  sync_title: 'النسخ الاحتياطي التلقائي', sync_off_msg: 'غير مفعّل: بياناتك على هذا الهاتف فقط.',
+  sync_steps: '١. افتح الرابط أدناه (وأنت مسجّل في GitHub).<br>٢. اترك «gist» فقط محددًا، والصلاحية «No expiration»، ثم «Generate token».<br>٣. انسخ الرمز (ghp_…) والصقه هنا.<br>احفظه في مدير كلمات المرور: يُستخدم لاستعادة بياناتك بعد إعادة التثبيت.',
+  sync_link: 'إنشاء الرمز في GitHub', token_ph: 'الصق الرمز ghp_…', sync_enable: 'تفعيل', sync_on: 'النسخ التلقائي مفعّل', last_sync: 'آخر نسخة',
+  sync_now: 'احفظ الآن', restore: 'استعادة', sync_disable: 'إيقاف', sync_err: 'فشلت المزامنة (ستعاد المحاولة تلقائيًا).', token_bad: 'رفض GitHub الرمز.',
+  restore_confirm: 'توجد نسخة أحدث. الاستعادة ستستبدل بيانات هذا الجهاز. استعادة؟', restored: 'تمت الاستعادة', saved: 'تم الحفظ ✓',
+  sync_excl: 'لا تُرسل: أرقام الحجز والموقع. بقية البيانات تُحفظ في gist خاص (غير معلن) في حسابك.', sync_none: 'لا توجد نسخة.',
+});
