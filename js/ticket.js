@@ -47,11 +47,19 @@
     return out;
   }
   function airportsIn(line) { const out = [], re = /\b([A-Z]{3})\b/g; let m; while ((m = re.exec(line))) if (IATA.has(m[1])) out.push(m[1]); return out; }
+  const DIGIT_FIX = { O: '0', o: '0', Q: '0', I: '1', l: '1', '|': '1', S: '5', B: '8' };
   function flightsIn(line) {
-    const out = [], re = /\b([A-Z][A-Z0-9]|[0-9][A-Z])\s?(\d{1,4})([A-Z])?\b/g; let m;
-    while ((m = re.exec(line))) if (AIRLINE_CODES.has(m[1]) && !/^20[2-3]\d$/.test(m[2])) out.push(`${m[1]} ${m[2]}`);      // on écarte les « années » (SV 2027)
+    const out = [], re = /(?<![A-Za-z0-9])([A-Za-z][A-Za-z0-9]|[0-9][A-Za-z])\s?([0-9OoIlQSB]{1,4})([A-Z])?(?![A-Za-z0-9])/g; let m;
+    while ((m = re.exec(line))) {
+      const code = m[1].toUpperCase(); if (!AIRLINE_CODES.has(code)) continue;
+      const num = m[2].replace(/[OoIlQSB]/g, c => DIGIT_FIX[c]);
+      if (!/^\d{1,4}$/.test(num) || /^20[2-3]\d$/.test(num)) continue;              // on écarte les « années » (SV 2027)
+      out.push(`${code} ${num}`);
+    }
     return out;
   }
+  /** Corrige les heures mal lues : « 1O:45 » → « 10:45 », « l8h30 » → « 18h30 ». */
+  const fixTimes = line => line.replace(/(?<![A-Za-z0-9])([0-2OoIl][0-9OoIl])\s?([:hH])\s?([0-5OoIl][0-9OoIl])(?![A-Za-z0-9])/g, (_, h, sep, m) => h.replace(/[OoIl]/g, c => DIGIT_FIX[c]) + sep + m.replace(/[OoIl]/g, c => DIGIT_FIX[c]));
   const terminalIn = line => { const m = /\b(?:terminal|term\.?)\s*[:\-]?\s*([A-Z0-9]{1,3})\b/i.exec(line); return m ? m[1].toUpperCase() : ''; };
 
   /** Terminal de DÉPART : sur la ligne de l'aéroport d'origine, ou sur la ligne suivante si elle ne parle pas d'un autre aéroport. */
@@ -59,12 +67,17 @@
     if (!origin) return '';
     const k = win.findIndex(l => airportsIn(l).includes(origin));
     if (k < 0) return '';
-    return terminalIn(win[k]) || (win[k + 1] && !airportsIn(win[k + 1]).length ? terminalIn(win[k + 1]) : '');
+    const own = terminalIn(win[k]); if (own) return own;
+    for (let j = k + 1; j < Math.min(win.length, k + 5); j++) {          // lignes suivantes, jusqu'à la prochaine ligne qui nomme un aéroport
+      if (airportsIn(win[j]).length) break;
+      const tm = terminalIn(win[j]); if (tm) return tm;                    // colonne de gauche = départ
+    }
+    return '';
   }
 
   /** Texte → liste de vols [{no,date,from,to,dep,arr,term}] triés par date/heure. */
   function parse(text) {
-    const lines = String(text || '').split(/\r?\n+/).map(l => l.replace(/\s+/g, ' ').trim()).filter(Boolean);
+    const lines = String(text || '').split(/\r?\n+/).map(l => fixTimes(l.replace(/\s+/g, ' ').trim())).filter(Boolean);
     const flights = lines.map(flightsIn), dates = lines.map(datesIn);
     const isHeader = lines.map((l, k) => dates[k].length > 0 && !flights[k].length && !timesIn(l).length && !airportsIn(l).length);      // ligne qui ne contient QUE une date
     const segs = [];
@@ -92,6 +105,25 @@
       .sort((a, b) => (a.date + (a.dep || '')).localeCompare(b.date + (b.dep || '')));
   }
 
+  /** Remet le texte dans l'ordre visuel : lignes de haut en bas, colonnes séparées par « | » (départ à gauche, arrivée à droite). */
+  function layoutText(words) {
+    const W = (words || []).filter(w => w && w.text && w.text.trim() && w.bbox && (w.confidence == null || w.confidence > 25));
+    if (!W.length) return '';
+    const hs = W.map(w => w.bbox.y1 - w.bbox.y0).sort((a, b) => a - b), H = hs[Math.floor(hs.length / 2)] || 20;
+    W.forEach(w => { w.yc = (w.bbox.y0 + w.bbox.y1) / 2; });
+    W.sort((a, b) => a.yc - b.yc);
+    const rows = [];
+    for (const w of W) { const r = rows[rows.length - 1]; if (r && Math.abs(w.yc - r.yc) <= 0.6 * Math.max(H, (w.bbox.y1 - w.bbox.y0) * 0.5)) { r.w.push(w); r.yc = (r.yc * (r.w.length - 1) + w.yc) / r.w.length; } else rows.push({ yc: w.yc, w: [w] }); }
+    return rows.map(r => {
+      r.w.sort((a, b) => a.bbox.x0 - b.bbox.x0);
+      let out = '', prev = null;
+      for (const w of r.w) { if (prev) out += (w.bbox.x0 - prev.bbox.x1 > 1.6 * H) ? '  |  ' : ' '; out += w.text; prev = w; }
+      return out;
+    }).join('\n');
+  }
+  /** Qualité d'une lecture : nombre de champs reconnus (date, heures, aéroports) dans les vols trouvés. */
+  const score = txt => { const sg = parse(txt); return sg.reduce((n, x) => n + (x.date ? 1 : 0) + (x.dep ? 1 : 0) + (x.arr ? 1 : 0) + (x.from ? 1 : 0) + (x.to ? 1 : 0), 0) + (sg.length >= 2 ? 2 : 0); };
+
   /** OCR d'une capture (Tesseract.js chargé à la demande, exécuté sur l'appareil). */
   let tessP = null;
   const loadTess = () => tessP || (tessP = new Promise((res, rej) => {
@@ -114,7 +146,20 @@
   async function ocr(file, onProgress) {
     const T = await loadTess(); file = await prepare(file);
     const worker = await T.createWorker('eng+fra', 1, { logger: m => { if (onProgress && m.progress != null) onProgress(m.status, m.progress); } });
-    try { const r = await worker.recognize(file); return r.data.text || ''; } finally { await worker.terminate(); }
+    try {
+      const wordsOf = d => d.words || (d.blocks || []).flatMap(bk => (bk.paragraphs || []).flatMap(pg => (pg.lines || []).flatMap(l => l.words || [])));
+      const cands = [];
+      const r1 = await worker.recognize(file, {}, { text: true, blocks: true });                        // lecture « page » normale
+      cands.push(layoutText(wordsOf(r1.data)), r1.data.text || '');
+      try {                                                                                                // lecture « texte épars » : meilleure pour les cartes en colonnes
+        await worker.setParameters({ tessedit_pageseg_mode: '11' });
+        const r2 = await worker.recognize(file, {}, { text: true, blocks: true });
+        cands.push(layoutText(wordsOf(r2.data)));
+      } catch (e) { /* lecture alternative indisponible */ }
+      let best = cands[0] || '', bs = -1;
+      for (const c of cands) { const sc = c ? score(c) : -1; if (sc > bs) { bs = sc; best = c; } }
+      return best;
+    } finally { await worker.terminate(); }
   }
 
   /** Toutes les dates plausibles du texte (à venir d'abord) : sert à corriger d'un toucher. */

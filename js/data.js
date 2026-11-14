@@ -366,3 +366,7 @@ Object.assign(I18N.en, { imp_pick: 'Choose the screenshot, photo or PDF of the t
 Object.assign(I18N.ar, { imp_pick: 'اختر لقطة الشاشة أو الصورة أو PDF للتذكرة', imp_paste: 'أو الصق النص بدلًا من ذلك', imp_pdf_fail: 'لا يحتوي هذا PDF على نص مقروء (تذكرة ممسوحة؟). التقط لقطة شاشة أو صورة.',
   imp_hint: 'اختر لقطة الشاشة أو الصورة أو PDF لتذكرتك: يقرؤها التطبيق وحده (دون نسخ ولصق). ثم تحقق من التواريخ والأوقات وصحّحها بلمسة. كل شيء يُقرأ على هاتفك ولا يُرسل شيء.',
   imp_check: 'تحقق: المس التاريخ الصحيح وصحّح الوقت عند الحاجة، ثم حدّد الذهاب والعودة:' });
+
+Object.assign(I18N.fr, { imp_paste: 'Texte lu (corrigeable) — ou coller un texte' });
+Object.assign(I18N.en, { imp_paste: 'Text read (editable) — or paste a text' });
+Object.assign(I18N.ar, { imp_paste: 'النص المقروء (قابل للتعديل) — أو الصق نصًا' });
