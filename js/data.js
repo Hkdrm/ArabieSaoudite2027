@@ -437,3 +437,5 @@ Object.assign(I18N.ar, { nav_sira: 'المسار', sira_title: 'المسار ا�
   sira_disc: 'المحتوى مكتوب من مصادر عامة ولم يراجعه عالم بعد: تأكد قبل النشر. ✅ ثابت · 📜 منقول · ❓ للتأكد. التواريخ تقريبية.', sira_listen: 'استمع', sira_stop: 'إيقاف', sira_stamp: 'زرت المكان', sira_stamped: 'تم الختم', sira_onsite: 'في المكان', sira_sources: 'المصادر', sira_more: 'أماكن أخرى من ملف المدينة', sira_unverified: 'مأخوذة من مقاطع فيديو وغير موثقة: تحقق قبل الذهاب.', sira_fiche: 'بطاقة المكان',
   sira_here: 'أنت قرب', sira_hint: 'اقرأ ما حدث هنا.', sira_read: 'اقرأ', sira_nearest: 'أقرب محطة', sira_no_gps: 'الموقع غير متاح.', sira_no_tts: 'القراءة الصوتية غير متاحة على هذا الجهاز.',
   sr_fact: 'ثابت (بمصدر)', sr_trad: 'منقول / متوارث', sr_tbc: 'للتأكد / مختلف فيه' });
+
+Object.assign(I18N.fr, { ex_category: 'Catégorie' }); Object.assign(I18N.en, { ex_category: 'Category' }); Object.assign(I18N.ar, { ex_category: 'الفئة' });

@@ -7,7 +7,7 @@
     set(k, v) { try { localStorage.setItem('omra:' + k, JSON.stringify(v)); } catch {} },
   };
 
-  const APP_VERSION = '2026-11-14.48';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
+  const APP_VERSION = '2026-11-14.49';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
 
   /* ---------- état ---------- */
   const detect = () => { const l = (navigator.language || 'fr').slice(0, 2); return LANGS[l] ? l : 'fr'; };
@@ -474,7 +474,7 @@
       const keys = Object.keys(byTab).sort((x, y) => (x === 'places' ? -1 : y === 'places' ? 1 : byTab[y].length - byTab[x].length));
       if ((tab !== 'all' && !byTab[tab]) || (tab === 'all' && keys.length <= 1)) tab = keys[0] || 'all';      // pas d'onglet « Tout » s'il n'y a qu'une catégorie
       const tabLabel = k => (k === 'places' ? '📍 ' + t('ex_tab_places') : k === 'all' ? t('ex_type_all') : catLabel(k));
-      $('#tabs', el).innerHTML = keys.length ? [...keys, ...(keys.length > 1 ? ['all'] : [])].map(k => `<button type="button" class="tab ${tab === k ? 'on' : ''}" role="tab" aria-selected="${tab === k}" data-tab="${esc(k)}">${esc(tabLabel(k))} <span class="tn">${k === 'all' ? base.length : byTab[k].length}</span></button>`).join('') : '';
+      $('#tabs', el).innerHTML = keys.length ? `<select id="catSel" aria-label="${esc(t('ex_category'))}" style="width:100%">${[...keys, ...(keys.length > 1 ? ['all'] : [])].map(k => `<option value="${esc(k)}" ${tab === k ? 'selected' : ''}>${esc(tabLabel(k))} (${k === 'all' ? base.length : byTab[k].length})</option>`).join('')}</select>` : '';
       /* contenu de l'onglet actif */
       const cur = tab === 'all' ? base : (byTab[tab] || []);
       const places = cur.filter(i => i.kind === 'place'), finds = cur.filter(i => i.kind === 'find');
@@ -490,7 +490,7 @@
       if (seq.length > shown.length) html += `<button type="button" class="ghost" id="moreBtn" style="grid-column:1/-1">${t('ex_more')} (${seq.length - shown.length})</button>`;
       $('#list', el).innerHTML = seq.length ? `<div class="cards">${html}</div>` : `<p class="muted">${t('no_results')}</p>`;
       /* événements */
-      $$('[data-tab]', el).forEach(bt => bt.onclick = () => { tab = bt.dataset.tab; limit = 10; render(false); const act = $('#tabs .tab.on', el); if (act && act.scrollIntoView) act.scrollIntoView({ inline: 'center', block: 'nearest' }); });
+      const cs = $('#catSel', el); if (cs) cs.onchange = () => { tab = cs.value; limit = 10; render(false); };
       const more = $('#moreBtn', el); if (more) more.onclick = () => { limit += 10; render(false); };
       $$('[data-open]', el).forEach(bt => bt.onclick = () => openSheet(itemById(bt.dataset.open)));
       /* carte : les lieux de la ville (les bons plans n'ont pas de coordonnées) */

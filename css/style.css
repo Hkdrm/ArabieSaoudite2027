@@ -191,3 +191,5 @@ button:disabled{opacity:.4;cursor:default}
 #sMapWrap .mapbtns{top:16px;left:8px}
 .sitem{scroll-margin-top:calc(36vh + 24px)}
 #sMapWrap.tall ~ #sList .sitem{scroll-margin-top:calc(62vh + 24px)}
+
+#tabs{border-bottom:0;margin:8px 0 6px;overflow:visible}
