@@ -254,3 +254,7 @@ Object.assign(I18N.ar, {
 Object.assign(I18N.fr, { reset_dates: '↺ Effacer les dates', reset_all: 'Tout réinitialiser', confirm_reset_all: 'Effacer le trajet, les dates, les numéros de vol et la réservation ?' });
 Object.assign(I18N.en, { reset_dates: '↺ Clear dates', reset_all: 'Reset everything', confirm_reset_all: 'Clear the route, dates, flight numbers and booking?' });
 Object.assign(I18N.ar, { reset_dates: '↺ مسح التواريخ', reset_all: 'إعادة ضبط الكل', confirm_reset_all: 'مسح المسار والتواريخ وأرقام الرحلات والحجز؟' });
+
+Object.assign(I18N.fr, { step_route: '1. Vos dates', airports_opt: 'Aéroports et horaires (facultatif)', airports_hint: "Pas nécessaire : l'aéroport se retrouve avec le numéro de vol ou la réservation. Utile seulement pour comparer les vols.", have_flight: 'Numéro de vol et/ou référence de réservation :', find_flights: 'Pas encore de vol ? Cherchez les vols de ces dates :' });
+Object.assign(I18N.en, { step_route: '1. Your dates', airports_opt: 'Airports and times (optional)', airports_hint: 'Not required: the airport can be found from the flight number or booking. Only useful to compare flights.', have_flight: 'Flight number and/or booking reference:', find_flights: 'No flight yet? Search flights for these dates:' });
+Object.assign(I18N.ar, { step_route: '١. تواريخك', airports_opt: 'المطارات والمواعيد (اختياري)', airports_hint: 'غير مطلوب: يمكن معرفة المطار من رقم الرحلة أو الحجز. مفيد فقط لمقارنة الرحلات.', have_flight: 'رقم الرحلة و/أو رقم الحجز:', find_flights: 'لا رحلة بعد؟ ابحث عن رحلات لهذه التواريخ:' });
