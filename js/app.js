@@ -7,7 +7,7 @@
     set(k, v) { try { localStorage.setItem('omra:' + k, JSON.stringify(v)); } catch {} },
   };
 
-  const APP_VERSION = '2026-11-14.31';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
+  const APP_VERSION = '2026-11-14.33';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
 
   /* ---------- état ---------- */
   const detect = () => { const l = (navigator.language || 'fr').slice(0, 2); return LANGS[l] ? l : 'fr'; };
@@ -297,30 +297,34 @@
   const pad2 = n => String(n).padStart(2, '0');
   const fmtDur = m => m >= 60 ? `${Math.floor(m / 60)} h ${pad2(m % 60)}` : `${m} min`;
 
-  /* ---------- Explorer (carte + recherche + filtres + GPS + itinéraires) ---------- */
+  /* Catalogue de découvertes (boutiques, marchés, bons plans) : chargé une fois, réuni aux lieux dans Explorer. */
+  let DISC = null;
+  const loadDisc = () => DISC ? Promise.resolve(DISC) : fetch('data/junaid-madinah-discoveries.json', { cache: 'no-cache' }).then(r => (r.ok ? r.json() : Promise.reject())).then(d => (DISC = d)).catch(() => null);
+  const httpsOnly = arr => (arr || []).filter(x => /^https:\/\//.test(x));
+
+  /* ---------- Explorer : lieux + bons plans réunis, filtrés par ville / type / catégorie ; carte, GPS activable ---------- */
   views.explore = (el, arg) => {
-    let cat = 'all', city = 'all', q = '', near = false, firstFix = true, lastR = null, ready = false;
+    let city = 'all', type = 'all', cat = 'all', q = '', posOn = false, far = false, firstFix = true, lastR = null, ready = false;
     const queue = [], whenReady = f => (ready ? f() : queue.push(f));
     let markers = [], meMarker = null, destMarker = null;
     const prefs = store.get('mappref', {});
     let mlang = prefs.lang || (S.lang === 'ar' ? 'ar' : S.lang), mbase = prefs.base || 'plan';
     const savePrefs = () => store.set('mappref', { lang: mlang, base: mbase });
-    const cities = [...new Set(PLACES.map(p => p.city))];
+    const CITY_ORDER = Object.keys(CITIES).filter(c => PLACES.some(p => p.city === c));
     el.innerHTML = `<h2>${t('explore_title')}</h2>
-      <div class="card muted">⚠️ ${t('warn_unverified')}</div>
-      <div class="card"><a class="btn" href="#/discoveries">🔎 ${S.lang === 'en' ? 'Discoveries & local finds' : S.lang === 'ar' ? 'اكتشافات وأماكن مميزة' : 'Découvertes, boutiques & bons plans'} · 67</a></div>
-      <div class="row" style="margin-bottom:8px"><input id="q" class="grow" type="search" placeholder="${esc(t('search'))}">
-        <select id="cty"><option value="all">${t('all_cities')}</option>${cities.map(c => `<option value="${c}">${esc(cityName(c))}</option>`).join('')}</select>
-        <button class="ghost" id="nearBtn" title="${t('follow_me')}">📍 ${t('follow_me')}</button></div>
-      <div class="chips" id="chips"></div>
-      <div class="row" style="margin-bottom:8px"><div class="grow"><label>🌐 ${t('map_lang_label')}</label><select id="mlang" style="width:100%">
+      <p class="muted warnline">⚠️ ${t('warn_unverified')}</p>
+      <input id="q" class="grow" type="search" placeholder="${esc(t('search'))}" style="width:100%;margin-bottom:8px">
+      <div class="chips" id="cityChips"></div><div class="chips" id="typeChips"></div><div class="chips" id="catChips"></div>
+      <div id="mapWrap"><div id="map"></div><button type="button" class="chip mapbtn" id="posBtn"></button></div>
+      <p class="muted" id="posInfo" style="font-size:12px;margin:4px 0 6px"></p>
+      <details class="mapset"><summary>⚙️ ${t('map_settings')}</summary><div class="row" style="margin-top:8px"><div class="grow"><label>🌐 ${t('map_lang_label')}</label><select id="mlang" style="width:100%">
           ${[['fr', 'Français'], ['en', 'English'], ['ar', 'العربية'], ['local', t('ml_local')]].map(([k, v]) => `<option value="${k}" ${mlang === k ? 'selected' : ''}>${esc(v)}</option>`).join('')}</select></div>
-        <div class="grow"><label>🗺️ ${t('map_style_label')}</label><select id="mbase" style="width:100%"><option value="plan" ${mbase === 'plan' ? 'selected' : ''}>${t('base_plan')}</option><option value="sat" ${mbase === 'sat' ? 'selected' : ''}>${t('base_sat')}</option></select></div></div>
-      <div id="map"></div><div id="routeBar"></div><div class="card" id="list"></div>`;
+        <div class="grow"><label>🗺️ ${t('map_style_label')}</label><select id="mbase" style="width:100%"><option value="plan" ${mbase === 'plan' ? 'selected' : ''}>${t('base_plan')}</option><option value="sat" ${mbase === 'sat' ? 'selected' : ''}>${t('base_sat')}</option></select></div></div></details>
+      <div id="routeBar"></div><p class="muted" id="count" aria-live="polite" style="margin:8px 0 4px"></p><div id="list"></div>`;
     const ML = window.maplibregl;
     let map = null;
 
-    /* ---- langue des noms sur la carte : on remplace le champ de texte des étiquettes (name:fr / name:en / name:ar / name) ---- */
+    /* ---- langue des noms sur la carte ---- */
     const LANG_EXPR = {
       fr: ['coalesce', ['get', 'name:fr'], ['get', 'name:en'], ['get', 'name_en'], ['get', 'name:latin'], ['get', 'name']],
       en: ['coalesce', ['get', 'name:en'], ['get', 'name_en'], ['get', 'name:latin'], ['get', 'name']],
@@ -336,10 +340,10 @@
     const applyBase = () => whenReady(() => {
       const sat = mbase === 'sat';
       if (map.getLayer('sat')) map.setLayoutProperty('sat', 'visibility', sat ? 'visible' : 'none');
-      // en mode satellite : on masque le dessin vectoriel (routes, zones) pour ne garder que l'image + les étiquettes
       map.getStyle().layers.forEach(l => { if (['fill', 'line', 'fill-extrusion'].includes(l.type) && !OVERLAY.includes(l.id)) map.setLayoutProperty(l.id, 'visibility', sat ? 'none' : 'visible'); });
     });
 
+    /* ---- position GPS (point bleu) ---- */
     const circlePoly = (lng, lat, r) => {
       const pts = []; for (let i = 0; i <= 64; i++) { const a = i / 64 * 2 * Math.PI; pts.push([lng + r * Math.cos(a) / (111320 * Math.cos(lat * Math.PI / 180)), lat + r * Math.sin(a) / 110540]); }
       return { type: 'Feature', geometry: { type: 'Polygon', coordinates: [pts] } };
@@ -349,6 +353,7 @@
       if (!meMarker) { const e = document.createElement('div'); e.className = 'medot'; meMarker = new ML.Marker({ element: e }).setLngLat([lng, lat]).addTo(map); } else meMarker.setLngLat([lng, lat]);
       whenReady(() => { const src = map.getSource('acc'); if (src) src.setData(circlePoly(lng, lat, acc || 30)); });
     };
+    const hideMe = () => { if (meMarker) { meMarker.remove(); meMarker = null; } whenReady(() => { const src = map && map.getSource('acc'); if (src) src.setData({ type: 'FeatureCollection', features: [] }); }); };
     const getPos = () => new Promise(res => {
       if (!navigator.geolocation) return res(null);
       navigator.geolocation.getCurrentPosition(pos => {
@@ -357,31 +362,124 @@
     });
     const fitTo = (pts, maxZoom = 14) => { if (!map || !pts.length) return; const bb = new ML.LngLatBounds(); pts.forEach(c => bb.extend(c)); map.fitBounds(bb, { padding: 40, maxZoom, duration: 600 }); };
 
-    const render = (fit = true) => {
-      $('#chips', el).innerHTML = ['all', ...CATEGORIES].map(c => `<button class="chip ${c === cat ? 'on' : ''}" data-cat="${c}">${t(c === 'all' ? 'all' : 'c_' + c)}</button>`).join('');
-      let ps = PLACES.filter(p => (cat === 'all' || p.c === cat) && (city === 'all' || p.city === city) &&
-        (!q || norm([p.n.fr, p.n.en, p.n.ar, L(p.sum), cityName(p.city)].join(' ')).includes(norm(q))));
-      ps = ps.map(p => ({ ...p, d: S.here ? km(S.here, p) : null }));
-      if (near && S.here) ps.sort((a, b) => a.d - b.d); else ps.sort((a, b) => L(a.n).localeCompare(L(b.n)));
-      $('#list', el).innerHTML = ps.length ? ps.map(p => `<div class="item"><div class="tx"><a href="#/place/${p.id}" style="color:var(--tx);font-size:16px">${S.fav.includes(p.id) ? '★ ' : ''}${S.visited[p.id] ? '✓ ' : ''}${esc(L(p.n))}</a>
-        <div class="muted" dir="rtl" style="text-align:start">${esc(p.n.ar)}</div>
-        <span class="pill">${t('c_' + p.c)}</span> <span class="pill">${esc(cityName(p.city))}</span>${p.d != null ? ` <span class="pill">${t('distance_km')} ${nf(Math.round(p.d))} ${t('km')}</span>` : ''}</div>
+    /* ---- données réunies : lieux (avec coordonnées) + bons plans (sans coordonnées) ---- */
+    const buildItems = () => {
+      const items = PLACES.map(p => ({ kind: 'place', id: p.id, p, city: p.city, cat: p.c, name: L(p.n), ar: p.n.ar, text: L(p.sum), disc: null }));
+      const byId = new Map(items.map(i => [i.id, i]));
+      ((DISC && DISC.records) || []).forEach(r => {
+        const ex = byId.get(r.id);
+        if (ex) ex.disc = r;                                                   // même lieu dans les deux catalogues : une seule fiche
+        else items.push({ kind: 'find', id: 'd-' + r.id, r, city: r.city, cat: r.category === 'history' ? 'sira' : r.category === 'nature' ? 'nature' : 'f:' + r.category, name: r.name_fr, text: r.description_fr || '', area: r.area || '' });   // « Histoire » et « Nature » = mêmes catégories que les lieux
+      });
+      return items;
+    };
+    let items = buildItems();
+    const catLabel = c => c.startsWith('f:') ? ((DISC && DISC.categories && DISC.categories[c.slice(2)]) || c.slice(2)) : t('c_' + c);
+    const hay = i => norm([i.name, i.ar || '', i.text, i.area || '', cityName(i.city), i.kind === 'find' ? (i.r.practical_notes_fr || '') : '', catLabel(i.cat)].join(' '));
+    const matchQ = i => !q || hay(i).includes(norm(q));
+    const matchType = i => type === 'all' || (type === 'places' ? i.kind === 'place' : i.kind === 'find');
+    const NEAR_KM = 300;                                                       // au-delà, les distances n'ont pas de sens (on n'est pas sur place)
+
+    const gSearch = i => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([i.name, i.area, cityName(i.city)].filter(Boolean).join(' '))}`;
+    const aSearch = i => `https://maps.apple.com/?q=${encodeURIComponent([i.name, i.area, cityName(i.city)].filter(Boolean).join(' '))}`;
+    const vids = i => httpsOnly(((i.kind === 'find' ? i.r : i.disc) || {}).source && ((i.kind === 'find' ? i.r : i.disc).source.videos || (i.kind === 'find' ? i.r : i.disc).source.references)).slice(0, 3);
+
+    const placeCard = i => {
+      const p = i.p, d = (posOn && !far && S.here) ? km(S.here, p) : null, v = vids(i);
+      return `<div class="item"><div class="tx"><a href="#/place/${p.id}" style="color:var(--tx);font-size:16px">${S.fav.includes(p.id) ? '★ ' : ''}${S.visited[p.id] ? '✓ ' : ''}${esc(i.name)}</a>
+        <div class="muted" dir="rtl" style="text-align:start">${esc(i.ar)}</div>
+        <span class="pill">${t('c_' + p.c)}</span> <span class="pill">${esc(cityName(p.city))}</span>${d != null && d < NEAR_KM ? ` <span class="pill">${t('distance_km')} ${nf(Math.round(d * 10) / 10)} ${t('km')}</span>` : ''}${v.length ? ' <span class="pill">🎬</span>' : ''}</div>
         <div class="acts"><button type="button" data-route="${p.id}">🧭 ${t('route_btn')}</button>
-          <a href="${gmaps(p)}" target="_blank" rel="noopener">Google Maps</a><a href="${appleMaps(p)}" target="_blank" rel="noopener">Plans</a></div></div>`).join('') : `<p class="muted">${t('no_results')}</p>`;
-      $$('[data-cat]', el).forEach(b => b.onclick = () => { cat = b.dataset.cat; render(); });
-      $$('[data-route]', el).forEach(b => b.onclick = () => routeTo(PLACES.find(x => x.id === b.dataset.route)));
-      if (map) {
-        markers.forEach(m => m.remove()); markers = [];
-        ps.forEach(p => {
-          const e = document.createElement('div'); e.className = 'mk'; e.style.background = catColor[p.c];
-          const pop = new ML.Popup({ offset: 12, maxWidth: '260px' }).setHTML(`<b>${esc(L(p.n))}</b><br><span dir="rtl">${esc(p.n.ar)}</span><br><a href="#/place/${p.id}">${t('nav_explore')} →</a> · <a href="#/explore/to-${p.id}">🧭 ${t('route_btn')}</a><br><a href="${gmaps(p)}" target="_blank" rel="noopener">Google Maps ↗</a> · <a href="${appleMaps(p)}" target="_blank" rel="noopener">Plans ↗</a>`);
-          markers.push(new ML.Marker({ element: e }).setLngLat([p.lng, p.lat]).setPopup(pop).addTo(map));
-        });
-        if (fit) fitTo(ps.map(p => [p.lng, p.lat]));
-      }
+          <a href="${gmaps(p)}" target="_blank" rel="noopener">Google Maps</a><a href="${appleMaps(p)}" target="_blank" rel="noopener">Plans</a></div></div>`;
+    };
+    const findCard = i => {
+      const r = i.r, v = vids(i), ok = r.verification && r.verification.independently_verified;
+      return `<div class="item find"><div class="tx"><b>${esc(i.name)}</b> <span class="pill ${ok ? 'ok' : ''}">${ok ? '✓ ' + t('disc_verified') : t('disc_pending')}</span>
+        <div class="muted">📍 ${esc(cityName(i.city))}${i.area ? ' · ' + esc(i.area) : ''}</div>
+        ${i.text ? `<div>${esc(i.text)}</div>` : ''}${r.practical_notes_fr ? `<div class="muted">💡 ${esc(r.practical_notes_fr)}</div>` : ''}
+        ${v.length ? `<div class="row" style="margin-top:6px">${v.map((u, k) => `<a class="btn ghost sm" target="_blank" rel="noopener noreferrer" href="${esc(u)}">🎬 ${t('disc_video')}${v.length > 1 ? ' ' + (k + 1) : ''}</a>`).join('')}</div>` : ''}</div>
+        <div class="acts"><a href="${gSearch(i)}" target="_blank" rel="noopener">Google Maps</a><a href="${aSearch(i)}" target="_blank" rel="noopener">Plans</a></div></div>`;
     };
 
-    /* Itinéraire depuis la position GPS (calcul routier OSM). Trop loin (> 800 km) : distance à vol d'oiseau + liens Google/Plans. */
+    const render = (fit = true) => {
+      /* chips Ville (compteurs selon type + recherche) */
+      const byCity = {}; items.filter(i => matchType(i) && matchQ(i)).forEach(i => { byCity[i.city] = (byCity[i.city] || 0) + 1; });
+      const totalCity = Object.values(byCity).reduce((a, b) => a + b, 0);
+      $('#cityChips', el).innerHTML = `<button type="button" class="chip ${city === 'all' ? 'on' : ''}" data-city="all">🌍 ${t('ex_all_cities')} · ${totalCity}</button>` +
+        CITY_ORDER.filter(c => byCity[c] || c === city).map(c => `<button type="button" class="chip ${city === c ? 'on' : ''}" data-city="${c}">${esc(cityName(c))} · ${byCity[c] || 0}</button>`).join('');
+      /* chips Type (compteurs selon ville + recherche) */
+      const cn = { all: 0, places: 0, finds: 0 };
+      items.filter(i => (city === 'all' || i.city === city) && matchQ(i)).forEach(i => { cn.all++; cn[i.kind === 'place' ? 'places' : 'finds']++; });
+      $('#typeChips', el).innerHTML = [['all', t('ex_type_all')], ['places', '📍 ' + t('ex_type_places')], ['finds', '🛍️ ' + t('ex_type_finds')]].map(([k, l]) => `<button type="button" class="chip ${type === k ? 'on' : ''}" data-type="${k}">${esc(l)} · ${cn[k]}</button>`).join('');
+      /* chips Catégorie (celles présentes dans la sélection) */
+      const base = items.filter(i => (city === 'all' || i.city === city) && matchType(i) && matchQ(i));
+      const byCat = {}; base.forEach(i => { byCat[i.cat] = (byCat[i.cat] || 0) + 1; });
+      if (cat !== 'all' && !byCat[cat]) cat = 'all';
+      $('#catChips', el).innerHTML = Object.keys(byCat).length > 1 ? `<button type="button" class="chip ${cat === 'all' ? 'on' : ''}" data-cat="all">${t('all')} · ${base.length}</button>` +
+        Object.entries(byCat).sort((a, b) => b[1] - a[1]).map(([c, n]) => `<button type="button" class="chip ${cat === c ? 'on' : ''}" data-cat="${esc(c)}">${esc(catLabel(c))} · ${n}</button>`).join('') : '';
+      /* résultats */
+      const res = base.filter(i => cat === 'all' || i.cat === cat);
+      const places = res.filter(i => i.kind === 'place'), finds = res.filter(i => i.kind === 'find');
+      if (posOn && !far && S.here) places.sort((a, b) => km(S.here, a.p) - km(S.here, b.p)); else places.sort((a, b) => a.name.localeCompare(b.name));
+      let html = '';
+      if (places.length) html += `<div class="card"><h3>📍 ${t('ex_type_places')} · ${places.length}</h3>${places.map(placeCard).join('')}</div>`;
+      if (finds.length) {
+        const groups = {}; finds.forEach(i => (groups[i.cat] = groups[i.cat] || []).push(i));
+        html += `<div class="card"><h3>🛍️ ${t('ex_type_finds')} · ${finds.length}</h3>` +
+          Object.entries(groups).sort((a, b) => b[1].length - a[1].length).map(([c, arr]) => `${cat === 'all' && Object.keys(groups).length > 1 ? `<h4 class="subh">${esc(catLabel(c))} · ${arr.length}</h4>` : ''}${arr.sort((a, b) => a.name.localeCompare(b.name)).map(findCard).join('')}`).join('') + '</div>';
+      }
+      if (!res.length) html = `<div class="card"><p class="muted">${t('no_results')}</p></div>`;
+      $('#list', el).innerHTML = html;
+      $('#count', el).textContent = `${res.length} ${t('ex_results')}${city !== 'all' ? ' · ' + cityName(city) : ''}`;
+      /* événements */
+      $$('[data-city]', el).forEach(b => b.onclick = () => { city = b.dataset.city; cat = 'all'; render(); });
+      $$('[data-type]', el).forEach(b => b.onclick = () => { type = b.dataset.type; cat = 'all'; render(); });
+      $$('[data-cat]', el).forEach(b => b.onclick = () => { cat = b.dataset.cat; render(); });
+      $$('[data-route]', el).forEach(b => b.onclick = () => routeTo(PLACES.find(x => x.id === b.dataset.route)));
+      /* carte : uniquement les lieux (les bons plans n'ont pas de coordonnées) */
+      if (map) {
+        markers.forEach(m => m.remove()); markers = [];
+        places.forEach(i => {
+          const p = i.p, e = document.createElement('div'); e.className = 'mk'; e.style.background = catColor[p.c];
+          const pop = new ML.Popup({ offset: 12, maxWidth: '260px' }).setHTML(`<b>${esc(i.name)}</b><br><span dir="rtl">${esc(i.ar)}</span><br><a href="#/place/${p.id}">${t('nav_explore')} →</a> · <a href="#/explore/to-${p.id}">🧭 ${t('route_btn')}</a><br><a href="${gmaps(p)}" target="_blank" rel="noopener">Google Maps ↗</a> · <a href="${appleMaps(p)}" target="_blank" rel="noopener">Plans ↗</a>`);
+          markers.push(new ML.Marker({ element: e }).setLngLat([p.lng, p.lat]).setPopup(pop).addTo(map));
+        });
+        if (fit) {
+          if (places.length) fitTo(places.map(i => [i.p.lng, i.p.lat]));
+          else if (city !== 'all' && CITIES[city]) map.flyTo({ center: [CITIES[city].lng, CITIES[city].lat], zoom: 11 });      // ville sans lieu géolocalisé : on la montre quand même
+        }
+      }
+      posUi();
+    };
+
+    /* ---- bouton Position : activer / désactiver ---- */
+    const posUi = () => {
+      const b = $('#posBtn', el), info = $('#posInfo', el); if (!b) return;
+      b.classList.toggle('on', posOn);
+      b.textContent = `📍 ${posOn ? t('pos_on') : t('pos_off')}`;
+      info.textContent = !posOn ? t('pos_hint_off') : far && S.here ? t('pos_far').replace('{km}', nf(Math.round(Math.min(...PLACES.map(p => km(S.here, p)))))) : S.here ? t('pos_active') : t('locating');
+    };
+    const stopFollow = () => {
+      if (geoWatch != null && navigator.geolocation) { navigator.geolocation.clearWatch(geoWatch); geoWatch = null; }
+      posOn = false; far = false; firstFix = true; lastR = null; S.here = null; save('here'); hideMe(); render(false);
+    };
+    const startFollow = () => {
+      if (!navigator.geolocation) return toast(t('geo_error'));
+      posOn = true; far = false; firstFix = true; posUi(); toast(t('locating'));
+      geoWatch = navigator.geolocation.watchPosition(pos => {
+        S.here = { lat: pos.coords.latitude, lng: pos.coords.longitude }; save('here');
+        showMe(S.here.lat, S.here.lng, pos.coords.accuracy);
+        if (firstFix) {
+          firstFix = false; lastR = S.here;
+          const nearest = Math.min(...PLACES.map(p => km(S.here, p)));
+          far = nearest > NEAR_KM;                                            // pas en Arabie saoudite : on garde la carte sur les lieux
+          if (far) toast(t('pos_far').replace('{km}', nf(Math.round(nearest)))); else if (map) map.flyTo({ center: [S.here.lng, S.here.lat], zoom: 14 });
+          render(false);
+        } else if (!lastR || km(lastR, S.here) > 0.05) { lastR = S.here; render(false); }
+      }, () => { toast(t('geo_error')); stopFollow(); }, { enableHighAccuracy: true, maximumAge: 5000, timeout: 20000 });
+    };
+
+    /* ---- itinéraire depuis la position GPS (calcul routier OSM). Trop loin (> 800 km) : distance à vol d'oiseau + liens Google/Plans ---- */
     const setRoute = geom => whenReady(() => { const src = map.getSource('route'); if (src) src.setData(geom ? { type: 'Feature', geometry: geom } : { type: 'FeatureCollection', features: [] }); });
     const clearRoute = () => { setRoute(null); if (destMarker) { destMarker.remove(); destMarker = null; } };
     const routeTo = async p => {
@@ -422,19 +520,6 @@
       bar.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     };
 
-    /* Suivi de ma position (point bleu) : se met à jour tout seul ; trie la liste par distance. */
-    const follow = () => {
-      if (!navigator.geolocation) return toast(t('geo_error'));
-      if (geoWatch != null) { if (S.here && map) map.flyTo({ center: [S.here.lng, S.here.lat], zoom: 15 }); return; }
-      toast(t('locating'));
-      geoWatch = navigator.geolocation.watchPosition(pos => {
-        S.here = { lat: pos.coords.latitude, lng: pos.coords.longitude }; save('here');
-        showMe(S.here.lat, S.here.lng, pos.coords.accuracy);
-        if (firstFix) { firstFix = false; near = true; lastR = S.here; render(false); if (map) map.flyTo({ center: [S.here.lng, S.here.lat], zoom: 14 }); }
-        else if (!lastR || km(lastR, S.here) > 0.05) { lastR = S.here; render(false); }
-      }, () => { toast(t('geo_error')); if (geoWatch != null) { navigator.geolocation.clearWatch(geoWatch); geoWatch = null; } }, { enableHighAccuracy: true, maximumAge: 5000, timeout: 20000 });
-    };
-
     /* ---- carte vectorielle OpenFreeMap (MapLibre) ---- */
     if (ML && navigator.onLine !== false) {
       try {
@@ -445,24 +530,23 @@
         map.on('load', () => {
           const first = map.getStyle().layers.find(l => l.type === 'symbol');
           map.addSource('sat', { type: 'raster', tileSize: 256, maxzoom: 19, tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'], attribution: 'Imagerie &copy; Esri, Maxar, Earthstar Geographics' });
-          map.addLayer({ id: 'sat', type: 'raster', source: 'sat', layout: { visibility: 'none' } }, first && first.id);     // sous les étiquettes
+          map.addLayer({ id: 'sat', type: 'raster', source: 'sat', layout: { visibility: 'none' } }, first && first.id);
           map.addSource('acc', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
           map.addLayer({ id: 'acc', type: 'fill', source: 'acc', paint: { 'fill-color': '#2b6cb0', 'fill-opacity': 0.14 } });
           map.addSource('route', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
           map.addLayer({ id: 'route-casing', type: 'line', source: 'route', layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#fff', 'line-width': 9 } });
           map.addLayer({ id: 'route-line', type: 'line', source: 'route', layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#2b6cb0', 'line-width': 6 } });
           ready = true; applyLang(); applyBase(); queue.splice(0).forEach(f => f());
-          if (S.here) showMe(S.here.lat, S.here.lng, 0);
         });
       } catch (e) { map = null; mapObj = null; }
     }
     if (!map) $('#map', el).outerHTML = `<div class="card muted">${t('map_offline')}</div>`;
     $('#q', el).oninput = e => { q = e.target.value; render(); };
-    $('#cty', el).onchange = e => { city = e.target.value; render(); };
-    $('#nearBtn', el).onclick = follow;
+    $('#posBtn', el).onclick = () => (posOn ? stopFollow() : startFollow());
     $('#mlang', el).onchange = e => { mlang = e.target.value; savePrefs(); applyLang(); };
     $('#mbase', el).onchange = e => { mbase = e.target.value; savePrefs(); applyBase(); };
     render();
+    loadDisc().then(() => { if (!document.body.contains($('#list', el))) return; items = buildItems(); render(false); });      // les bons plans s'ajoutent dès leur chargement
     const target = arg && /^to-/.test(arg) ? PLACES.find(x => 'to-' + x.id === arg) : null;
     if (target) routeTo(target);
   };

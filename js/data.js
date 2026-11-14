@@ -370,3 +370,17 @@ Object.assign(I18N.ar, { imp_pick: 'اختر لقطة الشاشة أو الصو
 Object.assign(I18N.fr, { imp_paste: 'Texte lu (corrigeable) — ou coller un texte' });
 Object.assign(I18N.en, { imp_paste: 'Text read (editable) — or paste a text' });
 Object.assign(I18N.ar, { imp_paste: 'النص المقروء (قابل للتعديل) — أو الصق نصًا' });
+
+/* ---- Explorer unifié : ville, type, position activable ---- */
+Object.assign(I18N.fr, { ex_all_cities: 'Toutes les villes', ex_type_all: 'Tout', ex_type_places: 'Lieux à visiter', ex_type_finds: 'Bons plans et découvertes', ex_results: 'résultat(s)',
+  pos_on: 'Position activée', pos_off: 'Position désactivée', pos_hint_off: "Activez-la pour voir votre point sur la carte et les distances. Désactivée, la carte montre les lieux.", pos_active: 'Position active : distances affichées pour les lieux proches.',
+  pos_far: "Vous êtes à {km} km de l'Arabie saoudite : la carte reste sur les lieux et les distances sont masquées.", disc_verified: 'Vérifié', disc_pending: 'À vérifier', disc_video: 'Vidéo / source' });
+Object.assign(I18N.en, { ex_all_cities: 'All cities', ex_type_all: 'All', ex_type_places: 'Places to visit', ex_type_finds: 'Local finds and tips', ex_results: 'result(s)',
+  pos_on: 'Location on', pos_off: 'Location off', pos_hint_off: 'Turn it on to see your dot on the map and distances. When off, the map shows the places.', pos_active: 'Location on: distances shown for nearby places.',
+  pos_far: 'You are {km} km from Saudi Arabia: the map stays on the places and distances are hidden.', disc_verified: 'Verified', disc_pending: 'To verify', disc_video: 'Video / source' });
+Object.assign(I18N.ar, { ex_all_cities: 'كل المدن', ex_type_all: 'الكل', ex_type_places: 'أماكن للزيارة', ex_type_finds: 'أماكن مميزة ونصائح', ex_results: 'نتيجة',
+  pos_on: 'الموقع مفعّل', pos_off: 'الموقع متوقف', pos_hint_off: 'فعّله لرؤية موقعك على الخريطة والمسافات. وهو متوقف تعرض الخريطة الأماكن.', pos_active: 'الموقع مفعّل: تظهر المسافات للأماكن القريبة.',
+  pos_far: 'أنت على بعد {km} كم من السعودية: تبقى الخريطة على الأماكن وتُخفى المسافات.', disc_verified: 'تم التحقق', disc_pending: 'يحتاج إلى تحقق', disc_video: 'فيديو / مصدر' });
+Object.assign(I18N.fr, { map_settings: 'Réglages de la carte (langue, fond)' });
+Object.assign(I18N.en, { map_settings: 'Map settings (language, style)' });
+Object.assign(I18N.ar, { map_settings: 'إعدادات الخريطة (اللغة، النمط)' });

@@ -99,3 +99,11 @@ button:disabled{opacity:.4;cursor:default}
 .pill.ok{background:rgba(11,107,79,.15);color:var(--g);border-color:var(--g);font-weight:700}
 .bottom a{font-size:9.5px}.bottom a b{font-size:18px}
 .seeTime{font-size:13px;font-weight:600;color:var(--g);text-decoration:none}
+.subh{margin:14px 0 2px;font-size:13px;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}
+.item.find .tx{display:block}
+#posBtn.on{background:var(--g);color:#fff;border-color:var(--g)}
+.warnline{font-size:12px;margin:0 0 8px}
+#mapWrap{position:relative}
+#mapWrap #map{margin-bottom:0;height:300px}
+.mapbtn{position:absolute;top:10px;left:10px;z-index:2;box-shadow:0 2px 8px rgba(0,0,0,.3);font-weight:600}
+.mapset{margin:0 0 8px}.mapset summary{cursor:pointer;color:var(--mut);font-size:13px}
