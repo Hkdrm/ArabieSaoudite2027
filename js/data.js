@@ -423,3 +423,17 @@ Object.assign(I18N.ar, { off_title: 'المصادر الرسمية', off_note: '
 Object.assign(I18N.fr, { holy_full: 'Plein écran', holy_close: 'Fermer' });
 Object.assign(I18N.en, { holy_full: 'Full screen', holy_close: 'Close' });
 Object.assign(I18N.ar, { holy_full: 'ملء الشاشة', holy_close: 'إغلاق' });
+
+/* ---- Parcours prophétique ---- */
+Object.assign(I18N.fr, { nav_sira: 'Parcours', sira_title: 'Parcours prophétique ﷺ', sira_sub: "Suivez la vie du Prophète ﷺ de lieu en lieu, dans l'ordre.", sira_play: 'Lancer le récit', sira_near: 'Autour de moi', sira_near_off: 'Arrêter', sira_stamps: 'étapes tamponnées', sira_all: 'Tout',
+  sira_disc: "Contenu rédigé à partir de sources générales, pas encore relu par un savant : confirmez avant de diffuser. ✅ établi · 📜 tradition · ❓ à confirmer. Les dates sont approximatives.", sira_listen: 'Écouter', sira_stop: 'Arrêter', sira_stamp: "J'y suis allé", sira_stamped: 'Étape tamponnée', sira_onsite: 'Sur place', sira_sources: 'Sources', sira_more: 'Autres lieux du dossier de Médine', sira_unverified: 'Fiches issues de vidéos, non vérifiées : contrôlez avant de vous déplacer.', sira_fiche: 'Fiche du lieu',
+  sira_here: 'Vous êtes près de', sira_hint: "Lisez ce qui s'est passé ici.", sira_read: 'Lire', sira_nearest: 'Étape la plus proche', sira_no_gps: 'Position indisponible.', sira_no_tts: "La lecture audio n'est pas disponible sur cet appareil.",
+  sr_fact: 'Établi (source citée)', sr_trad: 'Tradition / transmis', sr_tbc: 'À confirmer / discuté' });
+Object.assign(I18N.en, { nav_sira: 'Journey', sira_title: "Prophet's Journey ﷺ", sira_sub: 'Follow the life of the Prophet ﷺ place by place, in order.', sira_play: 'Play the story', sira_near: 'Near me', sira_near_off: 'Stop', sira_stamps: 'stamps', sira_all: 'All',
+  sira_disc: 'Content written from general sources, not yet reviewed by a scholar: confirm before sharing widely. ✅ established · 📜 tradition · ❓ to confirm. Dates are approximate.', sira_listen: 'Listen', sira_stop: 'Stop', sira_stamp: "I've been here", sira_stamped: 'Stamped', sira_onsite: 'On site', sira_sources: 'Sources', sira_more: 'More places from the Madinah file', sira_unverified: 'Entries from videos, unverified: check before going.', sira_fiche: 'Place page',
+  sira_here: 'You are near', sira_hint: 'Read what happened here.', sira_read: 'Read', sira_nearest: 'Nearest stop', sira_no_gps: 'Location unavailable.', sira_no_tts: 'Audio reading is not available on this device.',
+  sr_fact: 'Established (source cited)', sr_trad: 'Tradition / handed down', sr_tbc: 'To confirm / discussed' });
+Object.assign(I18N.ar, { nav_sira: 'المسار', sira_title: 'المسار النبوي ﷺ', sira_sub: 'تتبّع سيرة النبي ﷺ من مكان إلى مكان بالترتيب.', sira_play: 'ابدأ الحكاية', sira_near: 'بالقرب مني', sira_near_off: 'إيقاف', sira_stamps: 'أختام', sira_all: 'الكل',
+  sira_disc: 'المحتوى مكتوب من مصادر عامة ولم يراجعه عالم بعد: تأكد قبل النشر. ✅ ثابت · 📜 منقول · ❓ للتأكد. التواريخ تقريبية.', sira_listen: 'استمع', sira_stop: 'إيقاف', sira_stamp: 'زرت المكان', sira_stamped: 'تم الختم', sira_onsite: 'في المكان', sira_sources: 'المصادر', sira_more: 'أماكن أخرى من ملف المدينة', sira_unverified: 'مأخوذة من مقاطع فيديو وغير موثقة: تحقق قبل الذهاب.', sira_fiche: 'بطاقة المكان',
+  sira_here: 'أنت قرب', sira_hint: 'اقرأ ما حدث هنا.', sira_read: 'اقرأ', sira_nearest: 'أقرب محطة', sira_no_gps: 'الموقع غير متاح.', sira_no_tts: 'القراءة الصوتية غير متاحة على هذا الجهاز.',
+  sr_fact: 'ثابت (بمصدر)', sr_trad: 'منقول / متوارث', sr_tbc: 'للتأكد / مختلف فيه' });
