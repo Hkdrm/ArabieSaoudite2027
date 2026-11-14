@@ -55,3 +55,8 @@ progress{width:100%;height:8px;accent-color:var(--g)}
 .toast{position:fixed;inset-inline:16px;bottom:calc(var(--nav) + 24px);background:#222;color:#fff;padding:10px 14px;border-radius:12px;text-align:center;z-index:50}
 [dir=rtl] .compass .arrow{transform-origin:center}
 .btn{text-decoration:none;display:inline-block}
+#ptr{position:fixed;top:calc(64px + env(safe-area-inset-top));left:50%;z-index:60;width:40px;height:40px;border-radius:50%;background:var(--card);color:var(--g);border:1px solid var(--bd);box-shadow:0 2px 8px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;font-size:20px;opacity:0;transform:translate(-50%,-20px);pointer-events:none;transition:opacity .15s}
+#ptr.ready{background:var(--g);color:#fff}
+#ptr.spin{animation:ptrspin .8s linear infinite}
+@keyframes ptrspin{to{transform:translate(-50%,50px) rotate(360deg)}}
+body{overscroll-behavior-y:contain}
