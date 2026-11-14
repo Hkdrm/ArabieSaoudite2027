@@ -81,3 +81,4 @@ button:disabled{opacity:.4;cursor:default}
 .steps span{width:34px;height:6px;border-radius:3px;background:var(--bd)}
 .steps span.on{background:var(--g)}
 .mini{max-width:520px;margin-inline:auto}
+.err{color:#c0392b;font-size:13px;min-height:18px;margin:2px 0 8px}

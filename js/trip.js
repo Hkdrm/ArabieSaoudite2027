@@ -35,7 +35,7 @@
     const set = (k, v) => { J[k] = v; save('journey'); };
 
     /* ---------- écran 1 : ajouter le voyage ---------- */
-    const formOk = () => form.d1 && form.d2 && form.d2 > form.d1;
+    const formOk = () => form.d1 && form.d2 && form.d2 > form.d1 && (!has || numsOk());
 
     const calendar = () => {
       const first = new Date(view.y, view.m, 1), n = new Date(view.y, view.m + 1, 0).getDate();
@@ -58,6 +58,8 @@
       else { form.d1 = s; A.toast(t('err_return')); }
     };
 
+    const numsOk = () => FLIGHT_RE.test((form.noOut || '').trim()) && FLIGHT_RE.test((form.noRet || '').trim());
+    const bad = v => v && !FLIGHT_RE.test(v.trim());
     const dots = (i, n) => n > 1 ? `<div class="steps">${[...Array(n)].map((_, k) => `<span class="${k < i ? 'on' : ''}"></span>`).join('')}</div><p class="muted" style="text-align:center;margin:0 0 8px">${t('step_word')} ${i}/${n}</p>` : '';
 
     /* écran 0 : « Avez-vous déjà votre billet ? » */
@@ -73,16 +75,19 @@
     /* écran 1 : numéros de vol (si billet) */
     const drawNumbers = () => {
       el.innerHTML = `<h2>${t('my_trip')}</h2>${dots(1, 2)}<div class="card mini"><h3>✈️ ${t('ticket_title')}</h3><p class="muted">${t('ticket_hint')}</p>
-        <label>🛫 ${t('no_out')}</label><input id="fNoOut" value="${esc(form.noOut)}" placeholder="SV 124" autocapitalize="characters" style="width:100%;text-transform:uppercase;margin-bottom:10px">
-        <label>🛬 ${t('no_ret')}</label><input id="fNoRet" value="${esc(form.noRet)}" placeholder="SV 125" autocapitalize="characters" style="width:100%;text-transform:uppercase;margin-bottom:10px">
+        <label>🛫 ${t('no_out')} *</label><input id="fNoOut" value="${esc(form.noOut)}" placeholder="SV 124" autocapitalize="characters" style="width:100%;text-transform:uppercase">
+        <p class="err" id="eOut">${bad(form.noOut) ? t('flight_fmt') : ''}</p>
+        <label>🛬 ${t('no_ret')} *</label><input id="fNoRet" value="${esc(form.noRet)}" placeholder="SV 125" autocapitalize="characters" style="width:100%;text-transform:uppercase">
+        <p class="err" id="eRet">${bad(form.noRet) ? t('flight_fmt') : ''}</p>
         <label>${t('booking_ref')} <span class="muted">(${t('local_only')})</span></label><input id="fRef" value="${esc(form.ref)}" style="width:100%"></div>
-        <div class="stickybar"><button type="button" class="ghost" id="back">${t('back')}</button><button type="button" id="next" style="flex:1">${t('next')} →</button>
+        <div class="stickybar"><button type="button" class="ghost" id="back">${t('back')}</button><button type="button" id="next" style="flex:1" ${numsOk() ? '' : 'disabled'}>${t('next')} →</button>
           ${saved() ? `<button type="button" class="ghost" id="cancelTrip">${t('cancel')}</button>` : ''}</div>`;
-      $('#fNoOut', el).oninput = e => { form.noOut = e.target.value.toUpperCase(); };
-      $('#fNoRet', el).oninput = e => { form.noRet = e.target.value.toUpperCase(); };
+      const refreshNums = () => { $('#next', el).disabled = !numsOk(); $('#eOut', el).textContent = bad(form.noOut) ? t('flight_fmt') : ''; $('#eRet', el).textContent = bad(form.noRet) ? t('flight_fmt') : ''; };
+      $('#fNoOut', el).oninput = e => { form.noOut = e.target.value.toUpperCase(); refreshNums(); };
+      $('#fNoRet', el).oninput = e => { form.noRet = e.target.value.toUpperCase(); refreshNums(); };
       $('#fRef', el).oninput = e => { form.ref = e.target.value; };
       $('#back', el).onclick = () => { mode = 'ask'; draw(); };
-      $('#next', el).onclick = () => { mode = 'dates'; draw(); };
+      $('#next', el).onclick = () => { if (numsOk()) { mode = 'dates'; draw(); } };
       const cn = $('#cancelTrip', el); if (cn) cn.onclick = () => { mode = 'card'; draw(); };
     };
 

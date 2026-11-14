@@ -285,3 +285,7 @@ Object.assign(I18N.en, { ask_title: 'Do you already have your ticket?', ask_sub:
 Object.assign(I18N.ar, { ask_title: 'هل لديك تذكرتك بالفعل؟', ask_sub: 'رقم الرحلة موجود على التذكرة أو في رسالة التأكيد.', yes_ticket: '✅ نعم، لدي تذكرتي', no_ticket: '🔍 ليس بعد',
   ticket_title: 'تذكرتك', ticket_hint: 'أدخل رقم الرحلة (مثل SV 124). يمكنك ترك حقل فارغًا.', dates_title: 'تواريخ سفرك', step_word: 'الخطوة', next: 'التالي',
   search_after: 'بعد الحجز، عد وأضف رقم الرحلة من البطاقة.' });
+
+Object.assign(I18N.fr, { flight_fmt: 'Format attendu : 2 lettres + chiffres (ex. SV 124).', ticket_hint: 'Indiquez le numéro de vol ALLER et RETOUR (champs obligatoires), puis vos dates à l\'étape suivante.' });
+Object.assign(I18N.en, { flight_fmt: 'Expected format: 2 letters + digits (e.g. SV 124).', ticket_hint: 'Enter the OUTBOUND and RETURN flight numbers (required), then your dates on the next step.' });
+Object.assign(I18N.ar, { flight_fmt: 'الصيغة المتوقعة: حرفان + أرقام (مثل SV 124).', ticket_hint: 'أدخل رقم رحلة الذهاب والعودة (إلزامي)، ثم تواريخك في الخطوة التالية.' });
