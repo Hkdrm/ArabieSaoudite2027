@@ -7,7 +7,7 @@
     set(k, v) { try { localStorage.setItem('omra:' + k, JSON.stringify(v)); } catch {} },
   };
 
-  const APP_VERSION = '2026-11-14.36';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
+  const APP_VERSION = '2026-11-14.38';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
 
   /* ---------- état ---------- */
   const detect = () => { const l = (navigator.language || 'fr').slice(0, 2); return LANGS[l] ? l : 'fr'; };
@@ -312,8 +312,7 @@
     const savePrefs = () => store.set('mappref', { lang: mlang, base: mbase });
     const CITY_ORDER = Object.keys(CITIES).filter(c => PLACES.some(p => p.city === c));
     el.innerHTML = `<h2>${t('explore_title')}</h2>
-      <input id="q" class="grow" type="search" placeholder="${esc(t('search'))}" style="width:100%;margin-bottom:8px">
-      <div class="chips" id="cityChips"></div>
+      <div class="row" style="margin-bottom:8px;flex-wrap:nowrap"><input id="q" class="grow" type="search" placeholder="${esc(t('search'))}" style="min-width:0"><select id="citySel" aria-label="${esc(t('city'))}" style="max-width:58%;min-width:44%"></select></div>
       <div id="mapWrap"><div id="map"></div>
         <div class="mapbtns"><button type="button" class="chip mapbtn" id="posBtn"></button><button type="button" class="chip mapbtn" id="setBtn" aria-label="${esc(t('map_settings'))}" title="${esc(t('map_settings'))}">⚙️</button></div>
         <div class="mappanel" id="mapPanel" hidden><div class="row" style="justify-content:space-between;flex-wrap:nowrap;margin-bottom:8px"><b>⚙️ ${t('map_settings_short')}</b><button type="button" class="danger" id="setClose" aria-label="OK">✕</button></div>
@@ -402,11 +401,11 @@
     };
 
     const render = (fit = true) => {
-      /* chips Ville (compteurs selon la recherche) */
+      /* liste déroulante des villes (compteurs selon la recherche) */
       const byCity = {}; items.filter(matchQ).forEach(i => { byCity[i.city] = (byCity[i.city] || 0) + 1; });
       const totalCity = Object.values(byCity).reduce((x, y) => x + y, 0);
-      $('#cityChips', el).innerHTML = `<button type="button" class="chip ${city === 'all' ? 'on' : ''}" data-city="all">🌍 ${t('ex_all_cities')} · ${totalCity}</button>` +
-        CITY_ORDER.filter(c => byCity[c] || c === city).map(c => `<button type="button" class="chip ${city === c ? 'on' : ''}" data-city="${c}">${esc(cityName(c))} · ${byCity[c] || 0}</button>`).join('');
+      $('#citySel', el).innerHTML = `<option value="all" ${city === 'all' ? 'selected' : ''}>🌍 ${esc(t('ex_all_cities'))} (${totalCity})</option>` +
+        CITY_ORDER.filter(c => byCity[c] || c === city).map(c => `<option value="${c}" ${city === c ? 'selected' : ''}>${esc(cityName(c))} (${byCity[c] || 0})</option>`).join('');
       /* onglets sous la carte : « Lieux » puis une catégorie de bons plans par onglet */
       const base = items.filter(i => (city === 'all' || i.city === city) && matchQ(i));
       const byTab = {}; base.forEach(i => { const k = i.kind === 'place' ? 'places' : i.cat; (byTab[k] = byTab[k] || []).push(i); });
@@ -430,7 +429,6 @@
       if (!seq.length) html = `<p class="muted">${t('no_results')}</p>`;
       $('#list', el).innerHTML = html ? `<div class="card" style="padding:6px 14px">${html}</div>` : '';
       /* événements */
-      $$('[data-city]', el).forEach(bt => bt.onclick = () => { city = bt.dataset.city; tab = ''; limit = 8; render(); });
       $$('[data-tab]', el).forEach(bt => bt.onclick = () => { tab = bt.dataset.tab; limit = 8; render(false); const act = $('#tabs .tab.on', el); if (act && act.scrollIntoView) act.scrollIntoView({ inline: 'center', block: 'nearest' }); });
       const more = $('#moreBtn', el); if (more) more.onclick = () => { limit += 8; render(false); };
       $$('[data-route]', el).forEach(bt => bt.onclick = () => routeTo(PLACES.find(x => x.id === bt.dataset.route)));
@@ -540,6 +538,7 @@
       } catch (e) { map = null; mapObj = null; }
     }
     if (!map) $('#map', el).outerHTML = `<div class="card muted">${t('map_offline')}</div>`;
+    $('#citySel', el).onchange = e => { city = e.target.value; tab = ''; limit = 8; render(); };
     $('#q', el).oninput = e => { q = e.target.value; limit = 8; tab = q.trim() ? 'all' : ''; render(); };
     $('#posBtn', el).onclick = () => (posOn ? stopFollow() : startFollow());
     const panel = $('#mapPanel', el); $('#setBtn', el).onclick = () => { panel.hidden = !panel.hidden; }; $('#setClose', el).onclick = () => { panel.hidden = true; };
