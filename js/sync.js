@@ -24,17 +24,14 @@
   function payload() {
     const d = { _v: 1, _ts: +store.get('ts', 0) || Date.now() };
     A.SYNC_KEYS.forEach(k => { d[k] = S[k]; });
-    if (d.flights) {                                          // pas de références de réservation
-      d.flights = JSON.parse(JSON.stringify(d.flights));
-      for (const k in d.flights) delete d.flights[k].ref;
-    }
+    if (d.journey) { d.journey = { ...d.journey }; delete d.journey.ref; delete d.journey.date2Rejected; }   // pas de référence de réservation
     return d;
   }
 
   function apply(d) {
     A.SYNC_KEYS.forEach(k => {
       if (!(k in d)) return;
-      if (k === 'flights') for (const s in d.flights) { const mine = S.flights && S.flights[s]; if (mine && mine.ref) d.flights[s].ref = mine.ref; }
+      if (k === 'journey' && d.journey) d.journey.ref = (S.journey && S.journey.ref) || '';
       S[k] = d[k]; store.set(k, S[k]);
     });
     store.set('ts', d._ts || Date.now());

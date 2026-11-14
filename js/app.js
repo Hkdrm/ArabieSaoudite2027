@@ -7,7 +7,7 @@
     set(k, v) { try { localStorage.setItem('omra:' + k, JSON.stringify(v)); } catch {} },
   };
 
-  const APP_VERSION = '2026-11-14.7';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
+  const APP_VERSION = '2026-11-14.8';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
 
   /* ---------- état ---------- */
   const detect = () => { const l = (navigator.language || 'fr').slice(0, 2); return LANGS[l] ? l : 'fr'; };
@@ -25,10 +25,20 @@
     budget: store.get('budget', 0),
     rate: store.get('rate', 0.23),
     cur: store.get('cur', 'EUR'),
-    fav: store.get('fav', []), visited: store.get('visited', {}), notes: store.get('notes', {}), vids: store.get('vids', {}), here: store.get('here', null), flights: store.get('flights', {}),
+    fav: store.get('fav', []), visited: store.get('visited', {}), notes: store.get('notes', {}), vids: store.get('vids', {}), here: store.get('here', null), journey: store.get('journey', null),
   };
   const hooks = { onSave: () => {} };
-  const SYNC_KEYS = ['lang', 'city', 'method', 'trip', 'plan', 'checks', 'custom', 'cnt', 'exp', 'budget', 'rate', 'cur', 'fav', 'visited', 'notes', 'vids', 'flights'];
+  const SYNC_KEYS = ['lang', 'city', 'method', 'trip', 'plan', 'checks', 'custom', 'cnt', 'exp', 'budget', 'rate', 'cur', 'fav', 'visited', 'notes', 'vids', 'journey'];
+  (function migrate() {
+    const old = store.get('flights', null);
+    if (S.journey || !old) return;
+    const o = (old.out && old.out.legs) || [], r = (old.ret && old.ret.legs) || [];
+    if (!o.length && !r.length) return;
+    S.journey = { from: (o[0] || {}).from || '', to: (o.length ? o[o.length - 1].to : '') || '', date1: (o[0] || {}).date || '', date2: (r.length ? r[r.length - 1].date : '') || '',
+      noOut: (o[0] || {}).no || '', noRet: (r[0] || {}).no || '', depOut: (o[0] || {}).dep || '', arrOut: (o.length ? o[o.length - 1].arr : '') || '',
+      depRet: (r[0] || {}).dep || '', arrRet: (r.length ? r[r.length - 1].arr : '') || '', ref: (old.out && old.out.ref) || '' };
+    store.set('journey', S.journey);
+  })();
   const save = (k) => {
     store.set(k, S[k]);
     if (k !== 'geo' && k !== 'here') { store.set('ts', Date.now()); hooks.onSave(k); }
@@ -99,8 +109,7 @@
           <div style="font-size:28px;font-weight:700">${t(nx.key)} <span class="muted">${t('in')} ${h ? h + 'h ' : ''}${String(mm).padStart(2, '0')}min</span></div>
           <div class="muted">${esc(hijri)}</div></div><a class="btn" href="#/prayer">🕌</a></div></div>
         ${nextFlight ? `<a class="card" href="#/trip" style="display:block;color:inherit;text-decoration:none"><h3>✈️ ${t('next_flight')}</h3><b>${esc(nextFlight.no || '')} ${esc(nextFlight.from || '')} → ${esc(nextFlight.to || '')}</b><div class="muted">${esc(nextFlight.date || '')} ${esc(nextFlight.dep || '')}</div></a>` : ''}
-        <div class="card"><h3>${t('trip_start')} / ${t('trip_end')}</h3>
-          <div class="row"><input type="date" id="d1" value="${esc(S.trip.start)}"><input type="date" id="d2" value="${esc(S.trip.end)}"><button id="saveTrip">${t('save')}</button></div></div>
+        ${tripStart() ? '' : `<a class="card" href="#/trip" style="display:block;color:inherit;text-decoration:none"><h3>✈️ ${t('trip_title')}</h3><span class="muted">${t('set_dates')} →</span></a>`}
         <h3>${t('quick')}</h3>
         <div class="grid2">
           <a class="tile" href="#/omra"><span>🕋</span>${t('quick_omra')}</a>
@@ -109,7 +118,6 @@
           <a class="tile" href="#/tools"><span>✅</span>${t('quick_list')}</a>
         </div>
         <p class="muted" id="inst"></p>`;
-      $('#saveTrip', el).onclick = () => { S.trip = { start: $('#d1', el).value, end: $('#d2', el).value }; save('trip'); draw(); };
     };
     draw(); timer = setInterval(() => { if (!document.activeElement || document.activeElement.tagName !== 'INPUT') draw(); }, 30000);
     if (deferredInstall) { $('#inst', el).innerHTML = `<button id="instBtn">⬇️ ${t('install')}</button>`; $('#instBtn', el).onclick = () => deferredInstall.prompt(); }
@@ -131,11 +139,15 @@
   }
 
   /* ---------- dates issues des vols ---------- */
-  const legs = k => (S.flights[k] && S.flights[k].legs) || [];
+  const legs = k => {
+    const j = S.journey || {};
+    if (k === 'out') return j.date1 ? [{ date: j.date1, no: j.noOut, from: j.from, to: j.to, dep: j.depOut }] : [];
+    return j.date2 ? [{ date: j.date2, no: j.noRet, from: j.retFrom || j.to, to: j.retTo || j.from, dep: j.depRet }] : [];
+  };
   const firstDate = k => legs(k).map(l => l.date).filter(Boolean).sort()[0] || '';
   const lastDate = k => legs(k).map(l => l.date).filter(Boolean).sort().at(-1) || '';
-  const tripStart = () => S.trip.start || firstDate('out');
-  const tripEnd = () => S.trip.end || lastDate('ret');
+  const tripStart = () => firstDate('out') || S.trip.start;
+  const tripEnd = () => lastDate('ret') || S.trip.end;
 
   /* ---------- Planning / Carnet ---------- */
   views.plan = el => {
@@ -402,7 +414,7 @@
       $('#imp', el).onclick = () => $('#file', el).click();
       $('#file', el).onchange = async e => {
         try { const d = JSON.parse(await e.target.files[0].text()); if (typeof d !== 'object' || !d) throw 0;
-          for (const k of ['lang', 'city', 'geo', 'method', 'trip', 'plan', 'checks', 'custom', 'cnt', 'exp', 'budget', 'rate', 'cur', 'fav', 'visited', 'notes', 'vids', 'here', 'flights']) if (k in d) { S[k] = d[k]; save(k); }
+          for (const k of ['lang', 'city', 'geo', 'method', 'trip', 'plan', 'checks', 'custom', 'cnt', 'exp', 'budget', 'rate', 'cur', 'fav', 'visited', 'notes', 'vids', 'here', 'journey']) if (k in d) { S[k] = d[k]; save(k); }
           applyLang(); toast(t('imported')); draw(); } catch { toast(t('import_err')); }
       };
     };

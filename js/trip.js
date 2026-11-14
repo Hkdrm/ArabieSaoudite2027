@@ -1,46 +1,95 @@
-/* Onglet Départ / Retour : vols saisis par l'utilisateur (stockés localement).
-   Chargé après app.js : il enregistre sa vue via window.Omra. */
+/* Onglet Départ / Retour — saisie en une fois : trajet + dates, puis vol (recherche ou numéro/réservation).
+   Tout s'enregistre automatiquement. Données : S.journey (voir app.js). */
 (() => {
   const A = window.Omra;
   const { $, $$, esc, S, save, t } = A;
-  const AIRPORTS = ['CDG', 'ORY', 'LYS', 'MRS', 'NCE', 'TLS', 'BOD', 'NTE', 'BRU', 'GVA', 'JED', 'MED', 'RUH', 'DMM', 'TIF', 'ULH'];
-  const blank = () => ({ legs: [], ref: '' });
-  const sortLegs = a => a.sort((x, y) => (x.date + (x.dep || '')).localeCompare(y.date + (y.dep || '')));
+  const AIRPORTS = { CDG: 'Paris Charles-de-Gaulle', ORY: 'Paris Orly', LYS: 'Lyon', MRS: 'Marseille', NCE: 'Nice', TLS: 'Toulouse', BOD: 'Bordeaux', NTE: 'Nantes', LIL: 'Lille', BRU: 'Bruxelles', GVA: 'Genève',
+    JED: 'Jeddah', MED: 'Médine', RUH: 'Riyad', DMM: 'Dammam', TIF: 'Taïf', ULH: 'AlUla' };
+  const DEST = ['JED', 'MED', 'RUH', 'DMM'];
+  const FLIGHT_RE = /^[A-Z0-9]{2}\s?\d{1,4}[A-Z]?$/;
+  const day = s => new Date(s + 'T00:00:00');
+  const addDay = (s, n) => { const d = day(s); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
+  const todayStr = () => new Date().toISOString().slice(0, 10);
+  const iata = v => (v || '').toUpperCase().replace(/[^A-Z]/g, '').slice(0, 3);
+  const fmtDate = s => s ? day(s).toLocaleDateString(S.lang === 'ar' ? 'ar-SA-u-nu-latn' : S.lang, { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' }) : '';
+  const yymmdd = s => s.slice(2).replace(/-/g, '');
 
   A.views.trip = el => {
+    S.journey = S.journey || {};
+    const J = S.journey;
+    const set = (k, v) => { J[k] = v; save('journey'); };
+    const ok = () => J.date1 && J.date2 && J.date2 > J.date1;
+
+    const links = () => {
+      const f = J.from, to = J.to, d1 = J.date1, d2 = J.date2;
+      return [
+        ['Google Flights', `https://www.google.com/travel/flights?q=${encodeURIComponent(`Flights from ${f} to ${to} on ${d1} through ${d2}`)}`],
+        ['Skyscanner', `https://www.skyscanner.fr/transport/vols/${f.toLowerCase()}/${to.toLowerCase()}/${yymmdd(d1)}/${yymmdd(d2)}/`],
+        ['Kayak', `https://www.kayak.fr/flights/${f}-${to}/${d1}/${d2}`],
+      ];
+    };
+    const track = no => FLIGHT_RE.test(no || '') ? `<a href="https://www.google.com/search?q=${encodeURIComponent('vol ' + no.replace(/\s+/g, ''))}" target="_blank" rel="noopener">${t('track')} ↗</a>` : '';
+
+    const summary = () => {
+      if (!J.date1) return '';
+      const n = ok() ? Math.round((day(J.date2) - day(J.date1)) / 864e5) : 0;
+      return `<div class="card hero" style="text-align:start"><div style="font-size:24px;font-weight:700">${esc(J.from || '???')} → ${esc(J.to || '???')}</div>
+        <div>🛫 ${esc(fmtDate(J.date1))}${J.noOut ? ' · ' + esc(J.noOut) : ''}</div>
+        ${J.date2 ? `<div>🛬 ${esc(fmtDate(J.date2))}${J.noRet ? ' · ' + esc(J.noRet) : ''}</div>` : ''}
+        ${n ? `<small>${n} ${t('nights')}</small>` : ''}</div>`;
+    };
+
+    const apt = (id, label, key, ph) => `<div class="grow"><label>${label}</label><input id="${id}" list="apts" value="${esc(J[key] || '')}" placeholder="${esc(ph)}" maxlength="3" style="width:100%;text-transform:uppercase"></div>`;
+
     const draw = () => {
-      const sect = (k, title, icon) => {
-        const f = S.flights[k] || blank();
-        const cards = f.legs.map((l, i) => `<div class="card" style="background:var(--bg)">
-            <div class="row"><b class="grow">${t('leg')} ${i + 1}${l.no ? ' · ' + esc(l.no) : ''}${l.airline ? ' · ' + esc(l.airline) : ''}</b>
-              ${l.no ? `<a href="https://www.google.com/search?q=${encodeURIComponent('vol ' + l.no.replace(/\s+/g, ''))}" target="_blank" rel="noopener">${t('track')} ↗</a>` : ''}
-              <button class="danger" data-ldel="${k}:${i}" aria-label="${t('remove')}">✕</button></div>
-            <div style="font-size:22px;font-weight:700;margin:6px 0">${esc(l.from || '???')} → ${esc(l.to || '???')}</div>
-            <div class="muted">${esc(l.date || '')}${l.dep ? ' · ' + t('dep_time') + ' ' + esc(l.dep) : ''}${l.arr ? ' · ' + t('arr_time') + ' ' + esc(l.arr) : ''}${l.term ? ' · ' + t('terminal') + ' ' + esc(l.term) : ''}</div>
-            ${l.note ? `<div>${esc(l.note)}</div>` : ''}</div>`).join('');
-        return `<div class="card"><h3>${icon} ${title}</h3>
-          ${cards || `<p class="muted">${t('no_flight')}</p>`}
-          <details><summary>${t('add_leg')}</summary>
-            <form class="form" data-lf="${k}" style="margin-top:8px">
-              <div class="row"><input name="airline" placeholder="${esc(t('airline'))}" class="grow"><input name="no" placeholder="${esc(t('flight_no'))}" style="width:110px"></div>
-              <div class="row"><input name="from" list="apts" placeholder="${esc(t('from'))}" maxlength="3" style="width:100px;text-transform:uppercase"><input name="to" list="apts" placeholder="${esc(t('to'))}" maxlength="3" style="width:100px;text-transform:uppercase"><input name="date" type="date" required></div>
-              <div class="row"><div><label>${t('dep_time')}</label><input name="dep" type="time"></div><div><label>${t('arr_time')}</label><input name="arr" type="time"></div><div><label>${t('terminal')}</label><input name="term" style="width:80px"></div></div>
-              <input name="note" placeholder="${esc(t('f_notes'))}"><button>${t('add')}</button></form></details>
-          <div style="margin-top:10px"><label>${t('booking_ref')} <span class="muted">(${t('local_only')})</span></label>
-            <input data-ref="${k}" value="${esc(f.ref || '')}" style="width:100%"></div></div>`;
+      const valid = ok();
+      const retErr = J.date2Rejected ? `<p style="color:#c0392b;margin:4px 0">⚠️ ${t('err_return')}</p>` : '';
+      const past = J.date1 && J.date1 < todayStr() ? `<p class="muted">ℹ️ ${t('warn_past')}</p>` : '';
+      el.innerHTML = `<h2>${t('trip_title')}</h2><datalist id="apts">${Object.entries(AIRPORTS).map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join('')}</datalist>
+        <div id="sum">${summary()}</div>
+        <div class="card"><h3>${t('step_route')}</h3>
+          <div class="row">${apt('from', t('from_lbl'), 'from', 'CDG')}<div style="padding-top:20px">→</div>${apt('to', t('to_lbl'), 'to', 'JED')}</div>
+          <div class="chips" style="margin-top:8px">${DEST.map(d => `<button type="button" class="chip ${J.to === d ? 'on' : ''}" data-dest="${d}">${d} · ${esc(AIRPORTS[d])}</button>`).join('')}</div>
+          <div class="row"><div class="grow"><label>🛫 ${t('depart_date')}</label><input id="d1" type="date" value="${esc(J.date1 || '')}" style="width:100%"></div>
+            <div class="grow"><label>🛬 ${t('return_date')}</label><input id="d2" type="date" value="${esc(J.date2 || '')}" ${J.date1 ? `min="${addDay(J.date1, 1)}"` : 'disabled'} style="width:100%"></div></div>
+          ${retErr}${past}
+          <details style="margin-top:8px" ${J.retFrom || J.retTo ? 'open' : ''}><summary>${t('other_return')}</summary><div class="row" style="margin-top:6px">
+            ${apt('rfrom', t('ret_from'), 'retFrom', J.to || 'MED')}${apt('rto', t('ret_to'), 'retTo', J.from || 'CDG')}</div></details></div>
+        ${valid && J.from && J.to ? `<div class="card"><h3>${t('step_flights')}</h3>
+          <p>${t('find_flights')}</p><div class="row">${links().map(([n, u]) => `<a class="btn" href="${u}" target="_blank" rel="noopener">${n} ↗</a>`).join('')}</div>
+          <hr style="border:0;border-top:1px solid var(--bd);margin:14px 0">
+          <p>${t('have_flight')}</p>
+          <div class="row"><div class="grow"><label>🛫 ${t('no_out')}</label><input id="noOut" value="${esc(J.noOut || '')}" placeholder="SV 124" style="width:100%;text-transform:uppercase"></div>
+            <div class="grow"><label>🛬 ${t('no_ret')}</label><input id="noRet" value="${esc(J.noRet || '')}" placeholder="SV 125" style="width:100%;text-transform:uppercase"></div></div>
+          <div class="row"><span id="trkOut">${track(J.noOut)}</span><span id="trkRet">${track(J.noRet)}</span></div>
+          <div style="margin-top:8px"><label>${t('booking_ref')} <span class="muted">(${t('local_only')})</span></label><input id="ref" value="${esc(J.ref || '')}" style="width:100%"></div>
+          <details style="margin-top:10px" ${J.depOut || J.arrOut || J.depRet || J.arrRet ? 'open' : ''}><summary>${t('times_opt')}</summary>
+            <div class="row" style="margin-top:6px"><div><label>🛫 ${t('dep_time')}</label><input id="depOut" type="time" value="${esc(J.depOut || '')}"></div><div><label>🛫 ${t('arr_time')}</label><input id="arrOut" type="time" value="${esc(J.arrOut || '')}"></div><div><label>${t('terminal')}</label><input id="termOut" value="${esc(J.termOut || '')}" style="width:70px"></div></div>
+            <div class="row" style="margin-top:6px"><div><label>🛬 ${t('dep_time')}</label><input id="depRet" type="time" value="${esc(J.depRet || '')}"></div><div><label>🛬 ${t('arr_time')}</label><input id="arrRet" type="time" value="${esc(J.arrRet || '')}"></div><div><label>${t('terminal')}</label><input id="termRet" value="${esc(J.termRet || '')}" style="width:70px"></div></div></details>
+          <p class="muted" style="margin-top:10px">✓ ${t('saved_auto')}</p></div>`
+          : `<p class="muted">${t('pick_dates')}</p>`}`;
+
+      const bindAirport = (id, key) => { $(id, el).onchange = e => { e.target.value = iata(e.target.value); set(key, e.target.value); draw(); }; };
+      bindAirport('#from', 'from'); bindAirport('#to', 'to'); bindAirport('#rfrom', 'retFrom'); bindAirport('#rto', 'retTo');
+      $$('[data-dest]', el).forEach(b => b.onclick = () => { set('to', b.dataset.dest); draw(); });
+      $('#d1', el).onchange = e => {
+        set('date1', e.target.value); J.date2Rejected = false;
+        if (J.date2 && J.date2 <= J.date1) { set('date2', ''); J.date2Rejected = true; }   // le retour doit rester après le départ
+        draw();
       };
-      el.innerHTML = `<h2>${t('trip_title')}</h2><datalist id="apts">${AIRPORTS.map(a => `<option value="${a}">`).join('')}</datalist>
-        ${sect('out', t('outbound'), '🛫')}${sect('ret', t('inbound'), '🛬')}`;
-      $$('[data-lf]', el).forEach(f => f.onsubmit = e => {
-        e.preventDefault();
-        const d = Object.fromEntries(new FormData(f)), k = f.dataset.lf;
-        for (const x of ['from', 'to', 'no']) d[x] = (d[x] || '').toUpperCase().trim();
-        S.flights[k] = S.flights[k] || blank();
-        S.flights[k].legs = sortLegs([...S.flights[k].legs, d]);
-        save('flights'); draw();
-      });
-      $$('[data-ldel]', el).forEach(b => b.onclick = () => { const [k, i] = b.dataset.ldel.split(':'); S.flights[k].legs.splice(+i, 1); save('flights'); draw(); });
-      $$('[data-ref]', el).forEach(inp => inp.oninput = () => { const k = inp.dataset.ref; S.flights[k] = S.flights[k] || blank(); S.flights[k].ref = inp.value; save('flights'); });
+      $('#d2', el).onchange = e => {
+        const v = e.target.value;
+        if (v && J.date1 && v <= J.date1) { J.date2Rejected = true; set('date2', ''); } else { J.date2Rejected = false; set('date2', v); }
+        draw();
+      };
+      // champs texte : enregistrement à chaque frappe, sans redessiner (le clavier reste ouvert)
+      const bindText = (id, key, fn) => { const i = $(id, el); if (i) i.oninput = () => { set(key, fn ? fn(i.value) : i.value); $('#sum', el).innerHTML = summary(); }; };
+      const up = v => v.toUpperCase();
+      bindText('#noOut', 'noOut', up); bindText('#noRet', 'noRet', up); bindText('#ref', 'ref');
+      ['depOut', 'arrOut', 'depRet', 'arrRet', 'termOut', 'termRet'].forEach(k => bindText('#' + k, k));
+      const no1 = $('#noOut', el), no2 = $('#noRet', el);
+      if (no1) no1.onchange = () => { $('#trkOut', el).innerHTML = track(J.noOut); };
+      if (no2) no2.onchange = () => { $('#trkRet', el).innerHTML = track(J.noRet); };
     };
     draw();
   };

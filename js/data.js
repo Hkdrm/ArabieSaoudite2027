@@ -230,3 +230,23 @@ Object.assign(I18N.ar, {
   restore_confirm: 'توجد نسخة أحدث. الاستعادة ستستبدل بيانات هذا الجهاز. استعادة؟', restored: 'تمت الاستعادة', saved: 'تم الحفظ ✓',
   sync_excl: 'لا تُرسل: أرقام الحجز والموقع. بقية البيانات تُحفظ في gist خاص (غير معلن) في حسابك.', sync_none: 'لا توجد نسخة.',
 });
+
+/* ---- Départ / Retour simplifié ---- */
+Object.assign(I18N.fr, {
+  step_route: '1. Trajet et dates', step_flights: '2. Vos vols', from_lbl: 'Départ de', to_lbl: 'Destination', depart_date: 'Date de départ', return_date: 'Date de retour',
+  err_return: 'La date de retour doit être après la date de départ.', warn_past: 'Cette date est déjà passée.', nights: 'nuits', other_return: 'Retour depuis / vers un autre aéroport ?', ret_from: 'Retour depuis', ret_to: 'Retour vers',
+  find_flights: 'Pas encore de vol ? Cherchez les vols pour ces dates :', have_flight: 'Déjà réservé ? Indiquez le numéro de vol et/ou la réservation :',
+  no_out: 'N° de vol aller', no_ret: 'N° de vol retour', times_opt: 'Horaires (facultatif)', saved_auto: 'Enregistré automatiquement', pick_dates: 'Choisissez d\'abord vos dates pour continuer.', open_search: 'Ouvrir',
+});
+Object.assign(I18N.en, {
+  step_route: '1. Route and dates', step_flights: '2. Your flights', from_lbl: 'Departing from', to_lbl: 'Destination', depart_date: 'Departure date', return_date: 'Return date',
+  err_return: 'The return date must be after the departure date.', warn_past: 'This date is already past.', nights: 'nights', other_return: 'Return from / to a different airport?', ret_from: 'Return from', ret_to: 'Return to',
+  find_flights: 'No flight yet? Search flights for these dates:', have_flight: 'Already booked? Enter the flight number and/or booking:',
+  no_out: 'Outbound flight no.', no_ret: 'Return flight no.', times_opt: 'Times (optional)', saved_auto: 'Saved automatically', pick_dates: 'Pick your dates first to continue.', open_search: 'Open',
+});
+Object.assign(I18N.ar, {
+  step_route: '١. المسار والتواريخ', step_flights: '٢. رحلاتك', from_lbl: 'المغادرة من', to_lbl: 'الوجهة', depart_date: 'تاريخ المغادرة', return_date: 'تاريخ العودة',
+  err_return: 'يجب أن يكون تاريخ العودة بعد تاريخ المغادرة.', warn_past: 'هذا التاريخ مضى بالفعل.', nights: 'ليالٍ', other_return: 'العودة من/إلى مطار آخر؟', ret_from: 'العودة من', ret_to: 'العودة إلى',
+  find_flights: 'لا رحلة بعد؟ ابحث عن رحلات لهذه التواريخ:', have_flight: 'حجزت بالفعل؟ أدخل رقم الرحلة و/أو الحجز:',
+  no_out: 'رقم رحلة الذهاب', no_ret: 'رقم رحلة العودة', times_opt: 'المواعيد (اختياري)', saved_auto: 'يُحفظ تلقائيًا', pick_dates: 'اختر التواريخ أولًا للمتابعة.', open_search: 'فتح',
+});
