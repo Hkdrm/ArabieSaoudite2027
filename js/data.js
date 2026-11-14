@@ -297,3 +297,14 @@ Object.assign(I18N.en, { flights_for_dates: 'The flight number must match the da
   airline_app: 'Airline app', no_ticket_yet: 'No ticket yet: save the dates only', dates_changed_warn: 'You changed the dates: check that these flights operate on the new dates.', flights_h: 'Your flights' });
 Object.assign(I18N.ar, { flights_for_dates: 'يجب أن يطابق رقم الرحلة التاريخ المعروض: المس «تحقق» للتأكد.', verify_flight: 'تحقق من هذه الرحلة في هذا التاريخ', airline_link: 'رابط تطبيق أو موقع شركة الطيران (اختياري)',
   airline_app: 'تطبيق الشركة', no_ticket_yet: 'لا تذكرة بعد: احفظ التواريخ فقط', dates_changed_warn: 'غيّرت التواريخ: تأكد أن هذه الرحلات تعمل في التواريخ الجديدة.', flights_h: 'رحلاتك' });
+
+/* ---- Carte : français, GPS, itinéraires ---- */
+Object.assign(I18N.fr, { follow_me: 'Ma position', route_btn: 'Itinéraire', route_drive: 'en voiture', route_walk: 'à pied, estimation', route_err: 'Itinéraire indisponible pour le moment. Utilisez Google Maps ou Plans.',
+  route_far: 'Vous êtes à', route_crow: "à vol d'oiseau : l'itinéraire routier sera disponible une fois sur place. Utilisez Google Maps ou Plans.", map_layer_fr: 'Plan (français)', map_layer_local: 'Plan (noms locaux)', map_layer_sat: 'Satellite' });
+Object.assign(I18N.en, { follow_me: 'My position', route_btn: 'Route', route_drive: 'by car', route_walk: 'on foot, estimate', route_err: 'Route unavailable right now. Use Google Maps or Apple Maps.',
+  route_far: 'You are', route_crow: 'away as the crow flies: the road route will be available once you are there. Use Google Maps or Apple Maps.', map_layer_fr: 'Map (Latin names)', map_layer_local: 'Map (local names)', map_layer_sat: 'Satellite' });
+Object.assign(I18N.ar, { follow_me: 'موقعي', route_btn: 'المسار', route_drive: 'بالسيارة', route_walk: 'سيرًا، تقدير', route_err: 'المسار غير متاح الآن. استخدم خرائط Google أو Apple.',
+  route_far: 'أنت على بعد', route_crow: 'بخط مستقيم: سيتوفر المسار البري عند وصولك. استخدم خرائط Google أو Apple.', map_layer_fr: 'خريطة (أسماء لاتينية)', map_layer_local: 'خريطة (أسماء محلية)', map_layer_sat: 'قمر صناعي' });
+Object.assign(I18N.fr, { route_walk_real: 'à pied' });
+Object.assign(I18N.en, { route_walk_real: 'on foot' });
+Object.assign(I18N.ar, { route_walk_real: 'سيرًا' });

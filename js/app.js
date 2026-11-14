@@ -7,7 +7,7 @@
     set(k, v) { try { localStorage.setItem('omra:' + k, JSON.stringify(v)); } catch {} },
   };
 
-  const APP_VERSION = '2026-11-14.22';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
+  const APP_VERSION = '2026-11-14.24';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
 
   /* ---------- état ---------- */
   const detect = () => { const l = (navigator.language || 'fr').slice(0, 2); return LANGS[l] ? l : 'fr'; };
@@ -68,11 +68,12 @@
 
   /* ---------- routeur ---------- */
   const views = {};
-  let timer = null, mapObj = null, orient = null;
+  let timer = null, mapObj = null, orient = null, geoWatch = null;
   function route() {
     clearInterval(timer); timer = null;
     if (orient) { window.removeEventListener('deviceorientationabsolute', orient, true); window.removeEventListener('deviceorientation', orient, true); orient = null; }
     if (mapObj) { mapObj.remove(); mapObj = null; }
+    if (geoWatch != null && navigator.geolocation) { navigator.geolocation.clearWatch(geoWatch); geoWatch = null; }
     const [r, arg] = (location.hash.replace('#/', '') || 'home').split('/');
     const name = views[r] ? r : 'home';
     $$('#nav a').forEach(a => a.classList.toggle('on', a.dataset.r === (name === 'place' || name === 'map' ? 'explore' : name)));
@@ -266,26 +267,39 @@
   const rad = d => d * Math.PI / 180;
   const km = (a, b) => { const dp = rad(b.lat - a.lat), dl = rad(b.lng - a.lng); const x = Math.sin(dp / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dl / 2) ** 2; return 12742 * Math.asin(Math.sqrt(x)); };
   const norm = s => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
-  const gmaps = p => `https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}`;
+  const gmaps = p => `https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}&travelmode=driving`;
+  const appleMaps = p => `https://maps.apple.com/?daddr=${p.lat},${p.lng}&dirflg=d`;
   const catColor = { holy: '#0b6b4f', sira: '#2b6cb0', heritage: '#b7791f', nature: '#2f855a', miqat: '#c9a227', airport: '#7b5ea7' };
   const cityName = id => (CITIES[id] ? L(CITIES[id].n) : id);
-  function locate(cb) {
-    if (!navigator.geolocation) return toast(t('geo_error'));
-    toast(t('locating'));
-    navigator.geolocation.getCurrentPosition(pos => { S.here = { lat: pos.coords.latitude, lng: pos.coords.longitude }; save('here'); cb(); }, () => toast(t('geo_error')), { timeout: 10000 });
-  }
+  const pad2 = n => String(n).padStart(2, '0');
+  const fmtDur = m => m >= 60 ? `${Math.floor(m / 60)} h ${pad2(m % 60)}` : `${m} min`;
 
-  /* ---------- Explorer (carte + recherche + filtres) ---------- */
-  views.explore = el => {
-    let cat = 'all', city = 'all', q = '', near = false, layer = null;
+  /* ---------- Explorer (carte + recherche + filtres + GPS + itinéraires) ---------- */
+  views.explore = (el, arg) => {
+    let cat = 'all', city = 'all', q = '', near = false, layer = null, routeLayer = null, meLayer = null, firstFix = true, lastR = null;
     const cities = [...new Set(PLACES.map(p => p.city))];
     el.innerHTML = `<h2>${t('explore_title')}</h2>
       <div class="card muted">⚠️ ${t('warn_unverified')}</div>
       <div class="row" style="margin-bottom:8px"><input id="q" class="grow" type="search" placeholder="${esc(t('search'))}">
         <select id="cty"><option value="all">${t('all_cities')}</option>${cities.map(c => `<option value="${c}">${esc(cityName(c))}</option>`).join('')}</select>
-        <button class="ghost" id="nearBtn" title="${t('near_me')}">📍</button></div>
-      <div class="chips" id="chips"></div><div id="map"></div><div class="card" id="list"></div>`;
-    const render = () => {
+        <button class="ghost" id="nearBtn" title="${t('follow_me')}">📍 ${t('follow_me')}</button></div>
+      <div class="chips" id="chips"></div><div id="map"></div><div id="routeBar"></div><div class="card" id="list"></div>`;
+    const LF = window.L;
+
+    const showMe = (lat, lng, acc) => {
+      if (!mapObj || !meLayer) return;
+      meLayer.clearLayers();
+      LF.circle([lat, lng], { radius: acc || 30, color: '#2b6cb0', weight: 1, fillColor: '#2b6cb0', fillOpacity: 0.12 }).addTo(meLayer);
+      LF.circleMarker([lat, lng], { radius: 8, color: '#fff', weight: 3, fillColor: '#2b6cb0', fillOpacity: 1 }).addTo(meLayer);
+    };
+    const getPos = () => new Promise(res => {
+      if (!navigator.geolocation) return res(null);
+      navigator.geolocation.getCurrentPosition(pos => {
+        S.here = { lat: pos.coords.latitude, lng: pos.coords.longitude }; save('here'); showMe(S.here.lat, S.here.lng, pos.coords.accuracy); res(S.here);
+      }, () => res(null), { enableHighAccuracy: true, timeout: 12000, maximumAge: 15000 });
+    });
+
+    const render = (fit = true) => {
       $('#chips', el).innerHTML = ['all', ...CATEGORIES].map(c => `<button class="chip ${c === cat ? 'on' : ''}" data-cat="${c}">${t(c === 'all' ? 'all' : 'c_' + c)}</button>`).join('');
       let ps = PLACES.filter(p => (cat === 'all' || p.c === cat) && (city === 'all' || p.city === city) &&
         (!q || norm([p.n.fr, p.n.en, p.n.ar, L(p.sum), cityName(p.city)].join(' ')).includes(norm(q))));
@@ -294,26 +308,92 @@
       $('#list', el).innerHTML = ps.length ? ps.map(p => `<div class="item"><div class="tx"><a href="#/place/${p.id}" style="color:var(--tx);font-size:16px">${S.fav.includes(p.id) ? '★ ' : ''}${S.visited[p.id] ? '✓ ' : ''}${esc(L(p.n))}</a>
         <div class="muted" dir="rtl" style="text-align:start">${esc(p.n.ar)}</div>
         <span class="pill">${t('c_' + p.c)}</span> <span class="pill">${esc(cityName(p.city))}</span>${p.d != null ? ` <span class="pill">${t('distance_km')} ${nf(Math.round(p.d))} ${t('km')}</span>` : ''}</div>
-        <a href="${gmaps(p)}" target="_blank" rel="noopener">↗</a></div>`).join('') : `<p class="muted">${t('no_results')}</p>`;
+        <div class="acts"><button type="button" data-route="${p.id}">🧭 ${t('route_btn')}</button>
+          <a href="${gmaps(p)}" target="_blank" rel="noopener">Google Maps</a><a href="${appleMaps(p)}" target="_blank" rel="noopener">Plans</a></div></div>`).join('') : `<p class="muted">${t('no_results')}</p>`;
       $$('[data-cat]', el).forEach(b => b.onclick = () => { cat = b.dataset.cat; render(); });
+      $$('[data-route]', el).forEach(b => b.onclick = () => routeTo(PLACES.find(x => x.id === b.dataset.route)));
       if (mapObj && layer) {
         layer.clearLayers();
         ps.forEach(p => LF.circleMarker([p.lat, p.lng], { radius: 9, color: '#fff', weight: 2, fillColor: catColor[p.c], fillOpacity: 1 })
-          .bindPopup(`<b>${esc(L(p.n))}</b><br><span dir="rtl">${esc(p.n.ar)}</span><br><a href="#/place/${p.id}">${t('nav_explore')} →</a> · <a href="${gmaps(p)}" target="_blank" rel="noopener">${t('open_maps')} ↗</a>`).addTo(layer));
-        if (S.here) LF.circleMarker([S.here.lat, S.here.lng], { radius: 7, color: '#fff', weight: 2, fillColor: '#e53e3e', fillOpacity: 1 }).addTo(layer);
-        if (ps.length) mapObj.fitBounds(LF.latLngBounds(ps.map(p => [p.lat, p.lng])).pad(0.2), { maxZoom: 14 });
+          .bindPopup(`<b>${esc(L(p.n))}</b><br><span dir="rtl">${esc(p.n.ar)}</span><br><a href="#/place/${p.id}">${t('nav_explore')} →</a> · <a href="#/explore/to-${p.id}">🧭 ${t('route_btn')}</a><br><a href="${gmaps(p)}" target="_blank" rel="noopener">Google Maps ↗</a> · <a href="${appleMaps(p)}" target="_blank" rel="noopener">Plans ↗</a>`).addTo(layer));
+        if (fit && ps.length) mapObj.fitBounds(LF.latLngBounds(ps.map(p => [p.lat, p.lng])).pad(0.2), { maxZoom: 14 });
       }
     };
-    const LF = window.L;
+
+    /* Itinéraire depuis la position GPS (calcul routier OSRM). Trop loin (> 800 km) : distance à vol d'oiseau + liens Google/Plans. */
+    const routeTo = async p => {
+      const bar = $('#routeBar', el);
+      const links = `<a class="btn alt" href="${gmaps(p)}" target="_blank" rel="noopener">Google Maps ↗</a> <a class="btn alt" href="${appleMaps(p)}" target="_blank" rel="noopener">Plans ↗</a>`;
+      toast(t('locating'));
+      const me = await getPos();
+      if (!me) { bar.innerHTML = `<div class="card"><b>🧭 ${esc(L(p.n))}</b><p class="muted">${t('geo_error')}</p><div class="row">${links}</div></div>`; return; }
+      if (routeLayer) routeLayer.clearLayers();
+      const crow = km(me, p);
+      let rt = null, foot = null;
+      if (crow <= 800) {
+        // Calcul d'itinéraire (OSM) : voiture et marche en parallèle, avec serveur de secours et délai maximal de 9 s.
+        const fetchRoute = async (base) => {
+          const ctl = new AbortController(), tm = setTimeout(() => ctl.abort(), 9000);
+          try {
+            const r = await fetch(`${base}/route/v1/driving/${me.lng},${me.lat};${p.lng},${p.lat}?overview=full&geometries=geojson`, { signal: ctl.signal });
+            const d = await r.json(); return (d.routes && d.routes[0]) || null;
+          } catch (e) { return null; } finally { clearTimeout(tm); }
+        };
+        const firstOf = async bases => { for (const b of bases) { const r = await fetchRoute(b); if (r) return r; } return null; };
+        [rt, foot] = await Promise.all([
+          firstOf(['https://routing.openstreetmap.de/routed-car', 'https://router.project-osrm.org']),
+          firstOf(['https://routing.openstreetmap.de/routed-foot'])]);
+        if (!rt) rt = foot;                                    // à défaut de route voiture, on trace la route à pied
+      }
+      const head = `<b>🧭 ${esc(L(p.n))}</b> <button type="button" class="danger" id="routeClear" style="float:inline-end">✕</button>`;
+      if (rt && mapObj && routeLayer) {
+        const geo = LF.geoJSON(rt.geometry, { style: { color: '#2b6cb0', weight: 6, opacity: 0.85 } }).addTo(routeLayer);
+        LF.circleMarker([p.lat, p.lng], { radius: 11, color: '#fff', weight: 3, fillColor: '#e53e3e', fillOpacity: 1 }).addTo(routeLayer);
+        mapObj.fitBounds(geo.getBounds().pad(0.15));
+        const kmv = rt.distance / 1000, drive = Math.max(1, Math.round(rt.duration / 60)), walk = foot ? Math.max(1, Math.round(foot.duration / 60)) : Math.round(kmv / 5 * 60);
+        bar.innerHTML = `<div class="card">${head}<p style="margin:6px 0">🚗 <b>${nf(Math.round(kmv * 10) / 10)} ${t('km')}</b> · ${fmtDur(drive)} <span class="muted">(${t('route_drive')})</span><br>
+          🚶 ${foot ? '' : '≈ '}${fmtDur(walk)} <span class="muted">(${foot ? t('route_walk_real') : t('route_walk')})</span></p><div class="row">${links}</div></div>`;
+      } else {
+        if (mapObj && routeLayer) {
+          LF.polyline([[me.lat, me.lng], [p.lat, p.lng]], { color: '#2b6cb0', weight: 3, dashArray: '6 8' }).addTo(routeLayer);
+          mapObj.fitBounds(LF.latLngBounds([[me.lat, me.lng], [p.lat, p.lng]]).pad(0.2));
+        }
+        bar.innerHTML = `<div class="card">${head}<p style="margin:6px 0">${crow > 800 ? `${t('route_far')} <b>${nf(Math.round(crow))} ${t('km')}</b> ${t('route_crow')}` : t('route_err')}</p><div class="row">${links}</div></div>`;
+      }
+      const c = $('#routeClear', el); if (c) c.onclick = () => { bar.innerHTML = ''; if (routeLayer) routeLayer.clearLayers(); };
+      bar.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    };
+
+    /* Suivi de ma position (point bleu) : se met à jour tout seul ; trie la liste par distance. */
+    const follow = () => {
+      if (!navigator.geolocation) return toast(t('geo_error'));
+      if (geoWatch != null) { if (S.here && mapObj) mapObj.flyTo([S.here.lat, S.here.lng], 15); return; }
+      toast(t('locating'));
+      geoWatch = navigator.geolocation.watchPosition(pos => {
+        S.here = { lat: pos.coords.latitude, lng: pos.coords.longitude }; save('here');
+        showMe(S.here.lat, S.here.lng, pos.coords.accuracy);
+        if (firstFix) { firstFix = false; near = true; lastR = S.here; render(false); if (mapObj) mapObj.flyTo([S.here.lat, S.here.lng], 14); }
+        else if (!lastR || km(lastR, S.here) > 0.05) { lastR = S.here; render(false); }          // liste mise à jour si on a bougé de > 50 m
+      }, () => { toast(t('geo_error')); if (geoWatch != null) { navigator.geolocation.clearWatch(geoWatch); geoWatch = null; } }, { enableHighAccuracy: true, maximumAge: 5000, timeout: 20000 });
+    };
+
     if (LF && navigator.onLine !== false) {
       mapObj = LF.map('map').setView([23.5, 42], 5);
-      LF.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '&copy; OpenStreetMap' }).addTo(mapObj);
-      layer = LF.layerGroup().addTo(mapObj);
+      const osmfr = LF.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', { maxZoom: 20, subdomains: 'abc',
+        attribution: '&copy; <a href="https://www.openstreetmap.fr">OpenStreetMap France</a> | &copy; contributeurs <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' });
+      const osm = LF.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; contributeurs <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' });
+      const sat = LF.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, attribution: 'Imagerie &copy; Esri, Maxar, Earthstar Geographics' });
+      osmfr.addTo(mapObj);
+      LF.control.layers({ [t('map_layer_fr')]: osmfr, [t('map_layer_local')]: osm, [t('map_layer_sat')]: sat }, null, { collapsed: true }).addTo(mapObj);
+      layer = LF.layerGroup().addTo(mapObj); routeLayer = LF.layerGroup().addTo(mapObj); meLayer = LF.layerGroup().addTo(mapObj);
+      if (S.here) showMe(S.here.lat, S.here.lng, 0);
     } else { $('#map', el).outerHTML = `<div class="card muted">${t('map_offline')}</div>`; }
     $('#q', el).oninput = e => { q = e.target.value; render(); };
     $('#cty', el).onchange = e => { city = e.target.value; render(); };
-    $('#nearBtn', el).onclick = () => locate(() => { near = true; render(); });
+    $('#nearBtn', el).onclick = follow;
     render();
+    const target = arg && /^to-/.test(arg) ? PLACES.find(x => 'to-' + x.id === arg) : null;
+    if (target) routeTo(target);
   };
   views.map = views.explore;
 
@@ -341,8 +421,9 @@
           <p>${esc(L(p.sum))}</p>
           <div class="row"><button id="fav" class="${fav ? '' : 'ghost'}">${fav ? '★' : '☆'} ${t('fav')}</button>
             <button id="vis" class="${vis ? '' : 'ghost'}">${vis ? '✓ ' + t('visited') : t('mark_visited')}</button></div>
-          <div class="row" style="margin-top:8px"><a class="btn" href="${gmaps(p)}" target="_blank" rel="noopener">🧭 ${t('open_maps')}</a>
-            <button class="ghost" id="gps">📋 ${t('copy_gps')}</button><button class="ghost" id="addplan">🗓️ ${t('add_to_plan')}</button></div>
+          <div class="row" style="margin-top:8px"><a class="btn" href="#/explore/to-${p.id}">🧭 ${t('route_btn')}</a>
+            <a class="btn alt" href="${gmaps(p)}" target="_blank" rel="noopener">Google Maps ↗</a><a class="btn alt" href="${appleMaps(p)}" target="_blank" rel="noopener">Plans ↗</a></div>
+          <div class="row" style="margin-top:8px"><button class="ghost" id="gps">📋 ${t('copy_gps')}</button><button class="ghost" id="addplan">🗓️ ${t('add_to_plan')}</button></div>
           ${p.approx ? `<p class="muted">⚠️ ${t('approx_coord')}</p>` : ''}</div>
         ${p.facts.length ? `<div class="card"><h3>${t('facts_title')}</h3>${p.facts.map(f => `<div class="dua" style="border-inline-start-color:${f.s === 'fact' ? 'var(--g)' : '#d69e2e'}"><span class="pill">${f.s === 'fact' ? '✔ ' + t('fact') : '❓ ' + t('trad')}</span><div>${esc(L(f.t))}</div></div>`).join('')}</div>` : ''}
         <div class="card"><h3>${t('practical')}</h3><div class="times">

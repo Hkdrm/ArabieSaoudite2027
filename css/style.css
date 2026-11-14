@@ -86,3 +86,7 @@ button:disabled{opacity:.4;cursor:default}
 .legdate{margin-bottom:6px;font-size:15px}
 .detect{margin:0 0 8px;min-height:0;font-size:13px}
 .btn.alt{background:transparent;color:var(--g);border:1px solid var(--g)}
+.acts{display:flex;flex-direction:column;gap:4px;align-items:stretch;min-width:104px}
+.acts a,.acts button{font-size:12px;padding:6px 8px;border-radius:8px;text-align:center;text-decoration:none;font-weight:600}
+.acts a{border:1px solid var(--g);color:var(--g);background:transparent}
+#routeBar .card{border-color:#2b6cb0}
