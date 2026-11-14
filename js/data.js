@@ -384,3 +384,7 @@ Object.assign(I18N.ar, { ex_all_cities: 'كل المدن', ex_type_all: 'الك�
 Object.assign(I18N.fr, { map_settings: 'Réglages de la carte (langue, fond)' });
 Object.assign(I18N.en, { map_settings: 'Map settings (language, style)' });
 Object.assign(I18N.ar, { map_settings: 'إعدادات الخريطة (اللغة، النمط)' });
+
+Object.assign(I18N.fr, { map_settings_short: 'Réglages de la carte' });
+Object.assign(I18N.en, { map_settings_short: 'Map settings' });
+Object.assign(I18N.ar, { map_settings_short: 'إعدادات الخريطة' });

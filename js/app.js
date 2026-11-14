@@ -7,7 +7,7 @@
     set(k, v) { try { localStorage.setItem('omra:' + k, JSON.stringify(v)); } catch {} },
   };
 
-  const APP_VERSION = '2026-11-14.33';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
+  const APP_VERSION = '2026-11-14.35';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
 
   /* ---------- état ---------- */
   const detect = () => { const l = (navigator.language || 'fr').slice(0, 2); return LANGS[l] ? l : 'fr'; };
@@ -312,14 +312,14 @@
     const savePrefs = () => store.set('mappref', { lang: mlang, base: mbase });
     const CITY_ORDER = Object.keys(CITIES).filter(c => PLACES.some(p => p.city === c));
     el.innerHTML = `<h2>${t('explore_title')}</h2>
-      <p class="muted warnline">⚠️ ${t('warn_unverified')}</p>
       <input id="q" class="grow" type="search" placeholder="${esc(t('search'))}" style="width:100%;margin-bottom:8px">
       <div class="chips" id="cityChips"></div><div class="chips" id="typeChips"></div><div class="chips" id="catChips"></div>
-      <div id="mapWrap"><div id="map"></div><button type="button" class="chip mapbtn" id="posBtn"></button></div>
+      <div id="mapWrap"><div id="map"></div>
+        <div class="mapbtns"><button type="button" class="chip mapbtn" id="posBtn"></button><button type="button" class="chip mapbtn" id="setBtn" aria-label="${esc(t('map_settings'))}" title="${esc(t('map_settings'))}">⚙️</button></div>
+        <div class="mappanel" id="mapPanel" hidden><div class="row" style="justify-content:space-between;flex-wrap:nowrap;margin-bottom:8px"><b>⚙️ ${t('map_settings_short')}</b><button type="button" class="danger" id="setClose" aria-label="OK">✕</button></div>
+          <label>🌐 ${t('map_lang_label')}</label><select id="mlang" style="width:100%;margin-bottom:8px">${[['fr', 'Français'], ['en', 'English'], ['ar', 'العربية'], ['local', t('ml_local')]].map(([k, v]) => `<option value="${k}" ${mlang === k ? 'selected' : ''}>${esc(v)}</option>`).join('')}</select>
+          <label>🗺️ ${t('map_style_label')}</label><select id="mbase" style="width:100%"><option value="plan" ${mbase === 'plan' ? 'selected' : ''}>${t('base_plan')}</option><option value="sat" ${mbase === 'sat' ? 'selected' : ''}>${t('base_sat')}</option></select></div></div>
       <p class="muted" id="posInfo" style="font-size:12px;margin:4px 0 6px"></p>
-      <details class="mapset"><summary>⚙️ ${t('map_settings')}</summary><div class="row" style="margin-top:8px"><div class="grow"><label>🌐 ${t('map_lang_label')}</label><select id="mlang" style="width:100%">
-          ${[['fr', 'Français'], ['en', 'English'], ['ar', 'العربية'], ['local', t('ml_local')]].map(([k, v]) => `<option value="${k}" ${mlang === k ? 'selected' : ''}>${esc(v)}</option>`).join('')}</select></div>
-        <div class="grow"><label>🗺️ ${t('map_style_label')}</label><select id="mbase" style="width:100%"><option value="plan" ${mbase === 'plan' ? 'selected' : ''}>${t('base_plan')}</option><option value="sat" ${mbase === 'sat' ? 'selected' : ''}>${t('base_sat')}</option></select></div></div></details>
       <div id="routeBar"></div><p class="muted" id="count" aria-live="polite" style="margin:8px 0 4px"></p><div id="list"></div>`;
     const ML = window.maplibregl;
     let map = null;
@@ -543,6 +543,7 @@
     if (!map) $('#map', el).outerHTML = `<div class="card muted">${t('map_offline')}</div>`;
     $('#q', el).oninput = e => { q = e.target.value; render(); };
     $('#posBtn', el).onclick = () => (posOn ? stopFollow() : startFollow());
+    const panel = $('#mapPanel', el); $('#setBtn', el).onclick = () => { panel.hidden = !panel.hidden; }; $('#setClose', el).onclick = () => { panel.hidden = true; };
     $('#mlang', el).onchange = e => { mlang = e.target.value; savePrefs(); applyLang(); };
     $('#mbase', el).onchange = e => { mbase = e.target.value; savePrefs(); applyBase(); };
     render();

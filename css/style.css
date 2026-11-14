@@ -107,3 +107,7 @@ button:disabled{opacity:.4;cursor:default}
 #mapWrap #map{margin-bottom:0;height:300px}
 .mapbtn{position:absolute;top:10px;left:10px;z-index:2;box-shadow:0 2px 8px rgba(0,0,0,.3);font-weight:600}
 .mapset{margin:0 0 8px}.mapset summary{cursor:pointer;color:var(--mut);font-size:13px}
+.mapbtns{position:absolute;top:10px;left:10px;z-index:2;display:flex;gap:6px}
+.mapbtns .mapbtn{position:static}
+.mappanel{position:absolute;top:56px;left:10px;right:10px;z-index:3;background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:12px;padding:12px;box-shadow:0 4px 16px rgba(0,0,0,.28)}
+.mappanel[hidden]{display:none}
