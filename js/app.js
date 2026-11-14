@@ -7,7 +7,7 @@
     set(k, v) { try { localStorage.setItem('omra:' + k, JSON.stringify(v)); } catch {} },
   };
 
-  const APP_VERSION = '2026-11-14.40';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
+  const APP_VERSION = '2026-11-14.41';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
 
   /* ---------- état ---------- */
   const detect = () => { const l = (navigator.language || 'fr').slice(0, 2); return LANGS[l] ? l : 'fr'; };
@@ -221,16 +221,22 @@
 
   /* ---------- Guide Omra ---------- */
   views.omra = el => {
+    const MAP_STEPS = ['ihram', 'haram', 'tawaf', 'maqam', 'sai', 'halq'];
+    el.innerHTML = `<h2>${t('omra_title')}</h2><p class="muted">⚠️ ${t('omra_disclaimer')}</p><div id="holyWrap"></div><div id="omraSteps"></div>`;
+    const ctrl = window.Omra && window.Omra.holy ? window.Omra.holy.mount($('#holyWrap', el)) : null;
+    const box = $('#omraSteps', el);
     const draw = () => {
-      el.innerHTML = `<h2>${t('omra_title')}</h2><p class="muted">⚠️ ${t('omra_disclaimer')}</p>` + OMRA_STEPS.map(s => `
+      box.innerHTML = OMRA_STEPS.map(s => `
         <div class="card step"><h3><span>${s.ic}</span>${esc(L(s.t))}</h3><p>${esc(L(s.d))}</p>
         ${s.du.map(d => `<div class="dua"><div class="ar">${d.ar}</div><div class="tr">${esc(d.tr)}</div><div>${esc(L(d.m) || d.m.en)}</div></div>`).join('')}
+        ${ctrl && MAP_STEPS.includes(s.id) ? `<button type="button" class="ghost sm" data-map="${s.id}" style="margin-top:10px">📍 ${t('holy_see_map')}</button>` : ''}
         ${s.counter ? `<div class="counter"><button data-c="${s.counter.key}" data-max="${s.counter.max}">${t('plus')}</button>
           <div class="n" id="n-${s.counter.key}">${S.cnt[s.counter.key]}/${s.counter.max}</div>
           <progress max="${s.counter.max}" value="${S.cnt[s.counter.key]}" class="grow"></progress>
           <button class="ghost sm" data-r="${s.counter.key}">${t('reset')}</button></div>` : ''}</div>`).join('');
-      $$('[data-c]', el).forEach(b => b.onclick = () => { const k = b.dataset.c; if (S.cnt[k] < +b.dataset.max) S.cnt[k]++; save('cnt'); if (S.cnt[k] === +b.dataset.max) toast(t('done')); if (navigator.vibrate) navigator.vibrate(30); const y = scrollY; draw(); scrollTo(0, y); });
-      $$('[data-r]', el).forEach(b => b.onclick = () => { S.cnt[b.dataset.r] = 0; save('cnt'); const y = scrollY; draw(); scrollTo(0, y); });
+      $$('[data-map]', box).forEach(b => b.onclick = () => ctrl.focusStep(b.dataset.map));
+      $$('[data-c]', box).forEach(b => b.onclick = () => { const k = b.dataset.c; if (S.cnt[k] < +b.dataset.max) S.cnt[k]++; save('cnt'); if (S.cnt[k] === +b.dataset.max) toast(t('done')); if (navigator.vibrate) navigator.vibrate(30); const y = scrollY; draw(); scrollTo(0, y); });
+      $$('[data-r]', box).forEach(b => b.onclick = () => { S.cnt[b.dataset.r] = 0; save('cnt'); const y = scrollY; draw(); scrollTo(0, y); });
     };
     draw();
   };
@@ -571,7 +577,7 @@
     /* ---- carte vectorielle OpenFreeMap (MapLibre) ---- */
     if (ML && navigator.onLine !== false) {
       try {
-        try { ML.setRTLTextPlugin('https://cdn.jsdelivr.net/npm/@mapbox/mapbox-gl-rtl-text@0.2.3/mapbox-gl-rtl-text.min.js', true); } catch (e) { /* déjà chargé */ }
+        if (!window.__rtlSet) { window.__rtlSet = true; try { ML.setRTLTextPlugin('https://cdn.jsdelivr.net/npm/@mapbox/mapbox-gl-rtl-text@0.2.3/mapbox-gl-rtl-text.min.js', true); } catch (e) { /* indisponible */ } }
         map = new ML.Map({ container: 'map', style: 'https://tiles.openfreemap.org/styles/liberty', center: [42, 23.5], zoom: 4, attributionControl: { compact: true } });
         map.addControl(new ML.NavigationControl({ showCompass: false }), 'top-right');
         mapObj = map; window.Omra.map = map;                       // (exposé pour les tests)
@@ -751,7 +757,7 @@
   };
 
   /* ---------- démarrage ---------- */
-  window.Omra = { $, $$, esc, S, save, t, views, store, toast, hooks, SYNC_KEYS, refresh: () => { applyLang(); route(); }, syncCard: null };
+  window.Omra = { $, $$, esc, S, save, t, views, store, toast, hooks, SYNC_KEYS, refresh: () => { applyLang(); route(); }, syncCard: null, registerMap: m => { mapObj = m; } };
   if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
   applyLang(); document.addEventListener('DOMContentLoaded', route);
   /* Mises à jour automatiques : vérification à l'ouverture et au retour au premier plan,

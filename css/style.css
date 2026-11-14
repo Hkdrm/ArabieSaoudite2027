@@ -138,3 +138,13 @@ button:disabled{opacity:.4;cursor:default}
 .srow>span{font-size:20px}
 
 .sheet.noanim .sheet-in{animation:none}
+/* carte des lieux saints */
+.hm{min-width:26px;height:26px;padding:0 5px;border-radius:13px;display:flex;align-items:center;justify-content:center;font:700 12px/1 system-ui,sans-serif;color:#fff;background:#0b6b4f;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.5);cursor:pointer;white-space:nowrap}
+.hm-gate.women{background:#7b5ea7}
+.hm-rite,.hm-visit,.hm-miqat{background:#fff;color:#111;font-size:15px;min-width:30px;height:30px;border-radius:15px;border-color:#c9a227}
+.hm-sai{background:#fff;color:#111;font-size:15px;min-width:30px;height:30px;border-radius:15px;border-color:#2b6cb0}
+.hm-service{background:#fff;color:#111;font-size:13px;border-color:#888}
+.hm.hl{animation:hlpulse 1.2s ease-in-out infinite;border-color:#e53e3e;z-index:5}
+@keyframes hlpulse{0%,100%{box-shadow:0 0 0 0 rgba(229,62,62,.7)}50%{box-shadow:0 0 0 12px rgba(229,62,62,0)}}
+.holy .tabs{margin-top:0}
+.hm-rite.mini{min-width:22px;height:22px;font-size:11px;border-radius:11px}

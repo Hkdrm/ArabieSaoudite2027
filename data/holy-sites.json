@@ -1,0 +1,1188 @@
+{
+ "version": 1,
+ "created": "2026-11-14",
+ "attribution": "© contributeurs OpenStreetMap (ODbL) — https://www.openstreetmap.org/copyright",
+ "notice": "Positions relevées dans OpenStreetMap ; elles peuvent évoluer avec les travaux d'extension. Les descriptions sont des rappels pratiques : pour tout avis religieux, consultez un savant.",
+ "sites": [
+  {
+   "id": "haram",
+   "name": {
+    "fr": "Masjid al-Haram (La Mecque)",
+    "en": "Masjid al-Haram (Makkah)",
+    "ar": "المسجد الحرام"
+   },
+   "center": [
+    39.82618,
+    21.42252
+   ],
+   "zoom": 17.2,
+   "ref_name": "la Kaaba",
+   "features": [
+    {
+     "id": "kaaba",
+     "cat": "rite",
+     "name_fr": "La Kaaba",
+     "name_en": "The Kaaba",
+     "name_ar": "الكعبة",
+     "lng": 39.82618,
+     "lat": 21.42252,
+     "desc_fr": "Édifice cubique vers lequel les musulmans se tournent pour prier (qibla). Le tawaf se fait autour d'elle, dans le sens inverse des aiguilles d'une montre : la Kaaba reste à votre gauche."
+    },
+    {
+     "id": "hajar",
+     "cat": "rite",
+     "name_fr": "Pierre Noire (Hajar al-Aswad)",
+     "name_en": "Black Stone",
+     "name_ar": "الحجر الأسود",
+     "lng": 39.826255,
+     "lat": 21.422498,
+     "desc_fr": "Coin est de la Kaaba. Le tawaf commence et se termine face à la Pierre Noire : on la touche ou on l'embrasse si c'est possible sans bousculer ; sinon, on la salue de la main en disant « Bismillah, Allahu akbar » sans s'arrêter. Entre la Pierre Noire et la porte de la Kaaba se trouve le Multazam, où l'on aime invoquer Allah quand la foule le permet."
+    },
+    {
+     "id": "yamani",
+     "cat": "rite",
+     "name_fr": "Coin yéménite (Rukn al-Yamani)",
+     "name_en": "Yemeni Corner",
+     "name_ar": "الركن اليماني",
+     "lng": 39.826174,
+     "lat": 21.422447,
+     "desc_fr": "Coin sud de la Kaaba. On le touche de la main droite si c'est possible, sans le saluer de loin. Entre ce coin et la Pierre Noire, on récite : « Rabbana atina fid-dunya hasana… »."
+    },
+    {
+     "id": "shami",
+     "cat": "rite",
+     "name_fr": "Coin chamien (Rukn ash-Shami)",
+     "name_en": "Shami Corner",
+     "name_ar": "الركن الشامي",
+     "lng": 39.82611,
+     "lat": 21.422537
+    },
+    {
+     "id": "iraqi",
+     "cat": "rite",
+     "name_fr": "Coin irakien (Rukn al-Iraqi)",
+     "name_en": "Iraqi Corner",
+     "name_ar": "الركن العراقي",
+     "lng": 39.826192,
+     "lat": 21.422586
+    },
+    {
+     "id": "kaaba_door",
+     "cat": "rite",
+     "name_fr": "Porte de la Kaaba",
+     "name_en": "Door of the Kaaba",
+     "name_ar": "باب الكعبة",
+     "lng": 39.826241,
+     "lat": 21.422517,
+     "desc_fr": "Située sur la face nord-est, près de la Pierre Noire. La Kaaba n'est ouverte au public que de façon exceptionnelle. Le mur entre cette porte et la Pierre Noire est le Multazam."
+    },
+    {
+     "id": "hijr",
+     "cat": "rite",
+     "name_fr": "Hijr Ismaïl (Hatim)",
+     "name_en": "Hijr Ismail (Hateem)",
+     "name_ar": "الحِجر (الحطيم)",
+     "lng": 39.826121,
+     "lat": 21.422613,
+     "where_fr": "à environ 10 m au nord-ouest de la Kaaba",
+     "desc_fr": "Enceinte semi-circulaire au nord-ouest de la Kaaba. Le tawaf se fait à l'extérieur : il ne faut pas passer à l'intérieur du Hijr pendant les sept tours."
+    },
+    {
+     "id": "maqam",
+     "cat": "rite",
+     "name_fr": "Maqam Ibrahim",
+     "name_en": "Maqam Ibrahim (Station of Abraham)",
+     "name_ar": "مقام إبراهيم",
+     "lng": 39.826306,
+     "lat": 21.422578,
+     "where_fr": "à environ 10 m au nord-est de la Kaaba",
+     "desc_fr": "Pierre portant l'empreinte des pieds d'Ibrahim ﷺ, devant la Kaaba. Après le tawaf, on prie deux rak'as derrière lui (ou ailleurs dans la mosquée si la foule empêche)."
+    },
+    {
+     "id": "tawaf_start",
+     "cat": "rite",
+     "name_fr": "Repère de début et de fin du tawaf",
+     "name_en": "Tawaf start/end marker",
+     "name_ar": "علامة بداية ونهاية الطواف",
+     "lng": 39.82684,
+     "lat": 21.42229,
+     "where_fr": "à environ 70 m à l'est de la Kaaba",
+     "desc_fr": "Lumière verte alignée avec la Pierre Noire (ligne au sol sur le mataf) : elle marque le début et la fin des sept tours.",
+     "level_fr": "Niveau 1 (étage)"
+    },
+    {
+     "id": "safa",
+     "cat": "sai",
+     "name_fr": "As-Safa",
+     "name_en": "As-Safa",
+     "name_ar": "الصفا",
+     "lng": 39.827431,
+     "lat": 21.4218,
+     "where_fr": "à environ 150 m au sud-est de la Kaaba",
+     "desc_fr": "Point de départ du sa'i. On y récite « Inna as-Safa wal-Marwata min sha'a'irillah » puis on invoque face à la Kaaba."
+    },
+    {
+     "id": "marwa",
+     "cat": "sai",
+     "name_fr": "Al-Marwa",
+     "name_en": "Al-Marwa",
+     "name_ar": "المروة",
+     "lng": 39.827128,
+     "lat": 21.425175,
+     "where_fr": "à environ 310 m au nord de la Kaaba",
+     "desc_fr": "Point d'arrivée du 7e trajet du sa'i (Safa → Marwa = 1, Marwa → Safa = 2, etc.)."
+    },
+    {
+     "id": "hg4755914231",
+     "cat": "gate",
+     "name_fr": "Porte du Roi Abdelaziz (n°1)",
+     "name_en": "King Abdul Aziz Gate (1)",
+     "name_ar": "باب الملك عبد العزیز (1)",
+     "lng": 39.825841,
+     "lat": 21.421045,
+     "where_fr": "à environ 170 m au sud de la Kaaba",
+     "level_fr": "Rez-de-chaussée",
+     "num": "1"
+    },
+    {
+     "id": "hg3210622327",
+     "cat": "gate",
+     "name_fr": "Porte du Roi Fahd (n°79)",
+     "name_en": "King Fahd Gate (79)",
+     "name_ar": "باب الملك فھد - 79",
+     "lng": 39.824046,
+     "lat": 21.421232,
+     "where_fr": "à environ 260 m au sud-ouest de la Kaaba",
+     "num": "79"
+    },
+    {
+     "id": "hg5875587679",
+     "cat": "gate",
+     "name_fr": "Porte du Roi Abdallah (n°100)",
+     "name_en": "King Abdullah Gate (100)",
+     "name_ar": "باب الملك عبد الله",
+     "lng": 39.824132,
+     "lat": 21.425391,
+     "where_fr": "à environ 380 m au nord-ouest de la Kaaba",
+     "num": "100"
+    },
+    {
+     "id": "hg4318154228",
+     "cat": "gate",
+     "name_fr": "Porte de la Omra (n°40)",
+     "name_en": "Umra Gate (40)",
+     "name_ar": "باب العمرة - 40",
+     "lng": 39.82457,
+     "lat": 21.422838,
+     "where_fr": "à environ 170 m à l'ouest de la Kaaba",
+     "num": "40"
+    },
+    {
+     "id": "hg1199442714",
+     "cat": "gate",
+     "name_fr": "Porte Quraysh (n°28)",
+     "name_en": "Quraish Gate (28)",
+     "name_ar": "باب قريش 28",
+     "lng": 39.826923,
+     "lat": 21.425443,
+     "where_fr": "à environ 330 m au nord de la Kaaba",
+     "num": "28"
+    },
+    {
+     "id": "hg4562384977",
+     "cat": "gate",
+     "name_fr": "Porte As-Salam (de la Paix)",
+     "name_en": "Bab As-Salam",
+     "name_ar": "باب السلام",
+     "lng": 39.827566,
+     "lat": 21.423032,
+     "where_fr": "à environ 150 m à l'est de la Kaaba",
+     "level_fr": "Niveau −1 (sous-sol)",
+     "num": ""
+    },
+    {
+     "id": "hg4318154227",
+     "cat": "gate",
+     "name_fr": "Porte Al-Fath (de la Victoire)",
+     "name_en": "Fateh Gate",
+     "name_ar": "باب الفتح",
+     "lng": 39.826515,
+     "lat": 21.424015,
+     "where_fr": "à environ 170 m au nord de la Kaaba",
+     "num": ""
+    },
+    {
+     "id": "hg6297046470",
+     "cat": "gate",
+     "name_fr": "Porte Al-Quds (n°35)",
+     "name_en": "Al Quds Gate (35)",
+     "name_ar": "باب القدس 35",
+     "lng": 39.825269,
+     "lat": 21.423817,
+     "where_fr": "à environ 170 m au nord-ouest de la Kaaba",
+     "num": "35"
+    },
+    {
+     "id": "hg5858929758",
+     "cat": "gate",
+     "name_fr": "Porte Al-Hudaybiyah",
+     "name_en": "Bab al-Hudaybiyah",
+     "name_ar": "باب الحديبية",
+     "lng": 39.824743,
+     "lat": 21.423354,
+     "where_fr": "à environ 180 m au nord-ouest de la Kaaba",
+     "num": ""
+    },
+    {
+     "id": "hg4562391840",
+     "cat": "gate",
+     "name_fr": "Porte Al-Marwa (n°25)",
+     "name_en": "Bab Al Marwah (25)",
+     "name_ar": "باب المروة - 25",
+     "lng": 39.827387,
+     "lat": 21.425318,
+     "where_fr": "à environ 340 m au nord de la Kaaba",
+     "level_fr": "Rez-de-chaussée",
+     "num": "25"
+    },
+    {
+     "id": "hg6284838118",
+     "cat": "gate",
+     "name_fr": "Porte Bani Shaybah (n°22)",
+     "name_en": "Bani Shaibah Gate (22)",
+     "name_ar": "باب بني شيبة 22",
+     "lng": 39.827357,
+     "lat": 21.424689,
+     "where_fr": "à environ 270 m au nord-est de la Kaaba",
+     "num": "22"
+    },
+    {
+     "id": "hg8756153753",
+     "cat": "gate",
+     "name_fr": "Porte An-Nabi (n°14)",
+     "name_en": "Al Nabi Gate (14)",
+     "name_ar": "باب النبي",
+     "lng": 39.827678,
+     "lat": 21.422201,
+     "where_fr": "à environ 160 m à l'est de la Kaaba",
+     "level_fr": "Niveau −1 (sous-sol)",
+     "num": "14"
+    },
+    {
+     "id": "hg5858896077",
+     "cat": "gate",
+     "name_fr": "Porte Ali",
+     "name_en": "Bab Ali",
+     "name_ar": "باب علي",
+     "lng": 39.827579,
+     "lat": 21.422952,
+     "where_fr": "à environ 150 m à l'est de la Kaaba",
+     "level_fr": "Niveau −1 (sous-sol)",
+     "num": ""
+    },
+    {
+     "id": "hg5858933516",
+     "cat": "gate",
+     "name_fr": "Porte Ajyad (n°3)",
+     "name_en": "Ajyad Gate (3)",
+     "name_ar": "باب 3 أجياد",
+     "lng": 39.826406,
+     "lat": 21.421065,
+     "where_fr": "à environ 160 m au sud de la Kaaba",
+     "level_fr": "Niveau 1 (étage)",
+     "num": "3"
+    },
+    {
+     "id": "hg5875608247",
+     "cat": "gate",
+     "name_fr": "Porte Ajyad (n°5)",
+     "name_en": "Ajyad Gate (5)",
+     "name_ar": "باب أجياد 5",
+     "lng": 39.826853,
+     "lat": 21.421306,
+     "where_fr": "à environ 150 m au sud-est de la Kaaba",
+     "level_fr": "Rez-de-chaussée",
+     "num": "5"
+    },
+    {
+     "id": "hs5862282585",
+     "cat": "service",
+     "name_fr": "Bureau d’orientation religieuse",
+     "name_en": "Religious Guidance Office",
+     "name_ar": "مكتب الإفتاء الديني",
+     "lng": 39.823934,
+     "lat": 21.421774,
+     "where_fr": "à environ 250 m à l'ouest de la Kaaba",
+     "desc_fr": "Pour poser une question sur les rites.",
+     "level_fr": "Rez-de-chaussée"
+    },
+    {
+     "id": "hs5077107166",
+     "cat": "service",
+     "name_fr": "Objets trouvés",
+     "name_en": "Lost and Found Office",
+     "name_ar": "مكتب مفقودات",
+     "lng": 39.82893,
+     "lat": 21.424692,
+     "where_fr": "à environ 370 m au nord-est de la Kaaba"
+    },
+    {
+     "id": "hs5862285237",
+     "cat": "service",
+     "name_fr": "Centre des personnes égarées",
+     "name_en": "Lost Persons Center",
+     "name_ar": "مركز رعاية التائهين",
+     "lng": 39.824885,
+     "lat": 21.419829,
+     "where_fr": "à environ 330 m au sud-ouest de la Kaaba",
+     "desc_fr": "Si vous perdez quelqu'un de votre groupe."
+    },
+    {
+     "id": "hs5869436785",
+     "cat": "service",
+     "name_fr": "Bureau des fauteuils roulants",
+     "name_en": "Wheelchair Office",
+     "name_ar": "مكتب الكراسي المتحركة",
+     "lng": 39.825409,
+     "lat": 21.422034,
+     "where_fr": "à environ 100 m au sud-ouest de la Kaaba"
+    },
+    {
+     "id": "hs4320907300",
+     "cat": "service",
+     "name_fr": "Consignes à bagages",
+     "name_en": "Luggage Lockers",
+     "name_ar": "خزائن الأمتعة",
+     "lng": 39.827916,
+     "lat": 21.425229,
+     "where_fr": "à environ 350 m au nord-est de la Kaaba"
+    },
+    {
+     "id": "hs5076188152",
+     "cat": "service",
+     "name_fr": "Hôpital d'urgence d'Ajyad",
+     "name_en": "Ajyad Emergency Hospital",
+     "name_ar": "مستشفى أجياد للطوارئ",
+     "lng": 39.826384,
+     "lat": 21.41972,
+     "where_fr": "à environ 310 m au sud de la Kaaba"
+    }
+   ],
+   "lines": [
+    {
+     "id": "sai",
+     "cat": "sai",
+     "name_fr": "Parcours du sa'i (Mas'a)",
+     "name_ar": "المسعى",
+     "coords": [
+      [
+       39.827265,
+       21.424943
+      ],
+      [
+       39.827255,
+       21.425036
+      ],
+      [
+       39.827246,
+       21.425137
+      ],
+      [
+       39.827243,
+       21.425193
+      ],
+      [
+       39.827225,
+       21.425269
+      ],
+      [
+       39.827199,
+       21.425283
+      ],
+      [
+       39.827172,
+       21.425299
+      ],
+      [
+       39.827094,
+       21.425298
+      ],
+      [
+       39.827043,
+       21.425269
+      ],
+      [
+       39.827008,
+       21.425218
+      ],
+      [
+       39.827008,
+       21.425138
+      ],
+      [
+       39.827038,
+       21.424922
+      ],
+      [
+       39.827283,
+       21.422582
+      ],
+      [
+       39.827321,
+       21.422203
+      ],
+      [
+       39.827348,
+       21.421937
+      ],
+      [
+       39.827356,
+       21.421856
+      ],
+      [
+       39.827371,
+       21.421801
+      ],
+      [
+       39.827408,
+       21.421756
+      ],
+      [
+       39.827448,
+       21.421746
+      ],
+      [
+       39.827484,
+       21.421752
+      ],
+      [
+       39.827528,
+       21.421771
+      ],
+      [
+       39.827568,
+       21.421817
+      ],
+      [
+       39.827582,
+       21.421869
+      ],
+      [
+       39.827293,
+       21.424682
+      ],
+      [
+       39.827265,
+       21.424943
+      ]
+     ]
+    },
+    {
+     "id": "tawaf_line",
+     "cat": "rite",
+     "name_fr": "Ligne de début/fin du tawaf",
+     "name_ar": "خط بداية الطواف",
+     "coords": [
+      [
+       39.826255,
+       21.422498
+      ],
+      [
+       39.826519,
+       21.422408
+      ],
+      [
+       39.82684,
+       21.42229
+      ]
+     ]
+    }
+   ],
+   "polys": [
+    {
+     "id": "kaaba",
+     "cat": "rite",
+     "coords": [
+      [
+       39.82611,
+       21.422537
+      ],
+      [
+       39.826192,
+       21.422586
+      ],
+      [
+       39.826241,
+       21.422517
+      ],
+      [
+       39.826255,
+       21.422498
+      ],
+      [
+       39.826174,
+       21.422447
+      ],
+      [
+       39.82611,
+       21.422537
+      ]
+     ]
+    },
+    {
+     "id": "hijr",
+     "cat": "rite",
+     "coords": [
+      [
+       39.826174,
+       21.422607
+      ],
+      [
+       39.826166,
+       21.42262
+      ],
+      [
+       39.826155,
+       21.422631
+      ],
+      [
+       39.826139,
+       21.422636
+      ],
+      [
+       39.826123,
+       21.422636
+      ],
+      [
+       39.826108,
+       21.422631
+      ],
+      [
+       39.826096,
+       21.422621
+      ],
+      [
+       39.826088,
+       21.422607
+      ],
+      [
+       39.826086,
+       21.422592
+      ],
+      [
+       39.826091,
+       21.422577
+      ],
+      [
+       39.826101,
+       21.422564
+      ],
+      [
+       39.826091,
+       21.422557
+      ],
+      [
+       39.82608,
+       21.422572
+      ],
+      [
+       39.826074,
+       21.422591
+      ],
+      [
+       39.826076,
+       21.42261
+      ],
+      [
+       39.826086,
+       21.422628
+      ],
+      [
+       39.826102,
+       21.422641
+      ],
+      [
+       39.826121,
+       21.422647
+      ],
+      [
+       39.826142,
+       21.422647
+      ],
+      [
+       39.826161,
+       21.42264
+      ],
+      [
+       39.826176,
+       21.422627
+      ],
+      [
+       39.826184,
+       21.422612
+      ],
+      [
+       39.826174,
+       21.422607
+      ]
+     ]
+    },
+    {
+     "id": "maqam",
+     "cat": "rite",
+     "coords": [
+      [
+       39.826309,
+       21.422574
+      ],
+      [
+       39.826312,
+       21.422579
+      ],
+      [
+       39.826308,
+       21.422584
+      ],
+      [
+       39.826302,
+       21.422584
+      ],
+      [
+       39.826299,
+       21.422579
+      ],
+      [
+       39.826303,
+       21.422573
+      ],
+      [
+       39.826309,
+       21.422574
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "nabawi",
+   "name": {
+    "fr": "Masjid an-Nabawi (Médine)",
+    "en": "Masjid an-Nabawi (Madinah)",
+    "ar": "المسجد النبوي"
+   },
+   "center": [
+    39.611208,
+    24.467541
+   ],
+   "zoom": 16.8,
+   "ref_name": "la Rawdah",
+   "features": [
+    {
+     "id": "rawdah",
+     "cat": "rite",
+     "name_fr": "La Rawdah ach-Charifa",
+     "name_en": "The Noble Rawdah",
+     "name_ar": "الروضة الشريفة",
+     "lng": 39.611208,
+     "lat": 24.467541,
+     "desc_fr": "Espace entre l'ancienne maison du Prophète ﷺ et son minbar, recouvert de tapis verts. La visite se fait selon un programme et une réservation (Nusuk) : suivez les horaires officiels, distincts pour hommes et femmes."
+    },
+    {
+     "id": "tomb",
+     "cat": "rite",
+     "name_fr": "Tombeau du Prophète ﷺ",
+     "name_en": "Tomb of the Prophet ﷺ",
+     "name_ar": "قبر النبي محمد ﷺ",
+     "lng": 39.611447,
+     "lat": 24.467577,
+     "where_fr": "à environ 20 m à l'est de la Rawdah",
+     "desc_fr": "Salutations (salam) en passant devant, sans s'arrêter longtemps ni se bousculer ; les files sont organisées."
+    },
+    {
+     "id": "dome",
+     "cat": "rite",
+     "name_fr": "Dôme vert",
+     "name_en": "Green Dome",
+     "name_ar": "القبة الخضراء",
+     "lng": 39.611448,
+     "lat": 24.467565,
+     "where_fr": "à environ 20 m à l'est de la Rawdah",
+     "desc_fr": "Dôme qui surmonte la chambre où repose le Prophète ﷺ ; visible de l'extérieur et de la cour."
+    },
+    {
+     "id": "rawdah_women",
+     "cat": "rite",
+     "name_fr": "Accès des femmes à la Rawdah",
+     "name_en": "Women's access to the Rawdah",
+     "name_ar": "مدخل النساء إلى الروضة",
+     "lng": 39.612367,
+     "lat": 24.4689,
+     "where_fr": "à environ 190 m au nord-est de la Rawdah",
+     "desc_fr": "Quatre accès signalés pour les femmes (position moyenne). Les créneaux de visite diffèrent de ceux des hommes."
+    },
+    {
+     "id": "baqi",
+     "cat": "rite",
+     "name_fr": "Cimetière d'Al-Baqi'",
+     "name_en": "Al-Baqi' Cemetery",
+     "name_ar": "مقبرة البقيع",
+     "lng": 39.61673,
+     "lat": 24.466831,
+     "where_fr": "à environ 560 m à l'est de la Rawdah",
+     "desc_fr": "Cimetière historique à l'est de la mosquée. L'accès est généralement réservé aux hommes, à certaines heures."
+    },
+    {
+     "id": "ng4562374597",
+     "cat": "gate",
+     "name_fr": "Porte As-Salam (n°1)",
+     "name_en": "As-Salam Gate (1)",
+     "name_ar": "مدخل – باب السلام - 1",
+     "lng": 39.610663,
+     "lat": 24.46744,
+     "where_fr": "à environ 60 m à l'ouest de la Rawdah",
+     "num": "1"
+    },
+    {
+     "id": "ng5124366467",
+     "cat": "gate",
+     "name_fr": "Porte Abou Bakr as-Siddiq (n°2)",
+     "name_en": "Abu Bakr as-Siddiq Gate (2)",
+     "name_ar": "بوابة أبو بكر الصديق - 2",
+     "lng": 39.610663,
+     "lat": 24.467568,
+     "where_fr": "à environ 60 m à l'ouest de la Rawdah",
+     "num": "2"
+    },
+    {
+     "id": "ng5124338122",
+     "cat": "gate",
+     "name_fr": "Porte Ar-Rahma (n°3)",
+     "name_en": "Ar-Rahma Gate (3)",
+     "name_ar": "باب الرحمة - 3",
+     "lng": 39.610662,
+     "lat": 24.467749,
+     "where_fr": "à environ 60 m au nord-ouest de la Rawdah",
+     "num": "3"
+    },
+    {
+     "id": "ng5895136188",
+     "cat": "gate",
+     "name_fr": "Porte Al-Hijra (n°4)",
+     "name_en": "Al-Hijra Gate (4)",
+     "name_ar": "باب الهجرة - 4",
+     "lng": 39.61056,
+     "lat": 24.46786,
+     "where_fr": "à environ 70 m au nord-ouest de la Rawdah",
+     "num": "4"
+    },
+    {
+     "id": "ng4562352452",
+     "cat": "gate",
+     "name_fr": "Porte Quba (n°5)",
+     "name_en": "Quba Gate (5)",
+     "name_ar": "باب قباء - 5",
+     "lng": 39.60992,
+     "lat": 24.467755,
+     "where_fr": "à environ 130 m à l'ouest de la Rawdah",
+     "num": "5"
+    },
+    {
+     "id": "ng4562362787",
+     "cat": "gate",
+     "name_fr": "Portes du Roi Saoud (n°7-9)",
+     "name_en": "King Saud Gates (7-9)",
+     "name_ar": "باب الملك سعود - 7, 8, 9",
+     "lng": 39.609152,
+     "lat": 24.468265,
+     "where_fr": "à environ 220 m à l'ouest de la Rawdah",
+     "num": "7"
+    },
+    {
+     "id": "ng4562361493",
+     "cat": "gate",
+     "name_fr": "Portes Al-Aqiq (n°10-11)",
+     "name_en": "Al Aqiq Gates (10-11)",
+     "name_ar": "باب العقّيق - 10, 11",
+     "lng": 39.609115,
+     "lat": 24.468896,
+     "where_fr": "à environ 260 m au nord-ouest de la Rawdah",
+     "num": "10"
+    },
+    {
+     "id": "ng5859327471",
+     "cat": "gate",
+     "name_fr": "Portes Sultan Abdelmajid (n°12-14)",
+     "name_en": "Sultan Abdul Majid Gates (12-14)",
+     "name_ar": "باب المجيدي - 12, 13, 14 - مدخل النساء",
+     "lng": 39.609162,
+     "lat": 24.469481,
+     "where_fr": "à environ 300 m au nord-ouest de la Rawdah",
+     "desc_fr": "Entrée réservée aux femmes (d'après la signalétique OpenStreetMap).",
+     "num": "12",
+     "women": true
+    },
+    {
+     "id": "ng5895143050",
+     "cat": "gate",
+     "name_fr": "Porte Omar ibn al-Khattab (n°18)",
+     "name_en": "Omar Bin Al Khattab Gate (18)",
+     "name_ar": "باب عمر بن الخطاب 18",
+     "lng": 39.610081,
+     "lat": 24.469926,
+     "where_fr": "à environ 290 m au nord-ouest de la Rawdah",
+     "num": "18"
+    },
+    {
+     "id": "ng4562354617",
+     "cat": "gate",
+     "name_fr": "Portes Omar ibn al-Khattab (n°16-17)",
+     "name_en": "Omar Gates (16-17)",
+     "name_ar": "باب عمر بن الخطاب 16, 17 - مدخل النساء",
+     "lng": 39.609917,
+     "lat": 24.469925,
+     "where_fr": "à environ 300 m au nord-ouest de la Rawdah",
+     "desc_fr": "Entrée réservée aux femmes (d'après la signalétique OpenStreetMap).",
+     "num": "16",
+     "women": true
+    },
+    {
+     "id": "ng4562359894",
+     "cat": "gate",
+     "name_fr": "Porte Badr (n°19)",
+     "name_en": "Badr Gate (19)",
+     "name_ar": "باب بدر -19",
+     "lng": 39.610538,
+     "lat": 24.469837,
+     "where_fr": "à environ 260 m au nord de la Rawdah",
+     "num": "19"
+    },
+    {
+     "id": "ng3059531452",
+     "cat": "gate",
+     "name_fr": "Portes du Roi Fahd (n°20-22)",
+     "name_en": "King Fahd Gates (20-22)",
+     "name_ar": "باب الملك فهد - 20, 21, 22",
+     "lng": 39.611156,
+     "lat": 24.469925,
+     "where_fr": "à environ 270 m au nord de la Rawdah",
+     "num": "20"
+    },
+    {
+     "id": "ng4562359893",
+     "cat": "gate",
+     "name_fr": "Porte Uhud (n°23)",
+     "name_en": "Uhud Gate (23)",
+     "name_ar": "باب أحد - 23 - مدخل النساء",
+     "lng": 39.611753,
+     "lat": 24.469865,
+     "where_fr": "à environ 260 m au nord de la Rawdah",
+     "desc_fr": "Entrée réservée aux femmes (d'après la signalétique OpenStreetMap).",
+     "num": "23",
+     "women": true
+    },
+    {
+     "id": "ng4562358315",
+     "cat": "gate",
+     "name_fr": "Portes Othman ibn Affan (n°24-26)",
+     "name_en": "Othman Bin Affan Gates (24-26)",
+     "name_ar": "باب عثمان بن عفان - 24, 25, 26 - مدخل النساء",
+     "lng": 39.612376,
+     "lat": 24.46994,
+     "where_fr": "à environ 290 m au nord-est de la Rawdah",
+     "desc_fr": "Entrée réservée aux femmes (d'après la signalétique OpenStreetMap).",
+     "num": "24",
+     "women": true
+    },
+    {
+     "id": "ng5859110900",
+     "cat": "gate",
+     "name_fr": "Portes Ali ibn Abi Talib (n°28-30)",
+     "name_en": "Ali Ibn Abi Talib Gates (28-30)",
+     "name_ar": "باب علي بن أبو طالب - 28 , 29, 30 - مدخل النساء",
+     "lng": 39.613162,
+     "lat": 24.469455,
+     "where_fr": "à environ 290 m au nord-est de la Rawdah",
+     "desc_fr": "Entrée réservée aux femmes (d'après la signalétique OpenStreetMap).",
+     "num": "28",
+     "women": true
+    },
+    {
+     "id": "ng4562377035",
+     "cat": "gate",
+     "name_fr": "Portes Abou Dhar al-Ghifari (n°31-32)",
+     "name_en": "Abu Dhar Al-Ghafari Gates (31-32)",
+     "name_ar": "Abu Dhar Al-Ghafari Gates - 31, 32",
+     "lng": 39.613205,
+     "lat": 24.468872,
+     "where_fr": "à environ 250 m au nord-est de la Rawdah",
+     "num": "31"
+    },
+    {
+     "id": "ng4562362788",
+     "cat": "gate",
+     "name_fr": "Portes du Roi Abdelaziz (n°33-35)",
+     "name_en": "King Abdul Aziz Gates (33-35)",
+     "name_ar": "باب الملك عبدالعزيز - 33, 34, 35",
+     "lng": 39.613198,
+     "lat": 24.468276,
+     "where_fr": "à environ 220 m à l'est de la Rawdah",
+     "num": "33"
+    },
+    {
+     "id": "ng4562352453",
+     "cat": "gate",
+     "name_fr": "Porte La Mecque (n°37)",
+     "name_en": "Bab Makkah (37)",
+     "name_ar": "باب مكة - 37",
+     "lng": 39.612475,
+     "lat": 24.467769,
+     "where_fr": "à environ 130 m à l'est de la Rawdah",
+     "num": "37"
+    },
+    {
+     "id": "ng5859174894",
+     "cat": "gate",
+     "name_fr": "Porte Bilal (n°38)",
+     "name_en": "Bab Bilal (38)",
+     "name_ar": "باب بلال - 38",
+     "lng": 39.611789,
+     "lat": 24.467844,
+     "where_fr": "à environ 70 m au nord-est de la Rawdah",
+     "num": "38"
+    },
+    {
+     "id": "ng5124306217",
+     "cat": "gate",
+     "name_fr": "Porte An-Nisa (n°39)",
+     "name_en": "An-Nisa Gate (39)",
+     "name_ar": "باب النساء - 39",
+     "lng": 39.611545,
+     "lat": 24.46782,
+     "where_fr": "à environ 50 m au nord-est de la Rawdah",
+     "num": "39"
+    },
+    {
+     "id": "ng5124318602",
+     "cat": "gate",
+     "name_fr": "Porte Jibril (n°40)",
+     "name_en": "Al-Jebreel Gate (40)",
+     "name_ar": "باب جبريل - 40",
+     "lng": 39.611598,
+     "lat": 24.46774,
+     "where_fr": "à environ 50 m au nord-est de la Rawdah",
+     "num": "40"
+    },
+    {
+     "id": "ng4562374598",
+     "cat": "gate",
+     "name_fr": "Porte Al-Baqi' (n°41)",
+     "name_en": "Al-Baqi' Gate (41)",
+     "name_ar": "باب البقيع - 41",
+     "lng": 39.611599,
+     "lat": 24.467451,
+     "where_fr": "à environ 40 m à l'est de la Rawdah",
+     "num": "41"
+    },
+    {
+     "id": "ns3808086240",
+     "cat": "service",
+     "name_fr": "Centre d'information touristique",
+     "name_en": "Tourism Information Centre",
+     "name_ar": "Tourism Information Centre",
+     "lng": 39.608912,
+     "lat": 24.465735,
+     "where_fr": "à environ 310 m au sud-ouest de la Rawdah"
+    },
+    {
+     "id": "ns5859331818",
+     "cat": "service",
+     "name_fr": "Guide des personnes égarées",
+     "name_en": "Guiding the lost",
+     "name_ar": "دليل المفقودات",
+     "lng": 39.61252,
+     "lat": 24.466266,
+     "where_fr": "à environ 190 m au sud-est de la Rawdah"
+    },
+    {
+     "id": "ns5124143793",
+     "cat": "service",
+     "name_fr": "Bibliothèque de la Mosquée du Prophète",
+     "name_en": "Prophet's Mosque Library",
+     "name_ar": "مكتبة المسجد النبوي",
+     "lng": 39.609181,
+     "lat": 24.468711,
+     "where_fr": "à environ 240 m au nord-ouest de la Rawdah"
+    },
+    {
+     "id": "ns7084280000",
+     "cat": "service",
+     "name_fr": "Horaires de visite de la Rawdah (femmes)",
+     "name_en": "Women's Rawdah visiting schedule",
+     "name_ar": "Women's Schedule for Visiting the Noble Rawda",
+     "lng": 39.612424,
+     "lat": 24.470572,
+     "where_fr": "à environ 360 m au nord de la Rawdah",
+     "desc_fr": "Panneau d'information sur les créneaux."
+    },
+    {
+     "id": "ns6253573950",
+     "cat": "service",
+     "name_fr": "Police et objets trouvés",
+     "name_en": "Police and Lost & Found",
+     "name_ar": "Police Office and Lost and Found Office",
+     "lng": 39.612861,
+     "lat": 24.465826,
+     "where_fr": "à environ 250 m au sud-est de la Rawdah"
+    },
+    {
+     "id": "ghamama",
+     "cat": "visit",
+     "name_fr": "Mosquée Al-Ghamama",
+     "name_en": "Masjid Al-Ghamama",
+     "name_ar": "مسجد الغمامة",
+     "lng": 39.606921,
+     "lat": 24.465824,
+     "where_fr": "à environ 470 m au sud-ouest de la Rawdah",
+     "desc_fr": "Mosquée proche, à l'ouest, associée à la prière de l'Aïd du Prophète ﷺ."
+    },
+    {
+     "id": "nourain",
+     "cat": "visit",
+     "name_fr": "Mosquée Dhu an-Nurayn",
+     "name_en": "Masjid Zu Al-Nourain",
+     "name_ar": "مسجد ذو النورين",
+     "lng": 39.609478,
+     "lat": 24.463608,
+     "where_fr": "à environ 470 m au sud de la Rawdah"
+    }
+   ],
+   "lines": [],
+   "polys": [
+    {
+     "id": "rawdah",
+     "cat": "rite",
+     "coords": [
+      [
+       39.611338,
+       24.467468
+      ],
+      [
+       39.611337,
+       24.467605
+      ],
+      [
+       39.611337,
+       24.467643
+      ],
+      [
+       39.611061,
+       24.467642
+      ],
+      [
+       39.611062,
+       24.467569
+      ],
+      [
+       39.611062,
+       24.467467
+      ],
+      [
+       39.611132,
+       24.467467
+      ],
+      [
+       39.611338,
+       24.467468
+      ]
+     ]
+    },
+    {
+     "id": "dome",
+     "cat": "rite",
+     "coords": [
+      [
+       39.611487,
+       24.467501
+      ],
+      [
+       39.611509,
+       24.467518
+      ],
+      [
+       39.611524,
+       24.46754
+      ],
+      [
+       39.611529,
+       24.467566
+      ],
+      [
+       39.611525,
+       24.467589
+      ],
+      [
+       39.611513,
+       24.46761
+      ],
+      [
+       39.611495,
+       24.467627
+      ],
+      [
+       39.611472,
+       24.467637
+      ],
+      [
+       39.611446,
+       24.467641
+      ],
+      [
+       39.611421,
+       24.467637
+      ],
+      [
+       39.611398,
+       24.467627
+      ],
+      [
+       39.61138,
+       24.46761
+      ],
+      [
+       39.611368,
+       24.467589
+      ],
+      [
+       39.611364,
+       24.467566
+      ],
+      [
+       39.611369,
+       24.46754
+      ],
+      [
+       39.611383,
+       24.467518
+      ],
+      [
+       39.611405,
+       24.467501
+      ],
+      [
+       39.611432,
+       24.467492
+      ],
+      [
+       39.611461,
+       24.467492
+      ],
+      [
+       39.611487,
+       24.467501
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}

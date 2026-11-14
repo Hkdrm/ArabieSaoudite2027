@@ -397,3 +397,14 @@ Object.assign(I18N.ar, { ex_tab_places: 'أماكن', ex_more: 'عرض المز�
 Object.assign(I18N.fr, { sh_info: 'Infos', sh_practical: 'Pratique', sh_sources: 'Vidéos et sources', sh_category: 'Catégorie', sh_official: 'Site officiel', sh_loc_unverified: 'adresse non confirmée', sh_full: 'Fiche complète' });
 Object.assign(I18N.en, { sh_info: 'Info', sh_practical: 'Practical', sh_sources: 'Videos & sources', sh_category: 'Category', sh_official: 'Official site', sh_loc_unverified: 'address not confirmed', sh_full: 'Full page' });
 Object.assign(I18N.ar, { sh_info: 'معلومات', sh_practical: 'عملي', sh_sources: 'فيديوهات ومصادر', sh_category: 'الفئة', sh_official: 'الموقع الرسمي', sh_loc_unverified: 'العنوان غير مؤكد', sh_full: 'الصفحة الكاملة' });
+
+/* ---- Carte interactive des lieux saints ---- */
+Object.assign(I18N.fr, { holy_title: 'Carte interactive des lieux saints', holy_sub: 'Portes, lieux des rites, Safa et Marwa, miqats. Touchez un repère ou une carte.', holy_gates: 'Portes', holy_rites: 'Lieux des rites', holy_sai: "Sa'i", holy_services: 'Services', holy_visit: 'À proximité', holy_miqats: 'Miqats',
+  holy_see_map: 'Voir sur la carte', holy_plan: 'Plan', holy_sat: 'Satellite', holy_women: 'Entrée réservée aux femmes', holy_approx: 'Position approximative', holy_fail: 'Données indisponibles hors connexion lors du premier chargement.',
+  holy_note: "Positions : © contributeurs OpenStreetMap ; elles peuvent changer avec les travaux d'extension. Rappels pratiques : pour tout avis religieux, consultez un savant." });
+Object.assign(I18N.en, { holy_title: 'Interactive map of the holy sites', holy_sub: 'Gates, ritual spots, Safa and Marwa, miqats. Tap a marker or a card.', holy_gates: 'Gates', holy_rites: 'Ritual spots', holy_sai: "Sa'i", holy_services: 'Services', holy_visit: 'Nearby', holy_miqats: 'Miqats',
+  holy_see_map: 'See on the map', holy_plan: 'Map', holy_sat: 'Satellite', holy_women: "Women's entrance", holy_approx: 'Approximate position', holy_fail: 'Data unavailable offline on the first load.',
+  holy_note: 'Positions: © OpenStreetMap contributors; they may change with expansion works. Practical reminders only: for any ruling, consult a scholar.' });
+Object.assign(I18N.ar, { holy_title: 'خريطة تفاعلية للمشاعر المقدسة', holy_sub: 'الأبواب ومواضع المناسك والصفا والمروة والمواقيت. المس علامة أو بطاقة.', holy_gates: 'الأبواب', holy_rites: 'مواضع المناسك', holy_sai: 'السعي', holy_services: 'خدمات', holy_visit: 'قريب', holy_miqats: 'المواقيت',
+  holy_see_map: 'عرض على الخريطة', holy_plan: 'خريطة', holy_sat: 'قمر صناعي', holy_women: 'مدخل النساء', holy_approx: 'موقع تقريبي', holy_fail: 'البيانات غير متاحة دون اتصال في التحميل الأول.',
+  holy_note: 'المواقع: © المساهمون في OpenStreetMap؛ قد تتغير مع أعمال التوسعة. تذكيرات عملية فقط: لأي حكم شرعي راجع أهل العلم.' });
