@@ -7,7 +7,7 @@
     set(k, v) { try { localStorage.setItem('omra:' + k, JSON.stringify(v)); } catch {} },
   };
 
-  const APP_VERSION = '2026-11-14.45';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
+  const APP_VERSION = '2026-11-14.46';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
 
   /* ---------- état ---------- */
   const detect = () => { const l = (navigator.language || 'fr').slice(0, 2); return LANGS[l] ? l : 'fr'; };
@@ -61,7 +61,7 @@
     $('#appName').textContent = t('app_name');
     $('#tagline').textContent = t('tagline');
     $('#langSel').innerHTML = Object.entries(LANGS).map(([k, v]) => `<option value="${k}" ${k === S.lang ? 'selected' : ''}>${v}</option>`).join('');
-    const nav = [['home', '🏠'], ['trip', '✈️'], ['stay', '🏨'], ['explore', '🧭'], ['omra', '🕋'], ['sira', '🐪'], ['prayer', '🕌'], ['plan', '📒'], ['tools', '🧰']];
+    const nav = [['home', '🏠'], ['trip', '✈️'], ['stay', '🏨'], ['explore', '🧭'], ['omra', '🕋'], ['sira', '<span class="cal2">صلى الله عليه<br>وسلم</span>'], ['prayer', '🕌'], ['plan', '📒'], ['tools', '🧰']];
     $('#nav').innerHTML = nav.map(([r, i]) => `<a href="#/${r}" data-r="${r}"><b>${i}</b>${esc(t('nav_' + r))}</a>`).join('');
   }
   $('#langSel').addEventListener('change', e => { S.lang = e.target.value; save('lang'); applyLang(); route(); });

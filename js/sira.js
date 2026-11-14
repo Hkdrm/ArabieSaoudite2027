@@ -21,7 +21,7 @@
     const list = () => chapters.filter(c => era === 'all' || c.era === era);
     const count = () => chapters.filter(c => done()[c.id]).length;
 
-    el.innerHTML = `<h2>🐪 ${t('sira_title')}</h2>
+    el.innerHTML = `<h2>${t('sira_title')}</h2><div class="cal-title" lang="ar" dir="rtl">صلى الله عليه وسلم</div>
       <div class="card sira-hero"><div class="ring" id="sRing"></div><div><b id="sProg"></b><p class="muted" style="margin:2px 0 0;font-size:13px">${t('sira_sub')}</p></div></div>
       <div class="row" style="gap:8px;margin:8px 0"><button type="button" id="sPlay" class="btn">▶ ${t('sira_play')}</button><button type="button" id="sNear" class="ghost">📍 ${t('sira_near')}</button></div>
       <div id="sBanner"></div>
@@ -37,7 +37,7 @@
       const n = count(), tot = chapters.length;
       $('#sProg', el).textContent = `${n} / ${tot} ${t('sira_stamps')}`;
       $('#sRing', el).style.background = `conic-gradient(var(--g) ${Math.round(n / tot * 360)}deg, var(--bd) 0)`;
-      $('#sRing', el).textContent = n === tot ? '🏅' : '🐪';
+      $('#sRing', el).textContent = n === tot ? '✓' : String(n);
     };
 
     /* ---------- carte ---------- */

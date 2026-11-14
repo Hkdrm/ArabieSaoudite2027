@@ -6,7 +6,7 @@
 window.SIRA = {
   eras: {
     mecque: { fr: 'La Mecque', en: 'Makkah', ar: 'مكة', ic: '🕋', c: '#8a5a00' },
-    hijra: { fr: "L'Hégire", en: 'The Hijra', ar: 'الهجرة', ic: '🐪', c: '#0b6b4f' },
+    hijra: { fr: "L'Hégire", en: 'The Hijra', ar: 'الهجرة', ic: '🧭', c: '#0b6b4f' },
     medine: { fr: 'Médine', en: 'Madinah', ar: 'المدينة', ic: '🕌', c: '#2b6cb0' },
     adieu: { fr: 'Conquête et adieux', en: 'Conquest and farewell', ar: 'الفتح والوداع', ic: '🌅', c: '#7b5ea7' },
   },
