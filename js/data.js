@@ -289,3 +289,11 @@ Object.assign(I18N.ar, { ask_title: 'هل لديك تذكرتك بالفعل؟',
 Object.assign(I18N.fr, { flight_fmt: 'Format attendu : 2 lettres + chiffres (ex. SV 124).', ticket_hint: 'Indiquez le numéro de vol ALLER et RETOUR (champs obligatoires), puis vos dates à l\'étape suivante.' });
 Object.assign(I18N.en, { flight_fmt: 'Expected format: 2 letters + digits (e.g. SV 124).', ticket_hint: 'Enter the OUTBOUND and RETURN flight numbers (required), then your dates on the next step.' });
 Object.assign(I18N.ar, { flight_fmt: 'الصيغة المتوقعة: حرفان + أرقام (مثل SV 124).', ticket_hint: 'أدخل رقم رحلة الذهاب والعودة (إلزامي)، ثم تواريخك في الخطوة التالية.' });
+
+/* ---- Vols : dates puis vols, lien compagnie ---- */
+Object.assign(I18N.fr, { flights_for_dates: 'Le numéro de vol doit correspondre à la date affichée : touchez « Vérifier » pour contrôler.', verify_flight: 'Vérifier ce vol à cette date', airline_link: "Lien de l'app ou du site de la compagnie (facultatif)",
+  airline_app: 'App de la compagnie', no_ticket_yet: "Pas encore de billet : enregistrer seulement les dates", dates_changed_warn: 'Vous avez changé les dates : vérifiez que ces vols partent bien aux nouvelles dates.', flights_h: 'Vos vols' });
+Object.assign(I18N.en, { flights_for_dates: 'The flight number must match the date shown: tap “Verify” to check.', verify_flight: 'Verify this flight on this date', airline_link: "Link to the airline's app or website (optional)",
+  airline_app: 'Airline app', no_ticket_yet: 'No ticket yet: save the dates only', dates_changed_warn: 'You changed the dates: check that these flights operate on the new dates.', flights_h: 'Your flights' });
+Object.assign(I18N.ar, { flights_for_dates: 'يجب أن يطابق رقم الرحلة التاريخ المعروض: المس «تحقق» للتأكد.', verify_flight: 'تحقق من هذه الرحلة في هذا التاريخ', airline_link: 'رابط تطبيق أو موقع شركة الطيران (اختياري)',
+  airline_app: 'تطبيق الشركة', no_ticket_yet: 'لا تذكرة بعد: احفظ التواريخ فقط', dates_changed_warn: 'غيّرت التواريخ: تأكد أن هذه الرحلات تعمل في التواريخ الجديدة.', flights_h: 'رحلاتك' });
