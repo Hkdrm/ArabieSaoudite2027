@@ -7,7 +7,7 @@
     set(k, v) { try { localStorage.setItem('omra:' + k, JSON.stringify(v)); } catch {} },
   };
 
-  const APP_VERSION = '2026-11-14.29';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
+  const APP_VERSION = '2026-11-14.30';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
 
   /* ---------- état ---------- */
   const detect = () => { const l = (navigator.language || 'fr').slice(0, 2); return LANGS[l] ? l : 'fr'; };
@@ -76,7 +76,7 @@
     if (geoWatch != null && navigator.geolocation) { navigator.geolocation.clearWatch(geoWatch); geoWatch = null; }
     const [r, arg] = (location.hash.replace('#/', '') || 'home').split('/');
     const name = views[r] ? r : 'home';
-    $$('#nav a').forEach(a => a.classList.toggle('on', a.dataset.r === (name === 'place' || name === 'map' ? 'explore' : name)));
+    $$('#nav a').forEach(a => a.classList.toggle('on', a.dataset.r === (name === 'place' || name === 'map' || name === 'discoveries' ? 'explore' : name)));
     $('#view').innerHTML = '';
     views[name]($('#view'), arg);
     window.scrollTo(0, 0);
@@ -308,6 +308,7 @@
     const cities = [...new Set(PLACES.map(p => p.city))];
     el.innerHTML = `<h2>${t('explore_title')}</h2>
       <div class="card muted">⚠️ ${t('warn_unverified')}</div>
+      <div class="card"><a class="btn" href="#/discoveries">🔎 ${S.lang === 'en' ? 'Discoveries & local finds' : S.lang === 'ar' ? 'اكتشافات وأماكن مميزة' : 'Découvertes, boutiques & bons plans'} · 67</a></div>
       <div class="row" style="margin-bottom:8px"><input id="q" class="grow" type="search" placeholder="${esc(t('search'))}">
         <select id="cty"><option value="all">${t('all_cities')}</option>${cities.map(c => `<option value="${c}">${esc(cityName(c))}</option>`).join('')}</select>
         <button class="ghost" id="nearBtn" title="${t('follow_me')}">📍 ${t('follow_me')}</button></div>
@@ -571,6 +572,48 @@
       };
     };
     draw();
+  };
+
+  /* ---------- Catalogue de découvertes : vidéos, marchés, artisans, conseils ---------- */
+  views.discoveries = el => {
+    const i18n = {
+      fr: { title: 'Découvertes et bonnes adresses', search: 'Rechercher un lieu, un produit ou une astuce…', all: 'Toutes les catégories', cities: 'Toutes les villes', count: 'résultats', source: 'Source', warn: 'Catalogue documentaire : lieux, prix, accès et informations historiques à vérifier indépendamment avant une visite.', empty: 'Aucun résultat', fail: 'Catalogue indisponible hors connexion lors du premier chargement.', verified: 'Vérifié', pending: 'À vérifier', view: 'Voir la vidéo / source' },
+      en: { title: 'Discoveries and local finds', search: 'Search places, products and tips…', all: 'All categories', cities: 'All cities', count: 'results', source: 'Source', warn: 'Research catalogue: locations, prices, access and historic claims require independent verification before travel.', empty: 'No results', fail: 'Catalogue unavailable on the first offline load.', verified: 'Verified', pending: 'To verify', view: 'Watch video / source' },
+      ar: { title: 'اكتشافات وأماكن مميزة', search: 'البحث عن الأماكن والمنتجات والنصائح…', all: 'كل الفئات', cities: 'كل المدن', count: 'نتائج', source: 'المصدر', warn: 'بيانات بحثية: يجب التحقق من المواقع والأسعار والمعلومات التاريخية قبل الزيارة.', empty: 'لا توجد نتائج', fail: 'لا تتوفر البيانات دون اتصال في التحميل الأول.', verified: 'تم التحقق', pending: 'يحتاج إلى تحقق', view: 'عرض المصدر' }
+    };
+    const ui = i18n[S.lang] || i18n.fr;
+    el.innerHTML = '<h2>' + esc(ui.title) + '</h2><div class="card muted">⚠️ ' + esc(ui.warn) + '</div><div class="card" id="discoveryBody"><p class="muted">…</p></div>';
+    fetch('data/junaid-madinah-discoveries.json', { cache: 'no-cache' }).then(r => { if (!r.ok) throw Error(r.status); return r.json(); }).then(data => {
+      if (!document.getElementById('discoveryBody') || !Array.isArray(data.records)) return;
+      const root = document.getElementById('discoveryBody');
+      const ct = data.categories || {};
+      const cities = [...new Set(data.records.map(r => r.city))].sort();
+      root.innerHTML = '<div class="row"><input type="search" class="grow" id="discQuery" placeholder="' + esc(ui.search) + '" aria-label="' + esc(ui.search) + '"><select id="discCity" aria-label="' + esc(ui.cities) + '"><option value="">' + esc(ui.cities) + '</option>' + cities.map(c => '<option value="' + esc(c) + '">' + esc(cityName(c)) + '</option>').join('') + '</select></div>' +
+        '<div class="row" style="margin:10px 0"><select id="discCat" style="width:100%" aria-label="' + esc(ui.all) + '"><option value="">' + esc(ui.all) + '</option>' + Object.entries(ct).map(([k,v]) => '<option value="' + esc(k) + '">' + esc(v) + '</option>').join('') + '</select></div>' +
+        '<p class="muted" id="discCount" aria-live="polite"></p><div id="discResults"></div>';
+      const render = () => {
+        const q = norm($('#discQuery', root).value);
+        const c = $('#discCity', root).value, cat = $('#discCat', root).value;
+        const filtered = data.records.filter(p => (!c || p.city === c) && (!cat || p.category === cat) &&
+          (!q || norm([p.name_fr, p.area, p.description_fr, p.practical_notes_fr, ct[p.category]].join(' ')).includes(q)));
+        $('#discCount', root).textContent = filtered.length + ' ' + ui.count;
+        $('#discResults', root).innerHTML = filtered.length ? filtered.map(p => {
+          const links = (p.source?.videos || p.source?.references || []).filter(x => /^https:\/\//.test(x)).slice(0,5);
+          const status = p.verification?.independently_verified ? ui.verified : ui.pending;
+          return '<article style="padding:14px 0;border-top:1px solid var(--bd)">' +
+            '<div class="row" style="justify-content:space-between"><strong>' + esc(p.name_fr) + '</strong><span class="muted">' + esc(status) + '</span></div>' +
+            '<p class="muted">' + esc(cityName(p.city)) + (p.area ? ' · ' + esc(p.area) : '') + ' · ' + esc(ct[p.category] || p.category) + '</p>' +
+            '<p>' + esc(p.description_fr || '') + '</p>' +
+            (p.practical_notes_fr ? '<p class="muted">💡 ' + esc(p.practical_notes_fr) + '</p>' : '') +
+            (links.length ? '<div class="row">' + links.map((url,i) => '<a class="btn ghost sm" target="_blank" rel="noopener noreferrer" href="' + esc(url) + '">' + esc(ui.view) + (links.length > 1 ? ' ' + (i+1) : '') + '</a>').join('') + '</div>' : '') +
+            '</article>';
+        }).join('') : '<p class="muted">' + esc(ui.empty) + '</p>';
+      };
+      $('#discQuery', root).addEventListener('input', render);
+      $('#discCity', root).addEventListener('change', render);
+      $('#discCat', root).addEventListener('change', render);
+      render();
+    }).catch(() => { const b = document.getElementById('discoveryBody'); if (b) b.innerHTML = '<p class="muted">' + esc(ui.fail) + '</p>'; });
   };
 
   /* ---------- démarrage ---------- */
