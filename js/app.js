@@ -7,7 +7,7 @@
     set(k, v) { try { localStorage.setItem('omra:' + k, JSON.stringify(v)); } catch {} },
   };
 
-  const APP_VERSION = '2026-11-14.26';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
+  const APP_VERSION = '2026-11-14.27';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
 
   /* ---------- état ---------- */
   const detect = () => { const l = (navigator.language || 'fr').slice(0, 2); return LANGS[l] ? l : 'fr'; };
@@ -25,10 +25,10 @@
     budget: store.get('budget', 0),
     rate: store.get('rate', 0.23),
     cur: store.get('cur', 'EUR'),
-    fav: store.get('fav', []), visited: store.get('visited', {}), notes: store.get('notes', {}), vids: store.get('vids', {}), here: store.get('here', null), journey: store.get('journey', null),
+    fav: store.get('fav', []), visited: store.get('visited', {}), notes: store.get('notes', {}), vids: store.get('vids', {}), here: store.get('here', null), journey: store.get('journey', null), stays: store.get('stays', []),
   };
   const hooks = { onSave: () => {} };
-  const SYNC_KEYS = ['lang', 'city', 'method', 'trip', 'plan', 'checks', 'custom', 'cnt', 'exp', 'budget', 'rate', 'cur', 'fav', 'visited', 'notes', 'vids', 'journey'];
+  const SYNC_KEYS = ['lang', 'city', 'method', 'trip', 'plan', 'checks', 'custom', 'cnt', 'exp', 'budget', 'rate', 'cur', 'fav', 'visited', 'notes', 'vids', 'journey', 'stays'];
   (function migrate() {
     const old = store.get('flights', null);
     if (S.journey || !old) return;
@@ -61,7 +61,7 @@
     $('#appName').textContent = t('app_name');
     $('#tagline').textContent = t('tagline');
     $('#langSel').innerHTML = Object.entries(LANGS).map(([k, v]) => `<option value="${k}" ${k === S.lang ? 'selected' : ''}>${v}</option>`).join('');
-    const nav = [['home', '🏠'], ['trip', '✈️'], ['explore', '🧭'], ['omra', '🕋'], ['prayer', '🕌'], ['plan', '📒'], ['tools', '🧰']];
+    const nav = [['home', '🏠'], ['trip', '✈️'], ['stay', '🏨'], ['explore', '🧭'], ['omra', '🕋'], ['prayer', '🕌'], ['plan', '📒'], ['tools', '🧰']];
     $('#nav').innerHTML = nav.map(([r, i]) => `<a href="#/${r}" data-r="${r}"><b>${i}</b>${esc(t('nav_' + r))}</a>`).join('');
   }
   $('#langSel').addEventListener('change', e => { S.lang = e.target.value; save('lang'); applyLang(); route(); });
@@ -149,6 +149,29 @@
   const lastDate = k => legs(k).map(l => l.date).filter(Boolean).sort().at(-1) || '';
   const tripStart = () => firstDate('out') || S.trip.start;
   const tripEnd = () => lastDate('ret') || S.trip.end;
+
+
+  /* ---------- Import d'infos de vol via un lien préparé (#/import/…) : champs validés un par un ---------- */
+  views.import = (el, arg) => {
+    let d = null;
+    try { const b64 = String(arg || '').replace(/-/g, '+').replace(/_/g, '/'); d = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(b64), c => c.charCodeAt(0)))); } catch (e) { d = null; }
+    const RX = { date1: /^\d{4}-\d{2}-\d{2}$/, date2: /^\d{4}-\d{2}-\d{2}$/, noOut: /^[A-Z0-9]{2}\s?\d{1,4}[A-Z]?$/, noRet: /^[A-Z0-9]{2}\s?\d{1,4}[A-Z]?$/,
+      from: /^[A-Z]{3}$/, to: /^[A-Z]{3}$/, retFrom: /^[A-Z]{3}$/, retTo: /^[A-Z]{3}$/, depOut: /^\d{2}:\d{2}$/, arrOut: /^\d{2}:\d{2}$/, depRet: /^\d{2}:\d{2}$/, arrRet: /^\d{2}:\d{2}$/,
+      termOut: /^[\w -]{1,8}$/, termRet: /^[\w -]{1,8}$/ };
+    const clean = {};
+    if (d && typeof d === 'object') for (const k of Object.keys(RX)) if (typeof d[k] === 'string' && RX[k].test(d[k])) clean[k] = d[k];
+    if (d && d.names && typeof d.names === 'object') { clean.names = {}; for (const [c, n] of Object.entries(d.names)) if (/^[A-Z]{3}$/.test(c) && typeof n === 'string') clean.names[c] = n.slice(0, 40); }
+    const keys = Object.keys(clean);
+    if (!keys.length) { el.innerHTML = `<h2>${t('import')}</h2><div class="card"><p>${t('import_err')}</p><a class="btn" href="#/trip">${t('nav_trip')}</a></div>`; return; }
+    const rows = keys.filter(k => k !== 'names').map(k => `<div class="item"><span class="tx muted">${esc(k)}</span><b>${esc(clean[k])}</b></div>`).join('');
+    el.innerHTML = `<h2>${t('import')}</h2><div class="card"><p>${t('import_ask')}</p>${rows}
+      <div class="row" style="margin-top:12px"><button type="button" id="impOk">✓ ${t('import')}</button><a class="btn alt" href="#/trip">${t('cancel')}</a></div></div>`;
+    $('#impOk', el).onclick = () => {
+      S.journey = S.journey || {};
+      Object.assign(S.journey, clean, clean.names ? { names: { ...(S.journey.names || {}), ...clean.names } } : {});
+      save('journey'); toast(t('imported')); location.hash = '#/trip';
+    };
+  };
 
   /* ---------- Planning / Carnet ---------- */
   views.plan = el => {
@@ -543,7 +566,7 @@
       $('#imp', el).onclick = () => $('#file', el).click();
       $('#file', el).onchange = async e => {
         try { const d = JSON.parse(await e.target.files[0].text()); if (typeof d !== 'object' || !d) throw 0;
-          for (const k of ['lang', 'city', 'geo', 'method', 'trip', 'plan', 'checks', 'custom', 'cnt', 'exp', 'budget', 'rate', 'cur', 'fav', 'visited', 'notes', 'vids', 'here', 'journey']) if (k in d) { S[k] = d[k]; save(k); }
+          for (const k of ['lang', 'city', 'geo', 'method', 'trip', 'plan', 'checks', 'custom', 'cnt', 'exp', 'budget', 'rate', 'cur', 'fav', 'visited', 'notes', 'vids', 'here', 'journey', 'stays']) if (k in d) { S[k] = d[k]; save(k); }
           applyLang(); toast(t('imported')); draw(); } catch { toast(t('import_err')); }
       };
     };

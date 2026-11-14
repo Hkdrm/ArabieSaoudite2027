@@ -25,6 +25,7 @@
     const d = { _v: 1, _ts: +store.get('ts', 0) || Date.now() };
     A.SYNC_KEYS.forEach(k => { d[k] = S[k]; });
     if (d.journey) { d.journey = { ...d.journey }; delete d.journey.ref; delete d.journey.date2Rejected; }   // pas de référence de réservation
+    if (Array.isArray(d.stays)) d.stays = d.stays.map(x => { const y = { ...x }; delete y.ref; return y; });
     return d;
   }
 
@@ -32,6 +33,7 @@
     A.SYNC_KEYS.forEach(k => {
       if (!(k in d)) return;
       if (k === 'journey' && d.journey) d.journey.ref = (S.journey && S.journey.ref) || '';
+      if (k === 'stays' && Array.isArray(d.stays)) d.stays.forEach(x => { const mine = (S.stays || []).find(y => y.id === x.id); x.ref = (mine && mine.ref) || ''; });
       S[k] = d[k]; store.set(k, S[k]);
     });
     store.set('ts', d._ts || Date.now());

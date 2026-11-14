@@ -318,3 +318,24 @@ Object.assign(I18N.ar, { map_lang_label: 'لغة الخريطة', map_style_labe
 Object.assign(I18N.fr, { route_usual: 'route habituelle de ce vol', route_loading: 'Recherche de la route…', route_unknown: "Route introuvable pour ce vol : renseignez les aéroports dans « Détails ».", route_not_gva: 'Ce vol part habituellement de {city}, pas de Genève.' });
 Object.assign(I18N.en, { route_usual: 'usual route of this flight', route_loading: 'Looking up the route…', route_unknown: 'Route not found for this flight: enter the airports in “Details”.', route_not_gva: 'This flight usually departs from {city}, not Geneva.' });
 Object.assign(I18N.ar, { route_usual: 'المسار المعتاد لهذه الرحلة', route_loading: 'جارٍ البحث عن المسار…', route_unknown: 'لم يُعثر على مسار هذه الرحلة: أدخل المطارات في «التفاصيل».', route_not_gva: 'تقلع هذه الرحلة عادة من {city} وليس من جنيف.' });
+
+/* ---- Onglet Logement ---- */
+Object.assign(I18N.fr, { nav_stay: 'Logement', stay_title: 'Logement', stay_empty: 'Pas encore de logement', stay_empty_sub: "Ajoutez-le dès que vous l'aurez réservé, ou notez un « à réserver » en attendant.",
+  add_stay: 'Ajouter un logement', st_edit: 'Modifier le logement', st_city: 'Ville', st_other_city: 'Autre ville', st_name: "Nom de l'hôtel / logement", st_name_ph: 'ex. Hôtel près du Haram', st_noname: 'Logement sans nom',
+  st_todo: 'À réserver', st_booked: 'Réservé', st_in: 'Arrivée', st_out: 'Départ', st_addr: 'Adresse', st_link: 'Lien de la réservation ou de la plateforme (facultatif)', st_price: 'Prix total', st_phone: 'Téléphone', st_notes: 'Notes (petit-déjeuner, étage, navette…)',
+  st_nodates_hint: "Pour choisir les nuits, renseignez d'abord vos dates dans l'onglet Vols.", st_call: 'Appeler', st_open_booking: 'Réservation', st_search: 'Chercher un hôtel', st_uncovered: 'nuit(s) sans logement', st_all_covered: 'Toutes les nuits sont logées',
+  st_delete_confirm: 'Supprimer ce logement ?' });
+Object.assign(I18N.en, { nav_stay: 'Stay', stay_title: 'Accommodation', stay_empty: 'No accommodation yet', stay_empty_sub: 'Add it once booked, or note a “to book” in the meantime.',
+  add_stay: 'Add accommodation', st_edit: 'Edit accommodation', st_city: 'City', st_other_city: 'Other city', st_name: 'Hotel / place name', st_name_ph: 'e.g. Hotel near the Haram', st_noname: 'Unnamed accommodation',
+  st_todo: 'To book', st_booked: 'Booked', st_in: 'Check-in', st_out: 'Check-out', st_addr: 'Address', st_link: 'Booking or platform link (optional)', st_price: 'Total price', st_phone: 'Phone', st_notes: 'Notes (breakfast, floor, shuttle…)',
+  st_nodates_hint: 'To pick the nights, first enter your dates in the Flights tab.', st_call: 'Call', st_open_booking: 'Booking', st_search: 'Find a hotel', st_uncovered: 'night(s) without accommodation', st_all_covered: 'All nights are covered',
+  st_delete_confirm: 'Delete this accommodation?' });
+Object.assign(I18N.ar, { nav_stay: 'الإقامة', stay_title: 'الإقامة', stay_empty: 'لا إقامة بعد', stay_empty_sub: 'أضفها عند الحجز، أو دوّن «للحجز» في الوقت الحالي.',
+  add_stay: 'إضافة إقامة', st_edit: 'تعديل الإقامة', st_city: 'المدينة', st_other_city: 'مدينة أخرى', st_name: 'اسم الفندق / المسكن', st_name_ph: 'مثال: فندق قرب الحرم', st_noname: 'إقامة بلا اسم',
+  st_todo: 'للحجز', st_booked: 'تم الحجز', st_in: 'الوصول', st_out: 'المغادرة', st_addr: 'العنوان', st_link: 'رابط الحجز أو المنصة (اختياري)', st_price: 'السعر الإجمالي', st_phone: 'الهاتف', st_notes: 'ملاحظات (الإفطار، الطابق، الحافلة…)',
+  st_nodates_hint: 'لاختيار الليالي، أدخل تواريخك أولًا في تبويب الرحلات.', st_call: 'اتصال', st_open_booking: 'الحجز', st_search: 'ابحث عن فندق', st_uncovered: 'ليلة بلا إقامة', st_all_covered: 'كل الليالي مغطاة',
+  st_delete_confirm: 'حذف هذه الإقامة؟' });
+
+Object.assign(I18N.fr, { see_time: "voir l'heure ↗", import_ask: 'Importer ces informations de vol dans votre voyage ?' });
+Object.assign(I18N.en, { see_time: 'see time ↗', import_ask: 'Import this flight information into your trip?' });
+Object.assign(I18N.ar, { see_time: 'عرض الوقت ↗', import_ask: 'استيراد معلومات الرحلة هذه إلى رحلتك؟' });

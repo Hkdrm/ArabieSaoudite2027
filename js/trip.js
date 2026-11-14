@@ -177,6 +177,7 @@
     const legCard = k => {
       const L = leg(k), o = k === 'out';
       const valid = FLIGHT_RE.test((L.no || '').trim());
+      const tm = v => v ? esc(v) : (valid ? `<a class="seeTime" href="${esc(verifyUrl(L.no, L.date))}" target="_blank" rel="noopener">${t('see_time')}</a>` : '--:--');
       const info = valid ? `<a class="btn" href="${esc(verifyUrl(L.no, L.date))}" target="_blank" rel="noopener">ℹ️ ${t('flight_info')}</a>` : '';
       const a = airline(L.no), url = safeUrl(L.link) || (a ? a[1] : '');
       const open = url ? `<a class="btn alt" href="${esc(url)}" target="_blank" rel="noopener">✈️ ${esc(a && !safeUrl(L.link) ? a[0] : t('airline_app'))} ↗</a>` : '';
@@ -191,8 +192,8 @@
         <button type="button" id="legOk" style="margin-top:10px">${t('done_btn')}</button></div>` : '';
       return `<div class="card flight"><div class="row"><span class="pill">${o ? '🛫 ' + t('outbound') : '🛬 ' + t('inbound')}</span>
           <b class="grow" style="font-size:18px">${L.no ? esc(L.no) : `<a href="#" data-edit="${k}">＋ ${t('add_flight_no')}</a>`}</b><span class="pill">${esc(chip(L.date))}</span></div>
-        <div class="route"><div><div class="code">${esc(L.from || '—')}</div><div class="cname">${esc(nameOf(L.from))}</div><div class="time">${esc(L.dep || '--:--')}</div></div><div class="plane">✈️</div>
-          <div style="text-align:end"><div class="code">${esc(L.to || '—')}</div><div class="cname">${esc(nameOf(L.to))}</div><div class="time">${esc(L.arr || '--:--')}</div></div></div>
+        <div class="route"><div><div class="code">${esc(L.from || '—')}</div><div class="cname">${esc(nameOf(L.from))}</div><div class="time">${tm(L.dep)}</div></div><div class="plane">✈️</div>
+          <div style="text-align:end"><div class="code">${esc(L.to || '—')}</div><div class="cname">${esc(nameOf(L.to))}</div><div class="time">${tm(L.arr)}</div></div></div>
         <div class="muted">📅 ${esc(fmtDate(L.date))}${L.term ? ' · ' + t('terminal') + ' ' + esc(L.term) : ''}</div>
         <div class="row" style="margin-top:10px">${info}${open}<button type="button" class="ghost sm" data-edit="${k}">✏️ ${t('details')}</button></div>${panel}</div>`;
     };
