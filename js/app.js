@@ -23,6 +23,7 @@
     budget: store.get('budget', 0),
     rate: store.get('rate', 0.23),
     cur: store.get('cur', 'EUR'),
+    fav: store.get('fav', []), visited: store.get('visited', {}), notes: store.get('notes', {}), vids: store.get('vids', {}), here: store.get('here', null),
   };
   const save = (k) => store.set(k, S[k]);
   const t = k => (I18N[S.lang] && I18N[S.lang][k]) ?? I18N.fr[k] ?? k;
@@ -43,7 +44,7 @@
     $('#appName').textContent = t('app_name');
     $('#tagline').textContent = t('tagline');
     $('#langSel').innerHTML = Object.entries(LANGS).map(([k, v]) => `<option value="${k}" ${k === S.lang ? 'selected' : ''}>${v}</option>`).join('');
-    const nav = [['home', '🏠'], ['plan', '🗓️'], ['omra', '🕋'], ['prayer', '🕌'], ['map', '🗺️'], ['tools', '🧰']];
+    const nav = [['home', '🏠'], ['explore', '🧭'], ['omra', '🕋'], ['prayer', '🕌'], ['plan', '📒'], ['tools', '🧰']];
     $('#nav').innerHTML = nav.map(([r, i]) => `<a href="#/${r}" data-r="${r}"><b>${i}</b>${esc(t('nav_' + r))}</a>`).join('');
   }
   $('#langSel').addEventListener('change', e => { S.lang = e.target.value; save('lang'); applyLang(); route(); });
@@ -55,11 +56,11 @@
     clearInterval(timer); timer = null;
     if (orient) { window.removeEventListener('deviceorientationabsolute', orient, true); window.removeEventListener('deviceorientation', orient, true); orient = null; }
     if (mapObj) { mapObj.remove(); mapObj = null; }
-    const r = (location.hash.replace('#/', '') || 'home');
+    const [r, arg] = (location.hash.replace('#/', '') || 'home').split('/');
     const name = views[r] ? r : 'home';
-    $$('#nav a').forEach(a => a.classList.toggle('on', a.dataset.r === name));
+    $$('#nav a').forEach(a => a.classList.toggle('on', a.dataset.r === (name === 'place' || name === 'map' ? 'explore' : name)));
     $('#view').innerHTML = '';
-    views[name]($('#view'));
+    views[name]($('#view'), arg);
     window.scrollTo(0, 0);
   }
   window.addEventListener('hashchange', route);
@@ -93,7 +94,7 @@
         <div class="grid2">
           <a class="tile" href="#/omra"><span>🕋</span>${t('quick_omra')}</a>
           <a class="tile" href="#/plan"><span>🗓️</span>${t('quick_plan')}</a>
-          <a class="tile" href="#/map"><span>🗺️</span>${t('quick_map')}</a>
+          <a class="tile" href="#/explore"><span>🧭</span>${t('quick_map')}</a>
           <a class="tile" href="#/tools"><span>✅</span>${t('quick_list')}</a>
         </div>
         <p class="muted" id="inst"></p>`;
@@ -105,14 +106,39 @@
   let deferredInstall = null;
   window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredInstall = e; if ((location.hash || '#/home') === '#/home') route(); });
 
-  /* ---------- Planning ---------- */
+  function buildItin(city, hours, cats) {
+    const c = CITIES[city]; let cur = { lat: c.lat, lng: c.lng }, left = hours * 60;
+    const pool = PLACES.filter(p => p.city === city && p.mins > 0 && cats.includes(p.c)), out = [];
+    while (pool.length) {
+      pool.sort((a, b) => km(cur, a) - km(cur, b));
+      const k = pool.findIndex(p => km(cur, p) / 25 * 60 + 5 + p.mins <= left);
+      if (k < 0) break;
+      const p = pool.splice(k, 1)[0], tr = Math.round(km(cur, p) / 25 * 60 + 5);
+      left -= tr + p.mins; out.push({ p, tr }); cur = p;
+    }
+    return { out, used: hours * 60 - left };
+  }
+
+  /* ---------- Planning / Carnet ---------- */
   views.plan = el => {
     if (S.plan === null) { S.plan = []; save('plan'); }
+    const IT = { city: 'madinah', hours: 4, cats: ['holy', 'sira', 'heritage'], result: null };
     const draw = () => {
       const start = S.trip.start ? new Date(S.trip.start + 'T00:00') : null;
       const items = [...S.plan].sort((a, b) => a.day - b.day);
       const dateOf = d => { if (!start) return ''; const x = new Date(start); x.setDate(x.getDate() + d - 1); return x.toLocaleDateString(S.lang === 'ar' ? 'ar-SA-u-nu-latn' : S.lang, { weekday: 'short', day: 'numeric', month: 'short' }); };
-      el.innerHTML = `<h2>${t('plan_title')}</h2>
+      const favs = S.fav.map(id => PLACES.find(x => x.id === id)).filter(Boolean);
+      const itCities = [...new Set(PLACES.filter(x => x.c !== 'airport').map(x => x.city))];
+      const R = IT.result;
+      el.innerHTML = `<h2>${t('nav_plan')}</h2>
+        <div class="card"><h3>★ ${t('favorites')}</h3>${favs.length ? favs.map(x => `<div class="item ${S.visited[x.id] ? 'done' : ''}"><input type="checkbox" data-vis="${x.id}" ${S.visited[x.id] ? 'checked' : ''} title="${t('visited')}"><a class="tx" href="#/place/${x.id}" style="color:var(--tx)">${esc(L(x.n))} <span class="muted">· ${esc(cityName(x.city))}</span></a></div>`).join('') : `<p class="muted">${t('no_fav')}</p>`}</div>
+        <div class="card"><h3>⚡ ${t('itin')}</h3><div class="row">
+          <div><label>${t('city')}</label><select id="itc">${itCities.map(c => `<option value="${c}" ${IT.city === c ? 'selected' : ''}>${esc(cityName(c))}</option>`).join('')}</select></div>
+          <div><label>${t('itin_hours')}</label><input id="ith" type="number" min="1" max="12" step="0.5" value="${IT.hours}" style="width:80px"></div></div>
+          <label style="margin-top:8px">${t('itin_interests')}</label><div class="chips">${['holy', 'sira', 'heritage', 'nature'].map(c => `<button class="chip ${IT.cats.includes(c) ? 'on' : ''}" data-itcat="${c}">${t('c_' + c)}</button>`).join('')}</div>
+          <button id="itgo">${t('generate')}</button>
+          ${R ? (R.out.length ? `<div style="margin-top:12px">${R.out.map((o, i) => `<div class="item"><span class="daybadge">${i + 1}</span><div class="tx"><a href="#/place/${o.p.id}" style="color:var(--tx)"><b>${esc(L(o.p.n))}</b></a><div class="muted">${i ? '🚗 ~' + o.tr + ' ' + t('min') + ' · ' : ''}${o.p.mins} ${t('min')}</div></div></div>`).join('')}
+            <p><b>${t('itin_total')} :</b> ${Math.floor(R.used / 60)}h${String(Math.round(R.used % 60)).padStart(2, '0')}</p><p class="muted">${t('itin_note')}</p><button id="itadd">${t('add_all')}</button></div>` : `<p class="muted">${t('itin_none')}</p>`) : ''}</div>
         <div class="card">${items.length ? items.map(i => `<div class="item ${i.done ? 'done' : ''}">
             <input type="checkbox" data-done="${i.id}" ${i.done ? 'checked' : ''}>
             <div class="tx"><span class="daybadge">${t('day_word')} ${i.day}</span> <span class="pill">${esc(i.city && CITIES[i.city] ? L(CITIES[i.city].n) : '')}</span> <span class="muted">${esc(dateOf(i.day))}</span>
@@ -126,6 +152,10 @@
           <div><label>${t('notes')}</label><textarea name="notes" rows="2" style="width:100%"></textarea></div>
           <button>${t('add')}</button></form></div>`;
       $$('[data-done]', el).forEach(c => c.onchange = () => { const i = S.plan.find(x => x.id === c.dataset.done); i.done = c.checked; save('plan'); draw(); });
+      $$('[data-vis]', el).forEach(c => c.onchange = () => { if (c.checked) S.visited[c.dataset.vis] = new Date().toISOString().slice(0, 10); else delete S.visited[c.dataset.vis]; save('visited'); draw(); });
+      $$('[data-itcat]', el).forEach(b => b.onclick = () => { const c = b.dataset.itcat; IT.cats = IT.cats.includes(c) ? IT.cats.filter(x => x !== c) : [...IT.cats, c]; IT.city = $('#itc', el).value; IT.hours = +$('#ith', el).value || 4; draw(); });
+      $('#itgo', el).onclick = () => { IT.city = $('#itc', el).value; IT.hours = +$('#ith', el).value || 4; IT.result = buildItin(IT.city, IT.hours, IT.cats); draw(); };
+      const ia = $('#itadd', el); if (ia) ia.onclick = () => { const day = Math.max(0, ...S.plan.map(i => i.day)) + 1; IT.result.out.forEach(o => S.plan.push({ id: 'i' + Date.now() + o.p.id, day, city: o.p.city, title: L(o.p.n), notes: `~${o.p.mins} ${t('min')}`, done: false })); save('plan'); toast(t('added')); draw(); };
       $$('[data-del]', el).forEach(b => b.onclick = () => { S.plan = S.plan.filter(x => x.id !== b.dataset.del); save('plan'); draw(); });
       $('#ex', el).onclick = () => { S.plan = EXAMPLE_PLAN.map((e, n) => ({ id: 'e' + n + Date.now(), day: e.day, city: e.city, title: t(e.k), notes: '', done: false })); save('plan'); draw(); };
       const clr = $('#clr', el); if (clr) clr.onclick = () => { if (confirm(t('confirm_clear'))) { S.plan = []; save('plan'); draw(); } };
@@ -202,34 +232,115 @@
     draw();
   };
 
-  /* ---------- Carte ---------- */
-  views.map = el => {
-    let cat = 'all';
-    const cats = ['all', 'holy', 'miqat', 'visit', 'airport'];
-    const colors = { holy: '#0b6b4f', miqat: '#c9a227', visit: '#2b6cb0', airport: '#7b5ea7' };
-    el.innerHTML = `<h2>${t('map_title')}</h2><div class="chips" id="chips"></div><div id="map"></div><p class="muted">${t('approx')}</p><div class="card" id="list"></div>`;
-    let layer = null;
-    const gm = p => `https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}`;
+  /* ---------- outils géo ---------- */
+  const rad = d => d * Math.PI / 180;
+  const km = (a, b) => { const dp = rad(b.lat - a.lat), dl = rad(b.lng - a.lng); const x = Math.sin(dp / 2) ** 2 + Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(dl / 2) ** 2; return 12742 * Math.asin(Math.sqrt(x)); };
+  const norm = s => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  const gmaps = p => `https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}`;
+  const catColor = { holy: '#0b6b4f', sira: '#2b6cb0', heritage: '#b7791f', nature: '#2f855a', miqat: '#c9a227', airport: '#7b5ea7' };
+  const cityName = id => (CITIES[id] ? L(CITIES[id].n) : id);
+  function locate(cb) {
+    if (!navigator.geolocation) return toast(t('geo_error'));
+    toast(t('locating'));
+    navigator.geolocation.getCurrentPosition(pos => { S.here = { lat: pos.coords.latitude, lng: pos.coords.longitude }; save('here'); cb(); }, () => toast(t('geo_error')), { timeout: 10000 });
+  }
+
+  /* ---------- Explorer (carte + recherche + filtres) ---------- */
+  views.explore = el => {
+    let cat = 'all', city = 'all', q = '', near = false, layer = null;
+    const cities = [...new Set(PLACES.map(p => p.city))];
+    el.innerHTML = `<h2>${t('explore_title')}</h2>
+      <div class="card muted">⚠️ ${t('warn_unverified')}</div>
+      <div class="row" style="margin-bottom:8px"><input id="q" class="grow" type="search" placeholder="${esc(t('search'))}">
+        <select id="cty"><option value="all">${t('all_cities')}</option>${cities.map(c => `<option value="${c}">${esc(cityName(c))}</option>`).join('')}</select>
+        <button class="ghost" id="nearBtn" title="${t('near_me')}">📍</button></div>
+      <div class="chips" id="chips"></div><div id="map"></div><div class="card" id="list"></div>`;
     const render = () => {
-      $('#chips', el).innerHTML = cats.map(c => `<button class="chip ${c === cat ? 'on' : ''}" data-cat="${c}">${t(c === 'all' ? 'all' : 'c_' + c)}</button>`).join('');
-      const ps = PLACES.filter(p => cat === 'all' || p.c === cat);
-      $('#list', el).innerHTML = ps.map(p => `<div class="item"><div class="tx"><div><button data-fly="${p.id}" style="padding:0;background:none;text-align:start;font-size:15px;color:var(--tx)">${esc(L(p.n))}</button></div><div class="pill">${t('c_' + p.c)}</div></div><a href="${gm(p)}" target="_blank" rel="noopener">${t('open_maps')} ↗</a></div>`).join('');
+      $('#chips', el).innerHTML = ['all', ...CATEGORIES].map(c => `<button class="chip ${c === cat ? 'on' : ''}" data-cat="${c}">${t(c === 'all' ? 'all' : 'c_' + c)}</button>`).join('');
+      let ps = PLACES.filter(p => (cat === 'all' || p.c === cat) && (city === 'all' || p.city === city) &&
+        (!q || norm([p.n.fr, p.n.en, p.n.ar, L(p.sum), cityName(p.city)].join(' ')).includes(norm(q))));
+      ps = ps.map(p => ({ ...p, d: S.here ? km(S.here, p) : null }));
+      if (near && S.here) ps.sort((a, b) => a.d - b.d); else ps.sort((a, b) => L(a.n).localeCompare(L(b.n)));
+      $('#list', el).innerHTML = ps.length ? ps.map(p => `<div class="item"><div class="tx"><a href="#/place/${p.id}" style="color:var(--tx);font-size:16px">${S.fav.includes(p.id) ? '★ ' : ''}${S.visited[p.id] ? '✓ ' : ''}${esc(L(p.n))}</a>
+        <div class="muted" dir="rtl" style="text-align:start">${esc(p.n.ar)}</div>
+        <span class="pill">${t('c_' + p.c)}</span> <span class="pill">${esc(cityName(p.city))}</span>${p.d != null ? ` <span class="pill">${t('distance_km')} ${nf(Math.round(p.d))} ${t('km')}</span>` : ''}</div>
+        <a href="${gmaps(p)}" target="_blank" rel="noopener">↗</a></div>`).join('') : `<p class="muted">${t('no_results')}</p>`;
       $$('[data-cat]', el).forEach(b => b.onclick = () => { cat = b.dataset.cat; render(); });
-      $$('[data-fly]', el).forEach(b => b.onclick = () => { const p = PLACES.find(x => x.id === b.dataset.fly); if (mapObj) { mapObj.flyTo([p.lat, p.lng], 14); $('#map', el).scrollIntoView({ behavior: 'smooth' }); } });
       if (mapObj && layer) {
         layer.clearLayers();
-        const pts = ps.map(p => L_.circleMarker([p.lat, p.lng], { radius: 9, color: '#fff', weight: 2, fillColor: colors[p.c], fillOpacity: 1 })
-          .bindPopup(`<b>${esc(L(p.n))}</b><br><a href="${gm(p)}" target="_blank" rel="noopener">${t('open_maps')} ↗</a>`).addTo(layer));
-        if (pts.length) mapObj.fitBounds(L_.latLngBounds(ps.map(p => [p.lat, p.lng])).pad(0.2));
+        ps.forEach(p => LF.circleMarker([p.lat, p.lng], { radius: 9, color: '#fff', weight: 2, fillColor: catColor[p.c], fillOpacity: 1 })
+          .bindPopup(`<b>${esc(L(p.n))}</b><br><span dir="rtl">${esc(p.n.ar)}</span><br><a href="#/place/${p.id}">${t('nav_explore')} →</a> · <a href="${gmaps(p)}" target="_blank" rel="noopener">${t('open_maps')} ↗</a>`).addTo(layer));
+        if (S.here) LF.circleMarker([S.here.lat, S.here.lng], { radius: 7, color: '#fff', weight: 2, fillColor: '#e53e3e', fillOpacity: 1 }).addTo(layer);
+        if (ps.length) mapObj.fitBounds(LF.latLngBounds(ps.map(p => [p.lat, p.lng])).pad(0.2), { maxZoom: 14 });
       }
     };
-    const L_ = window.L;  // Leaflet (la fonction L locale masque le global dans ce module)
-    if (L_ && navigator.onLine !== false) {
-      mapObj = L_.map('map').setView([23.5, 42], 5);
-      L_.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '&copy; OpenStreetMap' }).addTo(mapObj);
-      layer = L_.layerGroup().addTo(mapObj);
+    const LF = window.L;
+    if (LF && navigator.onLine !== false) {
+      mapObj = LF.map('map').setView([23.5, 42], 5);
+      LF.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '&copy; OpenStreetMap' }).addTo(mapObj);
+      layer = LF.layerGroup().addTo(mapObj);
     } else { $('#map', el).outerHTML = `<div class="card muted">${t('map_offline')}</div>`; }
+    $('#q', el).oninput = e => { q = e.target.value; render(); };
+    $('#cty', el).onchange = e => { city = e.target.value; render(); };
+    $('#nearBtn', el).onclick = () => locate(() => { near = true; render(); });
     render();
+  };
+  views.map = views.explore;
+
+  /* ---------- Fiche d'un lieu ---------- */
+  const ytId = u => { try { const x = new URL(u); let id = null;
+    if (x.hostname === 'youtu.be') id = x.pathname.slice(1);
+    else if (/(^|\.)youtube\.com$/.test(x.hostname)) id = x.searchParams.get('v') || (x.pathname.match(/\/(?:shorts|embed|live)\/([\w-]{11})/) || [])[1];
+    return /^[\w-]{11}$/.test(id || '') ? id : null; } catch { return null; } };
+  const parseT = s => { s = String(s || '').trim(); if (!s) return 0; if (/^\d+$/.test(s)) return +s; const p = s.split(':').map(Number); if (p.some(isNaN)) return 0; return p.reduce((a, b) => a * 60 + b, 0); };
+  const fmtT = n => { const h = Math.floor(n / 3600), m = Math.floor(n % 3600 / 60), s = n % 60; return (h ? h + ':' + String(m).padStart(2, '0') : m) + ':' + String(s).padStart(2, '0'); };
+
+  views.place = (el, id) => {
+    const p = PLACES.find(x => x.id === id);
+    if (!p) { el.innerHTML = `<p>${t('not_found')}</p><a class="btn" href="#/explore">${t('back')}</a>`; return; }
+    const draw = () => {
+      const fav = S.fav.includes(p.id), vis = !!S.visited[p.id];
+      const vids = S.vids[p.id] || [];
+      el.innerHTML = `<a href="#/explore" class="muted">${t('back')}</a>
+        <div class="card"><h2 style="margin-bottom:2px">${esc(L(p.n))}</h2>
+          <div dir="rtl" style="font:28px/1.6 'Amiri','Noto Naskh Arabic',serif;text-align:start">${esc(p.n.ar)}</div>
+          <div class="muted" style="font-size:12px">${t('taxi_name')}</div>
+          <div style="margin-top:8px"><span class="pill">${t('c_' + p.c)}</span> <span class="pill">${esc(cityName(p.city))}</span>
+            <span class="pill">${t('reliability')} : ${t('rel_' + p.rel)}</span>
+            <span class="pill">${p.ver ? t('verified_on') + ' ' + esc(p.ver) : '⚠️ ' + t('not_verified')}</span></div>
+          <p>${esc(L(p.sum))}</p>
+          <div class="row"><button id="fav" class="${fav ? '' : 'ghost'}">${fav ? '★' : '☆'} ${t('fav')}</button>
+            <button id="vis" class="${vis ? '' : 'ghost'}">${vis ? '✓ ' + t('visited') : t('mark_visited')}</button></div>
+          <div class="row" style="margin-top:8px"><a class="btn" href="${gmaps(p)}" target="_blank" rel="noopener">🧭 ${t('open_maps')}</a>
+            <button class="ghost" id="gps">📋 ${t('copy_gps')}</button><button class="ghost" id="addplan">🗓️ ${t('add_to_plan')}</button></div>
+          ${p.approx ? `<p class="muted">⚠️ ${t('approx_coord')}</p>` : ''}</div>
+        ${p.facts.length ? `<div class="card"><h3>${t('facts_title')}</h3>${p.facts.map(f => `<div class="dua" style="border-inline-start-color:${f.s === 'fact' ? 'var(--g)' : '#d69e2e'}"><span class="pill">${f.s === 'fact' ? '✔ ' + t('fact') : '❓ ' + t('trad')}</span><div>${esc(L(f.t))}</div></div>`).join('')}</div>` : ''}
+        <div class="card"><h3>${t('practical')}</h3><div class="times">
+          <div><span>${t('price')}</span><b>${p.free ? t('free') : t('paid')}</b></div>
+          ${p.mins ? `<div><span>${t('duration')}</span><b>${p.mins} ${t('min')}</b></div>` : ''}
+          <div><span>${t('hours')}</span><b style="text-align:end">${esc(L(p.hours))}</b></div></div>
+          <p><b>${t('access')} :</b> ${esc(L(p.access))}</p>
+          <p class="muted">GPS : ${p.lat.toFixed(5)}, ${p.lng.toFixed(5)}</p>
+          ${p.tips.length ? `<h3>${t('tips')}</h3>${p.tips.map(x => `<p>💡 ${esc(L(x))}</p>`).join('')}` : ''}</div>
+        <div class="card"><h3>🎬 ${t('videos')}</h3>
+          ${vids.length ? vids.map((v, i) => `<div class="item"><div class="tx"><b>${esc(v.title)}</b><div class="muted">${esc(v.creator)}${v.t ? ' · ' + fmtT(v.t) : ''}</div></div>
+            <a href="https://www.youtube.com/watch?v=${v.id}${v.t ? '&t=' + v.t + 's' : ''}" target="_blank" rel="noopener">▶ ${t('watch')}</a><button class="danger" data-vdel="${i}">✕</button></div>`).join('') : `<p class="muted">${t('no_video')}</p>`}
+          <details style="margin-top:10px"><summary>${t('add_video')}</summary><p class="muted">${t('video_hint')}</p>
+            <form class="form" id="vf"><input name="u" placeholder="${esc(t('video_url'))}" required><input name="ti" placeholder="${esc(t('video_title'))}" required>
+              <input name="cr" placeholder="${esc(t('video_creator'))}" required><input name="tm" placeholder="${esc(t('video_time'))}"><button>${t('add')}</button></form></details></div>
+        <div class="card"><h3>📝 ${t('my_note')}</h3><textarea id="note" rows="4" style="width:100%">${esc(S.notes[p.id] || '')}</textarea></div>
+        <div class="card muted"><b>${t('sources')} :</b> ${p.src.length ? esc(p.src.join(' · ')) : '—'}</div>`;
+      $('#fav', el).onclick = () => { S.fav = fav ? S.fav.filter(x => x !== p.id) : [...S.fav, p.id]; save('fav'); draw(); };
+      $('#vis', el).onclick = () => { if (vis) delete S.visited[p.id]; else S.visited[p.id] = new Date().toISOString().slice(0, 10); save('visited'); draw(); };
+      $('#gps', el).onclick = async () => { try { await navigator.clipboard.writeText(`${p.lat},${p.lng}`); toast(t('copied')); } catch { prompt('GPS', `${p.lat},${p.lng}`); } };
+      $('#addplan', el).onclick = () => { S.plan = S.plan || []; S.plan.push({ id: 'p' + Date.now(), day: Math.max(1, ...S.plan.map(i => i.day)), city: p.city, title: L(p.n), notes: p.mins ? `~${p.mins} ${t('min')}` : '', done: false }); save('plan'); toast(t('added')); };
+      $('#note', el).oninput = e => { S.notes[p.id] = e.target.value; save('notes'); };
+      $$('[data-vdel]', el).forEach(b => b.onclick = () => { S.vids[p.id] = vids.filter((_, i) => i !== +b.dataset.vdel); save('vids'); draw(); });
+      $('#vf', el).onsubmit = e => { e.preventDefault(); const f = new FormData(e.target); const vid = ytId(f.get('u'));
+        if (!vid) return toast('YouTube ?');
+        S.vids[p.id] = [...vids, { id: vid, title: f.get('ti').trim(), creator: f.get('cr').trim(), t: parseT(f.get('tm')) }]; save('vids'); draw(); };
+    };
+    draw();
   };
 
   /* ---------- Outils ---------- */
@@ -270,7 +381,7 @@
       $('#imp', el).onclick = () => $('#file', el).click();
       $('#file', el).onchange = async e => {
         try { const d = JSON.parse(await e.target.files[0].text()); if (typeof d !== 'object' || !d) throw 0;
-          for (const k of ['lang', 'city', 'geo', 'method', 'trip', 'plan', 'checks', 'custom', 'cnt', 'exp', 'budget', 'rate', 'cur']) if (k in d) { S[k] = d[k]; save(k); }
+          for (const k of ['lang', 'city', 'geo', 'method', 'trip', 'plan', 'checks', 'custom', 'cnt', 'exp', 'budget', 'rate', 'cur', 'fav', 'visited', 'notes', 'vids', 'here']) if (k in d) { S[k] = d[k]; save(k); }
           applyLang(); toast(t('imported')); draw(); } catch { toast(t('import_err')); }
       };
     };

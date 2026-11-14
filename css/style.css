@@ -54,3 +54,4 @@ label{display:block;font-size:13px;color:var(--mut);margin-bottom:3px}
 progress{width:100%;height:8px;accent-color:var(--g)}
 .toast{position:fixed;inset-inline:16px;bottom:calc(var(--nav) + 24px);background:#222;color:#fff;padding:10px 14px;border-radius:12px;text-align:center;z-index:50}
 [dir=rtl] .compass .arrow{transform-origin:center}
+.btn{text-decoration:none;display:inline-block}

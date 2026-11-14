@@ -98,39 +98,14 @@ const I18N = {
 };
 
 const CITIES = {
-  makkah:  { n: { fr: 'La Mecque', ar: 'مكة المكرمة', en: 'Makkah' },     lat: 21.4225, lng: 39.8262, tz: 'Asia/Riyadh' },
-  madinah: { n: { fr: 'Médine', ar: 'المدينة المنورة', en: 'Madinah' },   lat: 24.4672, lng: 39.6111, tz: 'Asia/Riyadh' },
-  jeddah:  { n: { fr: 'Jeddah', ar: 'جدة', en: 'Jeddah' },                lat: 21.5433, lng: 39.1728, tz: 'Asia/Riyadh' },
-  riyadh:  { n: { fr: 'Riyad', ar: 'الرياض', en: 'Riyadh' },              lat: 24.7136, lng: 46.6753, tz: 'Asia/Riyadh' },
-  alula:   { n: { fr: 'AlUla', ar: 'العُلا', en: 'AlUla' },               lat: 26.6085, lng: 37.9232, tz: 'Asia/Riyadh' },
-  taif:    { n: { fr: 'Taïf', ar: 'الطائف', en: 'Taif' },                 lat: 21.2703, lng: 40.4158, tz: 'Asia/Riyadh' },
-  paris:   { n: { fr: 'Paris', ar: 'باريس', en: 'Paris' },                lat: 48.8566, lng: 2.3522,  tz: 'Europe/Paris' },
+  makkah:  { n: { fr: 'La Mecque', ar: 'مكة المكرمة', en: 'Makkah' },     lat: 21.4225, lng: 39.8262, tz: 'Asia/Riyadh', country: 'SA' },
+  madinah: { n: { fr: 'Médine', ar: 'المدينة المنورة', en: 'Madinah' },   lat: 24.4672, lng: 39.6111, tz: 'Asia/Riyadh', country: 'SA' },
+  jeddah:  { n: { fr: 'Jeddah', ar: 'جدة', en: 'Jeddah' },                lat: 21.5433, lng: 39.1728, tz: 'Asia/Riyadh', country: 'SA' },
+  riyadh:  { n: { fr: 'Riyad', ar: 'الرياض', en: 'Riyadh' },              lat: 24.7136, lng: 46.6753, tz: 'Asia/Riyadh', country: 'SA' },
+  alula:   { n: { fr: 'AlUla', ar: 'العُلا', en: 'AlUla' },               lat: 26.6085, lng: 37.9232, tz: 'Asia/Riyadh', country: 'SA' },
+  taif:    { n: { fr: 'Taïf', ar: 'الطائف', en: 'Taif' },                 lat: 21.2703, lng: 40.4158, tz: 'Asia/Riyadh', country: 'SA' },
+  paris:   { n: { fr: 'Paris', ar: 'باريس', en: 'Paris' },                lat: 48.8566, lng: 2.3522,  tz: 'Europe/Paris', country: 'FR' },
 };
-
-/* Lieux (coordonnées approximatives). c = holy | miqat | visit | airport */
-const PLACES = [
-  { id: 'haram',   c: 'holy',  lat: 21.4225, lng: 39.8262, n: { fr: 'Masjid al-Haram (Kaaba)', ar: 'المسجد الحرام (الكعبة)', en: 'Masjid al-Haram (Kaaba)' } },
-  { id: 'nabawi',  c: 'holy',  lat: 24.4672, lng: 39.6111, n: { fr: 'Masjid an-Nabawi', ar: 'المسجد النبوي', en: 'Masjid an-Nabawi' } },
-  { id: 'arafat',  c: 'holy',  lat: 21.3549, lng: 39.9841, n: { fr: 'Arafat', ar: 'عرفات', en: 'Arafat' } },
-  { id: 'mina',    c: 'holy',  lat: 21.4133, lng: 39.8933, n: { fr: 'Mina', ar: 'منى', en: 'Mina' } },
-  { id: 'muzd',    c: 'holy',  lat: 21.3892, lng: 39.9361, n: { fr: 'Muzdalifah', ar: 'مزدلفة', en: 'Muzdalifah' } },
-  { id: 'hulayfa', c: 'miqat', lat: 24.4137, lng: 39.5441, n: { fr: 'Dhul Hulayfah (Abyar Ali)', ar: 'ذو الحليفة (أبيار علي)', en: 'Dhul Hulayfah (Abyar Ali)' } },
-  { id: 'qarn',    c: 'miqat', lat: 21.6322, lng: 40.4263, n: { fr: 'Qarn al-Manazil (As-Sayl)', ar: 'قرن المنازل (السيل)', en: 'Qarn al-Manazil (As-Sayl)' } },
-  { id: 'yalam',   c: 'miqat', lat: 20.5167, lng: 39.8667, n: { fr: 'Yalamlam', ar: 'يلملم', en: 'Yalamlam' } },
-  { id: 'quba',    c: 'visit', lat: 24.4393, lng: 39.6173, n: { fr: 'Mosquée de Quba', ar: 'مسجد قباء', en: 'Quba Mosque' } },
-  { id: 'qiblat',  c: 'visit', lat: 24.4846, lng: 39.5787, n: { fr: 'Mosquée des Deux Qiblas', ar: 'مسجد القبلتين', en: 'Masjid al-Qiblatayn' } },
-  { id: 'uhud',    c: 'visit', lat: 24.5017, lng: 39.6128, n: { fr: 'Mont Uhud', ar: 'جبل أحد', en: 'Mount Uhud' } },
-  { id: 'nour',    c: 'visit', lat: 21.4586, lng: 39.8575, n: { fr: 'Jabal Nour (grotte de Hira)', ar: 'جبل النور (غار حراء)', en: 'Jabal Nour (Hira cave)' } },
-  { id: 'thawr',   c: 'visit', lat: 21.3786, lng: 39.8586, n: { fr: 'Jabal Thawr', ar: 'جبل ثور', en: 'Jabal Thawr' } },
-  { id: 'balad',   c: 'visit', lat: 21.4858, lng: 39.1925, n: { fr: 'Al-Balad (vieille ville de Jeddah)', ar: 'جدة التاريخية (البلد)', en: 'Al-Balad (old Jeddah)' } },
-  { id: 'corniche',c: 'visit', lat: 21.5130, lng: 39.1530, n: { fr: 'Corniche de Jeddah', ar: 'كورنيش جدة', en: 'Jeddah Corniche' } },
-  { id: 'hegra',   c: 'visit', lat: 26.7856, lng: 37.9533, n: { fr: 'Hegra (AlUla)', ar: 'الحِجر (العُلا)', en: 'Hegra (AlUla)' } },
-  { id: 'diriyah', c: 'visit', lat: 24.7342, lng: 46.5753, n: { fr: 'Diriyah (At-Turaif)', ar: 'الدرعية (الطريف)', en: 'Diriyah (At-Turaif)' } },
-  { id: 'masmak',  c: 'visit', lat: 24.6313, lng: 46.7135, n: { fr: 'Fort Masmak (Riyad)', ar: 'قصر المصمك (الرياض)', en: 'Masmak Fortress (Riyadh)' } },
-  { id: 'jed',     c: 'airport', lat: 21.6796, lng: 39.1565, n: { fr: 'Aéroport de Jeddah (JED)', ar: 'مطار الملك عبدالعزيز (جدة)', en: 'Jeddah Airport (JED)' } },
-  { id: 'med',     c: 'airport', lat: 24.5534, lng: 39.7051, n: { fr: 'Aéroport de Médine (MED)', ar: 'مطار الأمير محمد بن عبدالعزيز (المدينة)', en: 'Madinah Airport (MED)' } },
-  { id: 'ruh',     c: 'airport', lat: 24.9576, lng: 46.6988, n: { fr: 'Aéroport de Riyad (RUH)', ar: 'مطار الملك خالد (الرياض)', en: 'Riyadh Airport (RUH)' } },
-];
 
 /* Étapes de l'Omra. */
 const OMRA_STEPS = [
@@ -183,3 +158,44 @@ const EXAMPLE_PLAN = [
   { day: 4, city: 'makkah', k: 'ex4' }, { day: 5, city: 'makkah', k: 'ex5' }, { day: 6, city: 'makkah', k: 'ex6' },
   { day: 7, city: 'jeddah', k: 'ex7' }, { day: 8, city: 'jeddah', k: 'ex8' },
 ];
+
+/* ---- Hidden Arabia : textes additionnels ---- */
+Object.assign(I18N.fr, {
+  nav_explore: 'Explorer', nav_plan: 'Carnet', explore_title: 'Explorer', search: 'Rechercher un lieu…', all_cities: 'Toutes les villes',
+  near_me: 'Près de moi', sort_name: 'A–Z', c_sira: 'Histoire islamique', c_heritage: 'Patrimoine', c_nature: 'Nature',
+  warn_unverified: "Fiches en cours de validation : aucune n'est encore vérifiée par un humain. Confirmez horaires, prix et accès avant de vous déplacer.",
+  fav: 'Favori', favorites: 'Favoris', no_fav: 'Aucun favori. Ouvrez une fiche et touchez ☆.', visited: 'Visité', mark_visited: 'Marquer visité', my_note: 'Mes notes',
+  videos: 'Vidéos', add_video: 'Ajouter une vidéo', video_url: 'Lien YouTube', video_title: 'Titre', video_creator: 'Créateur', video_time: 'Passage (mm:ss)', watch: 'Voir', no_video: 'Aucune vidéo liée pour le moment.',
+  video_hint: "Collez un lien YouTube, le créateur et l'instant où le lieu est présenté. Citez toujours le créateur.",
+  fact: 'Fait établi', trad: 'Tradition non confirmée', facts_title: 'Histoire & faits', practical: 'Infos pratiques', price: 'Prix', free: 'Gratuit', paid: 'Payant', duration: 'Durée estimée', hours: 'Horaires', access: 'Accès', tips: 'Conseils',
+  min: 'min', reliability: 'Fiabilité', rel_high: 'Élevée', rel_medium: 'Moyenne', rel_low: 'Faible', verified_on: 'Vérifié le', not_verified: 'Non vérifié par un humain', sources: 'Sources', approx_coord: 'Coordonnées approximatives — à confirmer sur place.',
+  taxi_name: 'Montrez ce nom au chauffeur', back: '← Retour', copy_gps: 'Copier GPS', copied: 'Copié', add_to_plan: 'Ajouter au planning', added: 'Ajouté au planning', not_found: 'Lieu introuvable',
+  itin: 'Créateur d\'itinéraire', itin_hours: 'Temps disponible (heures)', itin_interests: 'Centres d\'intérêt', generate: 'Générer', itin_none: 'Aucun lieu ne rentre dans ce temps.', itin_total: 'Total estimé', itin_note: 'Trajets estimés à vol d\'oiseau (≈ 25 km/h). Vérifiez horaires et ouvertures.', add_all: 'Tout ajouter au planning',
+  distance_km: 'à', no_results: 'Aucun résultat.',
+});
+Object.assign(I18N.en, {
+  nav_explore: 'Explore', nav_plan: 'Notebook', explore_title: 'Explore', search: 'Search a place…', all_cities: 'All cities',
+  near_me: 'Near me', sort_name: 'A–Z', c_sira: 'Islamic history', c_heritage: 'Heritage', c_nature: 'Nature',
+  warn_unverified: 'Entries are under review: none has been human-verified yet. Confirm hours, prices and access before you go.',
+  fav: 'Favourite', favorites: 'Favourites', no_fav: 'No favourites yet. Open a place and tap ☆.', visited: 'Visited', mark_visited: 'Mark visited', my_note: 'My notes',
+  videos: 'Videos', add_video: 'Add a video', video_url: 'YouTube link', video_title: 'Title', video_creator: 'Creator', video_time: 'Moment (mm:ss)', watch: 'Watch', no_video: 'No video linked yet.',
+  video_hint: 'Paste a YouTube link, the creator and the moment the place is shown. Always credit the creator.',
+  fact: 'Established fact', trad: 'Unconfirmed tradition', facts_title: 'History & facts', practical: 'Practical info', price: 'Price', free: 'Free', paid: 'Paid', duration: 'Estimated time', hours: 'Hours', access: 'Access', tips: 'Tips',
+  min: 'min', reliability: 'Reliability', rel_high: 'High', rel_medium: 'Medium', rel_low: 'Low', verified_on: 'Verified on', not_verified: 'Not human-verified', sources: 'Sources', approx_coord: 'Approximate coordinates — confirm on site.',
+  taxi_name: 'Show this name to the driver', back: '← Back', copy_gps: 'Copy GPS', copied: 'Copied', add_to_plan: 'Add to plan', added: 'Added to plan', not_found: 'Place not found',
+  itin: 'Itinerary builder', itin_hours: 'Time available (hours)', itin_interests: 'Interests', generate: 'Generate', itin_none: 'No place fits in that time.', itin_total: 'Estimated total', itin_note: 'Travel estimated as the crow flies (≈ 25 km/h). Check opening hours.', add_all: 'Add all to plan',
+  distance_km: 'at', no_results: 'No results.',
+});
+Object.assign(I18N.ar, {
+  nav_explore: 'استكشف', nav_plan: 'دفتري', explore_title: 'استكشف', search: 'ابحث عن مكان…', all_cities: 'كل المدن',
+  near_me: 'الأقرب إليّ', sort_name: 'أ–ي', c_sira: 'التاريخ الإسلامي', c_heritage: 'التراث', c_nature: 'الطبيعة',
+  warn_unverified: 'المواد قيد المراجعة: لم يتحقق منها بشريًا بعد. تأكد من المواعيد والأسعار والوصول قبل الذهاب.',
+  fav: 'مفضلة', favorites: 'المفضلة', no_fav: 'لا مفضلة بعد. افتح مكانًا واضغط ☆.', visited: 'تمت الزيارة', mark_visited: 'تحديد كمزار', my_note: 'ملاحظاتي',
+  videos: 'فيديوهات', add_video: 'إضافة فيديو', video_url: 'رابط يوتيوب', video_title: 'العنوان', video_creator: 'صانع المحتوى', video_time: 'اللحظة (د:ث)', watch: 'مشاهدة', no_video: 'لا فيديو مرتبط بعد.',
+  video_hint: 'الصق رابط يوتيوب واسم صانع المحتوى واللحظة التي يظهر فيها المكان. اذكر صاحب المحتوى دائمًا.',
+  fact: 'حقيقة ثابتة', trad: 'رواية غير مؤكدة', facts_title: 'التاريخ والحقائق', practical: 'معلومات عملية', price: 'السعر', free: 'مجاني', paid: 'مدفوع', duration: 'المدة التقديرية', hours: 'المواعيد', access: 'الوصول', tips: 'نصائح',
+  min: 'د', reliability: 'الموثوقية', rel_high: 'عالية', rel_medium: 'متوسطة', rel_low: 'منخفضة', verified_on: 'تم التحقق في', not_verified: 'لم يُتحقق منه بشريًا', sources: 'المصادر', approx_coord: 'إحداثيات تقريبية — تأكد في الموقع.',
+  taxi_name: 'أرِ السائق هذا الاسم', back: 'رجوع ←', copy_gps: 'نسخ الإحداثيات', copied: 'تم النسخ', add_to_plan: 'إضافة إلى البرنامج', added: 'تمت الإضافة', not_found: 'المكان غير موجود',
+  itin: 'منشئ المسار', itin_hours: 'الوقت المتاح (ساعات)', itin_interests: 'الاهتمامات', generate: 'إنشاء', itin_none: 'لا يتسع الوقت لأي مكان.', itin_total: 'المجموع التقديري', itin_note: 'المسافات تقديرية بخط مستقيم (≈ ٢٥ كم/س). تحقق من أوقات الفتح.', add_all: 'إضافة الكل',
+  distance_km: 'على بعد', no_results: 'لا نتائج.',
+});
