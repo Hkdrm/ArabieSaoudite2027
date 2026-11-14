@@ -53,6 +53,7 @@
           <div class="row"><div class="grow"><label>🛫 ${t('depart_date')}</label><input id="d1" type="date" value="${esc(J.date1 || '')}" style="width:100%"></div>
             <div class="grow"><label>🛬 ${t('return_date')}</label><input id="d2" type="date" value="${esc(J.date2 || '')}" ${J.date1 ? `min="${addDay(J.date1, 1)}"` : 'disabled'} style="width:100%"></div></div>
           ${retErr}${past}
+          ${J.date1 || J.date2 ? `<div style="margin-top:8px"><button type="button" class="ghost sm" id="clrDates">${t('reset_dates')}</button></div>` : ''}
           <details style="margin-top:8px" ${J.retFrom || J.retTo ? 'open' : ''}><summary>${t('other_return')}</summary><div class="row" style="margin-top:6px">
             ${apt('rfrom', t('ret_from'), 'retFrom', J.to || 'MED')}${apt('rto', t('ret_to'), 'retTo', J.from || 'CDG')}</div></details></div>
         ${valid && J.from && J.to ? `<div class="card"><h3>${t('step_flights')}</h3>
@@ -66,11 +67,20 @@
           <details style="margin-top:10px" ${J.depOut || J.arrOut || J.depRet || J.arrRet ? 'open' : ''}><summary>${t('times_opt')}</summary>
             <div class="row" style="margin-top:6px"><div><label>🛫 ${t('dep_time')}</label><input id="depOut" type="time" value="${esc(J.depOut || '')}"></div><div><label>🛫 ${t('arr_time')}</label><input id="arrOut" type="time" value="${esc(J.arrOut || '')}"></div><div><label>${t('terminal')}</label><input id="termOut" value="${esc(J.termOut || '')}" style="width:70px"></div></div>
             <div class="row" style="margin-top:6px"><div><label>🛬 ${t('dep_time')}</label><input id="depRet" type="time" value="${esc(J.depRet || '')}"></div><div><label>🛬 ${t('arr_time')}</label><input id="arrRet" type="time" value="${esc(J.arrRet || '')}"></div><div><label>${t('terminal')}</label><input id="termRet" value="${esc(J.termRet || '')}" style="width:70px"></div></div></details>
-          <p class="muted" style="margin-top:10px">✓ ${t('saved_auto')}</p></div>`
+          <p class="muted" style="margin-top:10px">✓ ${t('saved_auto')}</p>
+          <button type="button" class="danger" id="clrAll">${t('reset_all')}</button></div>`
           : `<p class="muted">${t('pick_dates')}</p>`}`;
 
       const bindAirport = (id, key) => { $(id, el).onchange = e => { e.target.value = iata(e.target.value); set(key, e.target.value); draw(); }; };
       bindAirport('#from', 'from'); bindAirport('#to', 'to'); bindAirport('#rfrom', 'retFrom'); bindAirport('#rto', 'retTo');
+      const cd = $('#clrDates', el);
+      if (cd) cd.onclick = () => { J.date2Rejected = false; set('date1', ''); set('date2', ''); S.trip = { start: '', end: '' }; save('trip'); draw(); };
+      const ca = $('#clrAll', el);
+      if (ca) ca.onclick = () => {
+        if (!confirm(t('confirm_reset_all'))) return;
+        for (const k of Object.keys(J)) delete J[k];
+        S.trip = { start: '', end: '' }; save('trip'); save('journey'); draw();
+      };
       $$('[data-dest]', el).forEach(b => b.onclick = () => { set('to', b.dataset.dest); draw(); });
       $('#d1', el).onchange = e => {
         set('date1', e.target.value); J.date2Rejected = false;

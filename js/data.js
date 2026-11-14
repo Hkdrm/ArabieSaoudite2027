@@ -250,3 +250,7 @@ Object.assign(I18N.ar, {
   find_flights: 'لا رحلة بعد؟ ابحث عن رحلات لهذه التواريخ:', have_flight: 'حجزت بالفعل؟ أدخل رقم الرحلة و/أو الحجز:',
   no_out: 'رقم رحلة الذهاب', no_ret: 'رقم رحلة العودة', times_opt: 'المواعيد (اختياري)', saved_auto: 'يُحفظ تلقائيًا', pick_dates: 'اختر التواريخ أولًا للمتابعة.', open_search: 'فتح',
 });
+
+Object.assign(I18N.fr, { reset_dates: '↺ Effacer les dates', reset_all: 'Tout réinitialiser', confirm_reset_all: 'Effacer le trajet, les dates, les numéros de vol et la réservation ?' });
+Object.assign(I18N.en, { reset_dates: '↺ Clear dates', reset_all: 'Reset everything', confirm_reset_all: 'Clear the route, dates, flight numbers and booking?' });
+Object.assign(I18N.ar, { reset_dates: '↺ مسح التواريخ', reset_all: 'إعادة ضبط الكل', confirm_reset_all: 'مسح المسار والتواريخ وأرقام الرحلات والحجز؟' });
