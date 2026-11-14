@@ -6,6 +6,7 @@
   const AIRPORTS = { CDG: 'Paris Charles-de-Gaulle', ORY: 'Paris Orly', LYS: 'Lyon', MRS: 'Marseille', NCE: 'Nice', TLS: 'Toulouse', BOD: 'Bordeaux', NTE: 'Nantes', LIL: 'Lille', BRU: 'Bruxelles', GVA: 'Genève',
     JED: 'Jeddah', MED: 'Médine', RUH: 'Riyad', DMM: 'Dammam', TIF: 'Taïf', ULH: 'AlUla' };
   const DEST = ['JED', 'MED', 'RUH', 'DMM'];
+  const ORIGINS = ['GVA', 'LYS', 'CDG', 'ORY'];
   const FLIGHT_RE = /^[A-Z0-9]{2}\s?\d{1,4}[A-Z]?$/;
   const day = s => new Date(s + 'T00:00:00');
   const addDay = (s, n) => { const d = day(s); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
@@ -19,6 +20,7 @@
     const J = S.journey;
     const set = (k, v) => { J[k] = v; save('journey'); };
     const ok = () => J.date1 && J.date2 && J.date2 > J.date1;
+    if (!J.from) set('from', 'GVA');                       // départ par défaut : Genève
 
     const links = () => {
       const f = J.from, to = J.to, d1 = J.date1, d2 = J.date2;
@@ -49,7 +51,8 @@
         <div id="sum">${summary()}</div>
         <div class="card"><h3>${t('step_route')}</h3>
           <div class="row">${apt('from', t('from_lbl'), 'from', 'CDG')}<div style="padding-top:20px">→</div>${apt('to', t('to_lbl'), 'to', 'JED')}</div>
-          <div class="chips" style="margin-top:8px">${DEST.map(d => `<button type="button" class="chip ${J.to === d ? 'on' : ''}" data-dest="${d}">${d} · ${esc(AIRPORTS[d])}</button>`).join('')}</div>
+          <div class="chips" style="margin-top:8px">${ORIGINS.map(d => `<button type="button" class="chip ${J.from === d ? 'on' : ''}" data-orig="${d}">${d} · ${esc(AIRPORTS[d])}</button>`).join('')}</div>
+          <div class="chips">${DEST.map(d => `<button type="button" class="chip ${J.to === d ? 'on' : ''}" data-dest="${d}">${d} · ${esc(AIRPORTS[d])}</button>`).join('')}</div>
           <div class="row"><div class="grow"><label>🛫 ${t('depart_date')}</label><input id="d1" type="date" value="${esc(J.date1 || '')}" style="width:100%"></div>
             <div class="grow"><label>🛬 ${t('return_date')}</label><input id="d2" type="date" value="${esc(J.date2 || '')}" ${J.date1 ? `min="${addDay(J.date1, 1)}"` : 'disabled'} style="width:100%"></div></div>
           ${retErr}${past}
@@ -79,8 +82,10 @@
       if (ca) ca.onclick = () => {
         if (!confirm(t('confirm_reset_all'))) return;
         for (const k of Object.keys(J)) delete J[k];
+        J.from = 'GVA';
         S.trip = { start: '', end: '' }; save('trip'); save('journey'); draw();
       };
+      $$('[data-orig]', el).forEach(b => b.onclick = () => { set('from', b.dataset.orig); draw(); });
       $$('[data-dest]', el).forEach(b => b.onclick = () => { set('to', b.dataset.dest); draw(); });
       $('#d1', el).onchange = e => {
         set('date1', e.target.value); J.date2Rejected = false;
