@@ -42,5 +42,8 @@ js/app.js     interface et logique
 js/trip.js    onglet Départ / Retour (vols)
 ```
 
+## Crédits
+Écran d'ouverture : police **Aref Ruqaa** (SIL Open Font License 1.1, voir `fonts/OFL.txt`), sous-ensemble des glyphes utilisés.
+
 ## Avertissement
 Les contenus religieux sont un aide-mémoire ; référez-vous à un savant ou au guide de votre agence. Les coordonnées des lieux sont approximatives. Les horaires sont calculés (précision ≈ 1 min) : vérifiez avec les horaires officiels locaux.
