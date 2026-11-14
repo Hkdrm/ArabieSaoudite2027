@@ -239,17 +239,20 @@
     },
     {
       "id": "ring-well",
-      "name_fr": "Puits associé à une bague perdue",
+      "name_fr": "Bir Aris / puits de la bague (أريس)",
       "city": "madinah",
       "category": "history",
       "area": "Quba",
-      "description_fr": "Lieu évoqué dans une vidéo sur la perte d’une bague; attribution à vérifier",
-      "practical_notes_fr": "",
+      "description_fr": "Puits traditionnellement associé à la perte du sceau de l'époque des premiers califes, à proximité de Quba. L'identification moderne de l'emplacement demande confirmation.",
+      "practical_notes_fr": "Ne pas confondre avec le puits Ghars, situé dans une autre zone. Emplacement exact et accessibilité à vérifier.",
       "source": {
         "creator": "Junaid Hussain",
         "channel": "https://www.youtube.com/@junaidhussainmadinah",
         "videos": [
           "https://www.youtube.com/watch?v=NCxxq-pZeUk"
+        ],
+        "references": [
+          "https://www.youtube.com/watch?v=27S-UVTCtOg"
         ]
       },
       "verification": {
@@ -259,21 +262,29 @@
         "price_verified": false,
         "access_verified": false,
         "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "web_crosscheck",
+        "note": "Le titre de la vidéo indique la perte d'une bague; le nom Bir Aris est une identification extérieure à confirmer."
       }
     },
     {
       "id": "prophet-house",
-      "name_fr": "Maison historique attribuée au Prophète ﷺ",
+      "name_fr": "Ancien emplacement de la maison d'Abu Ayyub al-Ansari (lié à l'Hégire)",
       "city": "madinah",
       "category": "history",
       "area": "Médine",
-      "description_fr": "Vidéo présentant une maison associée au Prophète ﷺ; lieu exact non extrait",
-      "practical_notes_fr": "",
+      "description_fr": "La vidéo de Junaid évoque la maison dans laquelle Abu Ayyub al-Ansari accueillit le Prophète ﷺ à Médine. Ce n'est pas une maison ancienne dont l'état actuel est confirmé comme visitable.",
+      "practical_notes_fr": "À documenter comme emplacement historique rapporté, et non comme musée ouvert au public; pas de géolocalisation fiable fournie.",
       "source": {
         "creator": "Junaid Hussain",
         "channel": "https://www.youtube.com/@junaidhussainmadinah",
         "videos": [
           "https://www.youtube.com/watch?v=yFpTA6erRhk"
+        ],
+        "references": [
+          "https://sakina.global/en/sightsee/video/junaidhussainmadinah/first-home-prophet-madinah-abu-ayub"
         ]
       },
       "verification": {
@@ -283,6 +294,11 @@
         "price_verified": false,
         "access_verified": false,
         "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "web_crosscheck",
+        "note": "Correction d'une formulation ambiguë : maison d'Abu Ayyub et non maison privée attribuée directement au Prophète."
       }
     },
     {
@@ -346,7 +362,8 @@
         "creator": "Junaid Hussain",
         "channel": "https://www.youtube.com/@junaidhussainmadinah",
         "videos": [
-          "https://www.youtube.com/watch?v=_-nKoB0ym0s"
+          "https://www.youtube.com/watch?v=_-nKoB0ym0s",
+          "https://www.youtube.com/watch?v=4YlxWutCPhc"
         ]
       },
       "verification": {
@@ -462,12 +479,15 @@
       "category": "transport",
       "area": "Médine",
       "description_fr": "Réseau desservant Quba, Uhud et l’aéroport",
-      "practical_notes_fr": "Tarif 3 SAR annoncé; paiement par application ou carte; vérifier sur l’opérateur",
+      "practical_notes_fr": "Junaid annonce 3 SAR le trajet, tandis qu'un article secondaire associé à la vidéo mentionne 3,45 SAR. Les tarifs et moyens de paiement doivent être contrôlés sur le site de l'opérateur avant le départ.",
       "source": {
         "creator": "Junaid Hussain",
         "channel": "https://www.youtube.com/@junaidhussainmadinah",
         "videos": [
           "https://www.youtube.com/watch?v=aZKgt0URHSA"
+        ],
+        "references": [
+          "https://sakina.global/en/sightsee/video/junaidhussainmadinah/madinah-bus-guide-save-money-exploring-the-city"
         ]
       },
       "verification": {
@@ -477,6 +497,11 @@
         "price_verified": false,
         "access_verified": false,
         "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "web_crosscheck",
+        "note": "Tarifs contradictoires : ne pas publier de prix comme confirmé."
       }
     },
     {
@@ -558,12 +583,15 @@
       "category": "services",
       "area": "Al-Baqi",
       "description_fr": "Centre de santé mentionné par le créateur",
-      "practical_notes_fr": "Gratuité selon statut et assurance; prévoir documents",
+      "practical_notes_fr": "Près d'Al-Baqi / Bab Jibril ; un résumé secondaire donne la porte 355. Services, prise en charge et horaires à vérifier sur source sanitaire officielle. Emporter passeport, visa et preuve d'assurance.",
       "source": {
         "creator": "Junaid Hussain",
         "channel": "https://www.youtube.com/@junaidhussainmadinah",
         "videos": [
           "https://www.youtube.com/watch?v=OAsHO3nakyY"
+        ],
+        "references": [
+          "https://sakina.global/en/sightsee/video/junaidhussainmadinah/free-healthcare-near-masjid-an-nabawi-madinah-umrah"
         ]
       },
       "verification": {
@@ -573,6 +601,11 @@
         "price_verified": false,
         "access_verified": false,
         "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "web_crosscheck",
+        "note": "Le numéro de porte est une indication de source secondaire, pas une localisation officielle certifiée."
       }
     },
     {
@@ -724,14 +757,18 @@
       "name_fr": "Glace à la rose",
       "city": "madinah",
       "category": "food",
-      "area": "Autour de Nabawi",
+      "area": "Près de Masjid Nabawi : secteur de la porte 339 / International Food Market vers 340",
       "description_fr": "Dessert glacé à la rose testé par le créateur",
-      "practical_notes_fr": "Proche des portes 21 / 333 selon parcours; enseigne non confirmée",
+      "practical_notes_fr": "Le compte du vendeur de glace à la rose madin2h_rose0 indique une boutique au Grand Plaza Hotel près de la porte 339, plus un point de vente face à Dar Al Hijra. Attention : le créateur montre une glace près des portes 21/333 et l'identité précise de sa boutique n'est pas confirmée. La zone International Food Street a été réaménagée vers la porte 340.",
       "source": {
         "creator": "Junaid Hussain",
         "channel": "https://www.youtube.com/@junaidhussainmadinah",
         "videos": [
-          "https://www.youtube.com/watch?v=_-nKoB0ym0s"
+          "https://www.youtube.com/watch?v=_-nKoB0ym0s",
+          "https://www.youtube.com/watch?v=oi22D2aTZi8"
+        ],
+        "references": [
+          "https://linktr.ee/madin2h_rose0"
         ]
       },
       "verification": {
@@ -741,7 +778,13 @@
         "price_verified": false,
         "access_verified": false,
         "last_verified": null
-      }
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "web_crosscheck",
+        "note": "Vérification documentaire, sans vérification sur place"
+      },
+      "review_priority": "high"
     },
     {
       "id": "safiyyah-food",
@@ -780,7 +823,8 @@
         "channel": "https://www.youtube.com/@junaidhussainmadinah",
         "videos": [
           "https://www.youtube.com/watch?v=9anXxSSjQfo",
-          "https://www.youtube.com/watch?v=lupj2JIwBhY"
+          "https://www.youtube.com/watch?v=lupj2JIwBhY",
+          "https://www.youtube.com/watch?v=qIntmJAqtQM"
         ]
       },
       "verification": {
@@ -843,11 +887,12 @@
       "subcategory": "oud_attar",
       "area": "Al Rayah, rue Sultanah",
       "description_fr": "Maison de parfums orientaux liée à Médine, oud, bakhoor et huiles parfumées.",
-      "practical_notes_fr": "Comparer les compositions et les concentrations. Aucun prix relevé.",
+      "practical_notes_fr": "Boutique recensée rue Sultanah, Al Rayah, Madinah 42312. Téléphone +966 50 656 6832. Site indiqué : asraroud.sa. Existence recoupée par annuaire local ; ouverture et stocks à vérifier.",
       "source": {
         "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
         "references": [
-          "https://maps.google.com/?q=Asrar+Oud+Madinah"
+          "https://maps.google.com/?q=Asrar+Oud+Madinah",
+          "https://yalqa.com/p/asrar-alewd-asrar-oud-etwr-frnsya-wshrqya-wewd-french-8e701cca"
         ]
       },
       "verification": {
@@ -862,7 +907,12 @@
         "researched_shop",
         "needs_current_price",
         "local_address"
-      ]
+      ],
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "web_crosscheck",
+        "note": "Adresse localisée dans annuaire indépendant, pas visite sur place."
+      }
     },
     {
       "id": "khiar-aldyar",
@@ -870,13 +920,14 @@
       "city": "madinah",
       "category": "perfume",
       "subcategory": "perfume_and_gifts",
-      "area": "Abi Ubaidah ibn al Jarrah",
+      "area": "Bada'ah, rue Abi Ubaidah ibn al-Jarrah",
       "description_fr": "Huiles parfumées, oud et cadeaux religieux.",
-      "practical_notes_fr": "Boutique d’achats pratiques près du secteur central.",
+      "practical_notes_fr": "Adresse annuaire : rue Abi Ubaidah ibn al-Jarrah, Bada'ah. Téléphone +966 55 322 3190. Vérifier emplacement exact et horaires.",
       "source": {
         "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
         "references": [
-          "https://maps.google.com/?q=KHIAR+ALDYAR+Madinah"
+          "https://maps.google.com/?q=KHIAR+ALDYAR+Madinah",
+          "https://yalqa.com/p/khiar-aldyar-for-gifts-b14166e2"
         ]
       },
       "verification": {
@@ -891,7 +942,12 @@
         "researched_shop",
         "needs_current_price",
         "local_address"
-      ]
+      ],
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "web_crosscheck",
+        "note": "Quartier mieux documenté."
+      }
     },
     {
       "id": "exclusive-perfume",
@@ -957,13 +1013,15 @@
       "city": "jeddah",
       "category": "perfume",
       "subcategory": "bakhoor",
-      "area": "Al Dhahab, Al Balad",
+      "area": "Rue Al Dhahab, Al-Balad (boutique et siège) ; autre boutique à Musadiyah Plaza, Al-Hamra",
       "description_fr": "Boutique de oud, bakhoor et parfum à l’huile.",
-      "practical_notes_fr": "Opportunité de découverte pendant la promenade d’Al-Balad.",
+      "practical_notes_fr": "Deux établissements distincts repérés : boutique historique Al Dhahab, Jeddah 21331, téléphone +966 12 648 2222 ; succursale Musadiyah Plaza à Al Hamra. Choisir le bon point de vente dans l'itinéraire. Les horaires des annuaires divergent.",
       "source": {
         "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
         "references": [
-          "https://maps.google.com/?q=Banafa+for+Oud+Jeddah"
+          "https://maps.google.com/?q=Banafa+for+Oud+Jeddah",
+          "https://www.bizmideast.com/SA/banafa-for-oud-012-648-2222",
+          "https://www.ksa.directory/banafa-for-oud/i/2560"
         ]
       },
       "verification": {
@@ -978,7 +1036,12 @@
         "researched_shop",
         "needs_current_price",
         "local_address"
-      ]
+      ],
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "web_crosscheck",
+        "note": "Adresse Al Balad recoupée; une recherche générique de l'enseigne peut pointer à tort vers Al Hamra."
+      }
     },
     {
       "id": "akif-dehlawi",
@@ -1015,13 +1078,14 @@
       "city": "makkah",
       "category": "perfume",
       "subcategory": "luxury_perfume",
-      "area": "Makkah Towers, entrée 2, rez-de-chaussée",
+      "area": "Makkah Towers (boutique) ; Fairmont Clock Royal Tower (autre boutique) ; Address Hotel (autre boutique)",
       "description_fr": "Boutique de parfums haut de gamme proche du Haram.",
-      "practical_notes_fr": "Idéal pour comparaison avec les parfumeries de souk.",
+      "practical_notes_fr": "Le site officiel liste au moins trois adresses distinctes à La Mecque : Makkah Towers, Fairmont Hotel et Address Hotel. La boutique du Fairmont est indiquée au niveau M2 face à la réception dans une fiche publique. Ne pas mélanger les points de vente.",
       "source": {
         "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
         "references": [
-          "https://maps.google.com/?q=Taif+Al+Emarat+Perfumes+Makkah+Towers"
+          "https://maps.google.com/?q=Taif+Al+Emarat+Perfumes+Makkah+Towers",
+          "https://eg.taifalemarat.com/en/perfume-shops-ksa"
         ]
       },
       "verification": {
@@ -1036,7 +1100,12 @@
         "researched_shop",
         "needs_current_price",
         "local_address"
-      ]
+      ],
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "web_crosscheck",
+        "note": "Existence des trois implantations confirmée dans l'annuaire officiel de l'enseigne, emplacement détaillé de chaque boutique à valider."
+      }
     },
     {
       "id": "kiffa-center",
@@ -1046,11 +1115,15 @@
       "subcategory": "specialty_coffee",
       "area": "Badaah, près du Haram",
       "description_fr": "Café de spécialité près de Masjid Nabawi.",
-      "practical_notes_fr": "Café à déguster durant le parcours à pied.",
+      "practical_notes_fr": "Le créateur cite Kiffa près de la mosquée comme étape café. Adresse référencée à Bada'ah, Abu Ubaida ibn al-Jarrah Street. L'enseigne compte plusieurs points de vente; vérifier la bonne succursale.",
       "source": {
         "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
         "references": [
-          "https://maps.google.com/?q=Kiffa+Coffee+Madinah+Badaah"
+          "https://maps.google.com/?q=Kiffa+Coffee+Madinah+Badaah",
+          "https://www.google.com/maps/search/?api=1&query=Kiffa+Coffee+Badaah+Madinah"
+        ],
+        "videos": [
+          "https://www.youtube.com/watch?v=laXTM8dMW1g"
         ]
       },
       "verification": {
@@ -1065,7 +1138,12 @@
         "researched_shop",
         "needs_current_price",
         "local_address"
-      ]
+      ],
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "web_crosscheck",
+        "note": "Vérification documentaire, sans vérification sur place"
+      }
     },
     {
       "id": "kiffa-ring",
@@ -1564,11 +1642,11 @@
       "id": "hira-recordings",
       "name_fr": "Hira Recordings — تسجيلات حراء",
       "city": "makkah",
-      "category": "calligraphy",
-      "subcategory": "prayer_mat",
+      "category": "shopping",
+      "subcategory": "activity_to_confirm",
       "area": "Jarwal, At Taysir",
-      "description_fr": "Boutique de cadeaux religieux où des clients mentionnent la calligraphie sur tapis de prière.",
-      "practical_notes_fr": "Prestation à confirmer avant déplacement.",
+      "description_fr": "Commerce cité sous le nom Hira Recordings dans le quartier Jarwal. Aucun élément solide ne confirme une activité de calligraphie ou de personnalisation de vêtements.",
+      "practical_notes_fr": "À EXCLURE des recommandations calligraphie tant que l'activité exacte et l'adresse n'ont pas été confirmées.",
       "source": {
         "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
         "references": [
@@ -1587,7 +1665,13 @@
         "researched_shop",
         "needs_current_price",
         "local_address"
-      ]
+      ],
+      "review_priority": "high",
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "web_crosscheck",
+        "note": "Classification originelle non étayée, ne pas recommander comme calligraphe."
+      }
     },
     {
       "id": "baran-embroidery",
@@ -1631,6 +1715,9 @@
         "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
         "references": [
           "https://www.spa.gov.sa/en/N2035544"
+        ],
+        "videos": [
+          "https://www.youtube.com/watch?v=8Q5Ffgme7jA"
         ]
       },
       "verification": {
@@ -1813,7 +1900,514 @@
         "local_specificity",
         "product_to_look_for"
       ]
+    },
+    {
+      "id": "ajwatech-ajwa-date-icecream",
+      "name_fr": "Ajwatech (عجوتك) — glace à la datte Ajwa",
+      "city": "madinah",
+      "category": "food",
+      "subcategory": "date_icecream",
+      "area": "Deux adresses signalées : AlHaram (King Fahd Rd, Bada'ah) et Quba (Al Usbah)",
+      "description_fr": "Glacier spécialisé dans une glace à base de dattes Ajwa de Médine. Expérience gourmande typique à ajouter au circuit des découvertes locales.",
+      "practical_notes_fr": "Boutiques Ajwatech identifiées : AlHaram, King Fahd Rd, Bada'ah, Madinah 42311 ; Quba, Qiba Rd, Al Usbah, Madinah 42315 ; un point 'Al-Mazraah' à Qurban et un kiosque Bustan Al Mustadhal sont aussi référencés. Vérifier le point de vente exact avant déplacement, l'emplacement peut évoluer. Le Short exact de Junaid reste non identifié.",
+      "source": {
+        "creator": "Recherche d'adresses publiques — Short Junaid non identifié",
+        "channel": "https://ajwatech.sa/",
+        "videos": [],
+        "references": [
+          "https://ajwatech.sa/",
+          "https://www.halalcompanion.com/madinah/places-to-eat/ajwatech",
+          "https://www.bizmideast.com/SA/%D8%A7%D9%8A%D8%B3-%D9%83%D8%B1%D9%8A%D9%85-%D8%B9%D8%AC%D9%88%D8%AA%D9%83-%D9%82%D8%A8%D8%A7%D8%A1-053-138-8370",
+          "https://yellowpages-ar.cybo.com/SA-biz/%D8%A7%D9%8A%D8%B3-%D9%83%D8%B1%D9%8A%D9%85-%D8%B9%D8%AC%D9%88%D8%AA%D9%83-%D9%82%D8%A8%D8%A7%D8%A1",
+          "https://yalqa.com/p/ays-krym-ejwtk-bstan-almstzl-ec682625"
+        ]
+      },
+      "verification": {
+        "source_detail": "Public business listings and specialty retailer; YouTube short not yet confirmed",
+        "independently_verified": true,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "glace_aux_dattes",
+        "ajwa",
+        "specialite_locale",
+        "dessert"
+      ],
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "web_crosscheck",
+        "note": "Marque et boutiques recoupées; la disponibilité au moment de la visite et l'attribution au Short ne le sont pas."
+      }
+    },
+    {
+      "id": "ahmed-al-maghribi-gate330",
+      "name_fr": "Ahmed Al Maghribi Perfumes — boutique porte 330",
+      "city": "madinah",
+      "category": "perfume",
+      "subcategory": "perfume_shop",
+      "area": "Bada'ah, Makarem Haram, boutique TS/333, près porte 330 de Nabawi",
+      "description_fr": "Parfumerie visitée par Junaid dans un Short consacré au parfum offert en cadeau.",
+      "practical_notes_fr": "Boutique répertoriée près de la porte 330, Makarem Haram, rez-de-chaussée, boutique TS/333. Autre succursale proche de la porte 338 au Dar Al Taqwa, à ne pas confondre.",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=6cGJPSeKiWc"
+        ],
+        "references": [
+          "https://sakina.global/en/sightsee/video/junaidhussainmadinah/perfume-prophet-never-refused-madinah"
+        ]
+      },
+      "verification": {
+        "source_detail": "Junaid Hussain",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "web_crosscheck",
+        "note": "À vérifier avant visite"
+      }
+    },
+    {
+      "id": "madinah-international-food-market",
+      "name_fr": "International Food Market / Food Street",
+      "city": "madinah",
+      "category": "food",
+      "subcategory": "street_food_area",
+      "area": "Autour des portes 340–341 de Masjid Nabawi",
+      "description_fr": "Zone gourmande réaménagée avec cuisines internationales, desserts Ajwa et glace à la rose, et stands de souvenirs.",
+      "practical_notes_fr": "Le secteur est décrit comme déplacé/réaménagé près de la porte 340 en 2026. Emplacement exact des kiosques à reconfirmer.",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=xdBC4uFf5eg",
+          "https://www.youtube.com/watch?v=l5pBGzzQf1w"
+        ],
+        "references": [
+          "https://sakina.global/en/sightsee/video/junaidhussainmadinah/viral-madinah-fries-near-masjid-an-nabawi-gate-340"
+        ]
+      },
+      "verification": {
+        "source_detail": "Junaid Hussain",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "web_crosscheck",
+        "note": "À vérifier avant visite"
+      }
+    },
+    {
+      "id": "madinah-viral-fries",
+      "name_fr": "Madinah Fries — frites servies en parasol",
+      "city": "madinah",
+      "category": "food",
+      "subcategory": "street_food",
+      "area": "International Food Market, portes 340–341",
+      "description_fr": "Frites garnies vendues dans un plateau inspiré des parasols de Masjid Nabawi, montrées dans un Short de Junaid.",
+      "practical_notes_fr": "Quatre options à partir de 15 SAR selon la vidéo, prix à confirmer; boutique précise non nommée.",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=xdBC4uFf5eg"
+        ],
+        "references": [
+          "https://sakina.global/en/sightsee/video/junaidhussainmadinah/viral-madinah-fries-near-masjid-an-nabawi-gate-340"
+        ]
+      },
+      "verification": {
+        "source_detail": "Junaid Hussain",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "web_crosscheck",
+        "note": "À vérifier avant visite"
+      }
+    },
+    {
+      "id": "bin-dawood-umrah-gate330",
+      "name_fr": "Bin Dawood — achats essentiels de l'Omra",
+      "city": "madinah",
+      "category": "shopping",
+      "subcategory": "supermarket",
+      "area": "Près de la porte 330 de Masjid Nabawi",
+      "description_fr": "Supermarché utilisé par Junaid pour un défi d'achat des indispensables de l'Omra avec un budget de 100 SAR.",
+      "practical_notes_fr": "Sandales, ceinture d'ihram, savon non parfumé et produits pratiques mentionnés. 100 SAR est un défi vidéo, pas un prix forfaitaire garanti.",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=3M3f2WeiRzg"
+        ],
+        "references": [
+          "https://sakina.global/en/sightsee/video/junaidhussainmadinah/100-riyal-umrah-essentials-bin-dawood-madinah-guide"
+        ]
+      },
+      "verification": {
+        "source_detail": "Junaid Hussain",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "web_crosscheck",
+        "note": "À vérifier avant visite"
+      }
+    },
+    {
+      "id": "albaik-near-nabawi",
+      "name_fr": "Al Baik — restauration rapide près de Nabawi",
+      "city": "madinah",
+      "category": "food",
+      "subcategory": "fast_food",
+      "area": "Centre de Médine, proche de Masjid Nabawi",
+      "description_fr": "Arrêt présenté par Junaid avant son défi d'achats Bin Dawood : nuggets Musahhab épicés ou non.",
+      "practical_notes_fr": "Succursale exacte non établie par la source consultée. Vérifier la localisation avant de rejoindre le restaurant.",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=3M3f2WeiRzg"
+        ],
+        "references": [
+          "https://sakina.global/en/sightsee/video/junaidhussainmadinah/100-riyal-umrah-essentials-bin-dawood-madinah-guide"
+        ]
+      },
+      "verification": {
+        "source_detail": "Junaid Hussain",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "web_crosscheck",
+        "note": "À vérifier avant visite"
+      }
+    },
+    {
+      "id": "madin2h-rose-icecream",
+      "name_fr": "Madin2h Rose — glace à la rose de Médine",
+      "city": "madinah",
+      "category": "food",
+      "subcategory": "rose_icecream_shop",
+      "area": "Grand Plaza Hotel, porte 339 ; second point près Dar Al Hijra",
+      "description_fr": "Vendeur de glace parfumée à la rose de Médine, distinct d'Ajwatech (glace Ajwa).",
+      "practical_notes_fr": "Selon son propre compte : point principal à l'hôtel Grand Plaza, proche de la porte 339; deuxième point face à Dar Al Hijra au nord. À confirmer avant visite. Pas de preuve que le glacier de Junaid corresponde à cette enseigne.",
+      "source": {
+        "creator": "Site officiel du commerçant",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://linktr.ee/madin2h_rose0"
+        ]
+      },
+      "verification": {
+        "source_detail": "Site officiel du commerçant",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "web_crosscheck",
+        "note": "À vérifier avant visite"
+      }
+    },
+    {
+      "id": "bir-ghars",
+      "name_fr": "Puits historique de Ghars — بئر غرس",
+      "city": "madinah",
+      "category": "history",
+      "subcategory": "well",
+      "area": "Al-Awali / Qurban Road, à l'est-nord-est de Quba",
+      "description_fr": "Puits historique lié à la Sira, cité par les autorités de Médine et distinct de Bir Aris.",
+      "practical_notes_fr": "ATTENTION : fermeture pour maintenance signalée sur le portail officiel Visit Madinah le 14 novembre 2026. Réouverture non annoncée à la date de vérification ; ne pas prévoir d'entrée sans confirmation.",
+      "source": {
+        "creator": "Autorité touristique de Médine",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://visitmadinahsa.com/en/destinations/ghars-well",
+          "https://saudipedia.com/en/ghars-well",
+          "https://visitmadinahsa.com/sa-en/destinations/The-Well-of-Ghars."
+        ]
+      },
+      "official_status": "closed_for_maintenance",
+      "verification": {
+        "source_detail": "Autorité touristique de Médine",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "web_crosscheck",
+        "note": "À vérifier avant visite"
+      }
+    },
+    {
+      "id": "womens-gates-nabawi",
+      "name_fr": "Accès femmes à Masjid Nabawi : portes utiles",
+      "city": "madinah",
+      "category": "services",
+      "subcategory": "accessibility_tip",
+      "area": "Portes 12–14 et 23–30, et parcours de salutations signalé près de porte 21",
+      "description_fr": "Conseils de Junaid pour choisir un hôtel proche d'un accès femmes et vérifier les circulations permises après certaines prières.",
+      "practical_notes_fr": "Portes citées dans la vidéo et son résumé, accès et horaires susceptibles de changer. Ce n'est pas une liste exhaustive des entrées.",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=usIkVq89_js"
+        ],
+        "references": [
+          "https://sakina.global/en/sightsee/video/junaidhussainmadinah/madinah-for-women-avoid-these-2-common-masjid-nabawi-mistakes"
+        ]
+      },
+      "verification": {
+        "source_detail": "Junaid Hussain",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "web_crosscheck",
+        "note": "À vérifier avant visite"
+      }
+    },
+    {
+      "id": "nabawi-free-quran-classes",
+      "name_fr": "Cours religieux gratuits à Masjid Nabawi",
+      "city": "madinah",
+      "category": "services",
+      "subcategory": "education",
+      "area": "Masjid Nabawi",
+      "description_fr": "Junaid présente des cours de Coran gratuits et les modalités d'inscription à des enseignements liés à la mosquée.",
+      "practical_notes_fr": "Inscription selon calendrier et conditions; le créateur indique https://reg.qm.edu.sa/Minton/Account/NewRegistration. Confirmer la validité de l'inscription et l'éligibilité avant voyage.",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=cSF74v6Z_zo"
+        ],
+        "references": [
+          "https://reg.qm.edu.sa/Minton/Account/NewRegistration"
+        ]
+      },
+      "verification": {
+        "source_detail": "Junaid Hussain",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "web_crosscheck",
+        "note": "À vérifier avant visite"
+      }
+    },
+    {
+      "id": "ala-khutah-hijrah-route",
+      "name_fr": "Ala Khutah — parcours sur les traces de l'Hégire",
+      "city": "makkah",
+      "category": "history",
+      "subcategory": "hijrah_experience",
+      "area": "Parcours historique La Mecque – Médine (plusieurs étapes)",
+      "description_fr": "Série de vidéos de Junaid retraçant des stations associées à la route historique de l'Hégire.",
+      "practical_notes_fr": "Le parcours reconstitué est présenté comme 470 km et 11 stations dans une source secondaire; les activités, réservations et autorisations d'accès sont à vérifier. Ne pas présenter l'itinéraire reconstitué comme tracé archéologique certain.",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=IDieSjBkSYQ",
+          "https://www.youtube.com/watch?v=_OESQl04L-I",
+          "https://www.youtube.com/watch?v=I2F2qdQf-rk",
+          "https://www.youtube.com/watch?v=zjeSlq35p8s"
+        ],
+        "references": [
+          "https://sakina.global/en/sightsee/video/junaidhussainmadinah/prophet-went-south-to-ghar-thawr-during-hijrah"
+        ]
+      },
+      "verification": {
+        "source_detail": "Junaid Hussain",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "web_crosscheck",
+        "note": "À vérifier avant visite"
+      }
+    },
+    {
+      "id": "wells-bustan-mustadhal",
+      "name_fr": "Bustan Al Mustadhal — jardin historique",
+      "city": "madinah",
+      "category": "history",
+      "subcategory": "garden",
+      "area": "Secteur Quba / Al Usbah",
+      "description_fr": "Jardin traditionnel de Médine associé à des récits de l'Hégire et évoqué dans plusieurs récits de voyage.",
+      "practical_notes_fr": "Bustan Al Mustadhal possède également une fiche commerciale Ajwatech; vérifier si le site historique est accessible séparément du commerce et les conditions de visite.",
+      "source": {
+        "creator": "Sources touristiques indépendantes",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.youtube.com/watch?v=pGXAhM2NvUI",
+          "https://yalqa.com/p/ays-krym-ejwtk-bstan-almstzl-ec682625"
+        ]
+      },
+      "verification": {
+        "source_detail": "Sources touristiques indépendantes",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "web_crosscheck",
+        "note": "À vérifier avant visite"
+      }
+    },
+    {
+      "verification": {
+        "source_detail": "video_title_only",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "title_only",
+        "note": "Vidéo identifiée; adresse précise non extraite"
+      },
+      "id": "madinah-breakfast-date-farm",
+      "name_fr": "Petit déjeuner traditionnel dans une palmeraie",
+      "city": "madinah",
+      "category": "food",
+      "subcategory": "date_farm_breakfast",
+      "area": "Palmeraie de Médine — exploitation non identifiée",
+      "description_fr": "Short de Junaid consacré à un petit déjeuner traditionnel dans une ferme de dattiers.",
+      "practical_notes_fr": "Adresse, réservation et possibilité de visite non connues; classement comme idée à investiguer, pas adresse validée.",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=OfYe5slIC6E"
+        ]
+      }
+    },
+    {
+      "verification": {
+        "source_detail": "video_title_only",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "title_only",
+        "note": "Vidéo identifiée; adresse précise non extraite"
+      },
+      "id": "madinah-water-not-zamzam",
+      "name_fr": "Distinguer l'eau locale de l'eau de Zamzam",
+      "city": "madinah",
+      "category": "umrah",
+      "subcategory": "practical_advice",
+      "area": "Médine / commerces et points d'eau",
+      "description_fr": "Short de Junaid avertissant que toute eau distribuée ou vendue à Médine n'est pas nécessairement de l'eau de Zamzam.",
+      "practical_notes_fr": "Conseil identifié par titre uniquement; vérifier directement les indications officielles et l'étiquetage plutôt que de supposer l'origine de l'eau.",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=3vWqjnq6N7M"
+        ]
+      }
+    },
+    {
+      "verification": {
+        "source_detail": "video_title_only",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "title_only",
+        "note": "Vidéo identifiée; adresse précise non extraite"
+      },
+      "id": "madinah-wudu-around-nabawi",
+      "name_fr": "Emplacements pour les ablutions près de Nabawi",
+      "city": "madinah",
+      "category": "services",
+      "subcategory": "ablutions",
+      "area": "Autour de Masjid Nabawi",
+      "description_fr": "Short de Junaid sur l'emplacement des espaces d'ablutions autour de la mosquée.",
+      "practical_notes_fr": "Vidéo identifiée mais liste exacte des accès non transcrite; ne pas inventer de numéro de porte.",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=jPO2w1u_9iw"
+        ]
+      }
     }
   ],
-  "updated": "2026-11-14"
+  "updated": "2026-11-14",
+  "audit_metadata": {
+    "audit_date": "2026-11-14",
+    "scope": "Vérification documentaire du catalogue existant et extraction complémentaire d'adresses depuis vidéos indexées de Junaid, annuaires locaux et sites officiels",
+    "limitations": [
+      "Toutes les vidéos Shorts de la chaîne n'ont pas pu être visionnées intégralement : quota vidéotranscriptions vidIQ épuisé.",
+      "Les horaires d'ouvertures et prix changent; aucune confirmation téléphonique ni visite physique.",
+      "Les identifiants de portes, les repères et les liens vers des cartes ne constituent pas des coordonnées GPS fiables.",
+      "Les références de commerces trouvées indépendamment ne prouvent pas que Junaid les ait visités."
+    ],
+    "editorial_rule": "Ne pas publier des prix ou horaires comme garantis; distinguer 'vu dans vidéo', 'annuaire', 'source officielle' et 'à confirmer'."
+  }
 }

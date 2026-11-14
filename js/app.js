@@ -7,7 +7,7 @@
     set(k, v) { try { localStorage.setItem('omra:' + k, JSON.stringify(v)); } catch {} },
   };
 
-  const APP_VERSION = '2026-11-14.41';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
+  const APP_VERSION = '2026-11-14.42';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
 
   /* ---------- état ---------- */
   const detect = () => { const l = (navigator.language || 'fr').slice(0, 2); return LANGS[l] ? l : 'fr'; };
@@ -388,7 +388,7 @@
 
     const gSearch = i => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([i.name, i.area, cityName(i.city)].filter(Boolean).join(' '))}`;
     const aSearch = i => `https://maps.apple.com/?q=${encodeURIComponent([i.name, i.area, cityName(i.city)].filter(Boolean).join(' '))}`;
-    const vids = i => httpsOnly(((i.kind === 'find' ? i.r : i.disc) || {}).source && ((i.kind === 'find' ? i.r : i.disc).source.videos || (i.kind === 'find' ? i.r : i.disc).source.references)).slice(0, 3);
+    const vids = i => { const src = ((i.kind === 'find' ? i.r : i.disc) || {}).source || {}; return [...new Set(httpsOnly([...(src.videos || []), ...(src.references || [])]))].slice(0, 5); };
 
     const CAT_ICON = { holy: '🕋', sira: '📜', heritage: '🏛️', nature: '🌿', miqat: '🕌', airport: '✈️', 'f:history': '📜', 'f:museum': '🏛️', 'f:shopping': '🛍️', 'f:transport': '🚌', 'f:umrah': '🕋', 'f:services': '🛎️',
       'f:nature': '🌿', 'f:food': '🍽️', 'f:leisure': '🎡', 'f:perfume': '🧴', 'f:cafe_tea': '☕', 'f:dates': '🌴', 'f:calligraphy': '🖋️', 'f:regional_products': '🧺' };
@@ -407,7 +407,7 @@
     const closeSheet = () => { if (sheet) { sheet.remove(); sheet = null; } document.body.style.overflow = ''; document.removeEventListener('keydown', onKey); };
     const onKey = e => { if (e.key === 'Escape') closeSheet(); };
     const row = (ic, label, val) => val ? `<div class="srow"><span>${ic}</span><div><b>${esc(label)}</b><div>${val}</div></div></div>` : '';
-    const srcBtns = urls => urls.map((u, k) => `<a class="btn ghost sm" target="_blank" rel="noopener noreferrer" href="${esc(u)}">🎬 ${t('disc_video')}${urls.length > 1 ? ' ' + (k + 1) : ''}</a>`).join(' ');
+    const srcBtns = urls => urls.map((u, k) => `<a class="btn ghost sm" target="_blank" rel="noopener noreferrer" href="${esc(u)}">${/youtube\.com|youtu\.be/.test(u) ? '🎬 ' + t('disc_video') : '🔗 ' + t('sources')}${urls.length > 1 ? ' ' + (k + 1) : ''}</a>`).join(' ');
     const sheetTabs = i => {
       const out = [];
       if (i.kind === 'place') {
@@ -738,7 +738,7 @@
           (!q || norm([p.name_fr, p.area, p.description_fr, p.practical_notes_fr, ct[p.category]].join(' ')).includes(q)));
         $('#discCount', root).textContent = filtered.length + ' ' + ui.count;
         $('#discResults', root).innerHTML = filtered.length ? filtered.map(p => {
-          const links = (p.source?.videos || p.source?.references || []).filter(x => /^https:\/\//.test(x)).slice(0,5);
+          const links = [...new Set([...(p.source?.videos || []), ...(p.source?.references || [])])].filter(x => /^https:\/\//.test(x)).slice(0,5);
           const status = p.verification?.independently_verified ? ui.verified : ui.pending;
           return '<article style="padding:14px 0;border-top:1px solid var(--bd)">' +
             '<div class="row" style="justify-content:space-between"><strong>' + esc(p.name_fr) + '</strong><span class="muted">' + esc(status) + '</span></div>' +
