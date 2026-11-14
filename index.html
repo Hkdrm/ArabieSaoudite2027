@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Mon Voyage Omra</title>
+  <meta name="description" content="Planning, guide de l'Omra, horaires de prière, Qibla et carte pour votre voyage en Arabie saoudite.">
+  <meta name="theme-color" content="#0b6b4f">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand"><span class="logo">🕋</span><div><h1 id="appName"></h1><small id="tagline"></small></div></div>
+    <select id="langSel" aria-label="Language"></select>
+  </header>
+  <main id="view" tabindex="-1"></main>
+  <nav class="bottom" id="nav"></nav>
+  <script src="js/prayer.js"></script>
+  <script src="js/data.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
+  <script src="js/app.js" defer></script>
+</body>
+</html>
