@@ -7,7 +7,7 @@
     set(k, v) { try { localStorage.setItem('omra:' + k, JSON.stringify(v)); } catch {} },
   };
 
-  const APP_VERSION = '2026-11-14.49';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
+  const APP_VERSION = '2026-11-14.50';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
 
   /* ---------- état ---------- */
   const detect = () => { const l = (navigator.language || 'fr').slice(0, 2); return LANGS[l] ? l : 'fr'; };
@@ -471,7 +471,7 @@
       /* onglets sous la carte : « Lieux » puis une catégorie de bons plans par onglet */
       const base = items.filter(i => (city === 'all' || i.city === city) && matchQ(i));
       const byTab = {}; base.forEach(i => { const k = i.kind === 'place' ? 'places' : i.cat; (byTab[k] = byTab[k] || []).push(i); });
-      const keys = Object.keys(byTab).sort((x, y) => (x === 'places' ? -1 : y === 'places' ? 1 : byTab[y].length - byTab[x].length));
+      const keys = Object.keys(byTab).sort((x, y) => (x === 'places' ? -1 : y === 'places' ? 1 : catLabel(x).localeCompare(catLabel(y), S.lang === 'ar' ? 'ar' : S.lang === 'en' ? 'en' : 'fr', { sensitivity: 'base' })));      // « Lieux » d'abord, puis ordre alphabétique
       if ((tab !== 'all' && !byTab[tab]) || (tab === 'all' && keys.length <= 1)) tab = keys[0] || 'all';      // pas d'onglet « Tout » s'il n'y a qu'une catégorie
       const tabLabel = k => (k === 'places' ? '📍 ' + t('ex_tab_places') : k === 'all' ? t('ex_type_all') : catLabel(k));
       $('#tabs', el).innerHTML = keys.length ? `<select id="catSel" aria-label="${esc(t('ex_category'))}" style="width:100%">${[...keys, ...(keys.length > 1 ? ['all'] : [])].map(k => `<option value="${esc(k)}" ${tab === k ? 'selected' : ''}>${esc(tabLabel(k))} (${k === 'all' ? base.length : byTab[k].length})</option>`).join('')}</select>` : '';
