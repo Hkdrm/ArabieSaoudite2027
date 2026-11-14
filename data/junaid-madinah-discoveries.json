@@ -1,0 +1,1819 @@
+{
+  "schema_version": "1.0.0",
+  "created": "2026-11-14",
+  "title": "Découvertes et bons plans en Arabie saoudite",
+  "status": "research_only",
+  "notice": "Catalogue de recherche non publié. Adresses repérées dans des sources publiques, tarifs, horaires, stocks et accessibilité à confirmer avant déplacement. Aucune exclusivité mondiale garantie.",
+  "categories": {
+    "history": "Histoire et Sira",
+    "museum": "Musées",
+    "shopping": "Marchés et bons plans",
+    "transport": "Transports",
+    "umrah": "Omra et Nusuk",
+    "services": "Services pratiques",
+    "nature": "Nature",
+    "food": "Gastronomie",
+    "leisure": "Loisirs, parcs et sensations fortes",
+    "perfume": "Parfums, oud et encens",
+    "cafe_tea": "Cafés et salons de thé",
+    "dates": "Dattes et spécialités",
+    "calligraphy": "Calligraphie et artisanat",
+    "regional_products": "Produits régionaux emblématiques"
+  },
+  "records": [
+    {
+      "id": "jumuah",
+      "name_fr": "Mosquée Al-Jumu’ah",
+      "city": "madinah",
+      "category": "history",
+      "area": "Quba",
+      "description_fr": "Mosquée associée à la prière du vendredi lors de l’Hégire",
+      "practical_notes_fr": "Sur le chemin de Quba",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=wzL_I6Uywcw"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "bukhari",
+      "name_fr": "Mosquée Imam Al-Bukhari",
+      "city": "madinah",
+      "category": "history",
+      "area": "Centre historique",
+      "description_fr": "Site traditionnellement associé à l’imam Al-Bukhari; attribution à vérifier",
+      "practical_notes_fr": "Porte 342 selon le créateur",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=rx4mmlzX_ms"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "ghamama",
+      "name_fr": "Mosquée Al-Ghamama",
+      "city": "madinah",
+      "category": "history",
+      "area": "Centre historique",
+      "description_fr": "Ancien musalla lié aux prières de l’Aïd et de demande de pluie",
+      "practical_notes_fr": "Secteur porte 310",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=rx4mmlzX_ms"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "abu-bakr",
+      "name_fr": "Mosquée Abu Bakr",
+      "city": "madinah",
+      "category": "history",
+      "area": "Centre historique",
+      "description_fr": "Mosquée du groupe des anciennes mosquées",
+      "practical_notes_fr": "À côté d’Al-Ghamama",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=rx4mmlzX_ms"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "ali",
+      "name_fr": "Mosquée Ali ibn Abi Talib",
+      "city": "madinah",
+      "category": "history",
+      "area": "Centre historique",
+      "description_fr": "Mosquée historique",
+      "practical_notes_fr": "Porte 314 mentionnée",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=rx4mmlzX_ms"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "umar",
+      "name_fr": "Mosquée Umar ibn Al-Khattab",
+      "city": "madinah",
+      "category": "history",
+      "area": "Centre historique",
+      "description_fr": "Petite mosquée historique",
+      "practical_notes_fr": "À quelques minutes des autres mosquées",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=rx4mmlzX_ms"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "uthman",
+      "name_fr": "Mosquée Uthman ibn Affan",
+      "city": "madinah",
+      "category": "history",
+      "area": "Centre historique",
+      "description_fr": "Mosquée associée au troisième calife",
+      "practical_notes_fr": "Fermée lors du tournage, en face d’As-Safiyyah selon le créateur",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=rx4mmlzX_ms"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "saqifah",
+      "name_fr": "Saqifah Bani Sa’idah",
+      "city": "madinah",
+      "category": "history",
+      "area": "Ouest de Nabawi",
+      "description_fr": "Site lié au choix du premier calife",
+      "practical_notes_fr": "Fermé pour travaux lors du tournage",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=rx4mmlzX_ms"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "abu-talha-well",
+      "name_fr": "Emplacement du puits d’Abu Talha",
+      "city": "madinah",
+      "category": "history",
+      "area": "Masjid Nabawi",
+      "description_fr": "Ancien puits dont l’emplacement serait indiqué au sol; identification à vérifier",
+      "practical_notes_fr": "Trois cercles entre portes 21 et 22, dernière rangée côté nord",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=wKE4SlhQ7xU"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "ring-well",
+      "name_fr": "Puits associé à une bague perdue",
+      "city": "madinah",
+      "category": "history",
+      "area": "Quba",
+      "description_fr": "Lieu évoqué dans une vidéo sur la perte d’une bague; attribution à vérifier",
+      "practical_notes_fr": "",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=NCxxq-pZeUk"
+        ]
+      },
+      "verification": {
+        "source_detail": "title_only",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "prophet-house",
+      "name_fr": "Maison historique attribuée au Prophète ﷺ",
+      "city": "madinah",
+      "category": "history",
+      "area": "Médine",
+      "description_fr": "Vidéo présentant une maison associée au Prophète ﷺ; lieu exact non extrait",
+      "practical_notes_fr": "",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=yFpTA6erRhk"
+        ]
+      },
+      "verification": {
+        "source_detail": "title_only",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "uhud",
+      "name_fr": "Uhud et les martyrs",
+      "city": "madinah",
+      "category": "history",
+      "area": "Uhud",
+      "description_fr": "Visite des lieux liés à la bataille d’Uhud",
+      "practical_notes_fr": "Vérifier accès au cimetière",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=-DlLEYR0ocg",
+          "https://www.youtube.com/watch?v=XHM1BlWVebM"
+        ]
+      },
+      "verification": {
+        "source_detail": "title_only",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "baqi",
+      "name_fr": "Cimetière Al-Baqi",
+      "city": "madinah",
+      "category": "history",
+      "area": "Est de Nabawi",
+      "description_fr": "Cimetière historique et règles de visite",
+      "practical_notes_fr": "Accès réglementé",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=r_NjZL-ASuw"
+        ]
+      },
+      "verification": {
+        "source_detail": "title_only",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "manuscripts",
+      "name_fr": "Exposition de manuscrits rares",
+      "city": "madinah",
+      "category": "museum",
+      "area": "Masjid Nabawi",
+      "description_fr": "Manuscrits anciens, outils d’écriture, supports historiques",
+      "practical_notes_fr": "Secteur porte 369 selon vidéo; accès gratuit annoncé, à vérifier",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=_-nKoB0ym0s"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "safiyyah",
+      "name_fr": "As-Safiyyah Museum & Park",
+      "city": "madinah",
+      "category": "museum",
+      "area": "Sud de Nabawi",
+      "description_fr": "Musée, promenades, boutiques et restaurants",
+      "practical_notes_fr": "Porte 301, environ cinq minutes à pied selon vidéo",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=jPjqVp7zBSU",
+          "https://www.youtube.com/watch?v=laXTM8dMW1g"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "quba-market",
+      "name_fr": "Promenade commerciale de Quba",
+      "city": "madinah",
+      "category": "shopping",
+      "area": "Trajet de Quba",
+      "description_fr": "Commerces de souvenirs abordables sur le chemin vers Quba",
+      "practical_notes_fr": "Porte 310 puis à gauche; prix 1–3 SAR et vêtements à partir de 25 SAR annoncés, non vérifiés",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=9anXxSSjQfo"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "underground-market",
+      "name_fr": "Marché souterrain économique",
+      "city": "madinah",
+      "category": "shopping",
+      "area": "Sud-ouest de Nabawi",
+      "description_fr": "Souvenirs, parfums, miswaks, tapis et vêtements",
+      "practical_notes_fr": "Escalators au sud-ouest; prix dès 1 SAR selon vidéo",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=dHWyzTl9cFE"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "bilal-market",
+      "name_fr": "Marché près de la mosquée Bilal",
+      "city": "madinah",
+      "category": "shopping",
+      "area": "Mosquée Bilal",
+      "description_fr": "Marché économique et secteur des taxis",
+      "practical_notes_fr": "L’association historique de la mosquée avec Bilal n’est pas solidement établie",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=Fye9IwbRiyQ"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "bus",
+      "name_fr": "Madinah Bus",
+      "city": "madinah",
+      "category": "transport",
+      "area": "Médine",
+      "description_fr": "Réseau desservant Quba, Uhud et l’aéroport",
+      "practical_notes_fr": "Tarif 3 SAR annoncé; paiement par application ou carte; vérifier sur l’opérateur",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=aZKgt0URHSA"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "parking",
+      "name_fr": "Parking souterrain de Masjid Nabawi",
+      "city": "madinah",
+      "category": "transport",
+      "area": "Masjid Nabawi",
+      "description_fr": "Parking de deux niveaux et plusieurs zones selon vidéo",
+      "practical_notes_fr": "1 SAR/h annoncé, à confirmer",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=oD2ciWvBnT4"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "rawdah",
+      "name_fr": "Nusuk Instant Track pour Rawdah",
+      "city": "madinah",
+      "category": "umrah",
+      "area": "Masjid Nabawi",
+      "description_fr": "Fonction de recherche de créneaux à proximité",
+      "practical_notes_fr": "Activer la géolocalisation; disponibilité et éligibilité non garanties",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=t6Jj0BDEPwI"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "dallah",
+      "name_fr": "Parcours culturel Dallah Quba",
+      "city": "madinah",
+      "category": "umrah",
+      "area": "Quba",
+      "description_fr": "Expérience culturelle de l’histoire de Quba",
+      "practical_notes_fr": "Réservation et modalités à vérifier",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=lupj2JIwBhY"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "medical-jibril",
+      "name_fr": "Centre de santé Bab Jibril",
+      "city": "madinah",
+      "category": "services",
+      "area": "Al-Baqi",
+      "description_fr": "Centre de santé mentionné par le créateur",
+      "practical_notes_fr": "Gratuité selon statut et assurance; prévoir documents",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=OAsHO3nakyY"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "medical-safiyyah",
+      "name_fr": "Centre de soins As-Safiyyah",
+      "city": "madinah",
+      "category": "services",
+      "area": "Porte 305",
+      "description_fr": "Centre de soins annoncé 24 h/24",
+      "practical_notes_fr": "Horaires et éligibilité à vérifier",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=OAsHO3nakyY"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "medical-salam",
+      "name_fr": "Hôpital Al-Salam Endowment",
+      "city": "madinah",
+      "category": "services",
+      "area": "Porte 318",
+      "description_fr": "Hôpital et services médicaux",
+      "practical_notes_fr": "Confirmer services et prise en charge",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=OAsHO3nakyY"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "childcare",
+      "name_fr": "Garderie près de Masjid Nabawi",
+      "city": "madinah",
+      "category": "services",
+      "area": "Nord-est de Nabawi",
+      "description_fr": "Garde d’enfants mentionnée dans la vidéo",
+      "practical_notes_fr": "Portes 339–340; première heure gratuite puis 15 SAR/h annoncé; conditions à vérifier",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=StNjrExPk2A"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "lost-children",
+      "name_fr": "Service enfants égarés",
+      "city": "madinah",
+      "category": "services",
+      "area": "Al-Baqi",
+      "description_fr": "Bureau enfants perdus et bracelets avec téléphone",
+      "practical_notes_fr": "Près de porte 34, bracelet annoncé gratuit",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=o-1nRGd0v0Q"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "wheelchair",
+      "name_fr": "Prêt de fauteuils roulants",
+      "city": "madinah",
+      "category": "services",
+      "area": "Masjid Nabawi",
+      "description_fr": "Fauteuils disponibles en prêt selon le créateur",
+      "practical_notes_fr": "Portes 301–302; justificatifs et durée annoncés à reconfirmer",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=puQJUSg8gEI"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "wadi",
+      "name_fr": "Wadi Al-Aqiq",
+      "city": "madinah",
+      "category": "nature",
+      "area": "Wadi Al-Aqiq",
+      "description_fr": "Vallée et promenade locale, espaces pour les familles",
+      "practical_notes_fr": "Secteur montré annoncé à dix minutes de Nabawi; niveau d’eau variable",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=yIzzsJDJs3A"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "rose-icecream",
+      "name_fr": "Glace à la rose",
+      "city": "madinah",
+      "category": "food",
+      "area": "Autour de Nabawi",
+      "description_fr": "Dessert glacé à la rose testé par le créateur",
+      "practical_notes_fr": "Proche des portes 21 / 333 selon parcours; enseigne non confirmée",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=_-nKoB0ym0s"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "safiyyah-food",
+      "name_fr": "Restaurants d’As-Safiyyah",
+      "city": "madinah",
+      "category": "food",
+      "area": "As-Safiyyah",
+      "description_fr": "Food court international; enseignes citées : Shawarma City, Sauce Boss et Mahmood Kebab",
+      "practical_notes_fr": "Noms et ouverture à contrôler",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=laXTM8dMW1g"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "quba-walk",
+      "name_fr": "Marche historique vers Quba",
+      "city": "madinah",
+      "category": "history",
+      "area": "Trajet de Quba",
+      "description_fr": "Promenade associée aux visites à Quba",
+      "practical_notes_fr": "Éviter forte chaleur; combiner Al-Jumu’ah",
+      "source": {
+        "creator": "Junaid Hussain",
+        "channel": "https://www.youtube.com/@junaidhussainmadinah",
+        "videos": [
+          "https://www.youtube.com/watch?v=9anXxSSjQfo",
+          "https://www.youtube.com/watch?v=lupj2JIwBhY"
+        ]
+      },
+      "verification": {
+        "source_detail": "transcript",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "falcons-flight-qiddiya",
+      "name_fr": "Falcons Flight — Six Flags Qiddiya City",
+      "city": "riyadh",
+      "category": "leisure",
+      "subcategory": "roller_coaster",
+      "area": "Qiddiya City, au sud-ouest de Riyad",
+      "description_fr": "Montagnes russes à records mondiaux au parc Six Flags Qiddiya City : environ 195 m de hauteur, 250 km/h en vitesse maximale et près de 3 min 25 s de parcours selon le fabricant Intamin.",
+      "practical_notes_fr": "Parc ouvert depuis le 31 décembre 2025. Attraction dans la zone City of Thrills. Taille autorisée : 130 à 196 cm. Accès via billet du parc ; vérifier disponibilité de l'attraction, créneaux, tarifs et navettes avant la visite. Horaires publiés en octobre 2026 : mercredi à vendredi et dimanche 16h–minuit ; samedi 12h–minuit ; fermé lundi et mardi (sous réserve de changements).",
+      "source": {
+        "creator": "Sources officielles Six Flags Qiddiya City et Intamin",
+        "channel": "https://sixflagsqiddiyacity.com/en",
+        "videos": [
+          "https://www.youtube.com/watch?v=aYqWsyroqys"
+        ],
+        "references": [
+          "https://sixflagsqiddiyacity.com/en/explore/rides/falcons-flight",
+          "https://www.intamin.com/project/falcons-flight/",
+          "https://sixflagsqiddiyacity.com/en/plan-your-trip/park-information",
+          "https://webook.com/en/sa/ruh/experience/events/six-flags-new-2026"
+        ]
+      },
+      "verification": {
+        "source_detail": "official_website_and_manufacturer",
+        "independently_verified": true,
+        "location_verified": true,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "cost": {
+        "currency": "SAR",
+        "amount": null,
+        "note": "Billet du parc requis ; prix selon date"
+      },
+      "interest_tags": [
+        "sensations_fortes",
+        "records_mondiaux",
+        "activité_riyad",
+        "parc_attractions"
+      ],
+      "official_url": "https://sixflagsqiddiyacity.com/en/explore/rides/falcons-flight"
+    },
+    {
+      "id": "asrar-oud",
+      "name_fr": "Asrar Oud — أسرار العود",
+      "city": "madinah",
+      "category": "perfume",
+      "subcategory": "oud_attar",
+      "area": "Al Rayah, rue Sultanah",
+      "description_fr": "Maison de parfums orientaux liée à Médine, oud, bakhoor et huiles parfumées.",
+      "practical_notes_fr": "Comparer les compositions et les concentrations. Aucun prix relevé.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=Asrar+Oud+Madinah"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "researched_shop",
+        "needs_current_price",
+        "local_address"
+      ]
+    },
+    {
+      "id": "khiar-aldyar",
+      "name_fr": "Khiar Aldyar for Gifts",
+      "city": "madinah",
+      "category": "perfume",
+      "subcategory": "perfume_and_gifts",
+      "area": "Abi Ubaidah ibn al Jarrah",
+      "description_fr": "Huiles parfumées, oud et cadeaux religieux.",
+      "practical_notes_fr": "Boutique d’achats pratiques près du secteur central.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=KHIAR+ALDYAR+Madinah"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "researched_shop",
+        "needs_current_price",
+        "local_address"
+      ]
+    },
+    {
+      "id": "exclusive-perfume",
+      "name_fr": "Exclusive Perfume — عطر حصري",
+      "city": "madinah",
+      "category": "perfume",
+      "subcategory": "attar",
+      "area": "Abdul Muhsin ibn Abdul Aziz",
+      "description_fr": "Boutique d’attars, musc, oud et mélanges orientaux.",
+      "practical_notes_fr": "Faire sentir sur touche et attendre avant achat.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=Exclusive+Perfume+Madinah"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "researched_shop",
+        "needs_current_price",
+        "local_address"
+      ]
+    },
+    {
+      "id": "palace-oud",
+      "name_fr": "Palace Oud — عود القصر",
+      "city": "jeddah",
+      "category": "perfume",
+      "subcategory": "oud",
+      "area": "Souq Al Alawi, Al Balad",
+      "description_fr": "Marchand de oud et huile parfumée dans le souk historique.",
+      "practical_notes_fr": "Comparer plusieurs grades d’oud et demander son origine.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=Palace+Oud+Al+Balad+Jeddah"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "researched_shop",
+        "needs_current_price",
+        "local_address"
+      ]
+    },
+    {
+      "id": "banafa-oud",
+      "name_fr": "Banafa for Oud",
+      "city": "jeddah",
+      "category": "perfume",
+      "subcategory": "bakhoor",
+      "area": "Al Dhahab, Al Balad",
+      "description_fr": "Boutique de oud, bakhoor et parfum à l’huile.",
+      "practical_notes_fr": "Opportunité de découverte pendant la promenade d’Al-Balad.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=Banafa+for+Oud+Jeddah"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "researched_shop",
+        "needs_current_price",
+        "local_address"
+      ]
+    },
+    {
+      "id": "akif-dehlawi",
+      "name_fr": "Akif Dehlawi Perfumes — عاكف الدهلوي",
+      "city": "makkah",
+      "category": "perfume",
+      "subcategory": "traditional_perfume",
+      "area": "Al Hajlah, Al Hijrah",
+      "description_fr": "Parfums orientaux et oud de boutique spécialisée.",
+      "practical_notes_fr": "Prix à vérifier avant achat.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=Akif+Dehlawi+Makkah"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "researched_shop",
+        "needs_current_price",
+        "local_address"
+      ]
+    },
+    {
+      "id": "taif-emarat",
+      "name_fr": "Taif Al Emarat Perfumes",
+      "city": "makkah",
+      "category": "perfume",
+      "subcategory": "luxury_perfume",
+      "area": "Makkah Towers, entrée 2, rez-de-chaussée",
+      "description_fr": "Boutique de parfums haut de gamme proche du Haram.",
+      "practical_notes_fr": "Idéal pour comparaison avec les parfumeries de souk.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=Taif+Al+Emarat+Perfumes+Makkah+Towers"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "researched_shop",
+        "needs_current_price",
+        "local_address"
+      ]
+    },
+    {
+      "id": "kiffa-center",
+      "name_fr": "Kiffa Coffee Shop & Roastery",
+      "city": "madinah",
+      "category": "cafe_tea",
+      "subcategory": "specialty_coffee",
+      "area": "Badaah, près du Haram",
+      "description_fr": "Café de spécialité près de Masjid Nabawi.",
+      "practical_notes_fr": "Café à déguster durant le parcours à pied.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=Kiffa+Coffee+Madinah+Badaah"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "researched_shop",
+        "needs_current_price",
+        "local_address"
+      ]
+    },
+    {
+      "id": "kiffa-ring",
+      "name_fr": "Kiffa Roasters — الدائري",
+      "city": "madinah",
+      "category": "cafe_tea",
+      "subcategory": "roaster",
+      "area": "Shadhah, King Abdullah Branch Road",
+      "description_fr": "Torréfaction et café de spécialité.",
+      "practical_notes_fr": "Demander l’origine des grains ; localement torréfié ne signifie pas cultivé en Arabie.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=Kiffa+Roasters+Shadhah+Madinah"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "researched_shop",
+        "needs_current_price",
+        "local_address"
+      ]
+    },
+    {
+      "id": "shai-waqad",
+      "name_fr": "Shai Waqad — شاي وقاد",
+      "city": "madinah",
+      "category": "cafe_tea",
+      "subcategory": "tea",
+      "area": "Médine, secteur 8893",
+      "description_fr": "Salon de thé populaire, préparations de thé, visites nocturnes.",
+      "practical_notes_fr": "Horaires nocturnes annoncés, à revérifier.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=Shai+Waqad+Madinah"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "researched_shop",
+        "needs_current_price",
+        "local_address"
+      ]
+    },
+    {
+      "id": "ratio",
+      "name_fr": "RATIO Speciality Coffee",
+      "city": "makkah",
+      "category": "cafe_tea",
+      "subcategory": "specialty_coffee",
+      "area": "Ibrahim Al Khalil, Ash Shubaikah",
+      "description_fr": "Café de spécialité du secteur de Jabal Omar.",
+      "practical_notes_fr": "Pour espresso et extraction filtre.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=RATIO+Speciality+Coffee+Makkah"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "researched_shop",
+        "needs_current_price",
+        "local_address"
+      ]
+    },
+    {
+      "id": "shayti-clock",
+      "name_fr": "Shayti — شايتي",
+      "city": "makkah",
+      "category": "cafe_tea",
+      "subcategory": "karak_tea",
+      "area": "Clock Tower, niveau P3",
+      "description_fr": "Salon de thé réputé pour le karak.",
+      "practical_notes_fr": "Dans le complexe Clock Tower, accès à retrouver sur place.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=Shayti+Clock+Tower+Makkah"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "researched_shop",
+        "needs_current_price",
+        "local_address"
+      ]
+    },
+    {
+      "id": "hizb-shay",
+      "name_fr": "Hizb Al Shay — حزب الشاي",
+      "city": "makkah",
+      "category": "cafe_tea",
+      "subcategory": "karak_tea",
+      "area": "Walyal Ahd, Dr Abdulqader Koshak",
+      "description_fr": "Thé karak, à la menthe et infusions à la braise.",
+      "practical_notes_fr": "Hors du secteur immédiat du Haram.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=Hizb+Al+Shay+Makkah"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "researched_shop",
+        "needs_current_price",
+        "local_address"
+      ]
+    },
+    {
+      "id": "suwaa",
+      "name_fr": "Suwaa Roastery — صواع",
+      "city": "jeddah",
+      "category": "cafe_tea",
+      "subcategory": "roaster",
+      "area": "Al Mohammadiyyah, Amna Bint Wahb St",
+      "description_fr": "Torréfacteur créé à Djeddah, cafés de spécialité et sachets de grains.",
+      "practical_notes_fr": "Vérifier l’origine saoudienne des grains si recherché.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=Suwaa+Jeddah"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "researched_shop",
+        "needs_current_price",
+        "local_address"
+      ]
+    },
+    {
+      "id": "roaster-project",
+      "name_fr": "Roaster Project — روستر بروجكت",
+      "city": "jeddah",
+      "category": "cafe_tea",
+      "subcategory": "roaster",
+      "area": "Al Murjan",
+      "description_fr": "Torréfacteur pour espresso et cafés filtre.",
+      "practical_notes_fr": "Possibilité d’acheter des grains.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=Roaster+Project+Jeddah"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "researched_shop",
+        "needs_current_price",
+        "local_address"
+      ]
+    },
+    {
+      "id": "ghazala-tea",
+      "name_fr": "Al Ghazalah Tea — مقهى الغزالة",
+      "city": "jeddah",
+      "category": "cafe_tea",
+      "subcategory": "tea",
+      "area": "An Nahdah",
+      "description_fr": "Salon de thé proposant plusieurs styles de thé.",
+      "practical_notes_fr": "Vérifier le menu à jour.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=Al+Ghazalah+Tea+Jeddah"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "researched_shop",
+        "needs_current_price",
+        "local_address"
+      ]
+    },
+    {
+      "id": "qamar-dates",
+      "name_fr": "Qamar Al Madinah Dates",
+      "city": "madinah",
+      "category": "dates",
+      "subcategory": "dates_specialist",
+      "area": "Quba Street, Al Jumuah",
+      "description_fr": "Maison de dattes, notamment Ajwa et autres variétés de Médine.",
+      "practical_notes_fr": "Demander origine, lot et emballage sous vide.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=Qamar+Al+Madinah+Dates"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "researched_shop",
+        "needs_current_price",
+        "local_address"
+      ]
+    },
+    {
+      "id": "nurba-dates",
+      "name_fr": "Nurba Dates — نوربا للتمور",
+      "city": "madinah",
+      "category": "dates",
+      "subcategory": "dates_specialist",
+      "area": "Movenpick mall, près des portes 327-328",
+      "description_fr": "Boutique de dattes dans le quartier de la mosquée.",
+      "practical_notes_fr": "Pratique pour coffrets.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=Nurba+Dates+Madinah"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "researched_shop",
+        "needs_current_price",
+        "local_address"
+      ]
+    },
+    {
+      "id": "castle-farms",
+      "name_fr": "Castle Farms",
+      "city": "madinah",
+      "category": "dates",
+      "subcategory": "dates_specialist",
+      "area": "Abu Ayyub Al-Ansari, Al Haram",
+      "description_fr": "Dattes et cadeaux alimentaires proches du Haram.",
+      "practical_notes_fr": "Privilégier le conditionnement hermétique.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=Castle+Farms+Madinah"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "researched_shop",
+        "needs_current_price",
+        "local_address"
+      ]
+    },
+    {
+      "id": "makkah-dates-market",
+      "name_fr": "Date Market — Makkah",
+      "city": "makkah",
+      "category": "dates",
+      "subcategory": "market",
+      "area": "Makkah 24352",
+      "description_fr": "Marché spécialisé intéressant pour comparer les prix de dattes en quantité.",
+      "practical_notes_fr": "Acheter seulement après dégustation et comparaison de vendeurs.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=Date+Market+Makkah+24352"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "researched_shop",
+        "needs_current_price",
+        "local_address"
+      ]
+    },
+    {
+      "id": "siafa-dates",
+      "name_fr": "Siafa Dates",
+      "city": "makkah",
+      "category": "dates",
+      "subcategory": "dates_specialist",
+      "area": "Safwa Tower, 3e étage, boutique 513",
+      "description_fr": "Dattes et coffrets près du Haram.",
+      "practical_notes_fr": "Convenance privilégiée aux prix de gros.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=Siafa+Dates+Makkah"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "researched_shop",
+        "needs_current_price",
+        "local_address"
+      ]
+    },
+    {
+      "id": "jeddah-dates-market",
+      "name_fr": "Jeddah Dates Market",
+      "city": "jeddah",
+      "category": "dates",
+      "subcategory": "market",
+      "area": "Al Jamiah, Abdullah Sulayman Road",
+      "description_fr": "Marché de plusieurs vendeurs de dattes saoudiennes.",
+      "practical_notes_fr": "Comparer plusieurs stands, demander provenance.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=Jeddah+Dates+Market"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "researched_shop",
+        "needs_current_price",
+        "local_address"
+      ]
+    },
+    {
+      "id": "tamraty",
+      "name_fr": "Tamraty Al Momayazah",
+      "city": "jeddah",
+      "category": "dates",
+      "subcategory": "dates_specialist",
+      "area": "Ar Rawdah, Prince Saud Al Faisal Road",
+      "description_fr": "Dattes et confiseries à base de dattes.",
+      "practical_notes_fr": "Idée de cadeau gourmand en coffret.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=Tamraty+Al+Momayazah+Jeddah"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "researched_shop",
+        "needs_current_price",
+        "local_address"
+      ]
+    },
+    {
+      "id": "lawhati-calligraphy",
+      "name_fr": "Lawhati Art Calligraphy — خطاط لوحتي الفنية",
+      "city": "jeddah",
+      "category": "calligraphy",
+      "subcategory": "artwork",
+      "area": "Al Safa, Al Shakireen",
+      "description_fr": "Artisan d’œuvres et panneaux à inscription arabe personnalisée.",
+      "practical_notes_fr": "Vérifier délai, style d’écriture, support et prix.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=خطاط+لوحتي+الفنية+جدة"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "researched_shop",
+        "needs_current_price",
+        "local_address"
+      ]
+    },
+    {
+      "id": "reeman-design",
+      "name_fr": "Reeman Design Store",
+      "city": "jeddah",
+      "category": "calligraphy",
+      "subcategory": "personalization",
+      "area": "An Nahdah",
+      "description_fr": "Atelier de cadeaux personnalisés : calligraphie, impression et broderie.",
+      "practical_notes_fr": "Demander spécialement réalisation sur textile et vérification de l’orthographe arabe.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=Reeman+Design+Store+Jeddah"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "researched_shop",
+        "needs_current_price",
+        "local_address"
+      ]
+    },
+    {
+      "id": "hira-recordings",
+      "name_fr": "Hira Recordings — تسجيلات حراء",
+      "city": "makkah",
+      "category": "calligraphy",
+      "subcategory": "prayer_mat",
+      "area": "Jarwal, At Taysir",
+      "description_fr": "Boutique de cadeaux religieux où des clients mentionnent la calligraphie sur tapis de prière.",
+      "practical_notes_fr": "Prestation à confirmer avant déplacement.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=تسجيلات+حراء+مكة"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "researched_shop",
+        "needs_current_price",
+        "local_address"
+      ]
+    },
+    {
+      "id": "baran-embroidery",
+      "name_fr": "Baran Embroidery — باران للمطرزات",
+      "city": "jeddah",
+      "category": "calligraphy",
+      "subcategory": "embroidery",
+      "area": "Souq Bab Makkah, Al Balad",
+      "description_fr": "Petit atelier de broderie dans le quartier historique.",
+      "practical_notes_fr": "Vérifier s’il accepte les inscriptions arabes personnalisées sur vêtements.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=باران+للمطرزات+جدة"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "researched_shop",
+        "needs_current_price",
+        "local_address"
+      ]
+    },
+    {
+      "id": "ajwa-madinah",
+      "name_fr": "Ajwa de Médine",
+      "city": "madinah",
+      "category": "dates",
+      "subcategory": "regional_origin",
+      "area": "Médine",
+      "description_fr": "Dattes Ajwa issues de la région de Médine, achat emblématique et traçable.",
+      "practical_notes_fr": "Vérifier provenance et qualité, demander prix par kilo et goûter avant achat.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://www.spa.gov.sa/en/N2035544"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "local_specificity",
+        "product_to_look_for"
+      ]
+    },
+    {
+      "id": "khawlani-beans",
+      "name_fr": "Café Khawlani d’origine saoudienne",
+      "city": "jeddah",
+      "category": "regional_products",
+      "subcategory": "coffee",
+      "area": "Jazan (achat possible dans les trois villes)",
+      "description_fr": "Grains cultivés dans le sud-ouest saoudien, culture et savoir-faire inscrits à l’UNESCO.",
+      "practical_notes_fr": "Demander une origine de plantation Jazan/Asir/Al Baha, pas seulement torréfaction en Arabie.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://www.spa.gov.sa/2317263"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "local_specificity",
+        "product_to_look_for"
+      ]
+    },
+    {
+      "id": "taif-rose-products",
+      "name_fr": "Rose de Taïf : eau, pétales et attar",
+      "city": "makkah",
+      "category": "regional_products",
+      "subcategory": "rose",
+      "area": "Taïf (excursion depuis La Mecque)",
+      "description_fr": "Produits de distillation de la rose régionale, particulièrement intéressants au printemps.",
+      "practical_notes_fr": "Demander huile pure ou diluée et nom du producteur ; saison de récolte autour de mars-avril.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://www.thesaudiguides.com/fr/things-to-do/taif-rose-festival/"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "local_specificity",
+        "product_to_look_for"
+      ]
+    },
+    {
+      "id": "hijazi-embroidery",
+      "name_fr": "Broderie et vêtements de style hedjazi",
+      "city": "jeddah",
+      "category": "calligraphy",
+      "subcategory": "textiles",
+      "area": "Al Balad",
+      "description_fr": "Textiles et vêtements brodés dans les styles traditionnels du Hedjaz.",
+      "practical_notes_fr": "Identifier fabrication artisanale locale versus importation.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://www.spa.gov.sa/en/N2280487"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "local_specificity",
+        "product_to_look_for"
+      ]
+    },
+    {
+      "id": "roshan-miniatures",
+      "name_fr": "Miniatures des Roshan de Djeddah",
+      "city": "jeddah",
+      "category": "regional_products",
+      "subcategory": "woodcraft",
+      "area": "Al Balad",
+      "description_fr": "Objets inspirés des fenêtres de bois sculptées caractéristiques des maisons historiques.",
+      "practical_notes_fr": "Privilégier artisan identifié et fabrication locale.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://vstsaudi.com/historic-jeddah/"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "local_specificity",
+        "product_to_look_for"
+      ]
+    },
+    {
+      "id": "mabkhara",
+      "name_fr": "Mabkhara artisanal",
+      "city": "jeddah",
+      "category": "regional_products",
+      "subcategory": "incense_burner",
+      "area": "Souks Al Balad",
+      "description_fr": "Brûle-parfum traditionnel pour encens et bakhoor.",
+      "practical_notes_fr": "Vérifier qualité, matériau et possibilité de transport aérien.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://www.monshaat.gov.sa/sites/default/files/2025-06/V9.0%20Monsha%27at%20-%20Q1%202025%20EN.pdf"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "local_specificity",
+        "product_to_look_for"
+      ]
+    },
+    {
+      "id": "custom-souvenir-calligraphy",
+      "name_fr": "Calligraphie personnalisée sur textile ou cadeau",
+      "city": "jeddah",
+      "category": "calligraphy",
+      "subcategory": "custom_order",
+      "area": "Ateliers de Djeddah",
+      "description_fr": "Inscription de prénom ou courte expression en arabe sur tableau, vêtement ou objet.",
+      "practical_notes_fr": "Vérifier texte exact avec locuteur arabe avant fabrication.",
+      "source": {
+        "creator": "Recherche d’adresses locales et sources publiques, novembre 2026",
+        "references": [
+          "https://maps.google.com/?q=Reeman+Design+Store+Jeddah"
+        ]
+      },
+      "verification": {
+        "source_detail": "business_listing_or_public_source",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "interest_tags": [
+        "local_specificity",
+        "product_to_look_for"
+      ]
+    }
+  ],
+  "updated": "2026-11-14"
+}
