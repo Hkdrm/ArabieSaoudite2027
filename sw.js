@@ -1,7 +1,7 @@
 /* Service worker : réseau d'abord (toujours la dernière version quand on est en ligne),
    cache en secours (hors ligne). Les fichiers de l'appli sont revalidés à chaque requête. */
-const V = 'omra-v26';
-const SHELL = ['./', 'index.html', 'css/style.css', 'js/app.js', 'js/data.js', 'js/places.js', 'js/trip.js', 'js/stays.js', 'js/sync.js', 'js/refresh.js', 'js/prayer.js', 'manifest.webmanifest', 'icons/icon.svg', 'fonts/ArefRuqaa-ar.woff2', 'img/kaaba-hajj.jpg', 'img/bg-zoomblur.jpg', 'icons/icon-192.png', 'icons/icon-512.png'];
+const V = 'omra-v27';
+const SHELL = ['./', 'index.html', 'css/style.css', 'js/app.js', 'js/data.js', 'js/places.js', 'js/trip.js', 'js/ticket.js', 'js/stays.js', 'js/sync.js', 'js/refresh.js', 'js/prayer.js', 'manifest.webmanifest', 'icons/icon.svg', 'fonts/ArefRuqaa-ar.woff2', 'img/kaaba-hajj.jpg', 'img/bg-zoomblur.jpg', 'icons/icon-192.png', 'icons/icon-512.png'];
 const NET_TIMEOUT = 4000; // réseau trop lent → on sert le cache
 
 self.addEventListener('install', e => {

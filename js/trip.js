@@ -92,12 +92,13 @@
     const drawDates = () => {
       const hint = !form.d1 ? t('cal_start') : !form.d2 ? t('cal_end') : '';
       const chosen = form.d1 ? `<div style="margin-top:8px"><b>🛫 ${esc(fmtDate(form.d1))}</b>${form.d2 ? `<br><b>🛬 ${esc(fmtDate(form.d2))}</b> <span class="muted">(${nights(form.d1, form.d2)} ${t('nights')})</span>` : ''}</div>` : '';
-      el.innerHTML = `<h2>${t('my_trip')}</h2>${dots(1, 2)}<div class="card mini"><h3>📅 ${t('dates_title')}</h3>${calendar()}<p class="muted" style="margin:8px 0 0">${hint}</p>${chosen}</div>
+      el.innerHTML = `<h2>${t('my_trip')}</h2><button type="button" class="ghost" id="impOpen" style="width:100%;margin-bottom:10px">📋 ${t('imp_btn')}</button>${dots(1, 2)}<div class="card mini"><h3>📅 ${t('dates_title')}</h3>${calendar()}<p class="muted" style="margin:8px 0 0">${hint}</p>${chosen}</div>
         <div class="stickybar">${saved() ? `<button type="button" class="ghost" id="cancelTrip">${t('cancel')}</button>` : ''}<button type="button" id="next" style="flex:1" ${datesOk() ? '' : 'disabled'}>${t('next')} →</button></div>`;
       $$('.cal-day', el).forEach(b => b.onclick = () => { pick(b.dataset.d); const d = day(b.dataset.d); view.y = d.getFullYear(); view.m = d.getMonth(); draw(); });
       $('#calPrev', el).onclick = () => { view.m--; if (view.m < 0) { view.m = 11; view.y--; } draw(); };
       $('#calNext', el).onclick = () => { view.m++; if (view.m > 11) { view.m = 0; view.y++; } draw(); };
       $('#next', el).onclick = () => { if (datesOk()) { mode = 'flights'; draw(); scrollTo(0, 0); } };
+      $('#impOpen', el).onclick = () => { mode = 'import'; draw(); scrollTo(0, 0); };
       const cn = $('#cancelTrip', el); if (cn) cn.onclick = () => { mode = 'card'; draw(); };
     };
 
@@ -163,6 +164,66 @@
       $('#skipNums', el).onclick = () => { if (datesOk()) commit(false); };
     };
 
+
+    /* ---------- import depuis un billet / e-mail (texte collé ou capture lue par OCR) ---------- */
+    const imp = { segs: [], role: [], text: '', status: '' };
+    const roleDefaults = () => { const n = imp.segs.length; imp.role = imp.segs.map((_, i) => (i === 0 ? 'out' : i === n - 1 && n > 1 ? 'ret' : 'skip')); };
+    const analyze = async () => {
+      const T = A.ticket;
+      imp.segs = T ? T.parse(imp.text) : [];
+      for (const sg of imp.segs) if (!sg.from || !sg.to) { const r = await lookupRoute(sg.no); if (r) { sg.from = sg.from || r.from; sg.to = sg.to || r.to; sg.fromCity = r.fromCity; sg.toCity = r.toCity; } }
+      roleDefaults();
+    };
+    const impResult = () => {
+      if (!imp.segs.length) return imp.text.trim() ? `<div class="card"><p>${t('imp_none')}</p></div>` : '';
+      const rows = imp.segs.map((sg, i) => `<div class="legbox"><div class="legdate"><b>${esc(sg.no)}</b> · ${esc(sg.date ? fmtDate(sg.date) : '—')}</div>
+          <div>${esc(sg.from || '?')} → ${esc(sg.to || '?')} · ${esc(sg.dep || '--:--')} → ${esc(sg.arr || '--:--')}${sg.term ? ' · ' + t('terminal') + ' ' + esc(sg.term) : ''}</div>
+          <div class="chips" style="margin-top:8px">${[['out', t('outbound')], ['ret', t('inbound')], ['skip', t('imp_ignore')]].map(([k, l]) => `<button type="button" class="chip ${imp.role[i] === k ? 'on' : ''}" data-role="${i}:${k}">${esc(l)}</button>`).join('')}</div></div>`).join('');
+      return `<div class="card"><h3>✅ ${imp.segs.length} ${t('imp_found')}</h3><p class="muted">${t('imp_check')}</p>${rows}</div>
+        <div class="stickybar"><button type="button" id="impApply" style="flex:1">✓ ${t('imp_apply')}</button></div>`;
+    };
+    const drawImport = () => {
+      el.innerHTML = `<h2>${t('my_trip')}</h2><div class="card mini"><h3>📋 ${t('imp_title')}</h3><p class="muted">${t('imp_hint')}</p>
+        <textarea id="impText" rows="7" style="width:100%" placeholder="${esc(t('imp_placeholder'))}">${esc(imp.text)}</textarea>
+        <div class="row" style="margin-top:8px"><button type="button" id="impGo">🔎 ${t('imp_analyze')}</button><button type="button" class="ghost" id="impPic">📷 ${t('imp_pick')}</button>
+          <input type="file" id="impFile" accept="image/*" hidden></div><p class="muted" id="impStatus">${esc(imp.status)}</p></div>
+        <div id="impResult">${impResult()}</div>
+        <div class="stickybar"><button type="button" class="ghost" id="back">${t('back')}</button></div>`;
+      const wire = () => {
+        $$('[data-role]', el).forEach(b => b.onclick = () => { const [i, k] = b.dataset.role.split(':'); imp.role.forEach((r, j) => { if (r === k && k !== 'skip' && +i !== j) imp.role[j] = 'skip'; }); imp.role[+i] = k; $('#impResult', el).innerHTML = impResult(); wire(); });
+        const ap = $('#impApply', el); if (ap) ap.onclick = applyImport;
+      };
+      wire();
+      $('#impText', el).oninput = e => { imp.text = e.target.value; };
+      $('#back', el).onclick = () => { mode = saved() ? 'card' : 'dates'; draw(); };
+      $('#impGo', el).onclick = async () => { imp.text = $('#impText', el).value; $('#impStatus', el).textContent = t('imp_reading'); await analyze(); imp.status = ''; drawImport(); };
+      $('#impPic', el).onclick = () => $('#impFile', el).click();
+      $('#impFile', el).onchange = async e => {
+        const file = e.target.files && e.target.files[0]; if (!file) return;
+        try {
+          const text = await A.ticket.ocr(file, (st, pr) => { const b = $('#impStatus', el); if (b) b.textContent = `${t('imp_reading')} ${Math.round(pr * 100)} %`; });
+          imp.text = text; await analyze(); imp.status = ''; drawImport();
+        } catch (err) { imp.status = t('imp_ocr_fail'); const b = $('#impStatus', el); if (b) b.textContent = imp.status; }
+      };
+    };
+    const applyImport = () => {
+      const out = imp.segs[imp.role.indexOf('out')], ret = imp.segs[imp.role.indexOf('ret')];
+      if (!out && !ret) return A.toast(t('imp_pick_role'));
+      const d1 = out ? out.date : J.date1, d2 = ret ? ret.date : J.date2;
+      if (out && !out.date) return A.toast(t('imp_no_date'));
+      if (ret && !ret.date) return A.toast(t('imp_no_date'));
+      if (d1 && d2 && d2 <= d1) return A.toast(t('err_return'));
+      const put = (o, keys) => { if (o.no) J[keys.no] = o.no; if (o.date) J[keys.date] = o.date; if (o.from) J[keys.from] = o.from; if (o.to) J[keys.to] = o.to; if (o.dep) J[keys.dep] = o.dep; if (o.arr) J[keys.arr] = o.arr; if (o.term) J[keys.term] = o.term;
+        J.names = { ...(J.names || {}), ...(o.fromCity ? { [o.from]: o.fromCity } : {}), ...(o.toCity ? { [o.to]: o.toCity } : {}) }; };
+      if (out) put(out, { no: 'noOut', date: 'date1', from: 'from', to: 'to', dep: 'depOut', arr: 'arrOut', term: 'termOut' });
+      if (ret) put(ret, { no: 'noRet', date: 'date2', from: 'retFrom', to: 'retTo', dep: 'depRet', arr: 'arrRet', term: 'termRet' });
+      save('journey'); S.trip = { start: '', end: '' }; save('trip');
+      Object.assign(form, { d1: J.date1 || '', d2: J.date2 || '', noOut: J.noOut || '', noRet: J.noRet || '' });
+      A.toast(t('imported'));
+      if (saved()) { mode = 'card'; } else { mode = 'dates'; if (form.d1) { const b = day(form.d1); view.y = b.getFullYear(); view.m = b.getMonth(); } }
+      draw(); scrollTo(0, 0);
+    };
+
     /* ---------- cartes de vol ---------- */
     const leg = k => {
       const o = k === 'out';
@@ -205,6 +266,7 @@
       el.innerHTML = `<h2>${t('my_trip')}</h2><datalist id="apts">${Object.entries(AIRPORTS).map(([c, n]) => `<option value="${c}">${esc(n)}</option>`).join('')}</datalist>
         <div class="card hero">${hero}</div>${legCard('out')}${legCard('ret')}
         ${J.ref ? `<div class="card"><label>${t('booking_ref')}</label><b>${esc(J.ref)}</b></div>` : ''}
+        <button type="button" class="ghost" id="impOpen" style="width:100%;margin-bottom:10px">📋 ${t('imp_btn_complete')}</button>
         <div class="row"><button type="button" class="ghost" id="editTrip">✏️ ${t('edit_trip')}</button><button type="button" class="danger" id="delTrip">${t('delete_trip')}</button></div>`;
       $$('[data-edit]', el).forEach(b => b.onclick = e => { e.preventDefault(); editLeg = editLeg === b.dataset.edit ? null : b.dataset.edit; draw(); });
       const ok = $('#legOk', el);
@@ -217,6 +279,7 @@
         set(K[f], v);
         if (f === 'from' || f === 'to') i.value = v;
       });
+      $('#impOpen', el).onclick = () => { mode = 'import'; draw(); scrollTo(0, 0); };
       $('#editTrip', el).onclick = () => {
         Object.assign(form, { d1: J.date1 || '', d2: J.date2 || '', noOut: J.noOut || '', noRet: J.noRet || '', ref: J.ref || '', linkOut: J.linkOut || '', linkRet: J.linkRet || '' });
         const b = form.d1 ? day(form.d1) : new Date(); view.y = b.getFullYear(); view.m = b.getMonth();
@@ -231,7 +294,7 @@
       };
     };
 
-    const draw = () => (mode === 'card' && saved() ? drawCard() : mode === 'flights' ? drawFlights() : drawDates());
+    const draw = () => (mode === 'import' ? drawImport() : mode === 'card' && saved() ? drawCard() : mode === 'flights' ? drawFlights() : drawDates());
     draw();
   };
 })();

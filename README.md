@@ -43,6 +43,7 @@ js/trip.js    onglet Départ / Retour (vols)
 ```
 
 ## Crédits
+- Lecture d'un billet par image : [Tesseract.js](https://github.com/naptha/tesseract.js) (Apache-2.0), chargé à la demande ; l'analyse se fait sur l'appareil.
 - Carte : [OpenFreeMap](https://openfreemap.org) © [OpenMapTiles](https://www.openmaptiles.org/), données © contributeurs OpenStreetMap (rendu MapLibre GL) ; satellite © Esri ; itinéraires calculés avec les serveurs publics OSRM / FOSSGIS (usage léger).
 - Route d'un vol (aéroports) : [adsbdb.com](https://www.adsbdb.com) (données communautaires, route habituelle, sans horaires).
 - Photo de l'écran d'ouverture : « The Kaaba during Hajj » © **Adli Wahid**, licence **CC BY-SA 4.0**, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:The_Kaaba_during_Hajj.jpg). Recadrée, retouchée et floutée (`img/`, voir `img/LICENSE.txt`) ; ces versions modifiées restent sous CC BY-SA 4.0.

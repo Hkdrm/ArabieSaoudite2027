@@ -339,3 +339,20 @@ Object.assign(I18N.ar, { nav_stay: 'الإقامة', stay_title: 'الإقامة
 Object.assign(I18N.fr, { see_time: "voir l'heure ↗", import_ask: 'Importer ces informations de vol dans votre voyage ?' });
 Object.assign(I18N.en, { see_time: 'see time ↗', import_ask: 'Import this flight information into your trip?' });
 Object.assign(I18N.ar, { see_time: 'عرض الوقت ↗', import_ask: 'استيراد معلومات الرحلة هذه إلى رحلتك؟' });
+
+/* ---- Import depuis un billet / e-mail ---- */
+Object.assign(I18N.fr, { imp_btn: 'Importer depuis mon billet / e-mail', imp_btn_complete: 'Importer / compléter depuis mon billet', imp_title: 'Importer mon billet',
+  imp_hint: "Collez le texte de votre e-mail ou billet de confirmation, ou choisissez une capture. Astuce iPhone : sur la capture, appuyez longuement sur le texte puis « Copier ». Tout est lu sur votre téléphone, rien n'est envoyé.",
+  imp_placeholder: "Collez ici le texte de la confirmation…\n(masquez votre nom et votre numéro de réservation si vous le souhaitez : ils ne servent pas)", imp_analyze: 'Analyser', imp_pick: 'Choisir une capture', imp_reading: 'Lecture en cours…',
+  imp_none: "Aucun vol reconnu. Vérifiez que le texte contient les numéros de vol (ex. SV 126), les dates et les heures.", imp_found: 'vol(s) reconnu(s)', imp_check: 'Vérifiez et indiquez lequel est l\'aller et le retour :', imp_ignore: 'Ignorer',
+  imp_apply: 'Appliquer à mon voyage', imp_ocr_fail: "Lecture de l'image impossible : collez plutôt le texte (iPhone : appui long sur le texte de la capture → Copier).", imp_pick_role: "Choisissez au moins l'aller ou le retour.", imp_no_date: 'Date manquante pour ce vol : complétez-la dans le texte.' });
+Object.assign(I18N.en, { imp_btn: 'Import from my ticket / email', imp_btn_complete: 'Import / complete from my ticket', imp_title: 'Import my ticket',
+  imp_hint: 'Paste the text of your confirmation email or ticket, or choose a screenshot. iPhone tip: on the screenshot, long-press the text then “Copy”. Everything is read on your phone; nothing is sent.',
+  imp_placeholder: 'Paste the confirmation text here…\n(you may hide your name and booking reference: they are not needed)', imp_analyze: 'Analyze', imp_pick: 'Choose a screenshot', imp_reading: 'Reading…',
+  imp_none: 'No flight recognized. Check the text contains flight numbers (e.g. SV 126), dates and times.', imp_found: 'flight(s) found', imp_check: 'Check and say which is outbound and return:', imp_ignore: 'Ignore',
+  imp_apply: 'Apply to my trip', imp_ocr_fail: 'Could not read the image: paste the text instead (iPhone: long-press the text in the screenshot → Copy).', imp_pick_role: 'Choose at least the outbound or the return.', imp_no_date: 'Date missing for this flight: complete it in the text.' });
+Object.assign(I18N.ar, { imp_btn: 'استيراد من تذكرتي / بريدي', imp_btn_complete: 'استيراد / إكمال من تذكرتي', imp_title: 'استيراد تذكرتي',
+  imp_hint: 'الصق نص بريد التأكيد أو التذكرة، أو اختر لقطة شاشة. نصيحة آيفون: على اللقطة اضغط مطولًا على النص ثم «نسخ». كل شيء يُقرأ على هاتفك ولا يُرسل شيء.',
+  imp_placeholder: 'الصق نص التأكيد هنا…\n(يمكنك إخفاء اسمك ورقم الحجز: لا حاجة إليهما)', imp_analyze: 'تحليل', imp_pick: 'اختيار لقطة شاشة', imp_reading: 'جارٍ القراءة…',
+  imp_none: 'لم يُتعرَّف على أي رحلة. تأكد أن النص يحتوي أرقام الرحلات (مثل SV 126) والتواريخ والأوقات.', imp_found: 'رحلة مُتعرَّف عليها', imp_check: 'تحقق وحدّد الذهاب والعودة:', imp_ignore: 'تجاهل',
+  imp_apply: 'تطبيق على رحلتي', imp_ocr_fail: 'تعذرت قراءة الصورة: الصق النص بدلًا من ذلك (آيفون: اضغط مطولًا على النص في اللقطة ← نسخ).', imp_pick_role: 'اختر الذهاب أو العودة على الأقل.', imp_no_date: 'التاريخ ناقص لهذه الرحلة: أكمله في النص.' });
