@@ -1640,8 +1640,8 @@
       "id": "hira-recordings",
       "name_fr": "Hira Recordings — تسجيلات حراء",
       "city": "makkah",
-      "category": "calligraphy",
-      "subcategory": "prayer_mat",
+      "category": "shopping",
+      "subcategory": "activity_to_confirm",
       "area": "Jarwal, At Taysir",
       "description_fr": "Commerce cité sous le nom Hira Recordings dans le quartier Jarwal. Aucun élément solide ne confirme une activité de calligraphie ou de personnalisation de vêtements.",
       "practical_notes_fr": "À EXCLURE des recommandations calligraphie tant que l'activité exacte et l'adresse n'ont pas été confirmées.",
@@ -2142,14 +2142,15 @@
       "subcategory": "well",
       "area": "Al-Awali / Qurban Road, à l'est-nord-est de Quba",
       "description_fr": "Puits historique lié à la Sira, cité par les autorités de Médine et distinct de Bir Aris.",
-      "practical_notes_fr": "ATTENTION : le portail officiel Visit Madinah indique une fermeture actuelle pour maintenance. Ne pas programmer de visite intérieure avant confirmation officielle.",
+      "practical_notes_fr": "ATTENTION : fermeture pour maintenance signalée sur le portail officiel Visit Madinah le 14 novembre 2026. Réouverture non annoncée à la date de vérification ; ne pas prévoir d'entrée sans confirmation.",
       "source": {
         "creator": "Autorité touristique de Médine",
         "channel": null,
         "videos": [],
         "references": [
           "https://visitmadinahsa.com/en/destinations/ghars-well",
-          "https://saudipedia.com/en/ghars-well"
+          "https://saudipedia.com/en/ghars-well",
+          "https://visitmadinahsa.com/sa-en/destinations/The-Well-of-Ghars."
         ]
       },
       "official_status": "closed_for_maintenance",
