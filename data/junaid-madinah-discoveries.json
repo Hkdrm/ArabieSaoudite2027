@@ -2870,8 +2870,8 @@
       "category": "museum",
       "subcategory": "hidden_place",
       "area": "Djeddah, hors Al-Balad",
-      "description_fr": "Grand musée d'histoire et d'arts traditionnels visité par l'auteur du carnet du Routard.",
-      "practical_notes_fr": "Le voyageur recommande surtout les étages; horaires et droit d'entrée à vérifier.",
+      "description_fr": "Musée Al-Taybat et collections du patrimoine saoudien et islamique ; intéressant pour la calligraphie et les objets anciens.",
+      "practical_notes_fr": "La revendication « l'une des plus grandes collections de manuscrits coraniques rares du pays » n'a pas été corroborée ici ; ne pas la présenter comme fait établi. Horaires et accès à vérifier.",
       "source": {
         "creator": "Témoignage forum du Guide du Routard, novembre 2025",
         "channel": null,
@@ -2890,8 +2890,8 @@
       },
       "audit": {
         "reviewed_on": "2026-11-14",
-        "review_type": "source_specific_addition",
-        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+        "review_type": "calligraphy_source_crosscheck",
+        "note": "Musée existant — programmation et manuscrits exposés susceptibles de changer."
       }
     },
     {
@@ -3304,14 +3304,17 @@
       "category": "museum",
       "subcategory": "hidden_place",
       "area": "Au pied du mont Hira / Jabal Al-Nour, La Mecque",
-      "description_fr": "Complexe culturel consacré au Coran, à l'histoire de la Révélation et à la culture islamique.",
-      "practical_notes_fr": "La montée vers la grotte est une activité distincte des espaces d'exposition; horaires, billets et disponibilités à vérifier.",
+      "description_fr": "Quartier culturel au pied du mont Hira, comprenant le musée du Saint Coran avec des manuscrits, des pièces historiques, des objets liés à l'écriture et des textiles de la Kiswah.",
+      "practical_notes_fr": "Le musée présente des pièces de Kiswah brodées de fils métalliques et des manuscrits enluminés. La présence du « Coran bleu » précisément n'a pas été confirmée dans les sources officielles consultées ; ne pas le promettre. Confirmer tarifs et expositions lors de la visite.",
       "source": {
         "creator": "Site du quartier culturel / recherche touristique",
         "channel": null,
         "videos": [],
         "references": [
-          "https://hiraculturaldistrict.com/"
+          "https://hiraculturaldistrict.com/",
+          "https://www.spa.gov.sa/en/N2270359",
+          "https://www.spa.gov.sa/en/N2553685",
+          "https://www.spa.gov.sa/en/N2719079"
         ]
       },
       "verification": {
@@ -3324,8 +3327,8 @@
       },
       "audit": {
         "reviewed_on": "2026-11-14",
-        "review_type": "source_specific_addition",
-        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+        "review_type": "calligraphy_source_crosscheck",
+        "note": "Musée existant — programmation et manuscrits exposés susceptibles de changer."
       }
     },
     {
@@ -3705,6 +3708,385 @@
         "review_type": "source_specific_addition",
         "note": "Adresse, accès et horaires à contrôler. Ne pas déduire de position GPS d'une indication régionale."
       }
+    },
+    {
+      "id": "jeddah-house-islamic-arts",
+      "name_fr": "House of Islamic Arts — musée des arts islamiques",
+      "city": "jeddah",
+      "category": "museum",
+      "subcategory": "islamic_museum",
+      "area": "Jeddah Park Mall, 4e étage, Djeddah",
+      "description_fr": "Musée d'arts islamiques avec espace calligraphie et manuscrits coraniques, textiles de la Kaaba, céramiques et monnaies.",
+      "practical_notes_fr": "Le site officiel indique ouverture quotidienne 10 h–22 h, vendredi 17 h–23 h (horaires 2026, à revérifier pour 2027). Adresse exacte : Jeddah Park Mall, 4e étage.",
+      "source": {
+        "creator": "Site officiel House of Islamic Arts",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.iarts.sa/en/",
+          "https://www.iarts.sa/en/contactus"
+        ]
+      },
+      "verification": {
+        "source_detail": "Site officiel House of Islamic Arts",
+        "independently_verified": true,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_verification",
+        "note": "Vérification de l'existence documentaire, non de l'accès, d'une session 2027, ni du GPS exact."
+      }
+    },
+    {
+      "id": "jeddah-zawiya97",
+      "name_fr": "Zawiya 97 — ateliers d'artisans à Al-Balad",
+      "city": "jeddah",
+      "category": "calligraphy",
+      "subcategory": "craft_workshops",
+      "area": "Près de Bayt Nassif, Al-Balad, Djeddah",
+      "description_fr": "Espace d'artisanat et de création ; ateliers ayant inclus la calligraphie coufique carrée, dorure, broderie, parfums, encens et mosaïques.",
+      "practical_notes_fr": "Programme de l'été 2026 confirmé par l'agence de presse saoudienne et activité documentée en octobre 2026. La tenue d'ateliers en mars–avril 2027 n'est pas garantie : vérifier calendrier et réservation.",
+      "source": {
+        "creator": "Saudi Press Agency et Zawiya 97",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.spa.gov.sa/en/N2638075",
+          "https://www.spa.gov.sa/en/N2705267",
+          "https://linktr.ee/zawiya97"
+        ]
+      },
+      "verification": {
+        "source_detail": "Saudi Press Agency et Zawiya 97",
+        "independently_verified": true,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_verification",
+        "note": "Vérification de l'existence documentaire, non de l'accès, d'une session 2027, ni du GPS exact."
+      }
+    },
+    {
+      "id": "jeddah-wrth-institute",
+      "name_fr": "Institut Wrth — arts traditionnels à Djeddah",
+      "city": "jeddah",
+      "category": "calligraphy",
+      "subcategory": "craft_training",
+      "area": "Djeddah, lieux des cours variables",
+      "description_fr": "Institut royal des arts traditionnels proposant des formations et ateliers sur la décoration géométrique, le bois, l'artisanat et les motifs patrimoniaux.",
+      "practical_notes_fr": "Les cours ont des dates précises, parfois des prérequis, et ne constituent pas une boutique visitable à toute heure. Vérifier la programmation 2027 et l'éligibilité des visiteurs étrangers.",
+      "source": {
+        "creator": "Site officiel Wrth",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://wrth.edu.sa/en/learn/short-courses",
+          "https://wrth.edu.sa/en/learn/short-courses/fundamentals-of-geometric-drawing-in-traditional-ornamentation"
+        ]
+      },
+      "verification": {
+        "source_detail": "Site officiel Wrth",
+        "independently_verified": true,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_verification",
+        "note": "Vérification de l'existence documentaire, non de l'accès, d'une session 2027, ni du GPS exact."
+      }
+    },
+    {
+      "id": "jeddah-athr-gallery",
+      "name_fr": "ATHR Gallery — art contemporain et calligraphie",
+      "city": "jeddah",
+      "category": "calligraphy",
+      "subcategory": "art_gallery",
+      "area": "Tahlia Street, Office Tower 5th Floor, Al Faisaliyah, Djeddah",
+      "description_fr": "Galerie d'art contemporain représentant notamment Nasser Al Salem, artiste originaire de La Mecque travaillant la calligraphie dans des formes contemporaines.",
+      "practical_notes_fr": "Adresse officielle actuelle : Al Faisaliyah, Tahlia St, Office Tower, 5th Floor. Ne pas utiliser par défaut l'ancienne mention Serafi Mega Mall. Expositions variables, œuvres d'Al Salem non garanties à chaque visite.",
+      "source": {
+        "creator": "Site officiel ATHR Gallery",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://athrart.com/contact/",
+          "https://athrart.com/ar/news/142-athr-gallery-presents-nasser-alsalem-by-athr-gallery/"
+        ]
+      },
+      "verification": {
+        "source_detail": "Site officiel ATHR Gallery",
+        "independently_verified": true,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_verification",
+        "note": "Vérification de l'existence documentaire, non de l'accès, d'une session 2027, ni du GPS exact."
+      }
+    },
+    {
+      "id": "riyadh-alajlan-gallery",
+      "name_fr": "Al Ajlan Gallery — Mohammed Al-Ajlan",
+      "city": "riyadh",
+      "category": "calligraphy",
+      "subcategory": "art_gallery",
+      "area": "Riyad, adresse exacte via site officiel",
+      "description_fr": "Galerie de l'artiste Mohammed Al-Ajlan, mélangeant calligraphie, poésie, versets et peinture contemporaine.",
+      "practical_notes_fr": "Galerie fondée en 2018, existence confirmée. Horaires officiels en 2026 : samedi–jeudi 17 h–22 h, vendredi fermé. Gratuité non vérifiée : ne pas promettre l'entrée libre.",
+      "source": {
+        "creator": "Site officiel Al Ajlan Gallery",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://alajlangallery.com/pages/about-us",
+          "https://alajlangallery.com/"
+        ]
+      },
+      "verification": {
+        "source_detail": "Site officiel Al Ajlan Gallery",
+        "independently_verified": true,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_verification",
+        "note": "Vérification de l'existence documentaire, non de l'accès, d'une session 2027, ni du GPS exact."
+      }
+    },
+    {
+      "id": "riyadh-alkhattat-hub",
+      "name_fr": "Plateforme Al Khattat — ateliers de calligraphie",
+      "city": "riyadh",
+      "category": "calligraphy",
+      "subcategory": "scheduled_workshops",
+      "area": "Hub Space, Al-Malaz, Riyad (certaines sessions)",
+      "description_fr": "Plateforme de calligraphie et d'art, avec formations et ateliers en présentiel (Ruq'ah, Diwani, calligraphie et création sur textile).",
+      "practical_notes_fr": "Les ateliers sont programmés à des dates précises, non une activité quotidienne. Exemples de sessions de 2026 publiés sur la plateforme ; contrôler disponibilités et tarifs pour mars 2027.",
+      "source": {
+        "creator": "Plateforme officielle Al Khattat",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://alkhattat.app/en/",
+          "https://alkhattat.app/en/events"
+        ]
+      },
+      "verification": {
+        "source_detail": "Plateforme officielle Al Khattat",
+        "independently_verified": true,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_verification",
+        "note": "Vérification de l'existence documentaire, non de l'accès, d'une session 2027, ni du GPS exact."
+      }
+    },
+    {
+      "id": "riyadh-culture-house-calligraphy",
+      "name_fr": "Maison de la Culture de Riyad — ateliers ponctuels",
+      "city": "riyadh",
+      "category": "calligraphy",
+      "subcategory": "past_workshop",
+      "area": "Riyad — lieu exact des futurs ateliers à vérifier",
+      "description_fr": "La Maison de la Culture a organisé avec Dar Al-Qalam un cours de calligraphie Thuluth du 23 au 27 août 2026.",
+      "practical_notes_fr": "C'est un événement passé, pas une réservation ouverte pour mars 2027. À conserver comme contact à suivre pour une nouvelle session.",
+      "source": {
+        "creator": "Compte rendu de l'événement du 20 août 2026",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.saudiarabiapr.com/travel-tourism-hotels-asp/193581-riyadh-culture-house-organizes-thuluth-calligraphy-training-course"
+        ]
+      },
+      "verification": {
+        "source_detail": "Compte rendu de l'événement du 20 août 2026",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_verification",
+        "note": "Vérification de l'existence documentaire, non de l'accès, d'une session 2027, ni du GPS exact."
+      }
+    },
+    {
+      "id": "madinah-dar-al-qalam",
+      "name_fr": "Dar Al-Qalam — centre international de calligraphie",
+      "city": "madinah",
+      "category": "calligraphy",
+      "subcategory": "calligraphy_training",
+      "area": "Médine, lieu précis selon session",
+      "description_fr": "Centre Prince Mohammed bin Salman pour la calligraphie arabe, proposant en 2026 des cours Naskh, Thuluth, Ruq'ah et Diwani à Médine.",
+      "practical_notes_fr": "Ne pas confondre les formations de Médine avec l'événement ponctuel de la Maison de la Culture de Riyad. Inscriptions et dates 2027 à confirmer.",
+      "source": {
+        "creator": "Ministère saoudien de la Culture",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.moc.gov.sa/en/Modules/Pages/Initiative/Arabic_calligraphy_training_courses_2026"
+        ]
+      },
+      "verification": {
+        "source_detail": "Ministère saoudien de la Culture",
+        "independently_verified": true,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_verification",
+        "note": "Vérification de l'existence documentaire, non de l'accès, d'une session 2027, ni du GPS exact."
+      }
+    },
+    {
+      "id": "riyadh-calligraphy-wood-shadfa",
+      "name_fr": "Shadfa — Calligraphy & Wood",
+      "city": "riyadh",
+      "category": "calligraphy",
+      "subcategory": "custom_gifts",
+      "area": "Riyad — atelier et vente via plateforme Ashl",
+      "description_fr": "Créateur proposant œuvres et cadeaux mêlant calligraphie arabe et bois naturel, avec commandes personnalisées.",
+      "practical_notes_fr": "Boutique en ligne référencée par Ashl, mais magasin physique ouvert au public non établi. Confirmer modalités de retrait ou livraison avant déplacement.",
+      "source": {
+        "creator": "Plateforme commerçants Ashl",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://ashl.sa/en/shop/shadfa"
+        ]
+      },
+      "verification": {
+        "source_detail": "Plateforme commerçants Ashl",
+        "independently_verified": true,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_verification",
+        "note": "Vérification de l'existence documentaire, non de l'accès, d'une session 2027, ni du GPS exact."
+      }
+    },
+    {
+      "id": "riyadh-r-house-thuluth",
+      "name_fr": "R House — atelier Thuluth avec Badr Al-Jafen",
+      "city": "riyadh",
+      "category": "calligraphy",
+      "subcategory": "past_workshop",
+      "area": "Tafaseel Center, Building A, 3e étage, bureau 34, Al Mathar Ash Shamali, Riyad 12332",
+      "description_fr": "Atelier pratique de calligraphie Thuluth documenté avec le calligraphe Badr Al-Jafen.",
+      "practical_notes_fr": "La session documentée date de décembre 2025 et coûtait 600 SAR outils inclus. Ni l'atelier ni ce prix ne sont annoncés pour mars 2027.",
+      "source": {
+        "creator": "Organisateur R House",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://rhouse.co/thuluth-script-workshop-with-calligrapher-bader-aljafen/"
+        ]
+      },
+      "verification": {
+        "source_detail": "Organisateur R House",
+        "independently_verified": true,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_verification",
+        "note": "Vérification de l'existence documentaire, non de l'accès, d'une session 2027, ni du GPS exact."
+      }
+    },
+    {
+      "id": "riyadh-bayt-al-khatt-arabic",
+      "name_fr": "بيت الخط العربي — atelier de lettrage à Al-Rayyan",
+      "city": "riyadh",
+      "category": "calligraphy",
+      "subcategory": "potential_custom_art",
+      "area": "Quartier Al-Rayyan, Riyad — adresse exacte non établie",
+      "description_fr": "Nom signalé par l'utilisateur comme atelier de calligraphie murale et de commandes personnalisées.",
+      "practical_notes_fr": "Existence commerciale et adresse non vérifiées par source indépendante : conserver comme piste, ne pas afficher de point GPS précis ni confirmer les prestations.",
+      "source": {
+        "creator": "Information utilisateur non recoupée",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.google.com/maps/search/?api=1&query=%D8%A8%D9%8A%D8%AA+%D8%A7%D9%84%D8%AE%D8%B7+%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A+%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D9%86+%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6"
+        ]
+      },
+      "verification": {
+        "source_detail": "Information utilisateur non recoupée",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_verification",
+        "note": "Vérification de l'existence documentaire, non de l'accès, d'une session 2027, ni du GPS exact."
+      }
+    },
+    {
+      "id": "makkah-ojiz-pop-up",
+      "name_fr": "Ojiz Makkah — pop-up vêtements graphiques",
+      "city": "makkah",
+      "category": "shopping",
+      "subcategory": "pop_up_unconfirmed",
+      "area": "La Mecque — emplacement éphémère non établi",
+      "description_fr": "Collection éphémère de vêtements et t-shirts à motifs saoudiens et graphismes arabes mentionnée comme boutique pop-up.",
+      "practical_notes_fr": "Source commerciale, calendrier et point de vente actif non identifiés : ne pas présenter comme boutique actuellement ouverte.",
+      "source": {
+        "creator": "Information utilisateur non recoupée",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.google.com/search?q=Ojiz+Makkah+pop+up+store"
+        ]
+      },
+      "verification": {
+        "source_detail": "Information utilisateur non recoupée",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_verification",
+        "note": "Vérification de l'existence documentaire, non de l'accès, d'une session 2027, ni du GPS exact."
+      }
     }
   ],
   "updated": "2026-11-14",
@@ -3721,6 +4103,7 @@
     "last_updated": "2026-11-14",
     "supplement_source": "Routard forum 11/2025, Discover Makkah et recherches web/vidéos",
     "disclaimer": "Certaines fiches sont des lieux de promenade, idées d'ateliers ou services et non des établissements visitables. Ne pas attribuer un GPS précis sans géolocalisation fiable.",
-    "additional_review": "Sélection utilisateur du 14 novembre 2026 recoupée avec SPA, Saudipedia, Visit Saudi, Archnet, IRCICA et autres sources. Dangers, lieux éloignés et ambiguïtés de noms signalés."
+    "additional_review": "Sélection utilisateur du 14 novembre 2026 recoupée avec SPA, Saudipedia, Visit Saudi, Archnet, IRCICA et autres sources. Dangers, lieux éloignés et ambiguïtés de noms signalés.",
+    "calligraphy_audit": "12 nouvelles fiches de calligraphie/art, deux musées existants enrichis; expositions temporaires, programmes de formation et commerces non vérifiés clairement distingués."
   }
 }
