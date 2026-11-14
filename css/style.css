@@ -60,3 +60,11 @@ progress{width:100%;height:8px;accent-color:var(--g)}
 #ptr.spin{animation:ptrspin .8s linear infinite}
 @keyframes ptrspin{to{transform:translate(-50%,50px) rotate(360deg)}}
 body{overscroll-behavior-y:contain}
+.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-wd{text-align:center;font-size:12px;color:var(--mut);padding:4px 0}
+.cal-day{height:42px;padding:0;border-radius:10px;background:var(--bg);color:var(--tx);font-weight:500;border:1px solid transparent}
+.cal-day.today{border-color:var(--g)}
+.cal-day.range{background:rgba(11,107,79,.2)}
+.cal-day.sel{background:var(--g);color:#fff;font-weight:700}
+.cal-day:disabled{opacity:.3;cursor:default}

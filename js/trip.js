@@ -1,5 +1,6 @@
-/* Onglet Départ / Retour — saisie en une fois : trajet + dates, puis vol (recherche ou numéro/réservation).
-   Tout s'enregistre automatiquement. Données : S.journey (voir app.js). */
+/* Onglet Départ / Retour : dates choisies dans un calendrier intégré (1er toucher = départ, 2e = retour),
+   puis numéro de vol / référence de réservation. Aéroports et horaires facultatifs. Tout s'enregistre automatiquement.
+   Le calendrier remplace le sélecteur natif : celui d'iOS valide la date du jour dès qu'on le touche. */
 (() => {
   const A = window.Omra;
   const { $, $$, esc, S, save, t } = A;
@@ -8,20 +9,24 @@
   const DEST = ['JED', 'MED', 'RUH', 'DMM'];
   const ORIGINS = ['GVA', 'LYS', 'CDG', 'ORY'];
   const FLIGHT_RE = /^[A-Z0-9]{2}\s?\d{1,4}[A-Z]?$/;
+  const pad = n => String(n).padStart(2, '0');
+  const iso = (y, m, d) => `${y}-${pad(m + 1)}-${pad(d)}`;               // dates locales (pas d'UTC : évite le décalage d'un jour)
   const day = s => new Date(s + 'T00:00:00');
-  const addDay = (s, n) => { const d = day(s); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
-  const todayStr = () => new Date().toISOString().slice(0, 10);
+  const todayStr = () => { const n = new Date(); return iso(n.getFullYear(), n.getMonth(), n.getDate()); };
   const iata = v => (v || '').toUpperCase().replace(/[^A-Z]/g, '').slice(0, 3);
-  const fmtDate = s => s ? day(s).toLocaleDateString(S.lang === 'ar' ? 'ar-SA-u-nu-latn' : S.lang, { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' }) : '';
+  const loc = () => S.lang === 'ar' ? 'ar-SA-u-nu-latn' : S.lang;
+  const fmtDate = s => s ? day(s).toLocaleDateString(loc(), { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' }) : '';
   const yymmdd = s => s.slice(2).replace(/-/g, '');
 
   A.views.trip = el => {
     S.journey = S.journey || {};
     const J = S.journey;
+    delete J.date2Rejected;
     const set = (k, v) => { J[k] = v; save('journey'); };
-    let lockUntil = 0;
     const ok = () => J.date1 && J.date2 && J.date2 > J.date1;
     if (!J.from) set('from', 'GVA');                       // départ par défaut : Genève
+    const base = J.date1 ? day(J.date1) : new Date();
+    const view = { y: base.getFullYear(), m: base.getMonth() };   // mois affiché
 
     const links = () => {
       const f = J.from || 'GVA', to = J.to, d1 = J.date1, d2 = J.date2;
@@ -44,16 +49,39 @@
 
     const apt = (id, label, key, ph) => `<div class="grow"><label>${label}</label><input id="${id}" list="apts" value="${esc(J[key] || '')}" placeholder="${esc(ph)}" maxlength="3" style="width:100%;text-transform:uppercase"></div>`;
 
+    /* ---- calendrier ---- */
+    const calendar = () => {
+      const first = new Date(view.y, view.m, 1), n = new Date(view.y, view.m + 1, 0).getDate();
+      const offset = (first.getDay() + 6) % 7;                        // semaine commençant le lundi
+      const today = todayStr();
+      const wd = [...Array(7)].map((_, i) => new Date(2024, 0, 1 + i).toLocaleDateString(loc(), { weekday: 'narrow' }));   // 1er janv. 2024 = lundi
+      let cells = wd.map(w => `<div class="cal-wd">${esc(w)}</div>`).join('') + '<div></div>'.repeat(offset);
+      for (let d = 1; d <= n; d++) {
+        const s = iso(view.y, view.m, d);
+        const cls = [s === J.date1 || s === J.date2 ? 'sel' : '', J.date1 && J.date2 && s > J.date1 && s < J.date2 ? 'range' : '', s === today ? 'today' : ''].join(' ');
+        cells += `<button type="button" class="cal-day ${cls}" data-d="${s}" ${s < today ? 'disabled' : ''}>${d}</button>`;
+      }
+      const prev = S.lang === 'ar' ? '›' : '‹', next = S.lang === 'ar' ? '‹' : '›';
+      const hint = !J.date1 ? t('cal_start') : !J.date2 ? t('cal_end') : t('cal_again');
+      return `<div class="cal"><div class="cal-head"><button type="button" class="ghost sm" id="calPrev" aria-label="prev">${prev}</button>
+        <b>${esc(first.toLocaleDateString(loc(), { month: 'long', year: 'numeric' }))}</b>
+        <button type="button" class="ghost sm" id="calNext" aria-label="next">${next}</button></div>
+        <div class="cal-grid">${cells}</div></div><p class="muted" style="margin:8px 0 0">${hint}</p>`;
+    };
+
+    const pick = s => {
+      if (!J.date1 || J.date2) { set('date1', s); set('date2', ''); }                  // nouveau départ
+      else if (s > J.date1) set('date2', s);                                             // retour valide : strictement après le départ
+      else { set('date1', s); A.toast(t('err_return')); }                               // retour avant/le jour du départ : on déplace le départ
+      S.trip = { start: '', end: '' }; save('trip');
+    };
+
     const draw = () => {
       const valid = ok();
-      const retErr = J.date2Rejected ? `<p style="color:#c0392b;margin:4px 0">⚠️ ${t('err_return')}</p>` : '';
       const past = J.date1 && J.date1 < todayStr() ? `<p class="muted">ℹ️ ${t('warn_past')}</p>` : '';
       el.innerHTML = `<h2>${t('trip_title')}</h2><datalist id="apts">${Object.entries(AIRPORTS).map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join('')}</datalist>
         <div id="sum">${summary()}</div>
-        <div class="card"><h3>${t('step_route')}</h3>
-          <div class="row"><div class="grow"><label>🛫 ${t('depart_date')}</label><input id="d1" type="date" value="${esc(J.date1 || '')}" style="width:100%"></div>
-            <div class="grow"><label>🛬 ${t('return_date')}</label><input id="d2" type="date" value="${esc(J.date2 || '')}" ${J.date1 ? `min="${addDay(J.date1, 1)}"` : 'disabled'} style="width:100%"></div></div>
-          ${retErr}${past}
+        <div class="card"><h3>${t('step_route')}</h3>${calendar()}${past}
           ${J.date1 || J.date2 ? `<div style="margin-top:8px"><button type="button" class="ghost sm" id="clrDates">${t('reset_dates')}</button></div>` : ''}</div>
         ${valid ? `<div class="card"><h3>${t('step_flights')}</h3>
           <p>${t('have_flight')}</p>
@@ -77,38 +105,22 @@
           <button type="button" class="danger" id="clrAll">${t('reset_all')}</button></div>`
           : `<p class="muted">${t('pick_dates')}</p>`}`;
 
+      $$('.cal-day', el).forEach(b => b.onclick = () => { pick(b.dataset.d); const d = day(b.dataset.d); view.y = d.getFullYear(); view.m = d.getMonth(); draw(); });
+      $('#calPrev', el).onclick = () => { view.m--; if (view.m < 0) { view.m = 11; view.y--; } draw(); };
+      $('#calNext', el).onclick = () => { view.m++; if (view.m > 11) { view.m = 0; view.y++; } draw(); };
       const bindAirport = (id, key) => { const i = $(id, el); if (i) i.onchange = e => { e.target.value = iata(e.target.value); set(key, e.target.value); draw(); }; };
       bindAirport('#from', 'from'); bindAirport('#to', 'to'); bindAirport('#rfrom', 'retFrom'); bindAirport('#rto', 'retTo');
       const cd = $('#clrDates', el);
-      if (cd) cd.onclick = () => {
-        // Ferme d'abord le sélecteur de date (iOS valide sa valeur à la fermeture), puis efface et verrouille brièvement les saisies tardives.
-        if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
-        lockUntil = Date.now() + 700;
-        J.date2Rejected = false; set('date1', ''); set('date2', ''); S.trip = { start: '', end: '' }; save('trip'); draw();
-      };
+      if (cd) cd.onclick = () => { set('date1', ''); set('date2', ''); S.trip = { start: '', end: '' }; save('trip'); draw(); };
       const ca = $('#clrAll', el);
       if (ca) ca.onclick = () => {
         if (!confirm(t('confirm_reset_all'))) return;
-        if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
-        lockUntil = Date.now() + 700;
         for (const k of Object.keys(J)) delete J[k];
         J.from = 'GVA';
         S.trip = { start: '', end: '' }; save('trip'); save('journey'); draw();
       };
       $$('[data-orig]', el).forEach(b => b.onclick = () => { set('from', b.dataset.orig); draw(); });
       $$('[data-dest]', el).forEach(b => b.onclick = () => { set('to', b.dataset.dest); draw(); });
-      $('#d1', el).onchange = e => {
-        if (!e.target.isConnected || Date.now() < lockUntil) return;     // changement tardif d'un ancien champ : ignoré
-        set('date1', e.target.value); J.date2Rejected = false;
-        if (J.date2 && J.date2 <= J.date1) { set('date2', ''); J.date2Rejected = true; }   // le retour doit rester après le départ
-        draw();
-      };
-      $('#d2', el).onchange = e => {
-        if (!e.target.isConnected || Date.now() < lockUntil) return;
-        const v = e.target.value;
-        if (v && J.date1 && v <= J.date1) { J.date2Rejected = true; set('date2', ''); } else { J.date2Rejected = false; set('date2', v); }
-        draw();
-      };
       // champs texte : enregistrement à chaque frappe, sans redessiner (le clavier reste ouvert)
       const bindText = (id, key, fn) => { const i = $(id, el); if (i) i.oninput = () => { set(key, fn ? fn(i.value) : i.value); $('#sum', el).innerHTML = summary(); }; };
       const up = v => v.toUpperCase();
