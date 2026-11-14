@@ -23,7 +23,7 @@
     budget: store.get('budget', 0),
     rate: store.get('rate', 0.23),
     cur: store.get('cur', 'EUR'),
-    fav: store.get('fav', []), visited: store.get('visited', {}), notes: store.get('notes', {}), vids: store.get('vids', {}), here: store.get('here', null),
+    fav: store.get('fav', []), visited: store.get('visited', {}), notes: store.get('notes', {}), vids: store.get('vids', {}), here: store.get('here', null), flights: store.get('flights', {}),
   };
   const save = (k) => store.set(k, S[k]);
   const t = k => (I18N[S.lang] && I18N[S.lang][k]) ?? I18N.fr[k] ?? k;
@@ -44,7 +44,7 @@
     $('#appName').textContent = t('app_name');
     $('#tagline').textContent = t('tagline');
     $('#langSel').innerHTML = Object.entries(LANGS).map(([k, v]) => `<option value="${k}" ${k === S.lang ? 'selected' : ''}>${v}</option>`).join('');
-    const nav = [['home', '🏠'], ['explore', '🧭'], ['omra', '🕋'], ['prayer', '🕌'], ['plan', '📒'], ['tools', '🧰']];
+    const nav = [['home', '🏠'], ['trip', '✈️'], ['explore', '🧭'], ['omra', '🕋'], ['prayer', '🕌'], ['plan', '📒'], ['tools', '🧰']];
     $('#nav').innerHTML = nav.map(([r, i]) => `<a href="#/${r}" data-r="${r}"><b>${i}</b>${esc(t('nav_' + r))}</a>`).join('');
   }
   $('#langSel').addEventListener('change', e => { S.lang = e.target.value; save('lang'); applyLang(); route(); });
@@ -74,13 +74,16 @@
       const m = Math.floor(nx.minutes), h = Math.floor(m / 60), mm = m % 60;
       let hero = '';
       const now = new Date(); now.setHours(0, 0, 0, 0);
-      if (S.trip.start) {
-        const s = new Date(S.trip.start + 'T00:00'), e = S.trip.end ? new Date(S.trip.end + 'T00:00') : s;
+      if (tripStart()) {
+        const s = new Date(tripStart() + 'T00:00'), e = tripEnd() ? new Date(tripEnd() + 'T00:00') : s;
         const d = Math.round((s - now) / 864e5);
         if (d > 0) hero = `<small>${t('countdown')}</small><div class="big">${d}</div><small>${t('days')}</small>`;
         else if (now <= e) hero = `<div class="big">${t('day_word')} ${Math.round((now - s) / 864e5) + 1}</div><small>${t('trip_ongoing')}</small>`;
         else hero = `<div class="big">✓</div><small>${t('trip_over')}</small>`;
       } else hero = `<small>${t('set_dates')}</small>`;
+      const todayStr = new Date().toISOString().slice(0, 10);
+      const nextFlight = [...legs('out'), ...legs('ret')].filter(l => l.date && l.date >= todayStr)
+        .sort((a, b) => (a.date + (a.dep || '')).localeCompare(b.date + (b.dep || '')))[0];
       let hijri = '';
       try { hijri = new Intl.DateTimeFormat((S.lang === 'ar' ? 'ar-SA' : S.lang) + '-u-ca-islamic-umalqura', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date()); } catch {}
       el.innerHTML = `
@@ -88,6 +91,7 @@
         <div class="card"><div class="row"><div class="grow"><h3>${t('next_prayer')} · ${esc(p.name)}</h3>
           <div style="font-size:28px;font-weight:700">${t(nx.key)} <span class="muted">${t('in')} ${h ? h + 'h ' : ''}${String(mm).padStart(2, '0')}min</span></div>
           <div class="muted">${esc(hijri)}</div></div><a class="btn" href="#/prayer">🕌</a></div></div>
+        ${nextFlight ? `<a class="card" href="#/trip" style="display:block;color:inherit;text-decoration:none"><h3>✈️ ${t('next_flight')}</h3><b>${esc(nextFlight.no || '')} ${esc(nextFlight.from || '')} → ${esc(nextFlight.to || '')}</b><div class="muted">${esc(nextFlight.date || '')} ${esc(nextFlight.dep || '')}</div></a>` : ''}
         <div class="card"><h3>${t('trip_start')} / ${t('trip_end')}</h3>
           <div class="row"><input type="date" id="d1" value="${esc(S.trip.start)}"><input type="date" id="d2" value="${esc(S.trip.end)}"><button id="saveTrip">${t('save')}</button></div></div>
         <h3>${t('quick')}</h3>
@@ -119,12 +123,19 @@
     return { out, used: hours * 60 - left };
   }
 
+  /* ---------- dates issues des vols ---------- */
+  const legs = k => (S.flights[k] && S.flights[k].legs) || [];
+  const firstDate = k => legs(k).map(l => l.date).filter(Boolean).sort()[0] || '';
+  const lastDate = k => legs(k).map(l => l.date).filter(Boolean).sort().at(-1) || '';
+  const tripStart = () => S.trip.start || firstDate('out');
+  const tripEnd = () => S.trip.end || lastDate('ret');
+
   /* ---------- Planning / Carnet ---------- */
   views.plan = el => {
     if (S.plan === null) { S.plan = []; save('plan'); }
     const IT = { city: 'madinah', hours: 4, cats: ['holy', 'sira', 'heritage'], result: null };
     const draw = () => {
-      const start = S.trip.start ? new Date(S.trip.start + 'T00:00') : null;
+      const start = tripStart() ? new Date(tripStart() + 'T00:00') : null;
       const items = [...S.plan].sort((a, b) => a.day - b.day);
       const dateOf = d => { if (!start) return ''; const x = new Date(start); x.setDate(x.getDate() + d - 1); return x.toLocaleDateString(S.lang === 'ar' ? 'ar-SA-u-nu-latn' : S.lang, { weekday: 'short', day: 'numeric', month: 'short' }); };
       const favs = S.fav.map(id => PLACES.find(x => x.id === id)).filter(Boolean);
@@ -381,7 +392,7 @@
       $('#imp', el).onclick = () => $('#file', el).click();
       $('#file', el).onchange = async e => {
         try { const d = JSON.parse(await e.target.files[0].text()); if (typeof d !== 'object' || !d) throw 0;
-          for (const k of ['lang', 'city', 'geo', 'method', 'trip', 'plan', 'checks', 'custom', 'cnt', 'exp', 'budget', 'rate', 'cur', 'fav', 'visited', 'notes', 'vids', 'here']) if (k in d) { S[k] = d[k]; save(k); }
+          for (const k of ['lang', 'city', 'geo', 'method', 'trip', 'plan', 'checks', 'custom', 'cnt', 'exp', 'budget', 'rate', 'cur', 'fav', 'visited', 'notes', 'vids', 'here', 'flights']) if (k in d) { S[k] = d[k]; save(k); }
           applyLang(); toast(t('imported')); draw(); } catch { toast(t('import_err')); }
       };
     };
@@ -389,6 +400,7 @@
   };
 
   /* ---------- démarrage ---------- */
-  applyLang(); route();
+  window.Omra = { $, $$, esc, S, save, t, views };
+  applyLang(); document.addEventListener('DOMContentLoaded', route);
   if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(() => {});
 })();

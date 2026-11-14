@@ -11,6 +11,7 @@ Chaque fiche sépare les *faits établis* des *traditions non confirmées*, indi
 ## Fonctionnalités
 - **Explorer** : carte + recherche + filtres (catégorie, ville) + « près de moi » ; **fiches détaillées** (nom arabe pour les taxis, histoire, prix, durée, horaires, accès, conseils, GPS, sources)
 - **Vidéos liées aux lieux** : lien YouTube + créateur + passage exact (ajout manuel, le créateur est toujours cité)
+- **Départ / Retour** : vols aller et retour (escales, horaires, terminal, référence), alimente le compte à rebours de l'accueil
 - **Carnet** : favoris, lieux visités, notes personnelles, planning jour par jour, **créateur d'itinéraire** (temps disponible + centres d'intérêt)
 - **Accueil** : compte à rebours, prochaine prière, date hégirienne
 - **Planning** : étapes jour par jour (ville, notes, cases à cocher), exemple fourni
@@ -27,7 +28,7 @@ python3 -m http.server 8000   # puis ouvrir http://localhost:8000
 Aucune étape de build : HTML/CSS/JS purs.
 
 ## Publier (GitHub Pages)
-Settings → Pages → Source : **GitHub Actions**. Le workflow `.github/workflows/pages.yml` déploie à chaque push sur `main`.
+Settings → Pages → Source : **Deploy from a branch** → `main` / `(root)`. Le site se met à jour à chaque push sur `main`.
 Sur téléphone : ouvrir l'URL puis « Ajouter à l'écran d'accueil ».
 
 ## Structure
@@ -38,6 +39,7 @@ js/places.js  catalogue des lieux (fiches)
 js/data.js    traductions, villes, étapes de l'Omra, checklist
 js/prayer.js  calcul des prières & Qibla
 js/app.js     interface et logique
+js/trip.js    onglet Départ / Retour (vols)
 ```
 
 ## Avertissement
