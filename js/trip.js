@@ -19,6 +19,7 @@
     S.journey = S.journey || {};
     const J = S.journey;
     const set = (k, v) => { J[k] = v; save('journey'); };
+    let lockUntil = 0;
     const ok = () => J.date1 && J.date2 && J.date2 > J.date1;
     if (!J.from) set('from', 'GVA');                       // départ par défaut : Genève
 
@@ -77,10 +78,17 @@
       const bindAirport = (id, key) => { $(id, el).onchange = e => { e.target.value = iata(e.target.value); set(key, e.target.value); draw(); }; };
       bindAirport('#from', 'from'); bindAirport('#to', 'to'); bindAirport('#rfrom', 'retFrom'); bindAirport('#rto', 'retTo');
       const cd = $('#clrDates', el);
-      if (cd) cd.onclick = () => { J.date2Rejected = false; set('date1', ''); set('date2', ''); S.trip = { start: '', end: '' }; save('trip'); draw(); };
+      if (cd) cd.onclick = () => {
+        // Ferme d'abord le sélecteur de date (iOS valide sa valeur à la fermeture), puis efface et verrouille brièvement les saisies tardives.
+        if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+        lockUntil = Date.now() + 700;
+        J.date2Rejected = false; set('date1', ''); set('date2', ''); S.trip = { start: '', end: '' }; save('trip'); draw();
+      };
       const ca = $('#clrAll', el);
       if (ca) ca.onclick = () => {
         if (!confirm(t('confirm_reset_all'))) return;
+        if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+        lockUntil = Date.now() + 700;
         for (const k of Object.keys(J)) delete J[k];
         J.from = 'GVA';
         S.trip = { start: '', end: '' }; save('trip'); save('journey'); draw();
@@ -88,11 +96,13 @@
       $$('[data-orig]', el).forEach(b => b.onclick = () => { set('from', b.dataset.orig); draw(); });
       $$('[data-dest]', el).forEach(b => b.onclick = () => { set('to', b.dataset.dest); draw(); });
       $('#d1', el).onchange = e => {
+        if (!e.target.isConnected || Date.now() < lockUntil) return;     // changement tardif d'un ancien champ : ignoré
         set('date1', e.target.value); J.date2Rejected = false;
         if (J.date2 && J.date2 <= J.date1) { set('date2', ''); J.date2Rejected = true; }   // le retour doit rester après le départ
         draw();
       };
       $('#d2', el).onchange = e => {
+        if (!e.target.isConnected || Date.now() < lockUntil) return;
         const v = e.target.value;
         if (v && J.date1 && v <= J.date1) { J.date2Rejected = true; set('date2', ''); } else { J.date2Rejected = false; set('date2', v); }
         draw();
