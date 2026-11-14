@@ -266,3 +266,11 @@ Object.assign(I18N.ar, { cal_start: '👆 المس تاريخ المغادرة.'
 Object.assign(I18N.fr, { validate_dates: 'Valider les dates', edit_dates: 'Modifier les dates', cancel: 'Annuler', dates_ok: 'Dates validées ✓' });
 Object.assign(I18N.en, { validate_dates: 'Confirm dates', edit_dates: 'Edit dates', cancel: 'Cancel', dates_ok: 'Dates confirmed ✓' });
 Object.assign(I18N.ar, { validate_dates: 'تأكيد التواريخ', edit_dates: 'تعديل التواريخ', cancel: 'إلغاء', dates_ok: 'تم تأكيد التواريخ ✓' });
+
+/* ---- Onglet Vols : expérience « appli de compagnie » ---- */
+Object.assign(I18N.fr, { my_trip: 'Mon voyage', flights_h: 'Mes vols', dates_h: 'Dates', save_trip: 'Enregistrer mon voyage', edit_trip: 'Modifier le voyage', delete_trip: 'Supprimer', confirm_delete_trip: 'Supprimer ce voyage (vols, dates, réservation) ?',
+  details: 'Détails', flight_info: 'Infos du vol', add_flight_no: 'Ajouter le numéro de vol', done_btn: 'OK', past_lbl: 'Passé', search_hint: 'Pas encore de vol ? Voir les vols pour ces dates', flight_no: 'N° de vol' });
+Object.assign(I18N.en, { my_trip: 'My trip', flights_h: 'My flights', dates_h: 'Dates', save_trip: 'Save my trip', edit_trip: 'Edit trip', delete_trip: 'Delete', confirm_delete_trip: 'Delete this trip (flights, dates, booking)?',
+  details: 'Details', flight_info: 'Flight info', add_flight_no: 'Add flight number', done_btn: 'OK', past_lbl: 'Past', search_hint: 'No flight yet? See flights for these dates', flight_no: 'Flight no.' });
+Object.assign(I18N.ar, { my_trip: 'رحلتي', flights_h: 'رحلاتي', dates_h: 'التواريخ', save_trip: 'حفظ رحلتي', edit_trip: 'تعديل الرحلة', delete_trip: 'حذف', confirm_delete_trip: 'حذف هذه الرحلة (الرحلات والتواريخ والحجز)؟',
+  details: 'التفاصيل', flight_info: 'معلومات الرحلة', add_flight_no: 'إضافة رقم الرحلة', done_btn: 'تم', past_lbl: 'انتهت', search_hint: 'لا رحلة بعد؟ شاهد الرحلات لهذه التواريخ', flight_no: 'رقم الرحلة' });

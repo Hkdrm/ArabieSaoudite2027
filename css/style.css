@@ -69,3 +69,11 @@ body{overscroll-behavior-y:contain}
 .cal-day.sel{background:var(--g);color:#fff;font-weight:700}
 .cal-day:disabled{opacity:.3;cursor:default}
 button:disabled{opacity:.4;cursor:default}
+.flight .route{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:14px 0 8px}
+.flight .code{font-size:34px;font-weight:800;letter-spacing:1px;line-height:1.1}
+.flight .time{font-size:20px;color:var(--mut);font-variant-numeric:tabular-nums}
+.flight .plane{flex:1;text-align:center;position:relative;font-size:24px}
+.flight .plane::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:2px dashed var(--bd);z-index:0}
+.flight .plane{background:none}
+.legedit{margin-top:12px;padding-top:12px;border-top:1px solid var(--bd)}
+.stickybar{position:sticky;bottom:calc(var(--nav) + env(safe-area-inset-bottom) + 8px);display:flex;gap:8px;padding:8px 0;background:linear-gradient(transparent,var(--bg) 30%)}

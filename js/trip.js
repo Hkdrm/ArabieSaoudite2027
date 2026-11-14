@@ -1,153 +1,154 @@
-/* Onglet Départ / Retour : dates choisies dans un calendrier intégré (1er toucher = départ, 2e = retour),
-   puis numéro de vol / référence de réservation. Aéroports et horaires facultatifs. Tout s'enregistre automatiquement.
-   Le calendrier remplace le sélecteur natif : celui d'iOS valide la date du jour dès qu'on le touche. */
+/* Onglet Vols — expérience « appli de compagnie aérienne » :
+   1) un seul écran pour ajouter le voyage (n° de vol aller/retour + dates dans un calendrier) → « Enregistrer »
+   2) ensuite uniquement des cartes de vol (aller / retour) ; les détails (aéroports, heures, terminal) s'ajoutent d'un geste.
+   Aucun sélecteur natif de date/heure (celui d'iOS valide la date du jour dès qu'on le touche).
+   Données : S.journey (voir app.js), enregistrées localement. */
 (() => {
   const A = window.Omra;
   const { $, $$, esc, S, save, t } = A;
   const AIRPORTS = { CDG: 'Paris Charles-de-Gaulle', ORY: 'Paris Orly', LYS: 'Lyon', MRS: 'Marseille', NCE: 'Nice', TLS: 'Toulouse', BOD: 'Bordeaux', NTE: 'Nantes', LIL: 'Lille', BRU: 'Bruxelles', GVA: 'Genève',
     JED: 'Jeddah', MED: 'Médine', RUH: 'Riyad', DMM: 'Dammam', TIF: 'Taïf', ULH: 'AlUla' };
-  const DEST = ['JED', 'MED', 'RUH', 'DMM'];
-  const ORIGINS = ['GVA', 'LYS', 'CDG', 'ORY'];
   const FLIGHT_RE = /^[A-Z0-9]{2}\s?\d{1,4}[A-Z]?$/;
   const pad = n => String(n).padStart(2, '0');
   const iso = (y, m, d) => `${y}-${pad(m + 1)}-${pad(d)}`;               // dates locales (pas d'UTC : évite le décalage d'un jour)
   const day = s => new Date(s + 'T00:00:00');
   const todayStr = () => { const n = new Date(); return iso(n.getFullYear(), n.getMonth(), n.getDate()); };
   const iata = v => (v || '').toUpperCase().replace(/[^A-Z]/g, '').slice(0, 3);
+  const fmtTime = v => { const d = (v || '').replace(/\D/g, '').slice(0, 4); return d.length > 2 ? d.slice(0, 2) + ':' + d.slice(2) : d; };
   const loc = () => S.lang === 'ar' ? 'ar-SA-u-nu-latn' : S.lang;
   const fmtDate = s => s ? day(s).toLocaleDateString(loc(), { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' }) : '';
-  const yymmdd = s => s.slice(2).replace(/-/g, '');
+  const daysTo = s => Math.round((day(s) - day(todayStr())) / 864e5);
+  const nights = (a, b) => Math.round((day(b) - day(a)) / 864e5);
 
   A.views.trip = el => {
     S.journey = S.journey || {};
     const J = S.journey;
     delete J.date2Rejected;
+    const saved = () => !!(J.date1 && J.date2 && J.date2 > J.date1);
+    if (!J.from) J.from = 'GVA';                                // départ par défaut : Genève
+    let mode = saved() ? 'card' : 'form';
+    let editLeg = null;                                           // 'out' | 'ret' : panneau de détails ouvert
+    const form = { noOut: J.noOut || '', noRet: J.noRet || '', ref: J.ref || '', d1: J.date1 || '', d2: J.date2 || '' };
+    const base = form.d1 ? day(form.d1) : new Date();
+    const view = { y: base.getFullYear(), m: base.getMonth() };
     const set = (k, v) => { J[k] = v; save('journey'); };
-    const ok = () => J.date1 && J.date2 && J.date2 > J.date1;
-    if (!J.from) set('from', 'GVA');                       // départ par défaut : Genève
-    const base = J.date1 ? day(J.date1) : new Date();
-    const view = { y: base.getFullYear(), m: base.getMonth() };   // mois affiché
-    const draft = { d1: J.date1 || '', d2: J.date2 || '' };       // sélection en cours : enregistrée seulement après « Valider »
-    let editing = !ok();                                          // calendrier ouvert tant que les dates ne sont pas validées
 
-    const links = () => {
-      const f = J.from || 'GVA', to = J.to, d1 = J.date1, d2 = J.date2;
-      const g = ['Google Flights', `https://www.google.com/travel/flights?q=${encodeURIComponent(`Flights from ${f} to ${to || 'Saudi Arabia'} on ${d1} through ${d2}`)}`];
-      if (!to) return [g];                                  // sans destination précise : uniquement Google Flights (pays)
-      return [g,
-        ['Skyscanner', `https://www.skyscanner.fr/transport/vols/${f.toLowerCase()}/${to.toLowerCase()}/${yymmdd(d1)}/${yymmdd(d2)}/`],
-        ['Kayak', `https://www.kayak.fr/flights/${f}-${to}/${d1}/${d2}`]];
-    };
-    const track = no => FLIGHT_RE.test(no || '') ? `<a href="https://www.google.com/search?q=${encodeURIComponent('vol ' + no.replace(/\s+/g, ''))}" target="_blank" rel="noopener">${t('track')} ↗</a>` : '';
+    /* ---------- écran 1 : ajouter le voyage ---------- */
+    const formOk = () => form.d1 && form.d2 && form.d2 > form.d1;
 
-    const summary = () => {
-      if (!J.date1) return '';
-      const n = ok() ? Math.round((day(J.date2) - day(J.date1)) / 864e5) : 0;
-      return `<div class="card hero" style="text-align:start">${J.to ? `<div style="font-size:24px;font-weight:700">${esc(J.from || '???')} → ${esc(J.to)}</div>` : ''}
-        <div>🛫 ${esc(fmtDate(J.date1))}${J.noOut ? ' · ' + esc(J.noOut) : ''}</div>
-        ${J.date2 ? `<div>🛬 ${esc(fmtDate(J.date2))}${J.noRet ? ' · ' + esc(J.noRet) : ''}</div>` : ''}
-        ${n ? `<small>${n} ${t('nights')}</small>` : ''}</div>`;
-    };
-
-    const apt = (id, label, key, ph) => `<div class="grow"><label>${label}</label><input id="${id}" list="apts" value="${esc(J[key] || '')}" placeholder="${esc(ph)}" maxlength="3" style="width:100%;text-transform:uppercase"></div>`;
-
-    /* ---- calendrier ---- */
     const calendar = () => {
       const first = new Date(view.y, view.m, 1), n = new Date(view.y, view.m + 1, 0).getDate();
-      const offset = (first.getDay() + 6) % 7;                        // semaine commençant le lundi
-      const today = todayStr();
-      const wd = [...Array(7)].map((_, i) => new Date(2024, 0, 1 + i).toLocaleDateString(loc(), { weekday: 'narrow' }));   // 1er janv. 2024 = lundi
+      const offset = (first.getDay() + 6) % 7, today = todayStr();
+      const wd = [...Array(7)].map((_, i) => new Date(2024, 0, 1 + i).toLocaleDateString(loc(), { weekday: 'narrow' }));
       let cells = wd.map(w => `<div class="cal-wd">${esc(w)}</div>`).join('') + '<div></div>'.repeat(offset);
       for (let d = 1; d <= n; d++) {
         const s = iso(view.y, view.m, d);
-        const cls = [s === draft.d1 || s === draft.d2 ? 'sel' : '', draft.d1 && draft.d2 && s > draft.d1 && s < draft.d2 ? 'range' : '', s === today ? 'today' : ''].join(' ');
+        const cls = [s === form.d1 || s === form.d2 ? 'sel' : '', form.d1 && form.d2 && s > form.d1 && s < form.d2 ? 'range' : '', s === today ? 'today' : ''].join(' ');
         cells += `<button type="button" class="cal-day ${cls}" data-d="${s}" ${s < today ? 'disabled' : ''}>${d}</button>`;
       }
       const prev = S.lang === 'ar' ? '›' : '‹', next = S.lang === 'ar' ? '‹' : '›';
-      const hint = !draft.d1 ? t('cal_start') : !draft.d2 ? t('cal_end') : t('cal_again');
-      return `<div class="cal"><div class="cal-head"><button type="button" class="ghost sm" id="calPrev" aria-label="prev">${prev}</button>
+      return `<div class="cal-head"><button type="button" class="ghost sm" id="calPrev" aria-label="prev">${prev}</button>
         <b>${esc(first.toLocaleDateString(loc(), { month: 'long', year: 'numeric' }))}</b>
-        <button type="button" class="ghost sm" id="calNext" aria-label="next">${next}</button></div>
-        <div class="cal-grid">${cells}</div></div><p class="muted" style="margin:8px 0 0">${hint}</p>`;
+        <button type="button" class="ghost sm" id="calNext" aria-label="next">${next}</button></div><div class="cal-grid">${cells}</div>`;
     };
-
     const pick = s => {
-      if (!draft.d1 || draft.d2) { draft.d1 = s; draft.d2 = ''; }                         // nouveau départ
-      else if (s > draft.d1) draft.d2 = s;                                                  // retour : strictement après le départ
-      else { draft.d1 = s; A.toast(t('err_return')); }                                     // avant / même jour : on déplace le départ
+      if (!form.d1 || form.d2) { form.d1 = s; form.d2 = ''; }
+      else if (s > form.d1) form.d2 = s;
+      else { form.d1 = s; A.toast(t('err_return')); }
     };
-    const draftOk = () => draft.d1 && draft.d2 && draft.d2 > draft.d1;
-    const draftLine = () => !draft.d1 ? '' : `<div style="margin-top:8px"><b>🛫 ${esc(fmtDate(draft.d1))}</b>${draft.d2 ? `<br><b>🛬 ${esc(fmtDate(draft.d2))}</b> <span class="muted">(${Math.round((day(draft.d2) - day(draft.d1)) / 864e5)} ${t('nights')})</span>` : ''}</div>`;
 
-    const draw = () => {
-      const valid = ok();
-      const past = J.date1 && J.date1 < todayStr() && !editing ? `<p class="muted">ℹ️ ${t('warn_past')}</p>` : '';
-      el.innerHTML = `<h2>${t('trip_title')}</h2><datalist id="apts">${Object.entries(AIRPORTS).map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join('')}</datalist>
-        <div id="sum">${summary()}</div>
-        ${editing ? `<div class="card"><h3>${t('step_route')}</h3>${calendar()}${draftLine()}
-          <div class="row" style="margin-top:12px"><button type="button" id="okDates" ${draftOk() ? '' : 'disabled'}>✓ ${t('validate_dates')}</button>
-            ${ok() ? `<button type="button" class="ghost" id="cancelDates">${t('cancel')}</button>` : ''}
-            ${draft.d1 ? `<button type="button" class="ghost sm" id="clrDates">${t('reset_dates')}</button>` : ''}</div></div>`
-        : `<div class="card"><h3>${t('step_route')} ✓</h3>${past}<div class="row"><button type="button" class="ghost" id="editDates">✏️ ${t('edit_dates')}</button>
-            <button type="button" class="ghost sm" id="clrDates">${t('reset_dates')}</button></div></div>`}
-        ${valid ? `<div class="card"><h3>${t('step_flights')}</h3>
-          <p>${t('have_flight')}</p>
-          <div class="row"><div class="grow"><label>🛫 ${t('no_out')}</label><input id="noOut" value="${esc(J.noOut || '')}" placeholder="SV 124" style="width:100%;text-transform:uppercase"></div>
-            <div class="grow"><label>🛬 ${t('no_ret')}</label><input id="noRet" value="${esc(J.noRet || '')}" placeholder="SV 125" style="width:100%;text-transform:uppercase"></div></div>
-          <div class="row"><span id="trkOut">${track(J.noOut)}</span><span id="trkRet">${track(J.noRet)}</span></div>
-          <div style="margin-top:8px"><label>${t('booking_ref')} <span class="muted">(${t('local_only')})</span></label><input id="ref" value="${esc(J.ref || '')}" style="width:100%"></div>
-          <hr style="border:0;border-top:1px solid var(--bd);margin:14px 0">
-          <p>${t('find_flights')}</p><div class="row">${links().map(([n, u]) => `<a class="btn" href="${u}" target="_blank" rel="noopener">${n} ↗</a>`).join('')}</div>
-          <details style="margin-top:14px" ${J.to || J.retFrom || J.retTo || J.depOut || J.arrOut || J.depRet || J.arrRet ? 'open' : ''}><summary>${t('airports_opt')}</summary>
-            <p class="muted">${t('airports_hint')}</p>
-            <div class="row">${apt('from', t('from_lbl'), 'from', 'GVA')}<div style="padding-top:20px">→</div>${apt('to', t('to_lbl'), 'to', 'JED')}</div>
-            <div class="chips" style="margin-top:8px">${ORIGINS.map(d => `<button type="button" class="chip ${J.from === d ? 'on' : ''}" data-orig="${d}">${d} · ${esc(AIRPORTS[d])}</button>`).join('')}</div>
-            <div class="chips">${DEST.map(d => `<button type="button" class="chip ${J.to === d ? 'on' : ''}" data-dest="${d}">${d} · ${esc(AIRPORTS[d])}</button>`).join('')}</div>
-            <p class="muted" style="margin:10px 0 4px">${t('other_return')}</p>
-            <div class="row">${apt('rfrom', t('ret_from'), 'retFrom', J.to || 'MED')}${apt('rto', t('ret_to'), 'retTo', J.from || 'GVA')}</div>
-            <p class="muted" style="margin:10px 0 4px">${t('times_opt')}</p>
-            <div class="row"><div><label>🛫 ${t('dep_time')}</label><input id="depOut" type="time" value="${esc(J.depOut || '')}"></div><div><label>🛫 ${t('arr_time')}</label><input id="arrOut" type="time" value="${esc(J.arrOut || '')}"></div><div><label>${t('terminal')}</label><input id="termOut" value="${esc(J.termOut || '')}" style="width:70px"></div></div>
-            <div class="row" style="margin-top:6px"><div><label>🛬 ${t('dep_time')}</label><input id="depRet" type="time" value="${esc(J.depRet || '')}"></div><div><label>🛬 ${t('arr_time')}</label><input id="arrRet" type="time" value="${esc(J.arrRet || '')}"></div><div><label>${t('terminal')}</label><input id="termRet" value="${esc(J.termRet || '')}" style="width:70px"></div></div></details>
-          <p class="muted" style="margin-top:10px">✓ ${t('saved_auto')}</p>
-          <button type="button" class="danger" id="clrAll">${t('reset_all')}</button></div>`
-          : `<p class="muted">${t('pick_dates')}</p>`}`;
-
+    const drawForm = () => {
+      const hint = !form.d1 ? t('cal_start') : !form.d2 ? t('cal_end') : '';
+      const chosen = form.d1 ? `<div style="margin-top:8px"><b>🛫 ${esc(fmtDate(form.d1))}</b>${form.d2 ? `<br><b>🛬 ${esc(fmtDate(form.d2))}</b> <span class="muted">(${nights(form.d1, form.d2)} ${t('nights')})</span>` : ''}</div>` : '';
+      const gf = formOk() && !form.noOut && !form.noRet
+        ? `<p style="margin:10px 0 0"><a href="https://www.google.com/travel/flights?q=${encodeURIComponent(`Flights from ${J.from || 'GVA'} to Saudi Arabia on ${form.d1} through ${form.d2}`)}" target="_blank" rel="noopener">${t('search_hint')} ↗</a></p>` : '';
+      el.innerHTML = `<h2>${t('my_trip')}</h2>
+        <div class="card"><h3>✈️ ${t('flights_h')}</h3>
+          <div class="row"><div class="grow"><label>🛫 ${t('no_out')}</label><input id="fNoOut" value="${esc(form.noOut)}" placeholder="SV 124" autocapitalize="characters" style="width:100%;text-transform:uppercase"></div>
+            <div class="grow"><label>🛬 ${t('no_ret')}</label><input id="fNoRet" value="${esc(form.noRet)}" placeholder="SV 125" autocapitalize="characters" style="width:100%;text-transform:uppercase"></div></div>
+          <div style="margin-top:8px"><label>${t('booking_ref')} <span class="muted">(${t('local_only')})</span></label><input id="fRef" value="${esc(form.ref)}" style="width:100%"></div></div>
+        <div class="card"><h3>📅 ${t('dates_h')}</h3>${calendar()}<p class="muted" style="margin:8px 0 0">${hint}</p>${chosen}${gf}</div>
+        <div class="stickybar"><button type="button" id="saveTrip" style="flex:1" ${formOk() ? '' : 'disabled'}>✓ ${t('save_trip')}</button>
+          ${saved() ? `<button type="button" class="ghost" id="cancelTrip">${t('cancel')}</button>` : ''}</div>`;
       $$('.cal-day', el).forEach(b => b.onclick = () => { pick(b.dataset.d); const d = day(b.dataset.d); view.y = d.getFullYear(); view.m = d.getMonth(); draw(); });
-      const pv = $('#calPrev', el), nx = $('#calNext', el);
-      if (pv) pv.onclick = () => { view.m--; if (view.m < 0) { view.m = 11; view.y--; } draw(); };
-      if (nx) nx.onclick = () => { view.m++; if (view.m > 11) { view.m = 0; view.y++; } draw(); };
-      const okB = $('#okDates', el);
-      if (okB) okB.onclick = () => {
-        if (!draftOk()) return;
-        set('date1', draft.d1); set('date2', draft.d2); S.trip = { start: '', end: '' }; save('trip');
-        editing = false; A.toast(t('dates_ok')); draw();
+      $('#calPrev', el).onclick = () => { view.m--; if (view.m < 0) { view.m = 11; view.y--; } draw(); };
+      $('#calNext', el).onclick = () => { view.m++; if (view.m > 11) { view.m = 0; view.y++; } draw(); };
+      $('#fNoOut', el).oninput = e => { form.noOut = e.target.value.toUpperCase(); };
+      $('#fNoRet', el).oninput = e => { form.noRet = e.target.value.toUpperCase(); };
+      $('#fRef', el).oninput = e => { form.ref = e.target.value; };
+      $('#saveTrip', el).onclick = () => {
+        if (!formOk()) return;
+        Object.assign(J, { date1: form.d1, date2: form.d2, noOut: form.noOut.trim(), noRet: form.noRet.trim(), ref: form.ref.trim() });
+        save('journey'); S.trip = { start: '', end: '' }; save('trip');
+        mode = 'card'; A.toast(t('dates_ok')); draw(); scrollTo(0, 0);
       };
-      const cn = $('#cancelDates', el);
-      if (cn) cn.onclick = () => { draft.d1 = J.date1; draft.d2 = J.date2; editing = false; draw(); };
-      const ed = $('#editDates', el);
-      if (ed) ed.onclick = () => { draft.d1 = J.date1 || ''; draft.d2 = J.date2 || ''; if (J.date1) { const d = day(J.date1); view.y = d.getFullYear(); view.m = d.getMonth(); } editing = true; draw(); };
-      const bindAirport = (id, key) => { const i = $(id, el); if (i) i.onchange = e => { e.target.value = iata(e.target.value); set(key, e.target.value); draw(); }; };
-      bindAirport('#from', 'from'); bindAirport('#to', 'to'); bindAirport('#rfrom', 'retFrom'); bindAirport('#rto', 'retTo');
-      const cd = $('#clrDates', el);
-      if (cd) cd.onclick = () => { set('date1', ''); set('date2', ''); draft.d1 = ''; draft.d2 = ''; S.trip = { start: '', end: '' }; save('trip'); editing = true; draw(); };
-      const ca = $('#clrAll', el);
-      if (ca) ca.onclick = () => {
-        if (!confirm(t('confirm_reset_all'))) return;
-        for (const k of Object.keys(J)) delete J[k];
-        J.from = 'GVA'; draft.d1 = ''; draft.d2 = ''; editing = true;
-        S.trip = { start: '', end: '' }; save('trip'); save('journey'); draw();
-      };
-      $$('[data-orig]', el).forEach(b => b.onclick = () => { set('from', b.dataset.orig); draw(); });
-      $$('[data-dest]', el).forEach(b => b.onclick = () => { set('to', b.dataset.dest); draw(); });
-      // champs texte : enregistrement à chaque frappe, sans redessiner (le clavier reste ouvert)
-      const bindText = (id, key, fn) => { const i = $(id, el); if (i) i.oninput = () => { set(key, fn ? fn(i.value) : i.value); $('#sum', el).innerHTML = summary(); }; };
-      const up = v => v.toUpperCase();
-      bindText('#noOut', 'noOut', up); bindText('#noRet', 'noRet', up); bindText('#ref', 'ref');
-      ['depOut', 'arrOut', 'depRet', 'arrRet', 'termOut', 'termRet'].forEach(k => bindText('#' + k, k));
-      const no1 = $('#noOut', el), no2 = $('#noRet', el);
-      if (no1) no1.onchange = () => { $('#trkOut', el).innerHTML = track(J.noOut); };
-      if (no2) no2.onchange = () => { $('#trkRet', el).innerHTML = track(J.noRet); };
+      const cn = $('#cancelTrip', el);
+      if (cn) cn.onclick = () => { mode = 'card'; draw(); };
     };
+
+    /* ---------- écran 2 : cartes de vol ---------- */
+    const leg = k => {
+      const o = k === 'out';
+      return o ? { no: J.noOut, date: J.date1, from: J.from, to: J.to, dep: J.depOut, arr: J.arrOut, term: J.termOut }
+               : { no: J.noRet, date: J.date2, from: J.retFrom || J.to, to: J.retTo || J.from, dep: J.depRet, arr: J.arrRet, term: J.termRet };
+    };
+    const keys = k => k === 'out' ? { no: 'noOut', from: 'from', to: 'to', dep: 'depOut', arr: 'arrOut', term: 'termOut' }
+                                  : { no: 'noRet', from: 'retFrom', to: 'retTo', dep: 'depRet', arr: 'arrRet', term: 'termRet' };
+    const chip = date => { const d = daysTo(date); return d > 0 ? `J-${d}` : d === 0 ? t('today') : t('past_lbl'); };
+
+    const legCard = k => {
+      const L = leg(k), o = k === 'out', K = keys(k);
+      const info = FLIGHT_RE.test(L.no || '') ? `<a class="btn" href="https://www.google.com/search?q=${encodeURIComponent('vol ' + L.no.replace(/\s+/g, ''))}" target="_blank" rel="noopener">ℹ️ ${t('flight_info')}</a>` : '';
+      const panel = editLeg === k ? `<div class="legedit">
+        <div class="row"><div class="grow"><label>${t('flight_no')}</label><input data-f="no" value="${esc(L.no || '')}" placeholder="SV 124" autocapitalize="characters" style="width:100%;text-transform:uppercase"></div></div>
+        <div class="row" style="margin-top:6px"><div class="grow"><label>${t('from_lbl')}</label><input data-f="from" list="apts" value="${esc(L.from || '')}" maxlength="3" placeholder="GVA" style="width:100%;text-transform:uppercase"></div>
+          <div class="grow"><label>${t('to_lbl')}</label><input data-f="to" list="apts" value="${esc(L.to || '')}" maxlength="3" placeholder="JED" style="width:100%;text-transform:uppercase"></div></div>
+        <div class="row" style="margin-top:6px"><div class="grow"><label>${t('dep_time')}</label><input data-f="dep" inputmode="numeric" value="${esc(L.dep || '')}" placeholder="10:30" maxlength="5" style="width:100%"></div>
+          <div class="grow"><label>${t('arr_time')}</label><input data-f="arr" inputmode="numeric" value="${esc(L.arr || '')}" placeholder="17:05" maxlength="5" style="width:100%"></div>
+          <div class="grow"><label>${t('terminal')}</label><input data-f="term" value="${esc(L.term || '')}" placeholder="2" style="width:100%"></div></div>
+        <button type="button" id="legOk" style="margin-top:10px">${t('done_btn')}</button></div>` : '';
+      return `<div class="card flight"><div class="row"><span class="pill">${o ? '🛫 ' + t('outbound') : '🛬 ' + t('inbound')}</span>
+          <b class="grow" style="font-size:18px">${L.no ? esc(L.no) : `<a href="#" data-edit="${k}">＋ ${t('add_flight_no')}</a>`}</b><span class="pill">${esc(chip(L.date))}</span></div>
+        <div class="route"><div><div class="code">${esc(L.from || '—')}</div><div class="time">${esc(L.dep || '--:--')}</div></div><div class="plane">✈️</div>
+          <div style="text-align:end"><div class="code">${esc(L.to || '—')}</div><div class="time">${esc(L.arr || '--:--')}</div></div></div>
+        <div class="muted">📅 ${esc(fmtDate(L.date))}${L.term ? ' · ' + t('terminal') + ' ' + esc(L.term) : ''}</div>
+        <div class="row" style="margin-top:10px">${info}<button type="button" class="ghost sm" data-edit="${k}">✏️ ${t('details')}</button></div>${panel}</div>`;
+    };
+
+    const drawCard = () => {
+      const d = daysTo(J.date1), end = daysTo(J.date2);
+      const hero = d > 0 ? `<small>${t('countdown')}</small><div class="big">${d}</div><small>${t('days')} · ${nights(J.date1, J.date2)} ${t('nights')}</small>`
+        : end >= 0 ? `<div class="big">✈️</div><small>${t('trip_ongoing')}</small>` : `<div class="big">✓</div><small>${t('trip_over')}</small>`;
+      el.innerHTML = `<h2>${t('my_trip')}</h2><datalist id="apts">${Object.entries(AIRPORTS).map(([c, n]) => `<option value="${c}">${esc(n)}</option>`).join('')}</datalist>
+        <div class="card hero">${hero}</div>${legCard('out')}${legCard('ret')}
+        ${J.ref ? `<div class="card"><label>${t('booking_ref')}</label><b>${esc(J.ref)}</b></div>` : ''}
+        <div class="row"><button type="button" class="ghost" id="editTrip">✏️ ${t('edit_trip')}</button><button type="button" class="danger" id="delTrip">${t('delete_trip')}</button></div>`;
+      $$('[data-edit]', el).forEach(b => b.onclick = e => { e.preventDefault(); editLeg = editLeg === b.dataset.edit ? null : b.dataset.edit; draw(); });
+      const ok = $('#legOk', el);
+      if (ok) ok.onclick = () => { editLeg = null; draw(); };
+      const K = editLeg && keys(editLeg);
+      $$('[data-f]', el).forEach(i => i.oninput = () => {            // enregistré à chaque frappe, sans redessiner (le clavier reste ouvert)
+        const f = i.dataset.f;
+        let v = i.value;
+        if (f === 'no') v = v.toUpperCase(); else if (f === 'from' || f === 'to') v = iata(v); else if (f === 'dep' || f === 'arr') { v = fmtTime(v); i.value = v; }
+        set(K[f], v);
+        if (f === 'from' || f === 'to') i.value = v;
+      });
+      $('#editTrip', el).onclick = () => {
+        Object.assign(form, { noOut: J.noOut || '', noRet: J.noRet || '', ref: J.ref || '', d1: J.date1 || '', d2: J.date2 || '' });
+        const b = form.d1 ? day(form.d1) : new Date(); view.y = b.getFullYear(); view.m = b.getMonth();
+        mode = 'form'; editLeg = null; draw();
+      };
+      $('#delTrip', el).onclick = () => {
+        if (!confirm(t('confirm_delete_trip'))) return;
+        for (const k of Object.keys(J)) delete J[k];
+        J.from = 'GVA'; S.trip = { start: '', end: '' }; save('trip'); save('journey');
+        Object.assign(form, { noOut: '', noRet: '', ref: '', d1: '', d2: '' });
+        mode = 'form'; editLeg = null; draw();
+      };
+    };
+
+    const draw = () => (mode === 'card' && saved() ? drawCard() : drawForm());
     draw();
   };
 })();
