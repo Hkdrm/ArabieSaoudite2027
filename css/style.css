@@ -182,3 +182,12 @@ button:disabled{opacity:.4;cursor:default}
 .sira-hero .ring{font-weight:700;font-size:18px}
 
 .bottom a b:has(.cal2){height:19px;display:flex;align-items:center;justify-content:center}
+
+/* carte épinglée en haut pendant qu'on fait défiler la liste */
+#sMapWrap{position:sticky!important;top:0;z-index:20;background:var(--bg,#f4f3ee);padding:6px 0}
+#sMapWrap #sMap{height:36vh!important;min-height:210px}
+#sMapWrap.tall #sMap{height:62vh!important}
+#sMapWrap.sfull{padding:0}
+#sMapWrap .mapbtns{top:16px;left:8px}
+.sitem{scroll-margin-top:calc(36vh + 24px)}
+#sMapWrap.tall ~ #sList .sitem{scroll-margin-top:calc(62vh + 24px)}

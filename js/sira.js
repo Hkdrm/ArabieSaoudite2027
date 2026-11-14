@@ -27,7 +27,7 @@
       <div id="sBanner"></div>
       <div class="chips" id="sEras" style="margin:6px 0"></div>
       <div id="sMapWrap" style="position:relative"><div id="sMap" style="height:300px;border-radius:14px;overflow:hidden;border:1px solid var(--bd)"></div>
-        <div class="mapbtns"><button type="button" class="chip mapbtn" id="sFull">⛶ ${t('holy_full')}</button></div>
+        <div class="mapbtns"><button type="button" class="chip mapbtn" id="sFull">⛶ ${t('holy_full')}</button><button type="button" class="chip mapbtn" id="sTall" aria-label="↕">↕</button></div>
         <div id="sStory" class="sstory" hidden></div></div>
       <p class="muted" style="font-size:12px;margin:6px 0">⚠️ ${t('sira_disc')}</p>
       <div id="sList"></div>`;
@@ -123,8 +123,8 @@
       if (!map) return; if (pop) pop.remove();
       const n = chapters.indexOf(c) + 1, box = document.createElement('div');
       box.innerHTML = `<div style="display:flex;gap:8px;align-items:center"><span class="snum" style="--ec:${D.eras[c.era].c}">${n}</span><b>${esc(L(c.n))}</b></div>
-        <div class="muted" style="margin:4px 0">${esc(L(D.eras[c.era]))} · ${esc(L(c.year))}</div><div>${esc(L(c.sum))}</div>${c.approx ? `<div class="muted">⚠️ ${t('holy_approx')}</div>` : ''}
-        <button type="button" class="btn" style="margin-top:8px;padding:6px 12px">${t('sira_read')}</button>`;
+        <div class="muted" style="margin:4px 0">${esc(L(D.eras[c.era]))} · ${esc(L(c.year))}</div>${c.approx ? `<div class="muted">⚠️ ${t('holy_approx')}</div>` : ''}
+        <button type="button" class="btn" style="margin-top:6px;padding:5px 12px">${t('sira_read')}</button>`;
       $('button', box).onclick = () => { open = c.id; ui(); pop && pop.remove(); const x = $('#sc-' + c.id, el); x && x.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
       pop = new ML.Popup({ offset: 18, maxWidth: '270px', closeButton: true }).setLngLat([c.lng, c.lat]).setDOMContent(box).addTo(map);
     };
@@ -136,7 +136,7 @@
         map.flyTo({ center: [c.lng, c.lat], zoom: c.hijra && c.id === 'route' ? 7 : (c.id === 'badr' || c.id === 'khaybar' || c.id === 'hegra' || c.id === 'tabuk' || c.id === 'taif' ? 9 : 13.5), duration: 1400 });
         Object.values(markers).forEach(m => m.getElement().classList.remove('hl')); if (markers[id]) markers[id].getElement().classList.add('hl');
         if (c.hijra) animateHijra();
-        showPop(c);
+        if (fromMap) showPop(c); else if (pop) pop.remove();
       }
       const n = $('#sc-' + id, el); if (n && fly && story == null && !fromMap) setTimeout(() => n.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 80);
     };
@@ -173,6 +173,7 @@
       $('#sNear', el).textContent = '⏹ ' + t('sira_near_off');
       watch = navigator.geolocation.watchPosition(p => { pos = { lat: p.coords.latitude, lng: p.coords.longitude }; near(); }, () => { A.toast(t('sira_no_gps')); watch = null; $('#sNear', el).textContent = '📍 ' + t('sira_near'); }, { enableHighAccuracy: true, maximumAge: 15000, timeout: 20000 });
     };
+    $('#sTall', el).onclick = () => { const w = $('#sMapWrap', el); w.classList.toggle('tall'); setTimeout(() => map && map.resize(), 60); setTimeout(() => map && map.resize(), 350); };
     $('#sFull', el).onclick = () => {
       const w = $('#sMapWrap', el), on = !w.classList.contains('sfull'); w.classList.toggle('sfull', on);
       document.body.style.overflow = on ? 'hidden' : ''; $('#sFull', el).textContent = on ? '✕ ' + t('holy_close') : '⛶ ' + t('holy_full');
