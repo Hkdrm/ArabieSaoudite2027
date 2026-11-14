@@ -76,7 +76,7 @@
       "category": "history",
       "area": "Centre historique",
       "description_fr": "Ancien musalla lié aux prières de l’Aïd et de demande de pluie",
-      "practical_notes_fr": "Secteur porte 310",
+      "practical_notes_fr": "Dans le centre historique proche du Haram, secteur porte 310 selon une vidéo. Mosquée historique de pierre sombre ; vérifier les horaires et l'accès intérieur avant déplacement.",
       "source": {
         "creator": "Junaid Hussain",
         "channel": "https://www.youtube.com/@junaidhussainmadinah",
@@ -2147,7 +2147,7 @@
       "subcategory": "well",
       "area": "Al-Awali / Qurban Road, à l'est-nord-est de Quba",
       "description_fr": "Puits historique lié à la Sira, cité par les autorités de Médine et distinct de Bir Aris.",
-      "practical_notes_fr": "ATTENTION : fermeture pour maintenance signalée sur le portail officiel Visit Madinah le 14 novembre 2026. Réouverture non annoncée à la date de vérification ; ne pas prévoir d'entrée sans confirmation.",
+      "practical_notes_fr": "Site associé à la Sira, au quartier Al-Awali. Attention : le portail officiel Visit Madinah annonçait une fermeture pour maintenance au dernier contrôle ; l'accès n'est pas garanti. À vérifier avant tout déplacement.",
       "source": {
         "creator": "Autorité touristique de Médine",
         "channel": null,
@@ -3327,6 +3327,384 @@
         "review_type": "source_specific_addition",
         "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
       }
+    },
+    {
+      "id": "jeddah-abu-al-madafa-caves",
+      "name_fr": "Grottes sous-marines Abu Al Madafa",
+      "city": "jeddah",
+      "category": "nature",
+      "subcategory": "scuba_dive",
+      "area": "En mer Rouge au nord de Djeddah, accès bateau depuis la côte",
+      "description_fr": "Site de grottes sous-marines à environ 30 minutes de bateau, couloirs étroits, coraux et profondeur jusqu'à 60 m selon la Saudi Press Agency.",
+      "practical_notes_fr": "Plongée technique ou avancée uniquement avec centre agréé, qualifications adaptées et conditions vérifiées. Ne jamais entreprendre l'exploration sans guide et équipement spécialisé.",
+      "source": {
+        "creator": "Saudi Press Agency, 1er juillet 2025",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.spa.gov.sa/en/N2350067"
+        ]
+      },
+      "verification": {
+        "source_detail": "Saudi Press Agency, 1er juillet 2025",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Adresse, accès et horaires à contrôler. Ne pas déduire de position GPS d'une indication régionale."
+      }
+    },
+    {
+      "id": "jeddah-island-mosque",
+      "name_fr": "Island Mosque — mosquée de l'Île (Masjid Al-Jazirah)",
+      "city": "jeddah",
+      "category": "history",
+      "subcategory": "mosque",
+      "area": "Corniche nord, Al Kurnaysh Road, Djeddah",
+      "description_fr": "Petite mosquée d'Abdel-Wahed El-Wakil construite sur un îlot artificiel relié par un pont, achevée en mars 1986.",
+      "practical_notes_fr": "Coordonnées patrimoniales publiées : 21.597069, 39.105387. À ne pas confondre avec la mosquée flottante Al-Rahma (1985). Vérifier l'accès actuel au pont et à l'intérieur.",
+      "source": {
+        "creator": "IRCICA et Aga Khan Trust for Culture",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.islamicarchitecturalheritage.com/listings/island-mosque",
+          "https://next.archnet.org/sites/545"
+        ]
+      },
+      "verification": {
+        "source_detail": "IRCICA et Aga Khan Trust for Culture",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Adresse, accès et horaires à contrôler. Ne pas déduire de position GPS d'une indication régionale."
+      }
+    },
+    {
+      "id": "jeddah-mawakeb-alajr",
+      "name_fr": "Mawakeb Alajer — friperie solidaire",
+      "city": "jeddah",
+      "category": "shopping",
+      "subcategory": "charity_secondhand",
+      "area": "Derrière Al Badriyah Building, Al Rawdah Street, Al Khalediyah, Djeddah",
+      "description_fr": "Association de collecte et redistribution d'objets et vêtements d'occasion, citée parmi les œuvres caritatives de Djeddah.",
+      "practical_notes_fr": "Téléphone ancien annuaire : +966 12 6062433 / 6062430 ; cette adresse provient d'un article de 2023. Fonctionnement actuel, vente au public et affectation des bénéfices à un orphelinat non confirmés.",
+      "source": {
+        "creator": "Destination KSA 2023",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://destinationksa.com/en/charities-and-volunteer-initiatives-in-jeddah/"
+        ]
+      },
+      "verification": {
+        "source_detail": "Destination KSA 2023",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Adresse, accès et horaires à contrôler. Ne pas déduire de position GPS d'une indication régionale."
+      }
+    },
+    {
+      "id": "jeddah-al-balad-back-alleys",
+      "name_fr": "Petites ruelles derrière Souq Al-Alawi",
+      "city": "jeddah",
+      "category": "shopping",
+      "subcategory": "heritage_walk",
+      "area": "Al-Balad, derrière Souq Al-Alawi, Djeddah",
+      "description_fr": "Parcours de ruelles historiques, petites boutiques, boiseries roshan et vues sur les maisons anciennes.",
+      "practical_notes_fr": "Les toits des maisons sont privés ou soumis à autorisation : ne monter que dans un espace explicitement ouvert au public. Zone de promenade, sans commerce spécifique garanti.",
+      "source": {
+        "creator": "Vidéo de promenade Al-Balad 2026",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.youtube.com/watch?v=lG2xM-_fr8k"
+        ]
+      },
+      "verification": {
+        "source_detail": "Vidéo de promenade Al-Balad 2026",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Adresse, accès et horaires à contrôler. Ne pas déduire de position GPS d'une indication régionale."
+      }
+    },
+    {
+      "id": "riyadh-al-samhaniya",
+      "name_fr": "Al Samhaniya — quartier patrimonial de Diriyah",
+      "city": "riyadh",
+      "category": "heritage",
+      "subcategory": "heritage_district",
+      "area": "Diriyah, Riyad",
+      "description_fr": "Secteur historique de Diriyah associé aux ruelles en pisé et à l'hospitalité contemporaine, présenté par Visit Saudi comme une attraction patrimoniale.",
+      "practical_notes_fr": "Nom parfois translittéré Alsamhania ; vérifier les entrées, la programmation et les cafés actuellement ouverts. Ne pas assimiler à l'hôtel Bab Samhan sans preuve.",
+      "source": {
+        "creator": "Visit Saudi — site officiel",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.visitsaudi.com/en/destinations/diriyah/attractions/al-samhaniya"
+        ]
+      },
+      "verification": {
+        "source_detail": "Visit Saudi — site officiel",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Adresse, accès et horaires à contrôler. Ne pas déduire de position GPS d'une indication régionale."
+      }
+    },
+    {
+      "id": "riyadh-ain-heet-cave",
+      "name_fr": "Grotte d'Ain Heet (Heet Cave)",
+      "city": "riyadh",
+      "category": "nature",
+      "subcategory": "cave_high_risk",
+      "area": "Sud-est de Riyad, vers Al-Kharj",
+      "description_fr": "Grande cavité naturelle calcaire contenant un bassin souterrain, dans une zone de terrain instable.",
+      "practical_notes_fr": "Saudipedia signale des éboulements et une descente dangereuse. Ne pas y descendre ni entrer dans l'eau sans encadrement spécialisé et autorisation ; accès susceptible d'être restreint.",
+      "source": {
+        "creator": "Saudipedia — notice de référence",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://saudipedia.com/en/ain-heet-cave"
+        ]
+      },
+      "verification": {
+        "source_detail": "Saudipedia — notice de référence",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Adresse, accès et horaires à contrôler. Ne pas déduire de position GPS d'une indication régionale."
+      }
+    },
+    {
+      "id": "riyadh-camel-souq",
+      "name_fr": "Souq Al-Jamal — marché aux chameaux",
+      "city": "riyadh",
+      "category": "shopping",
+      "subcategory": "animal_market",
+      "area": "Au nord de Dammam Road, vers sortie Thumamah, périphérie de Riyad",
+      "description_fr": "Marché traditionnel de vente et négociation de chameaux, signalé par Lonely Planet.",
+      "practical_notes_fr": "Le marché a été déplacé plusieurs fois. Ne pas utiliser le repère historique comme adresse exacte ; demander l'emplacement actif avant déplacement.",
+      "source": {
+        "creator": "Lonely Planet — guide de voyage",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.lonelyplanet.com/points-of-interest/souq-al-jamal/1307198"
+        ]
+      },
+      "verification": {
+        "source_detail": "Lonely Planet — guide de voyage",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Adresse, accès et horaires à contrôler. Ne pas déduire de position GPS d'une indication régionale."
+      }
+    },
+    {
+      "id": "riyadh-souq-al-zal",
+      "name_fr": "Souq Al-Zal — souk des antiquaires",
+      "city": "riyadh",
+      "category": "shopping",
+      "subcategory": "traditional_souk",
+      "area": "Al Dirah, près du palais Al-Hukm et de la forteresse Al-Masmak",
+      "description_fr": "Marché ancien proposant tapis, oud, encens, objets de collection, bishts et antiquités.",
+      "practical_notes_fr": "Explorer aussi les allées secondaires; comparer l'origine et la légalité des objets anciens. Marché attesté par Visit Saudi et Saudipedia.",
+      "source": {
+        "creator": "Visit Saudi et Saudipedia",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.visitsaudi.com/en/destinations/riyadh/attractions/souq-al-zal-in-riyadh",
+          "https://saudipedia.com/en/souq-al-zal"
+        ]
+      },
+      "verification": {
+        "source_detail": "Visit Saudi et Saudipedia",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Adresse, accès et horaires à contrôler. Ne pas déduire de position GPS d'une indication régionale."
+      }
+    },
+    {
+      "id": "madinah-wadi-al-baida",
+      "name_fr": "Wadi Al-Baida / Wadi Al-Jinn",
+      "city": "madinah",
+      "category": "nature",
+      "subcategory": "gravity_hill",
+      "area": "Nord-ouest de Médine, route de Wadi Al-Baida",
+      "description_fr": "Vallée désertique célèbre pour une illusion d'optique faisant paraître certains tronçons descendants comme montants.",
+      "practical_notes_fr": "Ce n'est pas un phénomène prouvé de magnétisme ou surnaturel. Ne pas arrêter ni laisser rouler un véhicule sur une route ouverte pour tester cette illusion ; prévoir eau, carburant et transport adapté.",
+      "source": {
+        "creator": "Atlas Obscura et guide local",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.atlasobscura.com/places/wadi-e-jinn",
+          "https://medina.city/places/parks/wadi-al-jinn"
+        ]
+      },
+      "verification": {
+        "source_detail": "Atlas Obscura et guide local",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Adresse, accès et horaires à contrôler. Ne pas déduire de position GPS d'une indication régionale."
+      }
+    },
+    {
+      "id": "makkah-jabal-khandamah",
+      "name_fr": "Jabal Khandamah — panorama sur le Haram",
+      "city": "makkah",
+      "category": "nature",
+      "subcategory": "scenic_viewpoint",
+      "area": "Est du centre de La Mecque, montagne de Khandamah",
+      "description_fr": "Point de vue élevé sur le Masjid Al-Haram, les quartiers anciens et la Clock Tower.",
+      "practical_notes_fr": "La Saudi Press Agency décrit le panorama, mais le point exact d'observation et l'accès piéton peuvent varier. Ne pas s'aventurer sur des versants abrupts non aménagés.",
+      "source": {
+        "creator": "Saudi Press Agency et Saudi Film Commission",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://spa.gov.sa/en/N2171393",
+          "https://film.sa/locations-list-page/location-detail-page/?item_id=395"
+        ]
+      },
+      "verification": {
+        "source_detail": "Saudi Press Agency et Saudi Film Commission",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Adresse, accès et horaires à contrôler. Ne pas déduire de position GPS d'une indication régionale."
+      }
+    },
+    {
+      "id": "makkah-wadi-qanuna",
+      "name_fr": "Wadi Qanuna et son barrage — excursion régionale",
+      "city": "makkah",
+      "category": "nature",
+      "subcategory": "regional_excursion",
+      "area": "Al-Qunfudhah / Al-Ardiyat, province de La Mecque, très loin de la ville de La Mecque",
+      "description_fr": "Grande vallée de la province de La Mecque, avec barrage de stockage construit en 2017; paysage saisonnier et relief du sud-ouest saoudien.",
+      "practical_notes_fr": "Ne pas présenter comme destination proche du Haram. Le ministère saoudien met en garde contre les crues soudaines dans le lit des oueds. Vérifier l'état des routes et conditions météo.",
+      "source": {
+        "creator": "Saudipedia et centre national de végétation",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://saudipedia.com/en/list-of-the-largest-dams-in-saudi-arabia",
+          "https://ncvc.gov.sa/en/digitalKnowledge/Pages/Forests-and-Valleys.aspx"
+        ]
+      },
+      "verification": {
+        "source_detail": "Saudipedia et centre national de végétation",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Adresse, accès et horaires à contrôler. Ne pas déduire de position GPS d'une indication régionale."
+      }
+    },
+    {
+      "id": "makkah-masjid-al-jinn",
+      "name_fr": "Masjid Al-Jinn — mosquée des Djinns",
+      "city": "makkah",
+      "category": "history",
+      "subcategory": "historic_mosque",
+      "area": "Al-Ghazzah / Al-Hajun, près du cimetière Al-Mualla, au nord du Haram",
+      "description_fr": "Mosquée historique associée aux récits de la rencontre du Prophète ﷺ avec un groupe de djinns.",
+      "practical_notes_fr": "La dénomination 'Mahbas Al-Jinn' semble confondre cette mosquée avec un secteur routier de La Mecque ; l'adresse validée concerne Masjid Al-Jinn à Al-Ghazzah. Vérifier conditions de visite.",
+      "source": {
+        "creator": "Discover Makkah et Saudipedia",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.discovermakkah.sa/en/places-worth-visiting/landmarks/mosque-of-the-jinn",
+          "https://saudipedia.com/en/al-jinn-mosque"
+        ]
+      },
+      "verification": {
+        "source_detail": "Discover Makkah et Saudipedia",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Adresse, accès et horaires à contrôler. Ne pas déduire de position GPS d'une indication régionale."
+      }
     }
   ],
   "updated": "2026-11-14",
@@ -3342,6 +3720,7 @@
     "editorial_rule": "Ne pas publier des prix ou horaires comme garantis; distinguer 'vu dans vidéo', 'annuaire', 'source officielle' et 'à confirmer'.",
     "last_updated": "2026-11-14",
     "supplement_source": "Routard forum 11/2025, Discover Makkah et recherches web/vidéos",
-    "disclaimer": "Certaines fiches sont des lieux de promenade, idées d'ateliers ou services et non des établissements visitables. Ne pas attribuer un GPS précis sans géolocalisation fiable."
+    "disclaimer": "Certaines fiches sont des lieux de promenade, idées d'ateliers ou services et non des établissements visitables. Ne pas attribuer un GPS précis sans géolocalisation fiable.",
+    "additional_review": "Sélection utilisateur du 14 novembre 2026 recoupée avec SPA, Saudipedia, Visit Saudi, Archnet, IRCICA et autres sources. Dangers, lieux éloignés et ambiguïtés de noms signalés."
   }
 }
