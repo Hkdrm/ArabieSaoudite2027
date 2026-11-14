@@ -43,6 +43,7 @@ js/trip.js    onglet Départ / Retour (vols)
 ```
 
 ## Crédits
+- Lecture d'un PDF : [pdf.js](https://mozilla.github.io/pdf.js/) (Apache-2.0), chargé à la demande.
 - Lecture d'un billet par image : [Tesseract.js](https://github.com/naptha/tesseract.js) (Apache-2.0), chargé à la demande ; l'analyse se fait sur l'appareil.
 - Carte : [OpenFreeMap](https://openfreemap.org) © [OpenMapTiles](https://www.openmaptiles.org/), données © contributeurs OpenStreetMap (rendu MapLibre GL) ; satellite © Esri ; itinéraires calculés avec les serveurs publics OSRM / FOSSGIS (usage léger).
 - Route d'un vol (aéroports) : [adsbdb.com](https://www.adsbdb.com) (données communautaires, route habituelle, sans horaires).

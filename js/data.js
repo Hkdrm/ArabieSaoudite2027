@@ -356,3 +356,13 @@ Object.assign(I18N.ar, { imp_btn: 'استيراد من تذكرتي / بريدي
   imp_placeholder: 'الصق نص التأكيد هنا…\n(يمكنك إخفاء اسمك ورقم الحجز: لا حاجة إليهما)', imp_analyze: 'تحليل', imp_pick: 'اختيار لقطة شاشة', imp_reading: 'جارٍ القراءة…',
   imp_none: 'لم يُتعرَّف على أي رحلة. تأكد أن النص يحتوي أرقام الرحلات (مثل SV 126) والتواريخ والأوقات.', imp_found: 'رحلة مُتعرَّف عليها', imp_check: 'تحقق وحدّد الذهاب والعودة:', imp_ignore: 'تجاهل',
   imp_apply: 'تطبيق على رحلتي', imp_ocr_fail: 'تعذرت قراءة الصورة: الصق النص بدلًا من ذلك (آيفون: اضغط مطولًا على النص في اللقطة ← نسخ).', imp_pick_role: 'اختر الذهاب أو العودة على الأقل.', imp_no_date: 'التاريخ ناقص لهذه الرحلة: أكمله في النص.' });
+
+Object.assign(I18N.fr, { imp_pick: 'Choisir la capture, la photo ou le PDF du billet', imp_paste: 'Ou coller le texte à la place', imp_pdf_fail: "Ce PDF ne contient pas de texte lisible (billet scanné ?). Prenez-le en capture d'écran ou en photo.",
+  imp_hint: "Choisissez la capture d'écran, la photo ou le PDF de votre billet : l'appli le lit toute seule (inutile de copier-coller). Vérifiez ensuite les dates et heures, corrigeables d'un toucher. Tout est lu sur votre téléphone, rien n'est envoyé.",
+  imp_check: "Vérifiez : touchez la bonne date, corrigez une heure si besoin, puis indiquez l'aller et le retour :" });
+Object.assign(I18N.en, { imp_pick: 'Choose the screenshot, photo or PDF of the ticket', imp_paste: 'Or paste the text instead', imp_pdf_fail: 'This PDF has no readable text (scanned ticket?). Take a screenshot or photo of it.',
+  imp_hint: 'Choose the screenshot, photo or PDF of your ticket: the app reads it by itself (no copy-paste needed). Then check the dates and times, fixable with a tap. Everything is read on your phone; nothing is sent.',
+  imp_check: 'Check: tap the right date, fix a time if needed, then say which is outbound and return:' });
+Object.assign(I18N.ar, { imp_pick: 'اختر لقطة الشاشة أو الصورة أو PDF للتذكرة', imp_paste: 'أو الصق النص بدلًا من ذلك', imp_pdf_fail: 'لا يحتوي هذا PDF على نص مقروء (تذكرة ممسوحة؟). التقط لقطة شاشة أو صورة.',
+  imp_hint: 'اختر لقطة الشاشة أو الصورة أو PDF لتذكرتك: يقرؤها التطبيق وحده (دون نسخ ولصق). ثم تحقق من التواريخ والأوقات وصحّحها بلمسة. كل شيء يُقرأ على هاتفك ولا يُرسل شيء.',
+  imp_check: 'تحقق: المس التاريخ الصحيح وصحّح الوقت عند الحاجة، ثم حدّد الذهاب والعودة:' });

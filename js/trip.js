@@ -165,45 +165,64 @@
     };
 
 
-    /* ---------- import depuis un billet / e-mail (texte collé ou capture lue par OCR) ---------- */
-    const imp = { segs: [], role: [], text: '', status: '' };
+    /* ---------- import depuis un billet / e-mail : capture, photo ou PDF d'abord ; texte collé en secours ---------- */
+    const imp = { segs: [], role: [], text: '', status: '', dates: [] };
     const roleDefaults = () => { const n = imp.segs.length; imp.role = imp.segs.map((_, i) => (i === 0 ? 'out' : i === n - 1 && n > 1 ? 'ret' : 'skip')); };
     const analyze = async () => {
       const T = A.ticket;
-      imp.segs = T ? T.parse(imp.text) : [];
+      imp.segs = T ? T.parse(imp.text) : []; imp.dates = T ? T.allDates(imp.text) : [];
       for (const sg of imp.segs) if (!sg.from || !sg.to) { const r = await lookupRoute(sg.no); if (r) { sg.from = sg.from || r.from; sg.to = sg.to || r.to; sg.fromCity = r.fromCity; sg.toCity = r.toCity; } }
       roleDefaults();
     };
+    const parseDateInput = v => { const d = A.ticket.datesIn(v)[0]; return d || ''; };
     const impResult = () => {
       if (!imp.segs.length) return imp.text.trim() ? `<div class="card"><p>${t('imp_none')}</p></div>` : '';
-      const rows = imp.segs.map((sg, i) => `<div class="legbox"><div class="legdate"><b>${esc(sg.no)}</b> · ${esc(sg.date ? fmtDate(sg.date) : '—')}</div>
-          <div>${esc(sg.from || '?')} → ${esc(sg.to || '?')} · ${esc(sg.dep || '--:--')} → ${esc(sg.arr || '--:--')}${sg.term ? ' · ' + t('terminal') + ' ' + esc(sg.term) : ''}</div>
+      const rows = imp.segs.map((sg, i) => `<div class="legbox" data-seg="${i}">
+          <div class="row"><input data-sf="no" value="${esc(sg.no)}" style="width:96px;text-transform:uppercase;font-weight:700"><span class="muted">${esc(sg.date ? fmtDate(sg.date) : '—')}</span></div>
+          <div class="chips" style="margin-top:6px">${imp.dates.map(d => `<button type="button" class="chip ${sg.date === d ? 'on' : ''}" data-sd="${i}:${d}">${esc(day(d).toLocaleDateString(loc(), { day: 'numeric', month: 'short', year: 'numeric' }))}</button>`).join('')}
+            <input data-sf="dateText" placeholder="jj/mm/aaaa" inputmode="numeric" style="width:110px" value=""></div>
+          <div class="row" style="margin-top:6px"><div><label>${t('from_lbl')}</label><input data-sf="from" value="${esc(sg.from)}" maxlength="3" style="width:66px;text-transform:uppercase"></div>
+            <div><label>${t('to_lbl')}</label><input data-sf="to" value="${esc(sg.to)}" maxlength="3" style="width:66px;text-transform:uppercase"></div>
+            <div><label>${t('dep_time')}</label><input data-sf="dep" inputmode="numeric" value="${esc(sg.dep)}" maxlength="5" style="width:70px"></div>
+            <div><label>${t('arr_time')}</label><input data-sf="arr" inputmode="numeric" value="${esc(sg.arr)}" maxlength="5" style="width:70px"></div>
+            <div><label>${t('terminal')}</label><input data-sf="term" value="${esc(sg.term)}" style="width:56px"></div></div>
           <div class="chips" style="margin-top:8px">${[['out', t('outbound')], ['ret', t('inbound')], ['skip', t('imp_ignore')]].map(([k, l]) => `<button type="button" class="chip ${imp.role[i] === k ? 'on' : ''}" data-role="${i}:${k}">${esc(l)}</button>`).join('')}</div></div>`).join('');
       return `<div class="card"><h3>✅ ${imp.segs.length} ${t('imp_found')}</h3><p class="muted">${t('imp_check')}</p>${rows}</div>
         <div class="stickybar"><button type="button" id="impApply" style="flex:1">✓ ${t('imp_apply')}</button></div>`;
     };
     const drawImport = () => {
       el.innerHTML = `<h2>${t('my_trip')}</h2><div class="card mini"><h3>📋 ${t('imp_title')}</h3><p class="muted">${t('imp_hint')}</p>
-        <textarea id="impText" rows="7" style="width:100%" placeholder="${esc(t('imp_placeholder'))}">${esc(imp.text)}</textarea>
-        <div class="row" style="margin-top:8px"><button type="button" id="impGo">🔎 ${t('imp_analyze')}</button><button type="button" class="ghost" id="impPic">📷 ${t('imp_pick')}</button>
-          <input type="file" id="impFile" accept="image/*" hidden></div><p class="muted" id="impStatus">${esc(imp.status)}</p></div>
+        <button type="button" id="impPic" style="width:100%;padding:14px">📷 ${t('imp_pick')}</button>
+        <input type="file" id="impFile" accept="image/*,application/pdf" hidden>
+        <p class="muted" id="impStatus">${esc(imp.status)}</p>
+        <details ${imp.text.trim() ? 'open' : ''}><summary>${t('imp_paste')}</summary>
+          <textarea id="impText" rows="7" style="width:100%;margin-top:6px" placeholder="${esc(t('imp_placeholder'))}">${esc(imp.text)}</textarea>
+          <button type="button" class="ghost" id="impGo" style="margin-top:6px">🔎 ${t('imp_analyze')}</button></details></div>
         <div id="impResult">${impResult()}</div>
         <div class="stickybar"><button type="button" class="ghost" id="back">${t('back')}</button></div>`;
       const wire = () => {
-        $$('[data-role]', el).forEach(b => b.onclick = () => { const [i, k] = b.dataset.role.split(':'); imp.role.forEach((r, j) => { if (r === k && k !== 'skip' && +i !== j) imp.role[j] = 'skip'; }); imp.role[+i] = k; $('#impResult', el).innerHTML = impResult(); wire(); });
+        $$('[data-role]', el).forEach(bt => bt.onclick = () => { const [i, k] = bt.dataset.role.split(':'); imp.role.forEach((r, j) => { if (r === k && k !== 'skip' && +i !== j) imp.role[j] = 'skip'; }); imp.role[+i] = k; refresh(); });
+        $$('[data-sd]', el).forEach(bt => bt.onclick = () => { const [i, d] = bt.dataset.sd.split(':'); imp.segs[+i].date = d; refresh(); });
+        $$('[data-sf]', el).forEach(inp => inp.onchange = () => {                      // correction manuelle d'un champ
+          const sg = imp.segs[+inp.closest('[data-seg]').dataset.seg], f = inp.dataset.sf; let v = inp.value;
+          if (f === 'no') sg.no = v.toUpperCase().trim(); else if (f === 'from' || f === 'to') sg[f] = iata(v); else if (f === 'dep' || f === 'arr') sg[f] = fmtTime(v);
+          else if (f === 'term') sg.term = v.trim().toUpperCase(); else if (f === 'dateText') { const d = parseDateInput(v); if (d) { sg.date = d; if (!imp.dates.includes(d)) imp.dates.push(d); } }
+          refresh();
+        });
         const ap = $('#impApply', el); if (ap) ap.onclick = applyImport;
       };
+      const refresh = () => { $('#impResult', el).innerHTML = impResult(); wire(); };
       wire();
-      $('#impText', el).oninput = e => { imp.text = e.target.value; };
       $('#back', el).onclick = () => { mode = saved() ? 'card' : 'dates'; draw(); };
-      $('#impGo', el).onclick = async () => { imp.text = $('#impText', el).value; $('#impStatus', el).textContent = t('imp_reading'); await analyze(); imp.status = ''; drawImport(); };
+      const go = async () => { $('#impStatus', el).textContent = t('imp_reading'); await analyze(); imp.status = ''; drawImport(); };
+      $('#impGo', el).onclick = () => { imp.text = $('#impText', el).value; go(); };
       $('#impPic', el).onclick = () => $('#impFile', el).click();
       $('#impFile', el).onchange = async e => {
         const file = e.target.files && e.target.files[0]; if (!file) return;
         try {
-          const text = await A.ticket.ocr(file, (st, pr) => { const b = $('#impStatus', el); if (b) b.textContent = `${t('imp_reading')} ${Math.round(pr * 100)} %`; });
-          imp.text = text; await analyze(); imp.status = ''; drawImport();
-        } catch (err) { imp.status = t('imp_ocr_fail'); const b = $('#impStatus', el); if (b) b.textContent = imp.status; }
+          imp.text = await A.ticket.extract(file, (st, pr) => { const bx = $('#impStatus', el); if (bx) bx.textContent = `${t('imp_reading')} ${Math.round(pr * 100)} %`; });
+          await go();
+        } catch (err) { imp.status = /pdf/.test(String(err && err.message)) ? t('imp_pdf_fail') : t('imp_ocr_fail'); const bx = $('#impStatus', el); if (bx) bx.textContent = imp.status; }
       };
     };
     const applyImport = () => {
