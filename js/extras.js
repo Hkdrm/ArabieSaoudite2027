@@ -77,8 +77,8 @@
   /* ---------- Menu : toutes les rubriques, regroupées (la barre du bas ne garde que l'essentiel) ---------- */
   const MENU = [
     ['mn_prepare', [['trip', '✈️', 'nav_trip'], ['stay', '🏨', 'nav_stay'], ['plan', '📒', 'nav_plan'], ['tools', '🧰', 'nav_tools']]],
-    ['mn_faith', [['omra', '🕋', 'nav_omra'], ['makkah', '🕋', 'mk_title'], ['sira', '🌙', 'sira_title'], ['prayer', '🕌', 'nav_prayer'], ['holy', '🗺️', 'holy_title']]],
-    ['mn_discover', [['explore', '🧭', 'nav_explore'], ['discoveries', '🗂️', 'mn_disc'], ['umrah', '🏨', 'mn_umrah']]],
+    ['mn_faith', [['omra', '🕋', 'nav_omra'], ['https://maps.umrahcore.com/', '🕋', 'mn_mk_site'], ['makkah', '🗺️', 'mn_mk_osm'], ['sira', '🌙', 'sira_title'], ['prayer', '🕌', 'nav_prayer'], ['holy', '🗺️', 'holy_title']]],
+    ['mn_discover', [['explore', '🧭', 'nav_explore'], ['discoveries', '🗂️', 'mn_disc']]],
   ];
   /* ---------- Liens vers UmrahMap (maps.umrahcore.com) : hôtels par temps de marche, carte, portes ---------- */
   A.views.umrah = el => {
@@ -92,7 +92,7 @@
   };
 
   A.views.menu = el => {
-    el.innerHTML = `<h2>☰ ${A.t('nav_menu')}</h2>` + MENU.map(([h, items]) => `<h3 class="subh">${A.t(h)}</h3><div class="cards">${items.map(([r, ic, k]) => `<a class="pcard" href="#/${r}" style="text-decoration:none"><span class="ic">${ic}</span><span class="tt">${esc(A.t(k))}</span></a>`).join('')}</div>`).join('');
+    el.innerHTML = `<h2>☰ ${A.t('nav_menu')}</h2>` + MENU.map(([h, items]) => `<h3 class="subh">${A.t(h)}</h3><div class="cards">${items.map(([r, ic, k]) => `<a class="pcard" href="${/^https?:/.test(r) ? r : '#/' + r}" ${/^https?:/.test(r) ? 'target="_blank" rel="noopener"' : ''} style="text-decoration:none"><span class="ic">${ic}</span><span class="tt">${esc(A.t(k))}${/^https?:/.test(r) ? ' ↗' : ''}</span></a>`).join('')}</div>`).join('');
   };
 
 

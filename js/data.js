@@ -474,3 +474,7 @@ Object.assign(I18N.fr, { mn_umrah: 'Hôtels par temps de marche' }); Object.assi
 Object.assign(I18N.fr, { mk_title: 'Makkah', mk_sub: "Carte interactive de la Mosquée sacrée : portes, lieux des rites et hôtels classés par distance à pied." });
 Object.assign(I18N.en, { mk_title: 'Makkah', mk_sub: 'Interactive map of the Sacred Mosque: gates, rite places and hotels ranked by walking distance.' });
 Object.assign(I18N.ar, { mk_title: 'مكة', mk_sub: 'خريطة تفاعلية للمسجد الحرام: الأبواب ومواضع المناسك والفنادق مرتبة حسب المسافة مشيًا.' });
+
+Object.assign(I18N.fr, { mn_mk_site: 'Makkah', mn_mk_osm: 'Makkah · carte OpenStreetMap' });
+Object.assign(I18N.en, { mn_mk_site: 'Makkah', mn_mk_osm: 'Makkah · OpenStreetMap map' });
+Object.assign(I18N.ar, { mn_mk_site: 'مكة', mn_mk_osm: 'مكة · خريطة OpenStreetMap' });
