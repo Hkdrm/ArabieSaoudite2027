@@ -20,7 +20,7 @@
     if(!Number.isFinite(number) || number<0) return NaN;
     const map=rates(rateMap);
     if(!Object.hasOwn(map,currency)) return NaN;
-    return number*map[currency];
+    return Math.round((number * map[currency] + Number.EPSILON) * 100) / 100;
   }
   const fromCHF=(chf,currency,rateMap)=>{
     const map=rates(rateMap);
