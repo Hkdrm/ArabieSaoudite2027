@@ -124,7 +124,7 @@
       const hotel = stays.length ? stays.map(x => `🏨 <b>${esc(x.name || ST('hotel'))}</b> <span class="pill ${x.status === 'booked' ? 'ok' : ''}">${x.status === 'booked' ? '✓ ' + ST('booked') : ST('tbook')}</span>`).join('<br>') : `<a href="#/stay" class="muted">🏨 ${ST('hotel')} : ${ST('tbook')} →</a>`;
       const note = s.city === 'makkah' ? ST('omra') : s.city === 'madinah' ? ST('nabawi') : s.city === 'jeddah' ? ST('jeddah') : s.city === 'riyadh' ? ST('riyadh') : '';
       const tr = c.transports.find(x => (x.mode === 'train' || x.mode === 'flight') && x.to === s.city && x.date === s.in && x.from !== s.city);
-      return `${tr ? `<div class="muted" style="margin:2px 0 2px 14px;font-size:13px">${tr.mode === 'train' ? '🚆' : '✈️'} ${esc(shortD(tr.date))} · ${esc(cName(tr.from))} → ${esc(cName(tr.to))}</div>` : ''}
+      return `${tr ? `<div class="muted" style="margin:2px 0 2px 14px;font-size:13px">${A.circuit ? A.circuit.icon(tr) : '🚆'} ${A.circuit ? esc(A.circuit.label(tr)) + ' · ' : ''}${esc(shortD(tr.date))} · ${esc(cName(tr.from))} → ${esc(cName(tr.to))}</div>` : ''}
         <div class="sitem-tr ${cur ? 'done' : ''}" style="${s.city === 'makkah' ? 'border-color:#c9a227;border-width:2px' : ''}"><div class="row" style="gap:8px;flex-wrap:nowrap"><b class="grow">${s.city === 'makkah' ? '🕋 ' : ''}${i + 1}. ${esc(cName(s.city))}</b>${cur ? `<span class="pill ok">${ST('here')}</span>` : ''}</div>
           <div class="muted">📅 ${esc(shortD(s.in))} → ${esc(shortD(s.out))} · 🌙 ${n} ${n > 1 ? ST('nights') : ST('night')}</div>
           <div style="margin:4px 0">${hotel}</div>

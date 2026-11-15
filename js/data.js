@@ -482,3 +482,7 @@ Object.assign(I18N.ar, { mn_mk_site: 'مكة', mn_mk_osm: 'مكة · خريطة 
 Object.assign(I18N.fr, { mn_mk_site: 'Makkah · carte UmrahMap', mn_mk_osm: 'Makkah · notre carte' });
 Object.assign(I18N.en, { mn_mk_site: 'Makkah · UmrahMap', mn_mk_osm: 'Makkah · our map' });
 Object.assign(I18N.ar, { mn_mk_site: 'مكة · خريطة UmrahMap', mn_mk_osm: 'مكة · خريطتنا' });
+
+Object.assign(I18N.fr, { ci_m_train: 'Train Haramain', ci_m_taxi: 'Taxi / VTC', ci_m_bus: 'Bus', ci_m_car: 'Voiture de location', ci_m_flight: 'Vol', ci_find_car: 'Louer une voiture' });
+Object.assign(I18N.en, { ci_m_train: 'Haramain train', ci_m_taxi: 'Taxi / ride-hailing', ci_m_bus: 'Bus', ci_m_car: 'Rental car', ci_m_flight: 'Flight', ci_find_car: 'Rent a car' });
+Object.assign(I18N.ar, { ci_m_train: 'قطار الحرمين', ci_m_taxi: 'تاكسي / تطبيق', ci_m_bus: 'حافلة', ci_m_car: 'سيارة مستأجرة', ci_m_flight: 'رحلة جوية', ci_find_car: 'استئجار سيارة' });

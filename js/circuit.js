@@ -41,6 +41,23 @@
     riyadh: { fr: "Quartier central (Olaya) ou proche de l'aéroport selon vos visites : séjour court, 2 nuits.", en: 'Central district (Olaya) or near the airport depending on your visits: short stay, 2 nights.' },
   };
 
+  const MODE_IC = { train: '🚆', taxi: '🚕', bus: '🚌', car: '🚗', flight: '✈️' };
+  const MODE_KEY = { train: 'ci_m_train', taxi: 'ci_m_taxi', bus: 'ci_m_bus', car: 'ci_m_car', flight: 'ci_m_flight' };
+  const OPTS = { 'jeddah>makkah': ['train', 'taxi', 'bus', 'car'], 'makkah>madinah': ['train', 'taxi', 'bus', 'car'], 'madinah>riyadh': ['flight'], 'riyadh>jeddah': ['flight'] };
+  /* durées indicatives (à confirmer lors de la réservation) */
+  const INFO = {
+    'jeddah>makkah': { train: { fr: "Train à grande vitesse Haramain : durée et gare de départ à confirmer sur la billetterie.", en: 'Haramain high-speed train: check duration and departure station on the ticket site.' },
+      taxi: { fr: 'Environ 80 km : compter 1 h à 1 h 30 selon la circulation. Convenez du prix avant de partir ou utilisez une appli VTC.', en: 'About 80 km: allow 1–1.5 h depending on traffic. Agree the price first or use a ride-hailing app.' },
+      bus: { fr: 'Des bus relient Djeddah à La Mecque (SAPTCO) : à confirmer.', en: 'Buses link Jeddah and Makkah (SAPTCO): to confirm.' }, car: { fr: 'Environ 80 km par autoroute ; vérifiez les règles d’accès à La Mecque pour votre véhicule.', en: 'About 80 km by highway; check Makkah access rules for your vehicle.' } },
+    'makkah>madinah': { train: { fr: 'Train Haramain : environ 2 h 15 pour 450 km (à confirmer).', en: 'Haramain train: about 2 h 15 for 450 km (to confirm).' },
+      taxi: { fr: 'Environ 450 km : compter 4 h 30 à 5 h par la route. Prix à convenir à l’avance.', en: 'About 450 km: allow 4.5–5 h by road. Agree the price in advance.' },
+      bus: { fr: 'Bus longue distance (SAPTCO) : plus long que le train ; à confirmer.', en: 'Long-distance bus (SAPTCO): slower than the train; to confirm.' }, car: { fr: 'Environ 450 km ; prévoyez une pause et vérifiez l’assurance de la location.', en: 'About 450 km; plan a break and check rental insurance.' } },
+    'madinah>riyadh': { flight: { fr: 'Vol intérieur d’environ 1 h 30 (à confirmer).', en: 'Domestic flight of about 1 h 30 (to confirm).' } },
+    'riyadh>jeddah': { flight: { fr: 'Vol intérieur d’environ 1 h 45 (à confirmer).', en: 'Domestic flight of about 1 h 45 (to confirm).' } },
+  };
+  const modeOf = x => ((S.circuit && S.circuit.tmode) || {})[x.id] || x.mode;
+  const optsOf = x => OPTS[x.from + '>' + x.to] || [];
+  const modeLabel = m => t(MODE_KEY[m]);
   const get = () => S.circuit;
   const stageStatus = st => {
     const stays = (S.stays || []).filter(s => s.city === st.city && s.in && s.out && s.out > s.in && s.in < st.out && s.out > st.in);
@@ -55,16 +72,22 @@
   const flightsUrl = x => `https://www.google.com/travel/flights?q=${encodeURIComponent(`Flights from ${x.codes[0]} to ${x.codes[1]} on ${x.date}`)}`;
 
   const trCard = x => {
-    const done = !!(get().done || {})[x.id];
+    const done = !!(get().done || {})[x.id], m = modeOf(x), opts = optsOf(x);
     const title = x.mode === 'arrive' ? `🛬 ${t('ci_arrive')} ${cityName(x.to)}` : x.mode === 'leave' ? `🛫 ${t('ci_leave')} ${cityName(x.from)}` :
-      `${x.mode === 'train' ? '🚆' : '✈️'} ${cityName(x.from)} → ${cityName(x.to)}`;
-    const links = x.mode === 'train' ? `<a class="btn alt" href="https://hhr.sa/" target="_blank" rel="noopener">🚆 ${t('ci_book_train')} ↗</a>`
-      : x.mode === 'flight' ? `<a class="btn alt" href="${flightsUrl(x)}" target="_blank" rel="noopener">🔎 ${t('ci_find_flights')} ↗</a><a class="btn alt" href="https://www.saudia.com/" target="_blank" rel="noopener">Saudia ↗</a><a class="btn alt" href="https://www.flynas.com/" target="_blank" rel="noopener">flynas ↗</a><a class="btn alt" href="https://www.flyadeal.com/" target="_blank" rel="noopener">flyadeal ↗</a>`
-        : `<a class="btn alt" href="#/trip">✈️ ${t('nav_trip')} →</a>`;
-    const note = x.mode === 'train' ? t('ci_train_note') : x.mode === 'flight' ? (x.morning ? t('ci_flight_morning') : t('ci_flight_note')) : '';
+      `${MODE_IC[m]} ${cityName(x.from)} → ${cityName(x.to)}`;
+    const L2 = (u, txt) => `<a class="btn alt" href="${u}" target="_blank" rel="noopener">${txt} ↗</a>`;
+    const links = m === 'train' ? L2('https://hhr.sa/', `🚆 ${t('ci_book_train')}`)
+      : m === 'flight' ? `${L2(flightsUrl(x), `🔎 ${t('ci_find_flights')}`)}${L2('https://www.saudia.com/', 'Saudia')}${L2('https://www.flynas.com/', 'flynas')}${L2('https://www.flyadeal.com/', 'flyadeal')}`
+      : m === 'taxi' ? L2('https://www.careem.com/', 'Careem') + L2('https://www.uber.com/', 'Uber')
+      : m === 'bus' ? L2('https://www.saptco.com.sa/', 'SAPTCO')
+      : m === 'car' ? L2('https://www.discovercars.com/saudi-arabia', `🚗 ${t('ci_find_car')}`)
+      : `<a class="btn alt" href="#/trip">✈️ ${t('nav_trip')} →</a>`;
+    const info = (INFO[x.from + '>' + x.to] || {})[m];
+    const note = info ? tr(info) : (m === 'flight' ? (x.morning ? t('ci_flight_morning') : t('ci_flight_note')) : '');
+    const chips = opts.length > 1 ? `<div class="row" style="gap:6px;margin:6px 0 0 28px;flex-wrap:wrap">${opts.map(o => `<button type="button" class="chip ${m === o ? 'on' : ''}" data-tmode="${x.id}:${o}">${MODE_IC[o]} ${esc(modeLabel(o))}</button>`).join('')}</div>` : '';
     return `<div class="sitem-tr ${done ? 'done' : ''}"><div class="row" style="gap:8px;flex-wrap:nowrap"><label class="grow" style="display:flex;gap:8px;align-items:flex-start;margin:0">
-        <input type="checkbox" data-trdone="${x.id}" ${done ? 'checked' : ''} style="margin-top:3px"><span><b>${title}</b><br><span class="muted">📅 ${esc(short(x.date))}${x.morning ? ' · 🌅 ' + t('ci_morning') : ''}</span></span></label></div>
-      ${note ? `<div class="muted" style="margin:4px 0 0 28px;font-size:13px">${note}</div>` : ''}<div class="row" style="gap:6px;margin:6px 0 0 28px;flex-wrap:wrap">${links}</div></div>`;
+        <input type="checkbox" data-trdone="${x.id}" ${done ? 'checked' : ''} style="margin-top:3px"><span><b>${title}</b><br><span class="muted">📅 ${esc(short(x.date))}${x.morning ? ' · 🌅 ' + t('ci_morning') : ''}${opts.length ? ' · ' + esc(modeLabel(m)) : ''}</span></span></label></div>
+      ${chips}${note ? `<div class="muted" style="margin:4px 0 0 28px;font-size:13px">${esc(note)}</div>` : ''}<div class="row" style="gap:6px;margin:6px 0 0 28px;flex-wrap:wrap">${links}</div></div>`;
   };
 
   const html = () => {
@@ -99,6 +122,7 @@
       const c = JSON.parse(JSON.stringify(DEFAULT)); if (!ensureJourney(c)) return;
       S.circuit = c; save('circuit'); A.toast('✓ ' + t('ci_loaded')); h.redraw();
     };
+    $$('[data-tmode]', root).forEach(b => b.onclick = () => { const [id, m] = b.dataset.tmode.split(':'); const cc = get(); cc.tmode = cc.tmode || {}; cc.tmode[id] = m; save('circuit'); h.redraw(); });
     $$('[data-trdone]', root).forEach(i => i.onchange = () => { const c = get(); c.done = c.done || {}; if (i.checked) c.done[i.dataset.trdone] = 1; else delete c.done[i.dataset.trdone]; save('circuit'); h.redraw(); });
     $$('[data-addstay]', root).forEach(b => b.onclick = () => { const s = get().stages.find(x => x.id === b.dataset.addstay); if (!ensureJourney(get())) return; h.addStay(s); });
     const p = $('#ciPlan', root);
@@ -107,11 +131,11 @@
       const dayN = d => nights(d1, d) + 1; let added = 0;
       const push = (id, d, city, title) => { if (S.plan.some(x => x.id === id)) return; S.plan.push({ id, day: dayN(d), city, title, notes: '', done: false }); added++; };
       c.stages.forEach(s => push('ci-' + s.id, s.in, s.city, `🏨 ${cityName(s.city)} (${nights(s.in, s.out)} ${t('nights')})`));
-      c.transports.filter(x => x.mode === 'train' || x.mode === 'flight').forEach(x => push('ci-' + x.id, x.date, x.from, `${x.mode === 'train' ? '🚆' : '✈️'} ${cityName(x.from)} → ${cityName(x.to)}`));
+      c.transports.filter(x => x.mode === 'train' || x.mode === 'flight').forEach(x => push('ci-' + x.id, x.date, x.from, `${MODE_IC[modeOf(x)] || '🚆'} ${cityName(x.from)} → ${cityName(x.to)}`));
       save('plan'); A.toast(added ? `📒 ${added} ${t('ci_added')}` : t('ci_already'));
     };
     const r = $('#ciReset', root); if (r) r.onclick = () => { if (confirm(t('ci_remove_confirm'))) { S.circuit = null; save('circuit'); h.redraw(); } };
   };
 
-  A.circuit = { html, bind };
+  A.circuit = { html, bind, icon: x => MODE_IC[modeOf(x)] || '🚆', label: x => modeLabel(modeOf(x)) };
 })();
