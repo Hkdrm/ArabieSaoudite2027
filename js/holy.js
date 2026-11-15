@@ -54,7 +54,7 @@
     const queue = [], whenReady = f => (ready ? f() : queue.push(f));
     const ML = window.maplibregl;
     root.innerHTML = `<div class="card holy"><h3>🗺️ ${t('holy_title')}</h3><p class="muted" style="margin:0 0 8px;font-size:13px">${t('holy_sub')}</p>
-      <div class="tabs" id="hSites" role="tablist"></div><div class="chips" id="hLayers"></div>
+      <div class="tabs" id="hSites" role="tablist"></div><div class="chips" id="hLayers"></div><div id="hLegend" class="muted" style="font-size:12px;margin:0 0 6px"></div>
       <div id="hMapWrap" style="position:relative"><div id="hMap" style="height:340px;border-radius:14px;overflow:hidden;border:1px solid var(--bd)"></div>
         <div class="mapbtns"><button type="button" class="chip mapbtn" id="hBase"></button><button type="button" class="chip mapbtn" id="hFull" aria-label="${t('holy_full')}">⛶ ${t('holy_full')}</button></div></div>
       <div id="hList" style="margin-top:10px"></div>
@@ -134,7 +134,8 @@
     const ui = () => {
       $('#hSites', root).innerHTML = siteList().map(x => `<button type="button" class="tab ${site === x.id ? 'on' : ''}" role="tab" data-site="${x.id}">${esc(x.label)}</button>`).join('');
       const s = curSite(), cats = [...new Set(s.features.map(f => f.cat))].filter(c => c !== 'miqat');
-      $('#hLayers', root).innerHTML = site === 'miqats' ? '' : cats.map(c => `<button type="button" class="chip ${layers.has(c) ? 'on' : ''}" data-layer="${c}">${esc(t(CAT_KEY[c]))} · ${s.features.filter(f => f.cat === c).length}</button>`).join('') + (layers.has('hotel') ? `<div class="muted" style="font-size:12px;width:100%">${BAND_COL.map((c, i) => `<span style="color:${c}">●</span> ${['< 300 m', '300–600 m', '0,6–1 km', '1–2 km', '> 2 km'][i]}`).join(' · ')}<br>${t('holy_h_est')}</div>` : '');
+      $('#hLayers', root).innerHTML = site === 'miqats' ? '' : cats.map(c => `<button type="button" class="chip ${layers.has(c) ? 'on' : ''}" data-layer="${c}">${esc(t(CAT_KEY[c]))} · ${s.features.filter(f => f.cat === c).length}</button>`).join('');
+      { const lg = $('#hLegend', root); if (lg) lg.innerHTML = layers.has('hotel') && site !== 'miqats' ? `${BAND_COL.map((c, k) => `<span style="color:${c}">●</span> ${['< 300 m', '300–600 m', '0,6–1 km', '1–2 km', '> 2 km'][k]}`).join(' · ')}<br>${t('holy_h_est')}` : ''; }
       $('#hBase', root).textContent = base === 'sat' ? '🗺️ ' + t('holy_plan') : '🛰️ ' + t('holy_sat');
       shown = feats();
       const list = shown.slice(0, limit);
@@ -214,9 +215,10 @@
   A.holy = { mount, ctrl: null };
   /* Page « Makkah » : la carte interactive centrée sur la Mosquée sacrée, avec les portes, les rites et les hôtels par distance à pied */
   A.views.makkah = el => {
-    el.innerHTML = `<div class="mk"><h2>🕋 ${esc(t('mk_title'))}</h2><p class="muted" style="margin:0 0 8px">${t('mk_sub')}</p><div id="holyWrap"></div>
+    el.innerHTML = `<div class="mkpage"><h2>🕋 ${esc(t('mk_title'))}</h2><p class="muted" style="margin:0 0 8px">${t('mk_sub')}</p><div id="holyWrap"></div>
       <div class="card" style="margin-top:12px"><b>🏨 ${t('mn_umrah')}</b><div class="row" style="gap:8px;margin-top:8px;flex-wrap:wrap"><a class="btn alt" href="https://maps.umrahcore.com/hotels" target="_blank" rel="noopener">UmrahMap ↗</a><a class="ghost btn" href="#/stay">🏨 ${t('nav_stay')}</a><a class="ghost btn" href="#/omra">🕋 ${t('nav_omra')}</a></div></div></div>`;
     A.holy.ctrl = mount($('#holyWrap', el), { site: 'haram', layers: ['gate', 'rite', 'hotel'] });
+    let tries = 0; const iv = setInterval(() => { const m = A.holy.ctrl && A.holy.ctrl.map; if (++tries > 40 || !document.body.contains(el)) { clearInterval(iv); return; } if (m && m.loaded() && DATA) { clearInterval(iv); setTimeout(() => m.flyTo({ center: [39.8262, 21.4225], zoom: 15, duration: 900 }), 600); } }, 400);
   };
   A.views.holy = el => { el.innerHTML = '<h2>' + esc(t('holy_title')) + '</h2><div id="holyWrap"></div>'; A.holy.ctrl = mount($('#holyWrap', el)); };
 })();
