@@ -1,5 +1,6 @@
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
+  const Money = window.OmraCurrency;
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const store = {
@@ -25,10 +26,18 @@
     budget: store.get('budget', 0),
     rate: store.get('rate', 0.23),
     cur: store.get('cur', 'EUR'),
+    budgetChf: store.get('budgetChf', null),
+    fxRates: store.get('fxRates', null),
     fav: store.get('fav', []), visited: store.get('visited', {}), notes: store.get('notes', {}), vids: store.get('vids', {}), here: store.get('here', null), journey: store.get('journey', null), stays: store.get('stays', []),
   };
+  // Non-destructive migration: old 'budget' is SAR; retain it for rollback.
+  S.fxRates = Money.rates(S.fxRates);
+  if (S.budgetChf === null || !Number.isFinite(Number(S.budgetChf))) {
+    S.budgetChf = Money.legacyBudgetCHF(S.budget, S.rate, S.cur, S.fxRates);
+    store.set('budgetChf', S.budgetChf);
+  }
   const hooks = { onSave: () => {} };
-  const SYNC_KEYS = ['lang', 'city', 'method', 'trip', 'plan', 'checks', 'custom', 'cnt', 'exp', 'budget', 'rate', 'cur', 'fav', 'visited', 'notes', 'vids', 'journey', 'stays'];
+  const SYNC_KEYS = ['lang', 'city', 'method', 'trip', 'plan', 'checks', 'custom', 'cnt', 'exp', 'budget', 'rate', 'cur', 'budgetChf', 'fxRates', 'fav', 'visited', 'notes', 'vids', 'journey', 'stays'];
   (function migrate() {
     const old = store.get('flights', null);
     if (S.journey || !old) return;
@@ -676,21 +685,29 @@
       const cust = S.custom.map(c => ({ id: c.id, label: c.label, custom: true }));
       const total = all.reduce((n, [, a]) => n + a.length, 0) + cust.length;
       const done = all.flatMap(([, a]) => a).concat(cust).filter(i => S.checks[i.id]).length;
-      const toSar = e => e.cur === 'SAR' ? e.amount : e.amount / S.rate;
-      const spent = S.exp.reduce((n, e) => n + toSar(e), 0);
-      const fmtCur = sar => S.cur === 'SAR' ? `${nf(sar)} SAR` : `${nf(sar * S.rate)} ${S.cur}`;
+      const fx = Money.rates(S.fxRates);
+      const spent = S.exp.reduce((n, e) => {
+        const value = Money.toCHF(e.amount, e.cur, fx);
+        return n + (Number.isFinite(value) ? value : 0);
+      }, 0);
+      const fmtCHF = amount => Money.format(amount, 'CHF', S.lang === 'ar' ? 'ar-SA-u-nu-latn' : 'fr-CH');
+      const rateBox = ['USD', 'SAR'].map(code =>
+        `<div><label for="fx${code}">1 ${code} ≈ CHF</label><input id="fx${code}" data-fx="${code}" type="number" inputmode="decimal" min="0.0001" max="99" step="0.0001" value="${fx[code]}" style="width:115px"></div>`
+      ).join('');
+      const expCurs = Money.INPUT_CURRENCIES;
       el.innerHTML = `<h2>${t('tools_title')}</h2>
         <div class="card"><h3>✅ ${t('checklist')} <span class="pill">${done}/${total}</span></h3><progress max="${total}" value="${done}"></progress>
           ${all.map(([g, a]) => `<h3 style="margin-top:14px;font-size:14px;color:var(--mut)">${esc(g)}</h3>${a.map(i => `<div class="item ${S.checks[i.id] ? 'done' : ''}"><input type="checkbox" data-ck="${i.id}" ${S.checks[i.id] ? 'checked' : ''}><span class="tx">${esc(i.label)}</span></div>`).join('')}`).join('')}
           ${cust.length ? `<h3 style="margin-top:14px;font-size:14px;color:var(--mut)">★</h3>` + cust.map(i => `<div class="item ${S.checks[i.id] ? 'done' : ''}"><input type="checkbox" data-ck="${i.id}" ${S.checks[i.id] ? 'checked' : ''}><span class="tx">${esc(i.label)}</span><button class="danger" data-cdel="${i.id}">✕</button></div>`).join('') : ''}
           <form class="row" id="cf" style="margin-top:10px"><input class="grow" name="l" placeholder="${t('add_item')}" required><button>${t('add')}</button></form></div>
         <div class="card"><h3>💰 ${t('budget')}</h3>
-          <div class="row"><div><label>${t('planned')} (SAR)</label><input type="number" id="bud" value="${S.budget || ''}" style="width:130px"></div>
-            <div><label>${t('rate')}</label><div class="row"><input type="number" step="0.01" id="rate" value="${S.rate}" style="width:90px"><select id="cur">${['EUR', 'USD', 'GBP', 'CAD', 'CHF', 'SAR'].map(c => `<option ${S.cur === c ? 'selected' : ''}>${c}</option>`).join('')}</select></div></div></div>
-          <div style="margin:12px 0"><b>${t('spent')} :</b> ${nf(spent)} SAR ≈ ${fmtCur(spent)}${S.budget ? ` <span class="muted">/ ${nf(S.budget)} SAR</span>` : ''}</div>
-          ${S.budget ? `<progress max="${S.budget}" value="${Math.min(spent, S.budget)}"></progress>` : ''}
-          ${S.exp.length ? S.exp.map(e => `<div class="item"><span class="tx">${esc(e.label)}</span><b>${nf(e.amount)} ${e.cur}</b><button class="danger" data-edel="${e.id}">✕</button></div>`).join('') : `<p class="muted">${t('no_exp')}</p>`}
-          <form class="row" id="ef" style="margin-top:10px"><input class="grow" name="l" placeholder="${t('label')}" required><input name="a" type="number" step="0.01" placeholder="${t('amount')}" style="width:100px" required><select name="c"><option>SAR</option><option ${S.cur !== 'SAR' ? 'selected' : ''}>${S.cur !== 'SAR' ? S.cur : 'EUR'}</option></select><button>${t('add')}</button></form></div>
+          <div class="row"><div><label for="bud">${t('planned')} (CHF)</label><input type="number" inputmode="decimal" min="0" step="0.01" id="bud" value="${S.budgetChf || ''}" style="width:140px"></div>
+          <div class="grow"><label>${t('estimated_rates')}</label><div class="row">${rateBox}</div></div></div>
+          <p class="muted" style="font-size:12px">${t('rates_disclaimer')}</p>
+          <div style="margin:12px 0"><b>${t('spent')} :</b> ${fmtCHF(spent)} ${S.budgetChf ? `<span class="muted">/ ${fmtCHF(S.budgetChf)}</span>` : ''}</div>
+          ${S.budgetChf ? `<progress max="${S.budgetChf}" value="${Math.min(spent, S.budgetChf)}"></progress><p class="muted">${t('remaining_budget')}: ${fmtCHF(S.budgetChf-spent)}</p>` : ''}
+          ${S.exp.length ? S.exp.map(e => `<div class="item"><span class="tx">${esc(e.label)}</span><div><b>${Money.format(e.amount, Money.rates(fx)[e.cur] ? e.cur : 'CHF', 'fr-CH')}</b>${e.cur !== 'CHF' ? `<div class="muted">≈ ${fmtCHF(Money.toCHF(e.amount,e.cur,fx))}</div>` : ''}</div><button class="danger" data-edel="${e.id}">✕</button></div>`).join('') : `<p class="muted">${t('no_exp')}</p>`}
+          <form class="row" id="ef" style="margin-top:10px"><input class="grow" name="l" placeholder="${t('label')}" required><input name="a" type="number" min="0" step="0.01" placeholder="${t('amount')}" style="width:100px" required><select name="c">${expCurs.map(c=>`<option value="${c}" ${c==='CHF'?'selected':''}>${c}</option>`).join('')}</select><button>${t('add')}</button></form></div>
         <div id="syncBox"></div>
         <div class="card"><h3>💾 ${t('backup')}</h3><div class="row"><button class="ghost" id="exp">${t('export')}</button><button class="ghost" id="imp">${t('import')}</button><input type="file" id="file" accept="application/json" hidden></div>
           <p class="muted" style="margin-top:10px">v${APP_VERSION}</p>
@@ -699,10 +716,20 @@
       $$('[data-ck]', el).forEach(c => c.onchange = () => { S.checks[c.dataset.ck] = c.checked; save('checks'); const y = scrollY; draw(); scrollTo(0, y); });
       $$('[data-cdel]', el).forEach(b => b.onclick = () => { S.custom = S.custom.filter(x => x.id !== b.dataset.cdel); save('custom'); draw(); });
       $('#cf', el).onsubmit = e => { e.preventDefault(); S.custom.push({ id: 'c' + Date.now(), label: new FormData(e.target).get('l').trim() }); save('custom'); draw(); };
-      $('#bud', el).onchange = e => { S.budget = +e.target.value || 0; save('budget'); draw(); };
-      $('#rate', el).onchange = e => { S.rate = +e.target.value || S.rate; save('rate'); draw(); };
-      $('#cur', el).onchange = e => { S.cur = e.target.value; save('cur'); draw(); };
-      $('#ef', el).onsubmit = e => { e.preventDefault(); const f = new FormData(e.target); S.exp.push({ id: 'x' + Date.now(), label: f.get('l').trim(), amount: +f.get('a'), cur: f.get('c') }); save('exp'); draw(); };
+      $('#bud', el).onchange = e => { const v = +e.target.value; if (!Number.isFinite(v) || v < 0) return toast(t('invalid_amount')); S.budgetChf = v; save('budgetChf'); draw(); };
+      $('[data-fx]',el).forEach(input=>input.onchange=()=>{
+        const v = Number(input.value);
+        if (!Money.validRate(v)) { toast(t('invalid_rate')); draw(); return; }
+        S.fxRates = { ...Money.rates(S.fxRates), [input.dataset.fx]:v };
+        save('fxRates');draw();
+      });
+      $('#ef', el).onsubmit = e => {
+        e.preventDefault(); const f = new FormData(e.target);
+        const amount=Number(f.get('a')), cur=f.get('c');
+        if (!Number.isFinite(amount) || amount < 0 || !Money.INPUT_CURRENCIES.includes(cur)) {toast(t('invalid_amount'));return;}
+        S.exp.push({ id: 'x' + Date.now(), label: f.get('l').trim(), amount, cur });
+        save('exp'); draw();
+      };
       $$('[data-edel]', el).forEach(b => b.onclick = () => { S.exp = S.exp.filter(x => x.id !== b.dataset.edel); save('exp'); draw(); });
       $('#exp', el).onclick = () => {
         const blob = new Blob([JSON.stringify(S, null, 2)], { type: 'application/json' });
