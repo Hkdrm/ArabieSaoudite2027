@@ -77,7 +77,7 @@
   /* ---------- Menu : toutes les rubriques, regroupées (la barre du bas ne garde que l'essentiel) ---------- */
   const MENU = [
     ['mn_prepare', [['trip', '✈️', 'nav_trip'], ['stay', '🏨', 'nav_stay'], ['plan', '📒', 'nav_plan'], ['tools', '🧰', 'nav_tools']]],
-    ['mn_faith', [['omra', '🕋', 'nav_omra'], ['sira', '🌙', 'sira_title'], ['prayer', '🕌', 'nav_prayer'], ['holy', '🗺️', 'holy_title']]],
+    ['mn_faith', [['omra', '🕋', 'nav_omra'], ['makkah', '🕋', 'mk_title'], ['sira', '🌙', 'sira_title'], ['prayer', '🕌', 'nav_prayer'], ['holy', '🗺️', 'holy_title']]],
     ['mn_discover', [['explore', '🧭', 'nav_explore'], ['discoveries', '🗂️', 'mn_disc'], ['umrah', '🏨', 'mn_umrah']]],
   ];
   /* ---------- Liens vers UmrahMap (maps.umrahcore.com) : hôtels par temps de marche, carte, portes ---------- */

@@ -470,3 +470,7 @@ Object.assign(I18N.en, { holy_hotels: 'Hotels', holy_h_add: 'Add to my stays', h
 Object.assign(I18N.ar, { holy_hotels: 'الفنادق', holy_h_add: 'أضف إلى إقاماتي', holy_h_est: 'الفنادق: بيانات OpenStreetMap غير مكتملة. المسافة تقديرية إلى أقرب باب؛ تحقق منها في تبويب الإقامة.' });
 
 Object.assign(I18N.fr, { mn_umrah: 'Hôtels par temps de marche' }); Object.assign(I18N.en, { mn_umrah: 'Hotels by walking time' }); Object.assign(I18N.ar, { mn_umrah: 'الفنادق حسب زمن المشي' });
+
+Object.assign(I18N.fr, { mk_title: 'Makkah', mk_sub: "Carte interactive de la Mosquée sacrée : portes, lieux des rites et hôtels classés par distance à pied." });
+Object.assign(I18N.en, { mk_title: 'Makkah', mk_sub: 'Interactive map of the Sacred Mosque: gates, rite places and hotels ranked by walking distance.' });
+Object.assign(I18N.ar, { mk_title: 'مكة', mk_sub: 'خريطة تفاعلية للمسجد الحرام: الأبواب ومواضع المناسك والفنادق مرتبة حسب المسافة مشيًا.' });

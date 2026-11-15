@@ -49,7 +49,7 @@
   const aUrl = f => `https://maps.apple.com/?ll=${f.lat},${f.lng}&q=${encodeURIComponent(nm(f))}`;
 
   function mount(root, opts = {}) {
-    let site = opts.site || 'haram', layers = new Set(['gate', 'rite', 'sai']), hl = new Set(), base = 'plan', limit = 12;
+    let site = opts.site || 'haram', layers = new Set(opts.layers || ['gate', 'rite', 'sai']), hl = new Set(), base = 'plan', limit = 12;
     let map = null, markers = [], ready = false, shown = [];
     const queue = [], whenReady = f => (ready ? f() : queue.push(f));
     const ML = window.maplibregl;
@@ -212,5 +212,11 @@
   }
 
   A.holy = { mount, ctrl: null };
+  /* Page « Makkah » : la carte interactive centrée sur la Mosquée sacrée, avec les portes, les rites et les hôtels par distance à pied */
+  A.views.makkah = el => {
+    el.innerHTML = `<div class="mk"><h2>🕋 ${esc(t('mk_title'))}</h2><p class="muted" style="margin:0 0 8px">${t('mk_sub')}</p><div id="holyWrap"></div>
+      <div class="card" style="margin-top:12px"><b>🏨 ${t('mn_umrah')}</b><div class="row" style="gap:8px;margin-top:8px;flex-wrap:wrap"><a class="btn alt" href="https://maps.umrahcore.com/hotels" target="_blank" rel="noopener">UmrahMap ↗</a><a class="ghost btn" href="#/stay">🏨 ${t('nav_stay')}</a><a class="ghost btn" href="#/omra">🕋 ${t('nav_omra')}</a></div></div></div>`;
+    A.holy.ctrl = mount($('#holyWrap', el), { site: 'haram', layers: ['gate', 'rite', 'hotel'] });
+  };
   A.views.holy = el => { el.innerHTML = '<h2>' + esc(t('holy_title')) + '</h2><div id="holyWrap"></div>'; A.holy.ctrl = mount($('#holyWrap', el)); };
 })();

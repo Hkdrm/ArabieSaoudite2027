@@ -7,7 +7,7 @@
     set(k, v) { try { localStorage.setItem('omra:' + k, JSON.stringify(v)); } catch {} },
   };
 
-  const APP_VERSION = '2026-11-15.57';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
+  const APP_VERSION = '2026-11-15.58';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
 
   /* ---------- état ---------- */
   const detect = () => { const l = (navigator.language || 'fr').slice(0, 2); return LANGS[l] ? l : 'fr'; };
@@ -77,7 +77,7 @@
     if (geoWatch != null && navigator.geolocation) { navigator.geolocation.clearWatch(geoWatch); geoWatch = null; }
     const [r, arg] = (location.hash.replace('#/', '') || 'home').split('/');
     const name = views[r] ? r : 'home';
-    $$('#nav a').forEach(a => a.classList.toggle('on', a.dataset.r === (['place', 'map', 'discoveries'].includes(name) ? 'explore' : name === 'holy' ? 'omra' : ['trip', 'stay', 'plan', 'tools', 'prayer', 'import', 'menu', 'umrah'].includes(name) ? 'menu' : name)));
+    $$('#nav a').forEach(a => a.classList.toggle('on', a.dataset.r === (['place', 'map', 'discoveries'].includes(name) ? 'explore' : name === 'holy' ? 'omra' : ['trip', 'stay', 'plan', 'tools', 'prayer', 'import', 'menu', 'umrah', 'makkah'].includes(name) ? 'menu' : name)));
     $('#view').innerHTML = '';
     views[name]($('#view'), arg);
     window.scrollTo(0, 0);
