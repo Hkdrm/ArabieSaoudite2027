@@ -114,7 +114,7 @@
   let openStage = null, editId = null, formStatus = 'todo';
   const BKN = { jeddah: 'Jeddah', makkah: 'Mecca', madinah: 'Medina', riyadh: 'Riyadh' };
   const stageStays = s => (S.stays || []).filter(x => x.city === s.city && x.in && x.out && x.in < s.out && x.out > s.in);
-  const stageTr = (c, s) => c.transports.filter(x => (x.to === s.city && x.date === s.in) || (x.mode === 'leave' && x.date === s.out));
+  const stageTr = (c, s) => c.transports.filter(x => x.stage ? x.stage === s.id : ((x.to === s.city && x.date === s.in) || (x.mode === 'leave' && x.date === s.out)));
   const CURS = ['EUR', 'CHF', 'SAR', 'USD', 'GBP'];
   const hotelForm = x => {
     const v = x || { name: '', status: 'todo', addr: '', link: '', price: '', cur: 'EUR' };
@@ -132,7 +132,7 @@
       : `${stays.map(x => `<div class="row" style="gap:8px;margin:4px 0;flex-wrap:nowrap"><span class="grow">🏨 <b>${esc(x.name || ST('hotel'))}</b> <span class="pill ${x.status === 'booked' ? 'ok' : ''}">${x.status === 'booked' ? '✓ ' + ST('booked') : ST('tbook')}</span>${x.addr ? `<br><span class="muted" style="font-size:13px">${esc(x.addr)}</span>` : ''}</span><button type="button" class="chip" data-iedit="${x.id}">✏️ ${ST('edit')}</button></div>`).join('')}
         <div class="row" style="gap:6px;margin-top:6px;flex-wrap:wrap"><button type="button" class="chip on" data-ieadd="1">＋ ${A.t('add_stay')}</button><a class="chip" href="${bk}" target="_blank" rel="noopener">🔎 Booking ↗</a></div>`;
     const trs = stageTr(c, s).map(x => (A.circuit ? A.circuit.trCard(x) : '')).join('');
-    return `<div class="sbody" style="padding:8px 0 0"><h4 style="margin:6px 0 4px">🏨 ${A.t('ci_stages')}</h4>${hot}${trs ? `<h4 style="margin:12px 0 4px">🚆 ${A.t('ci_transports')}</h4>${trs}` : ''}</div>`;
+    return `<div class="sbody" style="padding:8px 0 0"><h4 style="margin:6px 0 4px">🏨 ${A.t('ci_stages')}</h4>${hot}<h4 style="margin:12px 0 4px">🚆 ${A.t('ci_transports')}</h4>${trs}<div style="margin-top:8px"><button type="button" class="chip on" data-addtr="${s.id}">＋ ${A.t('ci_add_tr')}</button></div></div>`;
   };
   const stayHtml = () => {
     const c = S.circuit;

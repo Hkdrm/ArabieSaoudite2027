@@ -41,8 +41,8 @@
     riyadh: { fr: "Quartier central (Olaya) ou proche de l'aéroport selon vos visites : séjour court, 2 nuits.", en: 'Central district (Olaya) or near the airport depending on your visits: short stay, 2 nights.' },
   };
 
-  const MODE_IC = { train: '🚆', taxi: '🚕', bus: '🚌', car: '🚗', flight: '✈️' };
-  const MODE_KEY = { train: 'ci_m_train', taxi: 'ci_m_taxi', bus: 'ci_m_bus', car: 'ci_m_car', flight: 'ci_m_flight' };
+  const MODE_IC = { train: '🚆', taxi: '🚕', bus: '🚌', car: '🚗', flight: '✈️', shuttle: '🚐', other: '➕' };
+  const MODE_KEY = { train: 'ci_m_train', taxi: 'ci_m_taxi', bus: 'ci_m_bus', car: 'ci_m_car', flight: 'ci_m_flight', shuttle: 'ci_m_shuttle', other: 'ci_m_other' };
   const OPTS = { 'jeddah>makkah': ['train', 'taxi', 'bus', 'car'], 'makkah>madinah': ['train', 'taxi', 'bus', 'car'], 'madinah>riyadh': ['flight'], 'riyadh>jeddah': ['flight'] };
   /* durées indicatives (à confirmer lors de la réservation) */
   const INFO = {
@@ -56,7 +56,10 @@
     'riyadh>jeddah': { flight: { fr: 'Vol intérieur d’environ 1 h 45 (à confirmer).', en: 'Domestic flight of about 1 h 45 (to confirm).' } },
   };
   const modeOf = x => ((S.circuit && S.circuit.tmode) || {})[x.id] || x.mode;
-  const optsOf = x => OPTS[x.from + '>' + x.to] || [];
+  const ALL_MODES = ['train', 'flight', 'taxi', 'bus', 'car', 'shuttle', 'other'];
+  const optsOf = x => (x.mode === 'arrive' || x.mode === 'leave' ? [] : ALL_MODES);
+  const tinfoOf = x => ((S.circuit && S.circuit.tinfo) || {})[x.id] || {};
+  const addTransport = stageId => { const cc = get(), st = cc.stages.find(s => s.id === stageId); if (!st) return; cc.transports.push({ id: 'tx' + Date.now(), date: st.in, mode: 'taxi', from: st.city, to: st.city, custom: true, stage: st.id }); cc.transports.sort((a, b) => a.date.localeCompare(b.date)); save('circuit'); };
   const modeLabel = m => t(MODE_KEY[m]);
   const get = () => S.circuit;
   const stageStatus = st => {
@@ -73,7 +76,8 @@
 
   const trCard = x => {
     const done = !!(get().done || {})[x.id], m = modeOf(x), opts = optsOf(x);
-    const title = x.mode === 'arrive' ? `🛬 ${t('ci_arrive')} ${cityName(x.to)}` : x.mode === 'leave' ? `🛫 ${t('ci_leave')} ${cityName(x.from)}` :
+    const inf = tinfoOf(x);
+    const title = x.custom ? `${MODE_IC[m]} ${esc(inf.label || modeLabel(m))}` : x.mode === 'arrive' ? `🛬 ${t('ci_arrive')} ${cityName(x.to)}` : x.mode === 'leave' ? `🛫 ${t('ci_leave')} ${cityName(x.from)}` :
       `${MODE_IC[m]} ${cityName(x.from)} → ${cityName(x.to)}`;
     const L2 = (u, txt) => `<a class="btn alt" href="${u}" target="_blank" rel="noopener">${txt} ↗</a>`;
     const links = m === 'train' ? L2('https://hhr.sa/', `🚆 ${t('ci_book_train')}`)
@@ -81,13 +85,20 @@
       : m === 'taxi' ? L2('https://www.careem.com/', 'Careem') + L2('https://www.uber.com/', 'Uber')
       : m === 'bus' ? L2('https://www.saptco.com.sa/', 'SAPTCO')
       : m === 'car' ? L2('https://www.discovercars.com/saudi-arabia', `🚗 ${t('ci_find_car')}`)
+      : m === 'shuttle' || m === 'other' ? ''
       : `<a class="btn alt" href="#/trip">✈️ ${t('nav_trip')} →</a>`;
     const info = (INFO[x.from + '>' + x.to] || {})[m];
     const note = info ? tr(info) : (m === 'flight' ? (x.morning ? t('ci_flight_morning') : t('ci_flight_note')) : '');
+    const sum = [inf.time, inf.ref, inf.price].filter(Boolean).map(esc).join(' · ');
+    const fld = (k, lbl, ph) => `<label style="margin-top:6px;display:block">${lbl}</label><input data-tinfo="${x.id}|${k}" value="${esc(inf[k] || '')}" placeholder="${esc(ph || '')}" style="width:100%">`;
+    const details = x.mode === 'arrive' || x.mode === 'leave' ? '' : `<details style="margin:6px 0 0 28px" ${sum || x.custom ? 'open' : ''}><summary class="muted" style="font-size:13px">✏️ ${t('ci_details')}</summary>
+      ${x.custom ? fld('label', t('ci_f_label'), modeLabel(m)) : ''}${fld('time', t('ci_f_time'), '08:30')}${fld('ref', t('ci_f_ref'))}${fld('price', t('ci_f_price'), '25 SAR')}
+      <label style="margin-top:6px;display:block">${t('ci_f_notes')}</label><textarea data-tinfo="${x.id}|notes" rows="2" style="width:100%">${esc(inf.notes || '')}</textarea>
+      ${x.custom ? `<p style="margin:8px 0 0"><button type="button" class="danger" data-tdel="${x.id}">${t('delete')}</button></p>` : ''}</details>`;
     const chips = opts.length > 1 ? `<div class="row" style="gap:6px;margin:6px 0 0 28px;flex-wrap:wrap">${opts.map(o => `<button type="button" class="chip ${m === o ? 'on' : ''}" data-tmode="${x.id}:${o}">${MODE_IC[o]} ${esc(modeLabel(o))}</button>`).join('')}</div>` : '';
     return `<div class="sitem-tr ${done ? 'done' : ''}"><div class="row" style="gap:8px;flex-wrap:nowrap"><label class="grow" style="display:flex;gap:8px;align-items:flex-start;margin:0">
         <input type="checkbox" data-trdone="${x.id}" ${done ? 'checked' : ''} style="margin-top:3px"><span><b>${title}</b><br><span class="muted">📅 ${esc(short(x.date))}${x.morning ? ' · 🌅 ' + t('ci_morning') : ''}${opts.length ? ' · ' + esc(modeLabel(m)) : ''}</span></span></label></div>
-      ${chips}${note ? `<div class="muted" style="margin:4px 0 0 28px;font-size:13px">${esc(note)}</div>` : ''}<div class="row" style="gap:6px;margin:6px 0 0 28px;flex-wrap:wrap">${links}</div></div>`;
+      ${chips}${sum ? `<div style="margin:4px 0 0 28px;font-size:13px">🧾 ${sum}</div>` : ''}${note ? `<div class="muted" style="margin:4px 0 0 28px;font-size:13px">${esc(note)}</div>` : ''}${links ? `<div class="row" style="gap:6px;margin:6px 0 0 28px;flex-wrap:wrap">${links}</div>` : ''}${details}</div>`;
   };
 
   const html = () => {
@@ -100,7 +111,7 @@
       return `<div class="sitem-tr"><div class="row" style="gap:8px;flex-wrap:nowrap"><b class="grow">${i + 1}. ${esc(cityName(s.city))}</b>${pill}</div>
         <div class="muted">📅 ${esc(short(s.in))} → ${esc(short(s.out))} · 🌙 ${q.n} ${t('nights')}</div>
         <div class="muted" style="font-size:13px;margin:4px 0">${esc(tr(TIPS[s.city]))}</div>${s.city === 'makkah' || s.city === 'madinah' ? `<div class="muted" style="font-size:12px;margin:0 0 4px">🚶 ${t('walk_legend')}</div>` : ''}
-        <div class="row" style="gap:6px;flex-wrap:wrap"><a class="btn" href="${bookingUrl(s)}" target="_blank" rel="noopener">🔎 Booking ↗</a><a class="btn alt" href="${mapsUrl(s)}" target="_blank" rel="noopener">Google Maps ↗</a><button type="button" class="ghost" data-addstay="${s.id}">＋ ${t('ci_add_stay')}</button></div></div>`;
+        <div class="row" style="gap:6px;flex-wrap:wrap"><a class="btn" href="${bookingUrl(s)}" target="_blank" rel="noopener">🔎 Booking ↗</a><a class="btn alt" href="${mapsUrl(s)}" target="_blank" rel="noopener">Google Maps ↗</a><button type="button" class="ghost" data-addstay="${s.id}">＋ ${t('ci_add_stay')}</button><button type="button" class="ghost" data-addtr="${s.id}">＋ ${t('ci_add_tr')}</button></div></div>`;
     }).join('');
     return `<div class="card"><h3>🗺️ ${t('ci_title')}</h3><p class="muted" style="margin:0 0 8px">${esc(short(c.stages[0].in))} → ${esc(short(c.stages.at(-1).out))} · ${tot} ${t('nights')}</p>
       <h4 style="margin:8px 0 4px">🏨 ${t('ci_stages')}</h4>${st}
@@ -122,6 +133,9 @@
       const c = JSON.parse(JSON.stringify(DEFAULT)); if (!ensureJourney(c)) return;
       S.circuit = c; save('circuit'); A.toast('✓ ' + t('ci_loaded')); h.redraw();
     };
+    $$('[data-tinfo]', root).forEach(i => i.oninput = () => { const [id, k] = i.dataset.tinfo.split('|'); const cc = get(); cc.tinfo = cc.tinfo || {}; (cc.tinfo[id] = cc.tinfo[id] || {})[k] = i.value; save('circuit'); });
+    $$('[data-tdel]', root).forEach(b => b.onclick = () => { if (confirm(t('ci_del_tr'))) { const cc = get(); cc.transports = cc.transports.filter(y => y.id !== b.dataset.tdel); save('circuit'); h.redraw(); } });
+    $$('[data-addtr]', root).forEach(b => b.onclick = () => { addTransport(b.dataset.addtr); h.redraw(); });
     $$('[data-tmode]', root).forEach(b => b.onclick = () => { const [id, m] = b.dataset.tmode.split(':'); const cc = get(); cc.tmode = cc.tmode || {}; cc.tmode[id] = m; save('circuit'); h.redraw(); });
     $$('[data-trdone]', root).forEach(i => i.onchange = () => { const c = get(); c.done = c.done || {}; if (i.checked) c.done[i.dataset.trdone] = 1; else delete c.done[i.dataset.trdone]; save('circuit'); h.redraw(); });
     $$('[data-addstay]', root).forEach(b => b.onclick = () => { const s = get().stages.find(x => x.id === b.dataset.addstay); if (!ensureJourney(get())) return; h.addStay(s); });
@@ -131,11 +145,11 @@
       const dayN = d => nights(d1, d) + 1; let added = 0;
       const push = (id, d, city, title) => { if (S.plan.some(x => x.id === id)) return; S.plan.push({ id, day: dayN(d), city, title, notes: '', done: false }); added++; };
       c.stages.forEach(s => push('ci-' + s.id, s.in, s.city, `🏨 ${cityName(s.city)} (${nights(s.in, s.out)} ${t('nights')})`));
-      c.transports.filter(x => x.mode === 'train' || x.mode === 'flight').forEach(x => push('ci-' + x.id, x.date, x.from, `${MODE_IC[modeOf(x)] || '🚆'} ${cityName(x.from)} → ${cityName(x.to)}`));
+      c.transports.filter(x => x.mode !== 'arrive' && x.mode !== 'leave').forEach(x => push('ci-' + x.id, x.date, x.from, `${MODE_IC[modeOf(x)] || '🚆'} ${x.custom ? (tinfoOf(x).label || modeLabel(modeOf(x))) : cityName(x.from) + ' → ' + cityName(x.to)}${tinfoOf(x).time ? ' · ' + tinfoOf(x).time : ''}`));
       save('plan'); A.toast(added ? `📒 ${added} ${t('ci_added')}` : t('ci_already'));
     };
     const r = $('#ciReset', root); if (r) r.onclick = () => { if (confirm(t('ci_remove_confirm'))) { S.circuit = null; save('circuit'); h.redraw(); } };
   };
 
-  A.circuit = { html, bind, trCard, icon: x => MODE_IC[modeOf(x)] || '🚆', label: x => modeLabel(modeOf(x)) };
+  A.circuit = { html, bind, trCard, addTransport, icon: x => MODE_IC[modeOf(x)] || '🚆', label: x => modeLabel(modeOf(x)) };
 })();
