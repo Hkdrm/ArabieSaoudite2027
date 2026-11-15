@@ -93,7 +93,7 @@
         ${s.in && s.out ? `<div>📅 ${esc(short(s.in))} → ${esc(short(s.out))}</div>` : ''}
         ${s.addr ? `<div class="muted">${esc(s.addr)}</div>` : ''}
         ${walkHtml(s)}
-        ${s.price ? `<div>💶 ${esc(s.price)} ${esc(s.cur || '')}</div>` : ''}
+        ${s.price ? `<div>💶 ${esc(s.price)} ${esc(s.cur || '')} <span class="pill ${s.pay === 'paid' ? 'ok' : ''}">${A.pay.PAY_IC[s.pay] || '⏳'} ${t({ paid: 'pay_paid', partial: 'pay_partial', onsite: 'pay_onsite' }[s.pay] || 'pay_todo')}</span></div>` : ''}
         ${s.ref ? `<div class="muted">${t('booking_ref')} : <b>${esc(s.ref)}</b></div>` : ''}
         ${s.notes ? `<div class="muted" style="margin-top:4px">${esc(s.notes)}</div>` : ''}
         <div class="row" style="margin-top:10px">
@@ -140,8 +140,7 @@
         <label>${t('st_addr')}</label><input id="fAddr" value="${esc(f.addr)}" style="width:100%">
         <label style="margin-top:8px">${t('st_link')}</label><input id="fLink" inputmode="url" autocapitalize="off" value="${esc(f.link)}" placeholder="https://…" style="width:100%">
         <label style="margin-top:8px">${t('booking_ref')} <span class="muted">(${t('local_only')})</span></label><input id="fRef" value="${esc(f.ref)}" style="width:100%">
-        <div class="row" style="margin-top:8px"><div class="grow"><label>${t('st_price')}</label><input id="fPrice" inputmode="decimal" value="${esc(f.price)}" style="width:100%"></div>
-          <div><label>${t('currency')}</label><select id="fCur">${opts(CUR, f.cur)}</select></div></div>
+        ${A.pay.fields('fp', { amount: f.price, cur: f.cur, pay: f.pay, paidAmt: f.paidAmt })}
         <label style="margin-top:8px">${t('st_phone')}</label><input id="fPhone" inputmode="tel" value="${esc(f.phone)}" style="width:100%">
         <label style="margin-top:8px">${t('st_notes')}</label><textarea id="fNotes" rows="3" style="width:100%">${esc(f.notes)}</textarea></div>
         <div class="stickybar"><button type="button" class="ghost" id="cancel">${t('cancel')}</button><button type="button" id="saveStay" style="flex:1">✓ ${t('save')}</button></div>
@@ -149,6 +148,7 @@
       const bind = (id, k, fn) => { const i = $(id, el); if (i) i.oninput = i.onchange = () => { f[k] = fn ? fn(i.value) : i.value; }; };
       bind('#fCity', 'city'); bind('#fName', 'name'); bind('#fAddr', 'addr'); bind('#fLink', 'link'); bind('#fRef', 'ref'); bind('#fPrice', 'price'); bind('#fCur', 'cur'); bind('#fPhone', 'phone'); bind('#fNotes', 'notes');
       $$('[data-st]', el).forEach(b => b.onclick = () => { f.status = b.dataset.st; $$('[data-st]', el).forEach(x => x.classList.toggle('on', x === b)); });
+      A.pay.wire(el, 'fp');
       const fin = $('#fIn', el), fout = $('#fOut', el);
       const checkDates = () => {
         if (!fin) return true;
@@ -160,6 +160,7 @@
       $('#saveStay', el).onclick = () => {
         if (!checkDates()) return;
         const rec = { ...f, name: f.name.trim(), addr: f.addr.trim(), link: safeUrl(f.link), ref: f.ref.trim(), price: String(f.price).trim(), phone: f.phone.trim(), notes: f.notes.trim() };
+        const pv = A.pay.read(el, 'fp'); rec.price = pv.amount ? String(pv.amount) : ''; rec.cur = pv.cur; rec.pay = pv.pay; rec.paidAmt = pv.paidAmt;
         const i = S.stays.findIndex(x => x.id === rec.id);
         if (i >= 0) S.stays[i] = rec; else S.stays.push(rec);
         save('stays'); editing = null; draw(); A.toast(t('saved'));

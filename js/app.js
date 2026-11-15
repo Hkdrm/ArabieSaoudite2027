@@ -7,7 +7,7 @@
     set(k, v) { try { localStorage.setItem('omra:' + k, JSON.stringify(v)); } catch {} },
   };
 
-  const APP_VERSION = '2026-11-15.67';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
+  const APP_VERSION = '2026-11-15.68';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
 
   /* ---------- état ---------- */
   const detect = () => { const l = (navigator.language || 'fr').slice(0, 2); return LANGS[l] ? l : 'fr'; };
@@ -25,10 +25,10 @@
     budget: store.get('budget', 0),
     rate: store.get('rate', 0.23),
     cur: store.get('cur', 'EUR'),
-    fav: store.get('fav', []), visited: store.get('visited', {}), sira: store.get('sira', {}), circuit: store.get('circuit', null), notes: store.get('notes', {}), vids: store.get('vids', {}), here: store.get('here', null), journey: store.get('journey', null), stays: store.get('stays', []),
+    fav: store.get('fav', []), visited: store.get('visited', {}), sira: store.get('sira', {}), circuit: store.get('circuit', null), pays: store.get('pays', {}), notes: store.get('notes', {}), vids: store.get('vids', {}), here: store.get('here', null), journey: store.get('journey', null), stays: store.get('stays', []),
   };
   const hooks = { onSave: () => {} };
-  const SYNC_KEYS = ['lang', 'city', 'method', 'trip', 'plan', 'checks', 'custom', 'cnt', 'exp', 'budget', 'rate', 'cur', 'fav', 'visited', 'notes', 'vids', 'journey', 'stays', 'sira', 'circuit'];
+  const SYNC_KEYS = ['lang', 'city', 'method', 'trip', 'plan', 'checks', 'custom', 'cnt', 'exp', 'budget', 'rate', 'cur', 'fav', 'visited', 'notes', 'vids', 'journey', 'stays', 'sira', 'circuit', 'pays'];
   (function migrate() {
     const old = store.get('flights', null);
     if (S.journey || !old) return;
@@ -77,7 +77,7 @@
     if (geoWatch != null && navigator.geolocation) { navigator.geolocation.clearWatch(geoWatch); geoWatch = null; }
     const [r, arg] = (location.hash.replace('#/', '') || 'home').split('/');
     const name = views[r] ? r : 'home';
-    $$('#nav a').forEach(a => a.classList.toggle('on', a.dataset.r === (['place', 'map', 'discoveries'].includes(name) ? 'explore' : name === 'holy' ? 'omra' : ['trip', 'stay', 'plan', 'tools', 'prayer', 'import', 'menu', 'umrah', 'makkah'].includes(name) ? 'menu' : name)));
+    $$('#nav a').forEach(a => a.classList.toggle('on', a.dataset.r === (['place', 'map', 'discoveries'].includes(name) ? 'explore' : name === 'holy' ? 'omra' : ['trip', 'stay', 'plan', 'tools', 'prayer', 'import', 'menu', 'umrah', 'makkah', 'expenses'].includes(name) ? 'menu' : name)));
     $('#view').innerHTML = '';
     views[name]($('#view'), arg);
     window.scrollTo(0, 0);
@@ -677,7 +677,7 @@
       const total = all.reduce((n, [, a]) => n + a.length, 0) + cust.length;
       const done = all.flatMap(([, a]) => a).concat(cust).filter(i => S.checks[i.id]).length;
       const toSar = e => e.cur === 'SAR' ? e.amount : e.amount / S.rate;
-      const spent = S.exp.reduce((n, e) => n + toSar(e), 0);
+      const spent = S.exp.reduce((n, e) => n + toSar({ ...e, amount: window.Omra.pay ? window.Omra.pay.paidOf(e) : e.amount }), 0);
       const fmtCur = sar => S.cur === 'SAR' ? `${nf(sar)} SAR` : `${nf(sar * S.rate)} ${S.cur}`;
       el.innerHTML = `<h2>${t('tools_title')}</h2>
         <div class="card"><h3>✅ ${t('checklist')} <span class="pill">${done}/${total}</span></h3><progress max="${total}" value="${done}"></progress>
@@ -711,7 +711,7 @@
       $('#imp', el).onclick = () => $('#file', el).click();
       $('#file', el).onchange = async e => {
         try { const d = JSON.parse(await e.target.files[0].text()); if (typeof d !== 'object' || !d) throw 0;
-          for (const k of ['lang', 'city', 'geo', 'method', 'trip', 'plan', 'checks', 'custom', 'cnt', 'exp', 'budget', 'rate', 'cur', 'fav', 'visited', 'notes', 'vids', 'here', 'journey', 'stays', 'sira', 'circuit']) if (k in d) { S[k] = d[k]; save(k); }
+          for (const k of ['lang', 'city', 'geo', 'method', 'trip', 'plan', 'checks', 'custom', 'cnt', 'exp', 'budget', 'rate', 'cur', 'fav', 'visited', 'notes', 'vids', 'here', 'journey', 'stays', 'sira', 'circuit', 'pays']) if (k in d) { S[k] = d[k]; save(k); }
           applyLang(); toast(t('imported')); draw(); } catch { toast(t('import_err')); }
       };
     };

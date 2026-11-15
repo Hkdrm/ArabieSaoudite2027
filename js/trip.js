@@ -285,9 +285,11 @@
       el.innerHTML = `<h2>${t('my_trip')}</h2><datalist id="apts">${Object.entries(AIRPORTS).map(([c, n]) => `<option value="${c}">${esc(n)}</option>`).join('')}</datalist>
         <div class="card hero">${hero}</div>${legCard('out')}${legCard('ret')}
         ${J.ref ? `<div class="card"><label>${t('booking_ref')}</label><b>${esc(J.ref)}</b></div>` : ''}
+        <a class="card" href="#/expenses" id="payFl" style="display:block;color:inherit;text-decoration:none"><b>💶 ${t('pay_fl_btn')} →</b><div class="muted" style="font-size:13px">${t('pay_fl_sub')}</div></a>
         <button type="button" class="ghost" id="impOpen" style="width:100%;margin-bottom:10px">📋 ${t('imp_btn_complete')}</button>
         <div class="row"><button type="button" class="ghost" id="editTrip">✏️ ${t('edit_trip')}</button><button type="button" class="danger" id="delTrip">${t('delete_trip')}</button></div>`;
       $$('[data-edit]', el).forEach(b => b.onclick = e => { e.preventDefault(); editLeg = editLeg === b.dataset.edit ? null : b.dataset.edit; draw(); });
+      const pf = $('#payFl', el); if (pf) pf.onclick = () => { window.Omra.payOpen = 'flight-out'; };
       const ok = $('#legOk', el);
       if (ok) ok.onclick = () => { editLeg = null; draw(); };
       const K = editLeg && keys(editLeg);

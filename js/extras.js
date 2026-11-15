@@ -76,7 +76,7 @@
 
   /* ---------- Menu : toutes les rubriques, regroupées (la barre du bas ne garde que l'essentiel) ---------- */
   const MENU = [
-    ['mn_prepare', [['trip', '✈️', 'nav_trip'], ['stay', '🏨', 'nav_stay'], ['plan', '📒', 'nav_plan'], ['tools', '🧰', 'nav_tools']]],
+    ['mn_prepare', [['trip', '✈️', 'nav_trip'], ['stay', '🏨', 'nav_stay'], ['plan', '📒', 'nav_plan'], ['expenses', '💶', 'pay_title'], ['tools', '🧰', 'nav_tools']]],
     ['mn_faith', [['omra', '🕋', 'nav_omra'], ['https://maps.umrahcore.com/', '🕋', 'mn_mk_site'], ['makkah', '🗺️', 'mn_mk_osm'], ['sira', '🌙', 'sira_title'], ['prayer', '🕌', 'nav_prayer'], ['holy', '🗺️', 'holy_title']]],
     ['mn_discover', [['explore', '🧭', 'nav_explore'], ['discoveries', '🗂️', 'mn_disc']]],
   ];
@@ -122,7 +122,7 @@
       <div class="chips" style="margin:8px 0"><button type="button" class="chip ${formStatus !== 'booked' ? 'on' : ''}" data-iest="todo">${A.t('st_todo')}</button><button type="button" class="chip ${formStatus === 'booked' ? 'on' : ''}" data-iest="booked">${A.t('st_booked')}</button></div>
       <label>${A.t('st_addr')}</label><input id="ie-addr" value="${esc(v.addr)}" style="width:100%">
       <label style="margin-top:8px">${A.t('st_link')}</label><input id="ie-link" inputmode="url" autocapitalize="off" value="${esc(v.link)}" placeholder="https://…" style="width:100%">
-      <div class="row" style="margin-top:8px"><div class="grow"><label>${A.t('st_price')}</label><input id="ie-price" inputmode="decimal" value="${esc(v.price)}" style="width:100%"></div><div><label>${A.t('currency')}</label><select id="ie-cur">${CURS.map(k => `<option ${k === (v.cur || 'EUR') ? 'selected' : ''}>${k}</option>`).join('')}</select></div></div>
+      ${A.pay.fields('ie', { amount: v.price, cur: v.cur, pay: v.pay, paidAmt: v.paidAmt })}
       <div class="row" style="gap:8px;margin-top:10px"><button type="button" id="ie-save">✓ ${A.t('save')}</button><button type="button" class="ghost" id="ie-cancel">${A.t('cancel')}</button>${x ? `<button type="button" class="danger" id="ie-del">${A.t('delete')}</button>` : ''}</div></div>`;
   };
   const panel = (c, s) => {
@@ -168,12 +168,13 @@
     $$('[data-ieadd]', box).forEach(b => b.onclick = () => { editId = 'new'; formStatus = 'todo'; redo(); });
     $$('[data-iest]', box).forEach(b => b.onclick = () => { formStatus = b.dataset.iest; $$('[data-iest]', box).forEach(x => x.classList.toggle('on', x === b)); });
     const stage = (S.circuit && S.circuit.stages.find(x => x.id === openStage)) || null;
+    A.pay.wire(box, 'ie');
     const cancel = $('#ie-cancel', box); if (cancel) cancel.onclick = () => { editId = null; redo(); };
     const save = $('#ie-save', box);
     if (save && stage) save.onclick = () => {
       const val = id => ($('#' + id, box) || { value: '' }).value.trim();
       let link = val('ie-link'); if (link && !/^[a-z][a-z0-9+.-]*:/i.test(link)) link = 'https://' + link; if (link && !/^https?:\/\//i.test(link)) link = '';
-      const f = { name: val('ie-name'), status: formStatus, addr: val('ie-addr'), link, price: val('ie-price'), cur: val('ie-cur') || 'EUR' };
+      const pv = A.pay.read(box, 'ie'); const f = { name: val('ie-name'), status: formStatus, addr: val('ie-addr'), link, price: pv.amount ? String(pv.amount) : '', cur: pv.cur, pay: pv.pay, paidAmt: pv.paidAmt };
       S.stays = S.stays || [];
       if (editId === 'new') S.stays.push({ id: 's' + Date.now(), city: stage.city, in: stage.in, out: stage.out, phone: '', notes: '', ref: '', ...f });
       else { const x = S.stays.find(y => y.id === editId); if (x) Object.assign(x, f); }

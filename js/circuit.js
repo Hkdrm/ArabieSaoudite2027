@@ -89,10 +89,16 @@
       : `<a class="btn alt" href="#/trip">✈️ ${t('nav_trip')} →</a>`;
     const info = (INFO[x.from + '>' + x.to] || {})[m];
     const note = info ? tr(info) : (m === 'flight' ? (x.morning ? t('ci_flight_morning') : t('ci_flight_note')) : '');
-    const sum = [inf.time, inf.ref, inf.price].filter(Boolean).map(esc).join(' · ');
+    const amt = inf.amount != null && inf.amount !== '' ? inf.amount : inf.price;
+    const payIc = { todo: '⏳', paid: '✅', partial: '🔸', onsite: '📍' }[inf.pay] || '⏳';
+    const sum = [inf.time, inf.ref, amt ? `${amt} ${inf.cur || 'EUR'} ${payIc}` : ''].filter(Boolean).map(esc).join(' · ');
+    const payRow = `<div class="row" style="gap:8px;margin-top:6px"><div class="grow"><label>${t('pay_amount')}</label><input data-tinfo="${x.id}|amount" inputmode="decimal" value="${esc(amt || '')}" style="width:100%"></div>
+      <div><label>${t('currency')}</label><select data-tinfo="${x.id}|cur">${['EUR', 'CHF', 'SAR', 'USD', 'GBP'].map(k => `<option ${k === (inf.cur || 'EUR') ? 'selected' : ''}>${k}</option>`).join('')}</select></div></div>
+      <div class="row" style="gap:8px;margin-top:6px"><div class="grow"><label>${t('pay_status')}</label><select data-tinfo="${x.id}|pay" style="width:100%">${['todo', 'paid', 'partial', 'onsite'].map(k => `<option value="${k}" ${(inf.pay || 'todo') === k ? 'selected' : ''}>${{ todo: '⏳', paid: '✅', partial: '🔸', onsite: '📍' }[k]} ${esc(t({ todo: 'pay_todo', paid: 'pay_paid', partial: 'pay_partial', onsite: 'pay_onsite' }[k]))}</option>`).join('')}</select></div>
+        <div class="grow"><label>${t('pay_paid_amt')}</label><input data-tinfo="${x.id}|paidAmt" inputmode="decimal" value="${esc(inf.paidAmt || '')}" style="width:100%"></div></div>`;
     const fld = (k, lbl, ph) => `<label style="margin-top:6px;display:block">${lbl}</label><input data-tinfo="${x.id}|${k}" value="${esc(inf[k] || '')}" placeholder="${esc(ph || '')}" style="width:100%">`;
     const details = x.mode === 'arrive' || x.mode === 'leave' ? '' : `<details style="margin:6px 0 0 28px" ${sum || x.custom ? 'open' : ''}><summary class="muted" style="font-size:13px">✏️ ${t('ci_details')}</summary>
-      ${x.custom ? fld('label', t('ci_f_label'), modeLabel(m)) : ''}${fld('time', t('ci_f_time'), '08:30')}${fld('ref', t('ci_f_ref'))}${fld('price', t('ci_f_price'), '25 SAR')}
+      ${x.custom ? fld('label', t('ci_f_label'), modeLabel(m)) : ''}${fld('time', t('ci_f_time'), '08:30')}${fld('ref', t('ci_f_ref'))}${payRow}
       <label style="margin-top:6px;display:block">${t('ci_f_notes')}</label><textarea data-tinfo="${x.id}|notes" rows="2" style="width:100%">${esc(inf.notes || '')}</textarea>
       ${x.custom ? `<p style="margin:8px 0 0"><button type="button" class="danger" data-tdel="${x.id}">${t('delete')}</button></p>` : ''}</details>`;
     const chips = opts.length > 1 ? `<div class="row" style="gap:6px;margin:6px 0 0 28px;flex-wrap:wrap">${opts.map(o => `<button type="button" class="chip ${m === o ? 'on' : ''}" data-tmode="${x.id}:${o}">${MODE_IC[o]} ${esc(modeLabel(o))}</button>`).join('')}</div>` : '';
@@ -133,7 +139,7 @@
       const c = JSON.parse(JSON.stringify(DEFAULT)); if (!ensureJourney(c)) return;
       S.circuit = c; save('circuit'); A.toast('✓ ' + t('ci_loaded')); h.redraw();
     };
-    $$('[data-tinfo]', root).forEach(i => i.oninput = () => { const [id, k] = i.dataset.tinfo.split('|'); const cc = get(); cc.tinfo = cc.tinfo || {}; (cc.tinfo[id] = cc.tinfo[id] || {})[k] = i.value; save('circuit'); });
+    $$('[data-tinfo]', root).forEach(i => i.oninput = i.onchange = () => { const [id, k] = i.dataset.tinfo.split('|'); const cc = get(); cc.tinfo = cc.tinfo || {}; (cc.tinfo[id] = cc.tinfo[id] || {})[k] = i.value; save('circuit'); });
     $$('[data-tdel]', root).forEach(b => b.onclick = () => { if (confirm(t('ci_del_tr'))) { const cc = get(); cc.transports = cc.transports.filter(y => y.id !== b.dataset.tdel); save('circuit'); h.redraw(); } });
     $$('[data-addtr]', root).forEach(b => b.onclick = () => { addTransport(b.dataset.addtr); h.redraw(); });
     $$('[data-tmode]', root).forEach(b => b.onclick = () => { const [id, m] = b.dataset.tmode.split(':'); const cc = get(); cc.tmode = cc.tmode || {}; cc.tmode[id] = m; save('circuit'); h.redraw(); });
