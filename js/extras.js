@@ -127,9 +127,10 @@
       return `${tr ? `<div class="muted" style="margin:2px 0 2px 14px;font-size:13px">${tr.mode === 'train' ? '🚆' : '✈️'} ${esc(shortD(tr.date))} · ${esc(cName(tr.from))} → ${esc(cName(tr.to))}</div>` : ''}
         <div class="sitem-tr ${cur ? 'done' : ''}" style="${s.city === 'makkah' ? 'border-color:#c9a227;border-width:2px' : ''}"><div class="row" style="gap:8px;flex-wrap:nowrap"><b class="grow">${s.city === 'makkah' ? '🕋 ' : ''}${i + 1}. ${esc(cName(s.city))}</b>${cur ? `<span class="pill ok">${ST('here')}</span>` : ''}</div>
           <div class="muted">📅 ${esc(shortD(s.in))} → ${esc(shortD(s.out))} · 🌙 ${n} ${n > 1 ? ST('nights') : ST('night')}</div>
-          <div style="margin:4px 0">${hotel}</div>${note ? `<div class="muted" style="font-size:13px">${note}${s.city === 'makkah' ? ` <a href="#omraSteps" data-goihram>${ST('see_ihram')} ↓</a>` : ''}</div>` : ''}</div>`;
+          <div style="margin:4px 0">${hotel}</div>
+          <div class="row" style="gap:6px;margin:6px 0">${stays.length ? stays.map(x => `<button type="button" class="chip" data-editstay="${x.id}">✏️ ${ST('edit')}${stays.length > 1 ? ' · ' + esc(x.name || ST('hotel')) : ''}</button>`).join('') : `<button type="button" class="chip" data-addstage="${s.id}">＋ ${ST('hotel')}</button>`}</div>${note ? `<div class="muted" style="font-size:13px">${note}${s.city === 'makkah' ? ` <a href="#omraSteps" data-goihram>${ST('see_ihram')} ↓</a>` : ''}</div>` : ''}</div>`;
     }).join('');
-    return `<div class="card"><div class="row" style="justify-content:space-between;flex-wrap:nowrap"><h3 style="margin:0">🧳 ${ST('title')}</h3><a class="ghost btn" href="#/stay">${ST('edit')}</a></div>
+    return `<div class="card"><h3 style="margin:0">🧳 ${ST('title')}</h3>
       <p class="muted" style="margin:4px 0 8px">${esc(shortD(d1))} → ${esc(shortD(d2))} · ${tot} ${ST('nights')}${head ? ' · ' + head : ''}</p>${rows}${flights}</div>`;
   };
 
@@ -138,6 +139,8 @@
     wrap(el);
     const w = $('#holyWrap', el); if (!w) return;
     w.insertAdjacentHTML('beforebegin', stayHtml() + duaHtml() + infoHtml());
+    $$('[data-editstay]', el).forEach(b => b.onclick = () => { A.stayEdit = b.dataset.editstay; location.hash = '#/stay'; });
+    $$('[data-addstage]', el).forEach(b => b.onclick = () => { const st = (S.circuit.stages || []).find(x => x.id === b.dataset.addstage); A.circuitPrefill = st; location.hash = '#/stay'; });
     const gi = $('[data-goihram]', el); if (gi) gi.onclick = ev => { ev.preventDefault(); const t0 = $('#omraSteps', el); t0 && t0.scrollIntoView({ behavior: 'smooth' }); };
     $$('[data-dua]', el).forEach(b => b.onclick = () => say(b.dataset.dua, { slow: !!b.dataset.slow, rep: +b.dataset.rep || 0 }));
     const leave = () => { if (/^#\/omra/.test(location.hash)) return; window.removeEventListener('hashchange', leave); window.speechSynthesis && speechSynthesis.cancel(); };
