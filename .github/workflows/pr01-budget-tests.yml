@@ -1,0 +1,27 @@
+name: PR 01 Budget Tests
+on:
+  push:
+    branches:
+      - feature/pr01-budget-chf-usd-sar-20261115
+  pull_request:
+    branches:
+      - claude/wonderful-lovelace-33f6d3
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  budget-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify JavaScript syntax
+        run: |
+          node --check js/app.js
+          node --check js/stays.js
+          node --check js/data.js
+          node --check js/currency.js
+      - name: Test currency conversion
+        run: node --test tests/currency.test.cjs
