@@ -78,8 +78,19 @@
   const MENU = [
     ['mn_prepare', [['trip', '✈️', 'nav_trip'], ['stay', '🏨', 'nav_stay'], ['plan', '📒', 'nav_plan'], ['tools', '🧰', 'nav_tools']]],
     ['mn_faith', [['omra', '🕋', 'nav_omra'], ['sira', '🌙', 'sira_title'], ['prayer', '🕌', 'nav_prayer'], ['holy', '🗺️', 'holy_title']]],
-    ['mn_discover', [['explore', '🧭', 'nav_explore'], ['discoveries', '🗂️', 'mn_disc']]],
+    ['mn_discover', [['explore', '🧭', 'nav_explore'], ['discoveries', '🗂️', 'mn_disc'], ['umrah', '🏨', 'mn_umrah']]],
   ];
+  /* ---------- Liens vers UmrahMap (maps.umrahcore.com) : hôtels par temps de marche, carte, portes ---------- */
+  A.views.umrah = el => {
+    const pre = 'https://maps.umrahcore.com' + (S.lang === 'ar' ? '/ar' : '');
+    const T2 = { fr: ['Hôtels par temps de marche', "Classés par distance à pied de la porte la plus proche du Haram (bandes de distance).", 'Carte de La Mecque', 'Carte interactive du site.', 'Portes du Haram', 'Liste des portes de la Mosquée sacrée.', "Site externe (UmrahMap, umrahcore.com) : le contenu appartient à ses auteurs. Connexion internet nécessaire."],
+      en: ['Hotels by walking time', 'Sorted by walking distance to the nearest Haram gate (distance bands).', 'Makkah map', "The site's interactive map.", 'Haram gates', 'List of the Sacred Mosque gates.', 'External site (UmrahMap, umrahcore.com): content belongs to its authors. Internet connection required.'],
+      ar: ['الفنادق حسب زمن المشي', 'مرتبة حسب المسافة مشيًا إلى أقرب باب للحرم.', 'خريطة مكة', 'الخريطة التفاعلية للموقع.', 'أبواب الحرم', 'قائمة أبواب المسجد الحرام.', 'موقع خارجي (UmrahMap): المحتوى لأصحابه، ويلزم اتصال بالإنترنت.'] }[S.lang] || [];
+    const rows = [['/hotels', 0, '🏨'], ['', 2, '🗺️'], ['/gates', 4, '🚪']];
+    el.innerHTML = `<h2>🏨 ${esc(T2[0])}</h2>${rows.map(([u, k, ic]) => `<a class="card" href="${pre}${u}" target="_blank" rel="noopener" style="display:block;color:inherit;text-decoration:none"><b>${ic} ${esc(T2[k])} ↗</b><div class="muted" style="margin-top:4px">${esc(T2[k + 1])}</div></a>`).join('')}
+      <p class="muted" style="font-size:12px">${esc(T2[6])}</p><a class="ghost btn" href="#/omra">🕋 ${S.lang === 'en' ? 'My own map (Umrah tab)' : S.lang === 'ar' ? 'خريطتي (تبويب العمرة)' : 'Ma carte (onglet Omra)'}</a>`;
+  };
+
   A.views.menu = el => {
     el.innerHTML = `<h2>☰ ${A.t('nav_menu')}</h2>` + MENU.map(([h, items]) => `<h3 class="subh">${A.t(h)}</h3><div class="cards">${items.map(([r, ic, k]) => `<a class="pcard" href="#/${r}" style="text-decoration:none"><span class="ic">${ic}</span><span class="tt">${esc(A.t(k))}</span></a>`).join('')}</div>`).join('');
   };

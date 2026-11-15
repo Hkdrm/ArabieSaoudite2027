@@ -468,3 +468,5 @@ Object.assign(I18N.ar, { st_walk_btn: 'المسافة مشيًا إلى أقرب
 Object.assign(I18N.fr, { holy_hotels: 'Hôtels', holy_h_add: 'Ajouter à mes logements', holy_h_est: "Hôtels : données OpenStreetMap, incomplètes. Distance estimée (vol d'oiseau × 1,3, 80 m/min) jusqu'à la porte la plus proche ; à vérifier avec le calcul à pied dans l'onglet Logement." });
 Object.assign(I18N.en, { holy_hotels: 'Hotels', holy_h_add: 'Add to my stays', holy_h_est: 'Hotels: OpenStreetMap data, incomplete. Estimated distance (straight line × 1.3, 80 m/min) to the nearest gate; confirm with the walking measure in the Stay tab.' });
 Object.assign(I18N.ar, { holy_hotels: 'الفنادق', holy_h_add: 'أضف إلى إقاماتي', holy_h_est: 'الفنادق: بيانات OpenStreetMap غير مكتملة. المسافة تقديرية إلى أقرب باب؛ تحقق منها في تبويب الإقامة.' });
+
+Object.assign(I18N.fr, { mn_umrah: 'Hôtels par temps de marche' }); Object.assign(I18N.en, { mn_umrah: 'Hotels by walking time' }); Object.assign(I18N.ar, { mn_umrah: 'الفنادق حسب زمن المشي' });
