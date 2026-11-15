@@ -1,0 +1,26 @@
+name: PR 02 Security Tests
+on:
+  push:
+    branches:
+      - security/pr02-encrypted-backup-20261115
+  pull_request:
+    branches:
+      - claude/wonderful-lovelace-33f6d3
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  security-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check JavaScript syntax
+        run: |
+          node --check js/app.js
+          node --check js/sync.js
+          node --check js/secure-backup.js
+      - name: Unit tests
+        run: node --test tests/*.test.cjs

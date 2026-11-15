@@ -4,7 +4,7 @@
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const store = {
     get(k, d) { try { const v = localStorage.getItem('omra:' + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
-    set(k, v) { try { localStorage.setItem('omra:' + k, JSON.stringify(v)); } catch {} },
+    set(k, v) { try { localStorage.setItem('omra:' + k, JSON.stringify(v)); return true; } catch (e) { console.error('Omra: storage failed', k, e); return false; } },
   };
 
   const APP_VERSION = '2026-11-15.70';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
@@ -40,7 +40,7 @@
     store.set('journey', S.journey);
   })();
   const save = (k) => {
-    store.set(k, S[k]);
+    if (!store.set(k, S[k])) { toast('⚠️ Enregistrement impossible : stockage saturé ou indisponible'); return; }
     if (k !== 'geo' && k !== 'here') { store.set('ts', Date.now()); hooks.onSave(k); }
   };
   const t = k => (I18N[S.lang] && I18N[S.lang][k]) ?? I18N.fr[k] ?? k;
@@ -657,15 +657,29 @@
       $('#cur', el).onchange = e => { S.cur = e.target.value; save('cur'); draw(); };
       $('#ef', el).onsubmit = e => { e.preventDefault(); const f = new FormData(e.target); S.exp.push({ id: 'x' + Date.now(), label: f.get('l').trim(), amount: +f.get('a'), cur: f.get('c') }); save('exp'); draw(); };
       $$('[data-edel]', el).forEach(b => b.onclick = () => { S.exp = S.exp.filter(x => x.id !== b.dataset.edel); save('exp'); draw(); });
-      $('#exp', el).onclick = () => {
-        const blob = new Blob([JSON.stringify(S, null, 2)], { type: 'application/json' });
-        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'omra-backup.json'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+      $('#exp', el).onclick = async () => {
+        try {
+          const pass = prompt('Phrase secrète de sauvegarde (12 caractères minimum) :');
+          if (pass === null) return;
+          const again = prompt('Confirmer la phrase secrète :');
+          if (again !== pass) throw new Error('Les phrases secrètes sont différentes');
+          const encrypted = await window.Omra.backup.encrypt(window.Omra.backup.snapshot(), pass);
+          window.Omra.backup.download(encrypted); toast('Sauvegarde chiffrée créée');
+        } catch (err) { toast('⚠️ ' + err.message); }
       };
       $('#imp', el).onclick = () => $('#file', el).click();
       $('#file', el).onchange = async e => {
-        try { const d = JSON.parse(await e.target.files[0].text()); if (typeof d !== 'object' || !d) throw 0;
-          for (const k of ['lang', 'city', 'geo', 'method', 'trip', 'plan', 'checks', 'custom', 'cnt', 'exp', 'budget', 'rate', 'cur', 'fav', 'visited', 'notes', 'vids', 'here', 'journey', 'stays', 'sira', 'circuit', 'pays']) if (k in d) { S[k] = d[k]; save(k); }
-          applyLang(); toast(t('imported')); draw(); } catch { toast(t('import_err')); }
+        try {
+          const file = e.target.files[0]; if (!file) return;
+          if (file.size > window.Omra.backup.MAX_BYTES * 2) throw new Error('Fichier trop volumineux');
+          const encrypted = JSON.parse(await file.text());
+          if (encrypted.type !== 'omra-encrypted-backup') throw new Error('Ancien export non chiffré : import désactivé par sécurité');
+          const pass = prompt('Phrase secrète de cette sauvegarde :'); if (pass === null) return;
+          const data = await window.Omra.backup.decrypt(encrypted, pass);
+          if (!confirm('Restaurer la sauvegarde du ' + (data.createdAt || 'date inconnue') + ' ? Les données actuelles seront sauvegardées localement pour récupération.')) return;
+          window.Omra.backup.restore(data); toast(t('imported'));
+        } catch (err) { toast('⚠️ Import refusé : ' + err.message); }
+        finally { e.target.value = ''; }
       };
     };
     draw();
