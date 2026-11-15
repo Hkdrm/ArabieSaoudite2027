@@ -70,7 +70,7 @@
     busy=true; pending=false; render();
     try {
       const latest=await getRemote();
-      if (latest !== previous) { conflict=true; throw Error('La sauvegarde a changé sur GitHub : envoi bloqué'); }
+      if (latest !== previous && !force) { conflict=true; throw Error('La sauvegarde a changé sur GitHub : envoi bloqué'); }
       const encrypted=await A.backup.encrypt(A.backup.snapshot(),pass);
       const value=JSON.stringify(encrypted);
       await api('/gists/'+encodeURIComponent(gistId),'PATCH',{files:{[FILE]:{content:value}}});
@@ -78,9 +78,8 @@
       status('Sauvegarde chiffrée envoyée');
     } catch (e) { pending=true;status(e.message,true); }
     finally { busy=false;render(); }
-    if(pending && !conflict && navigator.onLine !== false) {
-      pending=false;clearTimeout(timer);timer=setTimeout(()=>saveRemote(),1500);
-    }
+    // A failed request remains pending. Retry on reconnect or explicit user action,
+    // not with an unbounded loop (which could hit GitHub API rate limits).
   }
   async function restoreRemote() {
     if (!connected()) return;
