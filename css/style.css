@@ -196,3 +196,7 @@ button:disabled{opacity:.4;cursor:default}
 
 .sitem-tr{border:1px solid var(--bd);border-radius:12px;padding:10px 12px;margin:8px 0;background:var(--card)}
 .sitem-tr.done{background:rgba(47,133,90,.08)}
+
+.walkbox{border-radius:10px;padding:8px 10px;margin:6px 0;border:1px solid var(--bd);border-inline-start:6px solid #888;font-size:14px}
+.wb0{border-inline-start-color:#2f855a;background:rgba(47,133,90,.10)}.wb1{border-inline-start-color:#68a63c;background:rgba(104,166,60,.10)}
+.wb2{border-inline-start-color:#c9a227;background:rgba(201,162,39,.10)}.wb3{border-inline-start-color:#dd7a1f;background:rgba(221,122,31,.10)}.wb4{border-inline-start-color:#c53030;background:rgba(197,48,48,.10)}

@@ -44,6 +44,46 @@
         <a class="btn alt" href="https://www.google.com/maps/search/${encodeURIComponent('hotels near Masjid al-Haram')}" target="_blank" rel="noopener">Google Maps ↗</a></div>`;
     };
 
+
+    /* ---- Distance à pied jusqu'à la porte la plus proche (La Mecque / Médine) ----
+       Adresse → coordonnées (Nominatim/OSM) ; porte la plus proche (data/holy-sites.json, © OpenStreetMap) ;
+       itinéraire piéton (routing.openstreetmap.de) ou, à défaut, estimation à vol d'oiseau × 1,3. */
+    const WALK_CITIES = { makkah: 'haram', madinah: 'nabawi' };
+    const hav = (a, b) => { const R = 6371000, r = Math.PI / 180, dLa = (b.lat - a.lat) * r, dLo = (b.lng - a.lng) * r; const h = Math.sin(dLa / 2) ** 2 + Math.cos(a.lat * r) * Math.cos(b.lat * r) * Math.sin(dLo / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(h)); };
+    const band = m => (m < 300 ? 0 : m < 600 ? 1 : m < 1000 ? 2 : m < 2000 ? 3 : 4);
+    const fmtM = m => (m < 1000 ? `${Math.round(m / 10) * 10} m` : `${(m / 1000).toFixed(1)} km`);
+    let GATES = null;
+    const loadGates = () => GATES ? Promise.resolve(GATES) : fetch('data/holy-sites.json', { cache: 'no-cache' }).then(r => (r.ok ? r.json() : Promise.reject())).then(d => (GATES = d.sites));
+    const geocode = async s => {
+      const m = /(-?\d{1,2}\.\d{3,})\s*[, ]\s*(-?\d{1,3}\.\d{3,})/.exec(s.addr || '');           // coordonnées collées depuis Google Maps
+      if (m) return { lat: +m[1], lng: +m[2] };
+      const q = [s.addr || s.name, cityName(s.city), 'Saudi Arabia'].filter(Boolean).join(', ');
+      const r = await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=' + encodeURIComponent(q), { headers: { Accept: 'application/json' } });
+      const j = await r.json(); if (!j.length) return null;
+      return { lat: +j[0].lat, lng: +j[0].lon };
+    };
+    const measure = async s => {
+      const pt = await geocode(s); if (!pt) return { err: 'nofound' };
+      const sites = await loadGates(); const site = sites.find(x => x.id === WALK_CITIES[s.city]); if (!site) return { err: 'nodata' };
+      const gates = site.features.filter(f => f.cat === 'gate').map(f => ({ f, d: hav(pt, f) })).sort((a, b) => a.d - b.d);
+      const g = gates[0]; if (!g) return { err: 'nodata' };
+      let m = g.d * 1.3, min = Math.max(1, Math.round(m / 80)), approx = true;
+      try {
+        const u = `https://routing.openstreetmap.de/routed-foot/route/v1/foot/${pt.lng},${pt.lat};${g.f.lng},${g.f.lat}?overview=false`;
+        const j = await (await fetch(u)).json();
+        if (j.routes && j.routes[0]) { m = j.routes[0].distance; min = Math.max(1, Math.round(j.routes[0].duration / 60)); approx = false; }
+      } catch (e) { /* estimation */ }
+      return { m: Math.round(m), min, approx, gate: g.f.num || '', gname: { fr: g.f.name_fr, en: g.f.name_en, ar: g.f.name_ar }, lat: pt.lat, lng: pt.lng, at: Date.now() };
+    };
+    const walkHtml = s => {
+      if (!WALK_CITIES[s.city]) return '';
+      const w = s.walk, ref = s.city === 'makkah' ? t('st_walk_haram') : t('st_walk_nabawi');
+      if (!w) return `<div style="margin:6px 0"><button type="button" class="chip" data-walk="${s.id}">📏 ${t('st_walk_btn')}</button></div>`;
+      const gn = w.gname && (w.gname[S.lang] || w.gname.fr);
+      return `<div class="walkbox wb${band(w.m)}">🚶 <b>${w.approx ? '≈ ' : ''}${fmtM(w.m)}</b> · ${w.min} min · ${esc(ref)}<div style="font-size:12px;margin-top:2px">${w.gate ? `${t('st_gate')} ${esc(w.gate)}` : ''}${gn ? ` · ${esc(gn)}` : ''}${w.approx ? ` · ${t('st_walk_est')}` : ''}
+        <button type="button" class="chip" data-walk="${s.id}" style="margin-inline-start:6px;padding:2px 8px;font-size:12px">↻</button></div></div>`;
+    };
+
     const stayCard = s => {
       const n = s.in && s.out && s.out > s.in ? nights(s.in, s.out) : 0;
       const link = safeUrl(s.link);
@@ -52,6 +92,7 @@
         <div class="muted" style="margin:4px 0">📍 ${esc(cityName(s.city))}${n ? ` · 🌙 ${n} ${t('nights')}` : ''}</div>
         ${s.in && s.out ? `<div>📅 ${esc(short(s.in))} → ${esc(short(s.out))}</div>` : ''}
         ${s.addr ? `<div class="muted">${esc(s.addr)}</div>` : ''}
+        ${walkHtml(s)}
         ${s.price ? `<div>💶 ${esc(s.price)} ${esc(s.cur || '')}</div>` : ''}
         ${s.ref ? `<div class="muted">${t('booking_ref')} : <b>${esc(s.ref)}</b></div>` : ''}
         ${s.notes ? `<div class="muted" style="margin-top:4px">${esc(s.notes)}</div>` : ''}
@@ -74,6 +115,13 @@
         <button type="button" id="addStay" style="width:100%;padding:14px">＋ ${t('add_stay')}</button>
         <div class="card" style="margin-top:14px"><h3>🔎 ${t('st_search')}</h3>${tripOk ? '' : `<p class="muted">${t('st_nodates_hint')} <a href="#/trip">${t('nav_trip')} →</a></p>`}${searchLinks()}</div>`;
       $('#addStay', el).onclick = () => { f = blank(); editing = 'new'; draw(); scrollTo(0, 0); };
+      $$('[data-walk]', el).forEach(b => b.onclick = async () => {
+        const st = S.stays.find(x => x.id === b.dataset.walk); if (!st) return;
+        if (!st.addr && !st.name) { A.toast(t('st_walk_need')); return; }
+        b.disabled = true; b.textContent = '…';
+        try { const r = await measure(st); if (r.err) { A.toast(t(r.err === 'nofound' ? 'st_walk_nofound' : 'st_walk_fail')); } else { st.walk = r; save('stays'); } } catch (e) { A.toast(t('st_walk_fail')); }
+        drawList();
+      });
       if (A.circuit) A.circuit.bind(el, { redraw: () => A.views.stay(el), addStay: st => { A.circuitPrefill = st; A.views.stay(el); scrollTo(0, 0); } });
       $$('[data-edit]', el).forEach(b => b.onclick = () => { f = { ...S.stays.find(x => x.id === b.dataset.edit) }; editing = f.id; draw(); scrollTo(0, 0); });
     };

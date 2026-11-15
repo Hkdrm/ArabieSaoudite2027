@@ -76,7 +76,7 @@
       const pill = q.booked ? `<span class="pill ok">✓ ${t('st_booked')}</span>` : q.covered ? `<span class="pill">${q.covered}/${q.n} ${t('nights')}</span>` : `<span class="pill">${t('st_todo')}</span>`;
       return `<div class="sitem-tr"><div class="row" style="gap:8px;flex-wrap:nowrap"><b class="grow">${i + 1}. ${esc(cityName(s.city))}</b>${pill}</div>
         <div class="muted">📅 ${esc(short(s.in))} → ${esc(short(s.out))} · 🌙 ${q.n} ${t('nights')}</div>
-        <div class="muted" style="font-size:13px;margin:4px 0">${esc(tr(TIPS[s.city]))}</div>
+        <div class="muted" style="font-size:13px;margin:4px 0">${esc(tr(TIPS[s.city]))}</div>${s.city === 'makkah' || s.city === 'madinah' ? `<div class="muted" style="font-size:12px;margin:0 0 4px">🚶 ${t('walk_legend')}</div>` : ''}
         <div class="row" style="gap:6px;flex-wrap:wrap"><a class="btn" href="${bookingUrl(s)}" target="_blank" rel="noopener">🔎 Booking ↗</a><a class="btn alt" href="${mapsUrl(s)}" target="_blank" rel="noopener">Google Maps ↗</a><button type="button" class="ghost" data-addstay="${s.id}">＋ ${t('ci_add_stay')}</button></div></div>`;
     }).join('');
     return `<div class="card"><h3>🗺️ ${t('ci_title')}</h3><p class="muted" style="margin:0 0 8px">${esc(short(c.stages[0].in))} → ${esc(short(c.stages.at(-1).out))} · ${tot} ${t('nights')}</p>
