@@ -3,7 +3,8 @@
    Données : S.stays (synchronisées, sauf la référence de réservation), enregistrées localement. */
 (() => {
   const A = window.Omra;
-  const { $, $$, esc, S, save, t } = A;
+  const { $, $, esc, S, save, t } = A;
+  const Money = window.OmraCurrency;
   const CITY_IDS = ['makkah', 'madinah', 'jeddah', 'riyadh', 'alula', 'taif'];
   const cityName = id => (CITIES[id] ? (CITIES[id].n[S.lang] || CITIES[id].n.fr) : t('st_other_city'));
   const loc = () => S.lang === 'ar' ? 'ar-SA-u-nu-latn' : S.lang;
@@ -16,7 +17,7 @@
   const safeUrl = u => { u = (u || '').trim(); if (!u) return ''; try { const x = new URL(/^[a-z][a-z0-9+.-]*:/i.test(u) ? u : 'https://' + u); return /^https?:$/.test(x.protocol) ? x.href : ''; } catch { return ''; } };
   const tel = v => (v || '').replace(/[^\d+]/g, '');
   const where = s => encodeURIComponent([s.addr || s.name, s.addr ? '' : cityName(s.city)].filter(Boolean).join(' '));
-  const CUR = ['EUR', 'CHF', 'SAR', 'USD', 'GBP'];
+  const CUR = ['CHF', 'USD', 'SAR'];
 
   A.views.stay = el => {
     S.stays = S.stays || [];
@@ -27,7 +28,7 @@
     const dayList = () => { const out = []; if (!tripOk) return out; for (let d = J.date1; d <= J.date2; d = addDay(d, 1)) out.push(d); return out; };
     const lastOut = () => S.stays.filter(s => s.out).map(s => s.out).sort().at(-1);
 
-    const blank = () => ({ id: 's' + Date.now(), city: 'makkah', name: '', status: 'todo', in: tripOk ? (lastOut() && lastOut() < J.date2 ? lastOut() : J.date1) : '', out: tripOk ? J.date2 : '', addr: '', link: '', ref: '', price: '', cur: 'EUR', phone: '', notes: '' });
+    const blank = () => ({ id: 's' + Date.now(), city: 'makkah', name: '', status: 'todo', in: tripOk ? (lastOut() && lastOut() < J.date2 ? lastOut() : J.date1) : '', out: tripOk ? J.date2 : '', addr: '', link: '', ref: '', price: '', cur: 'CHF', phone: '', notes: '' });
 
     /* nuits couvertes / à loger */
     const coverage = () => {
@@ -52,7 +53,7 @@
         <div class="muted" style="margin:4px 0">📍 ${esc(cityName(s.city))}${n ? ` · 🌙 ${n} ${t('nights')}` : ''}</div>
         ${s.in && s.out ? `<div>📅 ${esc(short(s.in))} → ${esc(short(s.out))}</div>` : ''}
         ${s.addr ? `<div class="muted">${esc(s.addr)}</div>` : ''}
-        ${s.price ? `<div>💶 ${esc(s.price)} ${esc(s.cur || '')}</div>` : ''}
+        ${s.price ? `<div>💰 ${esc(s.price)} ${esc(s.cur || 'CHF')}${Number.isFinite(Money.toCHF(s.price,s.cur||'CHF',S.fxRates)) && (s.cur||'CHF') !== 'CHF' ? ` <span class="muted">≈ ${Money.format(Money.toCHF(s.price,s.cur||'CHF',S.fxRates),'CHF','fr-CH')}</span>` : ''}</div>` : ''}
         ${s.ref ? `<div class="muted">${t('booking_ref')} : <b>${esc(s.ref)}</b></div>` : ''}
         ${s.notes ? `<div class="muted" style="margin-top:4px">${esc(s.notes)}</div>` : ''}
         <div class="row" style="margin-top:10px">
@@ -91,7 +92,7 @@
         <label style="margin-top:8px">${t('st_link')}</label><input id="fLink" inputmode="url" autocapitalize="off" value="${esc(f.link)}" placeholder="https://…" style="width:100%">
         <label style="margin-top:8px">${t('booking_ref')} <span class="muted">(${t('local_only')})</span></label><input id="fRef" value="${esc(f.ref)}" style="width:100%">
         <div class="row" style="margin-top:8px"><div class="grow"><label>${t('st_price')}</label><input id="fPrice" inputmode="decimal" value="${esc(f.price)}" style="width:100%"></div>
-          <div><label>${t('currency')}</label><select id="fCur">${opts(CUR, f.cur)}</select></div></div>
+          <div><label>${t('currency')}</label><select id="fCur">${opts([...new Set([...CUR, f.cur].filter(Boolean))], f.cur)}</select></div></div>
         <label style="margin-top:8px">${t('st_phone')}</label><input id="fPhone" inputmode="tel" value="${esc(f.phone)}" style="width:100%">
         <label style="margin-top:8px">${t('st_notes')}</label><textarea id="fNotes" rows="3" style="width:100%">${esc(f.notes)}</textarea></div>
         <div class="stickybar"><button type="button" class="ghost" id="cancel">${t('cancel')}</button><button type="button" id="saveStay" style="flex:1">✓ ${t('save')}</button></div>
