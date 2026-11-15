@@ -450,3 +450,8 @@ Object.assign(I18N.en, { ci_title: 'My itinerary', ci_empty: 'Jeddah 20 → 23 M
 Object.assign(I18N.ar, { ci_title: 'مسار رحلتي', ci_empty: 'جدة ٢٠ → ٢٣ مارس · مكة ٢٣ → ٢٨ · المدينة ٢٨ مارس → ٢ أبريل · الرياض ٢ → ٤ · جدة ٤ → ٦ أبريل (١٧ ليلة).', ci_load: 'تحميل مساري (٢٠ مارس ← ٦ أبريل ٢٠٢٧)', ci_stages: 'المحطات والفنادق', ci_transports: 'المواصلات', ci_add_stay: 'إضافة الإقامة', ci_arrive: 'الوصول إلى', ci_leave: 'المغادرة من', ci_book_train: 'تذاكر قطار الحرمين', ci_find_flights: 'ابحث عن رحلات',
   ci_train_note: 'قطار الحرمين السريع: تحقق من محطة الانطلاق واحجز مسبقًا.', ci_flight_note: 'رحلة داخلية: قارن بين الشركات والمواعيد.', ci_flight_morning: 'خطط لرحلة صباحية للاستفادة من اليوم في جدة.', ci_morning: 'صباحًا',
   ci_to_plan: 'أضف إلى الدفتر', ci_remove: 'إزالة المسار', ci_remove_confirm: 'إزالة المسار؟ إقاماتك المحفوظة لا تُحذف.', ci_loaded: 'تم تحميل المسار', ci_added: 'أُضيفت إلى الدفتر', ci_already: 'موجود في الدفتر.', ci_replace_dates: 'استبدال تواريخ الرحلة بـ ٢٠ مارس ← ٦ أبريل ٢٠٢٧؟' });
+
+/* ---- Menu ---- */
+Object.assign(I18N.fr, { nav_menu: 'Menu', mn_prepare: 'Préparer le voyage', mn_faith: 'Omra et foi', mn_discover: 'Découvrir', mn_disc: 'Découvertes de Médine' });
+Object.assign(I18N.en, { nav_menu: 'Menu', mn_prepare: 'Plan the trip', mn_faith: 'Umrah and faith', mn_discover: 'Discover', mn_disc: 'Madinah discoveries' });
+Object.assign(I18N.ar, { nav_menu: 'القائمة', mn_prepare: 'تحضير الرحلة', mn_faith: 'العمرة والإيمان', mn_discover: 'اكتشف', mn_disc: 'اكتشافات المدينة' });

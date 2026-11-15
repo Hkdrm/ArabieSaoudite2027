@@ -7,7 +7,7 @@
     set(k, v) { try { localStorage.setItem('omra:' + k, JSON.stringify(v)); } catch {} },
   };
 
-  const APP_VERSION = '2026-11-15.52';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
+  const APP_VERSION = '2026-11-15.53';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
 
   /* ---------- état ---------- */
   const detect = () => { const l = (navigator.language || 'fr').slice(0, 2); return LANGS[l] ? l : 'fr'; };
@@ -61,7 +61,7 @@
     $('#appName').textContent = t('app_name');
     $('#tagline').textContent = t('tagline');
     $('#langSel').innerHTML = Object.entries(LANGS).map(([k, v]) => `<option value="${k}" ${k === S.lang ? 'selected' : ''}>${v}</option>`).join('');
-    const nav = [['home', '🏠'], ['trip', '✈️'], ['stay', '🏨'], ['explore', '🧭'], ['omra', '🕋'], ['sira', '<span class="cal2">صلى الله عليه<br>وسلم</span>'], ['prayer', '🕌'], ['plan', '📒'], ['tools', '🧰']];
+    const nav = [['home', '🏠'], ['explore', '🧭'], ['omra', '🕋'], ['sira', '<span class="cal2">صلى الله عليه<br>وسلم</span>'], ['menu', '☰']];
     $('#nav').innerHTML = nav.map(([r, i]) => `<a href="#/${r}" data-r="${r}"><b>${i}</b>${esc(t('nav_' + r))}</a>`).join('');
   }
   $('#langSel').addEventListener('change', e => { S.lang = e.target.value; save('lang'); applyLang(); route(); });
@@ -77,7 +77,7 @@
     if (geoWatch != null && navigator.geolocation) { navigator.geolocation.clearWatch(geoWatch); geoWatch = null; }
     const [r, arg] = (location.hash.replace('#/', '') || 'home').split('/');
     const name = views[r] ? r : 'home';
-    $$('#nav a').forEach(a => a.classList.toggle('on', a.dataset.r === (name === 'place' || name === 'map' || name === 'discoveries' ? 'explore' : name)));
+    $$('#nav a').forEach(a => a.classList.toggle('on', a.dataset.r === (['place', 'map', 'discoveries'].includes(name) ? 'explore' : name === 'holy' ? 'omra' : ['trip', 'stay', 'plan', 'tools', 'prayer', 'import', 'menu'].includes(name) ? 'menu' : name)));
     $('#view').innerHTML = '';
     views[name]($('#view'), arg);
     window.scrollTo(0, 0);

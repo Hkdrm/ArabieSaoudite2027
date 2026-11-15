@@ -74,6 +74,16 @@
     for (let i = 0; i < (opt.rep || 1); i++) { const u = new SpeechSynthesisUtterance(d.ar); u.lang = 'ar-SA'; u.rate = opt.slow ? .6 : .85; ss.speak(u); }
   };
 
+  /* ---------- Menu : toutes les rubriques, regroupées (la barre du bas ne garde que l'essentiel) ---------- */
+  const MENU = [
+    ['mn_prepare', [['trip', '✈️', 'nav_trip'], ['stay', '🏨', 'nav_stay'], ['plan', '📒', 'nav_plan'], ['tools', '🧰', 'nav_tools']]],
+    ['mn_faith', [['omra', '🕋', 'nav_omra'], ['sira', '🌙', 'sira_title'], ['prayer', '🕌', 'nav_prayer'], ['holy', '🗺️', 'holy_title']]],
+    ['mn_discover', [['explore', '🧭', 'nav_explore'], ['discoveries', '🗂️', 'mn_disc']]],
+  ];
+  A.views.menu = el => {
+    el.innerHTML = `<h2>☰ ${A.t('nav_menu')}</h2>` + MENU.map(([h, items]) => `<h3 class="subh">${A.t(h)}</h3><div class="cards">${items.map(([r, ic, k]) => `<a class="pcard" href="#/${r}" style="text-decoration:none"><span class="ic">${ic}</span><span class="tt">${esc(A.t(k))}</span></a>`).join('')}</div>`).join('');
+  };
+
   const wrap = A.views.omra;
   A.views.omra = el => {
     wrap(el);
