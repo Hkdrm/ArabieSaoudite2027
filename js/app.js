@@ -7,7 +7,7 @@
     set(k, v) { try { localStorage.setItem('omra:' + k, JSON.stringify(v)); } catch {} },
   };
 
-  const APP_VERSION = '2026-11-15.68';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
+  const APP_VERSION = '2026-11-15.69';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
 
   /* ---------- état ---------- */
   const detect = () => { const l = (navigator.language || 'fr').slice(0, 2); return LANGS[l] ? l : 'fr'; };
@@ -77,7 +77,7 @@
     if (geoWatch != null && navigator.geolocation) { navigator.geolocation.clearWatch(geoWatch); geoWatch = null; }
     const [r, arg] = (location.hash.replace('#/', '') || 'home').split('/');
     const name = views[r] ? r : 'home';
-    $$('#nav a').forEach(a => a.classList.toggle('on', a.dataset.r === (['place', 'map', 'discoveries'].includes(name) ? 'explore' : name === 'holy' ? 'omra' : ['trip', 'stay', 'plan', 'tools', 'prayer', 'import', 'menu', 'umrah', 'makkah', 'expenses'].includes(name) ? 'menu' : name)));
+    $$('#nav a').forEach(a => a.classList.toggle('on', a.dataset.r === (['place', 'map', 'discoveries'].includes(name) ? 'explore' : name === 'holy' ? 'omra' : ['trip', 'stay', 'tools', 'prayer', 'import', 'menu', 'umrah', 'makkah', 'expenses'].includes(name) ? 'menu' : name)));
     $('#view').innerHTML = '';
     views[name]($('#view'), arg);
     window.scrollTo(0, 0);
@@ -115,7 +115,6 @@
         <h3>${t('quick')}</h3>
         <div class="grid2">
           <a class="tile" href="#/omra"><span>🕋</span>${t('quick_omra')}</a>
-          <a class="tile" href="#/plan"><span>🗓️</span>${t('quick_plan')}</a>
           <a class="tile" href="#/explore"><span>🧭</span>${t('quick_map')}</a>
           <a class="tile" href="#/tools"><span>✅</span>${t('quick_list')}</a>
         </div>
@@ -172,51 +171,6 @@
       Object.assign(S.journey, clean, clean.names ? { names: { ...(S.journey.names || {}), ...clean.names } } : {});
       save('journey'); toast(t('imported')); location.hash = '#/trip';
     };
-  };
-
-  /* ---------- Planning / Carnet ---------- */
-  views.plan = el => {
-    if (S.plan === null) { S.plan = []; save('plan'); }
-    const IT = { city: 'madinah', hours: 4, cats: ['holy', 'sira', 'heritage'], result: null };
-    const draw = () => {
-      const start = tripStart() ? new Date(tripStart() + 'T00:00') : null;
-      const items = [...S.plan].sort((a, b) => a.day - b.day);
-      const dateOf = d => { if (!start) return ''; const x = new Date(start); x.setDate(x.getDate() + d - 1); return x.toLocaleDateString(S.lang === 'ar' ? 'ar-SA-u-nu-latn' : S.lang, { weekday: 'short', day: 'numeric', month: 'short' }); };
-      const favs = S.fav.map(id => PLACES.find(x => x.id === id)).filter(Boolean);
-      const itCities = [...new Set(PLACES.filter(x => x.c !== 'airport').map(x => x.city))];
-      const R = IT.result;
-      el.innerHTML = `<h2>${t('nav_plan')}</h2>
-        <div class="card"><h3>★ ${t('favorites')}</h3>${favs.length ? favs.map(x => `<div class="item ${S.visited[x.id] ? 'done' : ''}"><input type="checkbox" data-vis="${x.id}" ${S.visited[x.id] ? 'checked' : ''} title="${t('visited')}"><a class="tx" href="#/place/${x.id}" style="color:var(--tx)">${esc(L(x.n))} <span class="muted">· ${esc(cityName(x.city))}</span></a></div>`).join('') : `<p class="muted">${t('no_fav')}</p>`}</div>
-        <div class="card"><h3>⚡ ${t('itin')}</h3><div class="row">
-          <div><label>${t('city')}</label><select id="itc">${itCities.map(c => `<option value="${c}" ${IT.city === c ? 'selected' : ''}>${esc(cityName(c))}</option>`).join('')}</select></div>
-          <div><label>${t('itin_hours')}</label><input id="ith" type="number" min="1" max="12" step="0.5" value="${IT.hours}" style="width:80px"></div></div>
-          <label style="margin-top:8px">${t('itin_interests')}</label><div class="chips">${['holy', 'sira', 'heritage', 'nature'].map(c => `<button class="chip ${IT.cats.includes(c) ? 'on' : ''}" data-itcat="${c}">${t('c_' + c)}</button>`).join('')}</div>
-          <button id="itgo">${t('generate')}</button>
-          ${R ? (R.out.length ? `<div style="margin-top:12px">${R.out.map((o, i) => `<div class="item"><span class="daybadge">${i + 1}</span><div class="tx"><a href="#/place/${o.p.id}" style="color:var(--tx)"><b>${esc(L(o.p.n))}</b></a><div class="muted">${i ? '🚗 ~' + o.tr + ' ' + t('min') + ' · ' : ''}${o.p.mins} ${t('min')}</div></div></div>`).join('')}
-            <p><b>${t('itin_total')} :</b> ${Math.floor(R.used / 60)}h${String(Math.round(R.used % 60)).padStart(2, '0')}</p><p class="muted">${t('itin_note')}</p><button id="itadd">${t('add_all')}</button></div>` : `<p class="muted">${t('itin_none')}</p>`) : ''}</div>
-        <div class="card">${items.length ? items.map(i => `<div class="item ${i.done ? 'done' : ''}">
-            <input type="checkbox" data-done="${i.id}" ${i.done ? 'checked' : ''}>
-            <div class="tx"><span class="daybadge">${t('day_word')} ${i.day}</span> <span class="pill">${esc(i.city && CITIES[i.city] ? L(CITIES[i.city].n) : '')}</span> <span class="muted">${esc(dateOf(i.day))}</span>
-            <div><b>${esc(i.title)}</b></div>${i.notes ? `<div class="muted">${esc(i.notes)}</div>` : ''}</div>
-            <button class="danger" data-del="${i.id}" aria-label="${t('delete')}">✕</button></div>`).join('') : `<p class="muted">${t('empty_plan')}</p>`}
-          <div class="row" style="margin-top:10px"><button class="ghost sm" id="ex">${t('load_example')}</button>${items.length ? `<button class="danger" id="clr">${t('clear')}</button>` : ''}</div></div>
-        <div class="card"><h3>${t('add_day')}</h3><form class="form" id="f">
-          <div class="row"><div><label>${t('day_word')}</label><input type="number" min="1" name="day" value="${(items.at(-1)?.day || 0) + 1}" style="width:80px" required></div>
-          <div class="grow"><label>${t('city')}</label><select name="city" style="width:100%">${Object.entries(CITIES).map(([k, c]) => `<option value="${k}">${esc(L(c.n))}</option>`).join('')}</select></div></div>
-          <div><label>${t('title')}</label><input name="title" style="width:100%" required></div>
-          <div><label>${t('notes')}</label><textarea name="notes" rows="2" style="width:100%"></textarea></div>
-          <button>${t('add')}</button></form></div>`;
-      $$('[data-done]', el).forEach(c => c.onchange = () => { const i = S.plan.find(x => x.id === c.dataset.done); i.done = c.checked; save('plan'); draw(); });
-      $$('[data-vis]', el).forEach(c => c.onchange = () => { if (c.checked) S.visited[c.dataset.vis] = new Date().toISOString().slice(0, 10); else delete S.visited[c.dataset.vis]; save('visited'); draw(); });
-      $$('[data-itcat]', el).forEach(b => b.onclick = () => { const c = b.dataset.itcat; IT.cats = IT.cats.includes(c) ? IT.cats.filter(x => x !== c) : [...IT.cats, c]; IT.city = $('#itc', el).value; IT.hours = +$('#ith', el).value || 4; draw(); });
-      $('#itgo', el).onclick = () => { IT.city = $('#itc', el).value; IT.hours = +$('#ith', el).value || 4; IT.result = buildItin(IT.city, IT.hours, IT.cats); draw(); };
-      const ia = $('#itadd', el); if (ia) ia.onclick = () => { const day = Math.max(0, ...S.plan.map(i => i.day)) + 1; IT.result.out.forEach(o => S.plan.push({ id: 'i' + Date.now() + o.p.id, day, city: o.p.city, title: L(o.p.n), notes: `~${o.p.mins} ${t('min')}`, done: false })); save('plan'); toast(t('added')); draw(); };
-      $$('[data-del]', el).forEach(b => b.onclick = () => { S.plan = S.plan.filter(x => x.id !== b.dataset.del); save('plan'); draw(); });
-      $('#ex', el).onclick = () => { S.plan = EXAMPLE_PLAN.map((e, n) => ({ id: 'e' + n + Date.now(), day: e.day, city: e.city, title: t(e.k), notes: '', done: false })); save('plan'); draw(); };
-      const clr = $('#clr', el); if (clr) clr.onclick = () => { if (confirm(t('confirm_clear'))) { S.plan = []; save('plan'); draw(); } };
-      $('#f', el).onsubmit = e => { e.preventDefault(); const f = new FormData(e.target); S.plan.push({ id: 'p' + Date.now(), day: +f.get('day') || 1, city: f.get('city'), title: f.get('title').trim(), notes: f.get('notes').trim(), done: false }); save('plan'); draw(); };
-    };
-    draw();
   };
 
   /* ---------- Guide Omra ---------- */
@@ -638,7 +592,7 @@
             <button id="vis" class="${vis ? '' : 'ghost'}">${vis ? '✓ ' + t('visited') : t('mark_visited')}</button></div>
           <div class="row" style="margin-top:8px"><a class="btn" href="#/explore/to-${p.id}">🧭 ${t('route_btn')}</a>
             <a class="btn alt" href="${gmaps(p)}" target="_blank" rel="noopener">Google Maps ↗</a><a class="btn alt" href="${appleMaps(p)}" target="_blank" rel="noopener">Plans ↗</a></div>
-          <div class="row" style="margin-top:8px"><button class="ghost" id="gps">📋 ${t('copy_gps')}</button><button class="ghost" id="addplan">🗓️ ${t('add_to_plan')}</button></div>
+          <div class="row" style="margin-top:8px"><button class="ghost" id="gps">📋 ${t('copy_gps')}</button></div>
           ${p.approx ? `<p class="muted">⚠️ ${t('approx_coord')}</p>` : ''}</div>
         ${p.facts.length ? `<div class="card"><h3>${t('facts_title')}</h3>${p.facts.map(f => `<div class="dua" style="border-inline-start-color:${f.s === 'fact' ? 'var(--g)' : '#d69e2e'}"><span class="pill">${f.s === 'fact' ? '✔ ' + t('fact') : '❓ ' + t('trad')}</span><div>${esc(L(f.t))}</div></div>`).join('')}</div>` : ''}
         <div class="card"><h3>${t('practical')}</h3><div class="times">
@@ -659,7 +613,6 @@
       $('#fav', el).onclick = () => { S.fav = fav ? S.fav.filter(x => x !== p.id) : [...S.fav, p.id]; save('fav'); draw(); };
       $('#vis', el).onclick = () => { if (vis) delete S.visited[p.id]; else S.visited[p.id] = new Date().toISOString().slice(0, 10); save('visited'); draw(); };
       $('#gps', el).onclick = async () => { try { await navigator.clipboard.writeText(`${p.lat},${p.lng}`); toast(t('copied')); } catch { prompt('GPS', `${p.lat},${p.lng}`); } };
-      $('#addplan', el).onclick = () => { S.plan = S.plan || []; S.plan.push({ id: 'p' + Date.now(), day: Math.max(1, ...S.plan.map(i => i.day)), city: p.city, title: L(p.n), notes: p.mins ? `~${p.mins} ${t('min')}` : '', done: false }); save('plan'); toast(t('added')); };
       $('#note', el).oninput = e => { S.notes[p.id] = e.target.value; save('notes'); };
       $$('[data-vdel]', el).forEach(b => b.onclick = () => { S.vids[p.id] = vids.filter((_, i) => i !== +b.dataset.vdel); save('vids'); draw(); });
       $('#vf', el).onsubmit = e => { e.preventDefault(); const f = new FormData(e.target); const vid = ytId(f.get('u'));

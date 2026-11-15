@@ -122,7 +122,7 @@
     return `<div class="card"><h3>🗺️ ${t('ci_title')}</h3><p class="muted" style="margin:0 0 8px">${esc(short(c.stages[0].in))} → ${esc(short(c.stages.at(-1).out))} · ${tot} ${t('nights')}</p>
       <h4 style="margin:8px 0 4px">🏨 ${t('ci_stages')}</h4>${st}
       <h4 style="margin:12px 0 4px">🚆 ${t('ci_transports')}</h4>${c.transports.map(trCard).join('')}
-      <div class="row" style="gap:8px;margin-top:10px"><button type="button" class="ghost" id="ciPlan">📒 ${t('ci_to_plan')}</button><button type="button" class="danger" id="ciReset">${t('ci_remove')}</button></div></div>`;
+      <div class="row" style="gap:8px;margin-top:10px"><button type="button" class="danger" id="ciReset">${t('ci_remove')}</button></div></div>`;
   };
 
   const tripDates = (c) => ({ d1: c.stages[0].in, d2: c.stages.at(-1).out });
@@ -145,15 +145,6 @@
     $$('[data-tmode]', root).forEach(b => b.onclick = () => { const [id, m] = b.dataset.tmode.split(':'); const cc = get(); cc.tmode = cc.tmode || {}; cc.tmode[id] = m; save('circuit'); h.redraw(); });
     $$('[data-trdone]', root).forEach(i => i.onchange = () => { const c = get(); c.done = c.done || {}; if (i.checked) c.done[i.dataset.trdone] = 1; else delete c.done[i.dataset.trdone]; save('circuit'); h.redraw(); });
     $$('[data-addstay]', root).forEach(b => b.onclick = () => { const s = get().stages.find(x => x.id === b.dataset.addstay); if (!ensureJourney(get())) return; h.addStay(s); });
-    const p = $('#ciPlan', root);
-    if (p) p.onclick = () => {
-      const c = get(), d1 = c.stages[0].in; S.plan = S.plan || [];
-      const dayN = d => nights(d1, d) + 1; let added = 0;
-      const push = (id, d, city, title) => { if (S.plan.some(x => x.id === id)) return; S.plan.push({ id, day: dayN(d), city, title, notes: '', done: false }); added++; };
-      c.stages.forEach(s => push('ci-' + s.id, s.in, s.city, `🏨 ${cityName(s.city)} (${nights(s.in, s.out)} ${t('nights')})`));
-      c.transports.filter(x => x.mode !== 'arrive' && x.mode !== 'leave').forEach(x => push('ci-' + x.id, x.date, x.from, `${MODE_IC[modeOf(x)] || '🚆'} ${x.custom ? (tinfoOf(x).label || modeLabel(modeOf(x))) : cityName(x.from) + ' → ' + cityName(x.to)}${tinfoOf(x).time ? ' · ' + tinfoOf(x).time : ''}`));
-      save('plan'); A.toast(added ? `📒 ${added} ${t('ci_added')}` : t('ci_already'));
-    };
     const r = $('#ciReset', root); if (r) r.onclick = () => { if (confirm(t('ci_remove_confirm'))) { S.circuit = null; save('circuit'); h.redraw(); } };
   };
 
