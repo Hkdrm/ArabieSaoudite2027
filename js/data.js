@@ -509,3 +509,7 @@ Object.assign(I18N.ar, { pay_night: 'ليلة', pay_no_hotel: 'إقامة للإ
 Object.assign(I18N.fr, { pay_chf_total: 'au total', pay_chf_paid: 'déjà payés', pay_chf_rates: 'taux indicatifs modifiables dans Outils' });
 Object.assign(I18N.en, { pay_chf_total: 'in total', pay_chf_paid: 'already paid', pay_chf_rates: 'indicative rates, editable in Tools' });
 Object.assign(I18N.ar, { pay_chf_total: 'إجمالًا', pay_chf_paid: 'مدفوعة', pay_chf_rates: 'أسعار تقريبية قابلة للتعديل في الأدوات' });
+
+Object.assign(I18N.fr, { ci_airport: 'Aéroport', ci_hotel: 'hôtel', ci_tf_note: "Prévoyez le trajet entre l'aéroport et l'hôtel : taxi, VTC, navette, voiture de location ou transfert organisé par l'hôtel." });
+Object.assign(I18N.en, { ci_airport: 'Airport', ci_hotel: 'hotel', ci_tf_note: 'Plan the airport–hotel ride: taxi, ride-hailing, shuttle, rental car or a transfer arranged by the hotel.' });
+Object.assign(I18N.ar, { ci_airport: 'مطار', ci_hotel: 'الفندق', ci_tf_note: 'خطط للانتقال بين المطار والفندق: تاكسي أو تطبيق أو حافلة أو سيارة مستأجرة أو نقل ينظمه الفندق.' });

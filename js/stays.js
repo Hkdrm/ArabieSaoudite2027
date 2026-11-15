@@ -109,7 +109,7 @@
       const cv = coverage();
       const list = [...S.stays].sort((a, b) => (a.in || '9').localeCompare(b.in || '9'));
       el.innerHTML = `<h2>${t('stay_title')}</h2>
-        ${A.circuit ? A.circuit.html() : ''}
+        <div id="sejCard"></div>
         ${cv ? `<div class="card"><b>🌙 ${cv.covered} / ${cv.total} ${t('nights')}</b><progress max="${cv.total}" value="${cv.covered}"></progress>
           ${cv.covered < cv.total ? `<p class="muted" style="margin:6px 0 0">⚠️ ${cv.total - cv.covered} ${t('st_uncovered')}</p>` : `<p class="muted" style="margin:6px 0 0">✓ ${t('st_all_covered')}</p>`}</div>` : ''}
         ${list.length ? list.map(stayCard).join('') : `<div class="card" style="text-align:center"><div style="font-size:54px">🏨</div><h3>${t('stay_empty')}</h3><p class="muted">${t('stay_empty_sub')}</p></div>`}
@@ -123,7 +123,7 @@
         try { const r = await measure(st); if (r.err) { A.toast(t(r.err === 'nofound' ? 'st_walk_nofound' : 'st_walk_fail')); } else { st.walk = r; save('stays'); } } catch (e) { A.toast(t('st_walk_fail')); }
         drawList();
       });
-      if (A.circuit) A.circuit.bind(el, { redraw: () => A.views.stay(el), addStay: st => { A.circuitPrefill = st; A.views.stay(el); scrollTo(0, 0); } });
+      if (A.sejour) A.sejour.render(el);
       $$('[data-edit]', el).forEach(b => b.onclick = () => { f = { ...S.stays.find(x => x.id === b.dataset.edit) }; editing = f.id; draw(); scrollTo(0, 0); });
     };
 

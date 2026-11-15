@@ -25,12 +25,19 @@
     ],
     transports: [
       { id: 't0', date: '2027-03-20', mode: 'arrive', from: 'jeddah', to: 'jeddah' },
+      { id: 'tf1', date: '2027-03-20', mode: 'taxi', kind: 'transfer', dir: 'toHotel', city: 'jeddah', from: 'jeddah', to: 'jeddah', stage: 's1' },
       { id: 't1', date: '2027-03-23', mode: 'train', from: 'jeddah', to: 'makkah' },
       { id: 't2', date: '2027-03-28', mode: 'train', from: 'makkah', to: 'madinah' },
+      { id: 'tf2', date: '2027-04-02', mode: 'taxi', kind: 'transfer', dir: 'toAirport', city: 'madinah', from: 'madinah', to: 'madinah', stage: 's3' },
       { id: 't3', date: '2027-04-02', mode: 'flight', from: 'madinah', to: 'riyadh', codes: ['MED', 'RUH'] },
+      { id: 'tf3', date: '2027-04-02', mode: 'taxi', kind: 'transfer', dir: 'toHotel', city: 'riyadh', from: 'riyadh', to: 'riyadh', stage: 's4' },
+      { id: 'tf4', date: '2027-04-04', mode: 'taxi', kind: 'transfer', dir: 'toAirport', city: 'riyadh', from: 'riyadh', to: 'riyadh', stage: 's4' },
       { id: 't4', date: '2027-04-04', mode: 'flight', from: 'riyadh', to: 'jeddah', codes: ['RUH', 'JED'], morning: true },
+      { id: 'tf5', date: '2027-04-04', mode: 'taxi', kind: 'transfer', dir: 'toHotel', city: 'jeddah', from: 'jeddah', to: 'jeddah', stage: 's5' },
+      { id: 'tf6', date: '2027-04-06', mode: 'taxi', kind: 'transfer', dir: 'toAirport', city: 'jeddah', from: 'jeddah', to: 'jeddah', stage: 's5' },
       { id: 't5', date: '2027-04-06', mode: 'leave', from: 'jeddah', to: 'jeddah' },
     ],
+    tf: 1,
     done: {},
   };
 
@@ -62,6 +69,15 @@
   const addTransport = stageId => { const cc = get(), st = cc.stages.find(s => s.id === stageId); if (!st) return; cc.transports.push({ id: 'tx' + Date.now(), date: st.in, mode: 'taxi', from: st.city, to: st.city, custom: true, stage: st.id }); cc.transports.sort((a, b) => a.date.localeCompare(b.date)); save('circuit'); };
   const modeLabel = m => t(MODE_KEY[m]);
   const get = () => S.circuit;
+  const migrate = () => {
+    const cc = S.circuit; if (!cc || cc.tf) return;
+    const have = Object.fromEntries(cc.transports.map(x => [x.id, x]));
+    const merged = DEFAULT.transports.map(d => have[d.id] || d);
+    const extras = cc.transports.filter(x => !DEFAULT.transports.some(d => d.id === x.id));
+    cc.transports = [...merged, ...extras].sort((a, b) => a.date.localeCompare(b.date) || 0);
+    cc.tf = 1; save('circuit');
+  };
+  migrate();
   const stageStatus = st => {
     const stays = (S.stays || []).filter(s => s.city === st.city && s.in && s.out && s.out > s.in && s.in < st.out && s.out > st.in);
     const set = new Set();
@@ -74,10 +90,16 @@
   const mapsUrl = st => `https://www.google.com/maps/search/${encodeURIComponent('hotels in ' + (BK[st.city] || cityName(st.city)))}`;
   const flightsUrl = x => `https://www.google.com/travel/flights?q=${encodeURIComponent(`Flights from ${x.codes[0]} to ${x.codes[1]} on ${x.date}`)}`;
 
+  const titleOf = x => {
+    const m = modeOf(x), inf = tinfoOf(x);
+    if (x.custom) return inf.label || modeLabel(m);
+    if (x.kind === 'transfer') return x.dir === 'toHotel' ? `${t('ci_airport')} ${cityName(x.city)} → ${t('ci_hotel')}` : `${t('ci_hotel')} → ${t('ci_airport')} ${cityName(x.city)}`;
+    return `${cityName(x.from)} → ${cityName(x.to)}`;
+  };
   const trCard = x => {
     const done = !!(get().done || {})[x.id], m = modeOf(x), opts = optsOf(x);
     const inf = tinfoOf(x);
-    const title = x.custom ? `${MODE_IC[m]} ${esc(inf.label || modeLabel(m))}` : x.mode === 'arrive' ? `🛬 ${t('ci_arrive')} ${cityName(x.to)}` : x.mode === 'leave' ? `🛫 ${t('ci_leave')} ${cityName(x.from)}` :
+    const title = x.custom || x.kind === 'transfer' ? `${MODE_IC[m]} ${esc(titleOf(x))}` : x.mode === 'arrive' ? `🛬 ${t('ci_arrive')} ${cityName(x.to)}` : x.mode === 'leave' ? `🛫 ${t('ci_leave')} ${cityName(x.from)}` :
       `${MODE_IC[m]} ${cityName(x.from)} → ${cityName(x.to)}`;
     const L2 = (u, txt) => `<a class="btn alt" href="${u}" target="_blank" rel="noopener">${txt} ↗</a>`;
     const links = m === 'train' ? L2('https://hhr.sa/', `🚆 ${t('ci_book_train')}`)
@@ -87,7 +109,7 @@
       : m === 'car' ? L2('https://www.discovercars.com/saudi-arabia', `🚗 ${t('ci_find_car')}`)
       : m === 'shuttle' || m === 'other' ? ''
       : `<a class="btn alt" href="#/trip">✈️ ${t('nav_trip')} →</a>`;
-    const info = (INFO[x.from + '>' + x.to] || {})[m];
+    const info = x.kind === 'transfer' ? { fr: t('ci_tf_note'), en: t('ci_tf_note'), ar: t('ci_tf_note') } : (INFO[x.from + '>' + x.to] || {})[m];
     const note = info ? tr(info) : (m === 'flight' ? (x.morning ? t('ci_flight_morning') : t('ci_flight_note')) : '');
     const amt = inf.amount != null && inf.amount !== '' ? inf.amount : inf.price;
     const payIc = { todo: '⏳', paid: '✅', partial: '🔸', onsite: '📍' }[inf.pay] || '⏳';
@@ -148,5 +170,6 @@
     const r = $('#ciReset', root); if (r) r.onclick = () => { if (confirm(t('ci_remove_confirm'))) { S.circuit = null; save('circuit'); h.redraw(); } };
   };
 
-  A.circuit = { html, bind, trCard, addTransport, icon: x => MODE_IC[modeOf(x)] || '🚆', label: x => modeLabel(modeOf(x)) };
+  const loadDefault = () => { const cc = JSON.parse(JSON.stringify(DEFAULT)); if (!ensureJourney(cc)) return false; S.circuit = cc; save('circuit'); return true; };
+  A.circuit = { html, bind, trCard, addTransport, loadDefault, titleOf, icon: x => MODE_IC[modeOf(x)] || '🚆', label: x => modeLabel(modeOf(x)) };
 })();

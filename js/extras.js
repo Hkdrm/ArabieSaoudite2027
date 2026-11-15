@@ -99,9 +99,9 @@
   /* ---------- « Mon séjour » : le circuit, les hôtels et les vols vus depuis l'onglet Omra ---------- */
   const SJ = {
     fr: { title: 'Mon séjour', empty: "Chargez votre circuit (Djeddah, La Mecque, Médine, Riyad…) pour voir ici vos étapes, vos hôtels et vos transports.", load: 'Charger mon circuit', edit: 'Modifier', hotel: 'Hôtel', tbook: "À réserver", booked: 'Réservé', nights: 'nuits', night: 'nuit', here: "Vous êtes ici", day: 'Jour', of: 'sur', left: 'jours avant le départ', flights: 'Vols', out: 'Aller', ret: 'Retour',
-      omra: "Omra : étape principale. Renseignez-vous sur le miqat et le moment de l'ihram avant d'entrer à La Mecque.", nabawi: 'Visite de la Mosquée du Prophète ﷺ, Rawdah (permis Nusuk), Quba, Uhud.', jeddah: 'Arrivée et repos ; Djeddah historique (Al-Balad), Corniche.', riyadh: 'Capitale : Diriyah, Masmak.', see_ihram: "Voir l'étape Ihram", tap: "Touchez pour renseigner l'hôtel et le transport" },
+      omra: "Omra : étape principale. Renseignez-vous sur le miqat et le moment de l'ihram avant d'entrer à La Mecque.", nabawi: 'Visite de la Mosquée du Prophète ﷺ, Rawdah (permis Nusuk), Quba, Uhud.', jeddah: 'Arrivée et repos ; Djeddah historique (Al-Balad), Corniche.', riyadh: 'Capitale : Diriyah, Masmak.', see_ihram: "Voir l'étape Ihram", remove: 'Retirer le circuit', tap: "Touchez pour renseigner l'hôtel et le transport" },
     en: { title: 'My stay', empty: 'Load your itinerary (Jeddah, Makkah, Madinah, Riyadh…) to see your stops, hotels and transport here.', load: 'Load my itinerary', edit: 'Edit', hotel: 'Hotel', tbook: 'To book', booked: 'Booked', nights: 'nights', night: 'night', here: 'You are here', day: 'Day', of: 'of', left: 'days until departure', flights: 'Flights', out: 'Outbound', ret: 'Return',
-      omra: 'Umrah: main stop. Find out about the miqat and when to enter ihram before reaching Makkah.', nabawi: "Prophet's Mosque ﷺ, Rawdah (Nusuk permit), Quba, Uhud.", jeddah: 'Arrival and rest; historic Jeddah (Al-Balad), Corniche.', riyadh: 'Capital: Diriyah, Masmak.', see_ihram: 'See the Ihram step', tap: 'Tap to enter the hotel and transport' },
+      omra: 'Umrah: main stop. Find out about the miqat and when to enter ihram before reaching Makkah.', nabawi: "Prophet's Mosque ﷺ, Rawdah (Nusuk permit), Quba, Uhud.", jeddah: 'Arrival and rest; historic Jeddah (Al-Balad), Corniche.', riyadh: 'Capital: Diriyah, Masmak.', see_ihram: 'See the Ihram step', remove: 'Remove itinerary', tap: 'Tap to enter the hotel and transport' },
   };
   const ST = k => (SJ[S.lang] || SJ.fr)[k] || SJ.fr[k];
   const pad2 = n => String(n).padStart(2, '0');
@@ -136,7 +136,7 @@
   };
   const stayHtml = () => {
     const c = S.circuit;
-    if (!c) return `<div class="card" id="sejCard"><h3>🧳 ${ST('title')}</h3><p class="muted">${ST('empty')}</p><a class="btn" href="#/stay">${ST('load')} →</a></div>`;
+    if (!c) return `<div class="card" id="sejCard"><h3>🧳 ${ST('title')}</h3><p class="muted">${ST('empty')}</p><button type="button" id="sejLoad" style="width:100%">⬇️ ${ST('load')}</button></div>`;
     const today = isoD(new Date()), d1 = c.stages[0].in, d2 = c.stages.at(-1).out, tot = nts(d1, d2);
     let head = '';
     if (today < d1) head = `<b>${nts(today, d1)}</b> ${ST('left')}`; else if (today < d2) head = `${ST('here')} · ${ST('day')} <b>${nts(d1, today) + 1}</b> ${ST('of')} ${tot + 1}`;
@@ -157,8 +157,9 @@
           ${on ? panel(c, s) : ''}</div>`;
     }).join('');
     return `<div class="card" id="sejCard"><h3 style="margin:0">🧳 ${ST('title')}</h3>
-      <p class="muted" style="margin:4px 0 8px">${esc(shortD(d1))} → ${esc(shortD(d2))} · ${tot} ${ST('nights')}${head ? ' · ' + head : ''}</p>${rows}${flights}</div>`;
+      <p class="muted" style="margin:4px 0 8px">${esc(shortD(d1))} → ${esc(shortD(d2))} · ${tot} ${ST('nights')}${head ? ' · ' + head : ''}</p>${rows}${flights}<p style="margin:10px 0 0;text-align:end"><button type="button" class="ghost" id="sejRm" style="font-size:12px">${ST('remove')}</button></p></div>`;
   };
+  A.sejour = { render: el => { const box = $('#sejCard', el); if (box) { box.outerHTML = stayHtml(); bindStay(el); } } };
   const mountStay = el => { const box = $('#sejCard', el); if (!box) return; box.outerHTML = stayHtml(); bindStay(el); };
   const bindStay = el => {
     const box = $('#sejCard', el); if (!box) return;
@@ -182,6 +183,8 @@
     };
     const del = $('#ie-del', box); if (del) del.onclick = () => { if (confirm(A.t('st_delete_confirm'))) { S.stays = S.stays.filter(y => y.id !== editId); A.save('stays'); editId = null; redo(); } };
     if (A.circuit) A.circuit.bind(box, { redraw: redo, addStay: () => {} });
+    const ld = $('#sejLoad', box); if (ld) ld.onclick = () => { if (A.circuit && A.circuit.loadDefault()) { A.toast('✓ ' + A.t('ci_loaded')); A.refresh(); } };
+    const rm = $('#sejRm', box); if (rm) rm.onclick = () => { if (confirm(A.t('ci_remove_confirm'))) { S.circuit = null; A.save('circuit'); A.refresh(); } };
     const gi = $('[data-goihram]', box); if (gi) gi.onclick = ev => { ev.preventDefault(); ev.stopPropagation(); const t0 = $('#omraSteps', el); t0 && t0.scrollIntoView({ behavior: 'smooth' }); };
   };
 

@@ -46,7 +46,7 @@
     const c = S.circuit;
     if (c) c.transports.filter(x => x.mode !== 'arrive' && x.mode !== 'leave').forEach(x => {
       const m = (c.tmode || {})[x.id] || x.mode, inf = (c.tinfo || {})[x.id] || {}, ic = A.circuit ? A.circuit.icon(x) : '🚆';
-      const name = x.custom ? (inf.label || (A.circuit ? A.circuit.label(x) : '')) : `${cityName(x.from)} → ${cityName(x.to)}`;
+      const name = A.circuit ? A.circuit.titleOf(x) : `${cityName(x.from)} → ${cityName(x.to)}`;
       out.push({ key: 'tr-' + x.id, cat: 'transport', icon: ic, label: name, sub: `${shortD(x.date)}${A.circuit ? ' · ' + A.circuit.label(x) : ''}`,
         read: () => ({ amount: inf.amount != null && inf.amount !== '' ? num(inf.amount) : num(inf.price), cur: inf.cur, pay: inf.pay, paidAmt: inf.paidAmt }),
         write: v => { const cc = S.circuit; cc.tinfo = cc.tinfo || {}; const o = (cc.tinfo[x.id] = cc.tinfo[x.id] || {}); o.amount = v.amount || ''; o.price = ''; o.cur = v.cur; o.pay = v.pay; o.paidAmt = v.paidAmt; save('circuit'); } });
