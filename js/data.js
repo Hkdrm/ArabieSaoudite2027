@@ -501,3 +501,7 @@ Object.assign(I18N.en, { pay_title: 'Expenses', pay_amount: 'Price', pay_status:
 Object.assign(I18N.ar, { pay_title: 'المصروفات', pay_amount: 'السعر', pay_status: 'الدفع', pay_paid_amt: 'المدفوع مسبقًا (عربون)', pay_todo: 'للدفع', pay_paid: 'مدفوع', pay_partial: 'عربون مدفوع', pay_onsite: 'في المكان', pay_rest: 'المتبقي للدفع', pay_total: 'الإجمالي المتوقع',
   pay_f_all: 'الكل', pay_f_due: 'للدفع', pay_c_flight: 'الرحلات', pay_c_stay: 'الإقامة', pay_c_transport: 'المواصلات', pay_c_other: 'مصروفات أخرى', pay_fl_out: 'رحلة الذهاب', pay_fl_ret: 'رحلة العودة', pay_set: 'أدخل السعر',
   pay_missing: 'بند بدون سعر: المسه لإدخال المبلغ.', pay_note: 'المجاميع حسب كل عملة دون تحويل. «في المكان» = يُدفع عند الوصول.', pay_none: 'لا شيء لعرضه.', pay_add: 'إضافة مصروف', pay_need: 'أدخل البيان والمبلغ.', pay_budget: 'الميزانية والتحويل (الأدوات)', pay_del_confirm: 'حذف هذا المصروف؟', pay_fl_btn: 'سعر الرحلات والدفع', pay_fl_sub: 'أدخل سعر الذهاب والعودة وحالة الدفع.' });
+
+Object.assign(I18N.fr, { pay_night: 'nuit', pay_no_hotel: 'hébergement à ajouter', pay_mk_stays: 'Créer les hébergements manquants' });
+Object.assign(I18N.en, { pay_night: 'night', pay_no_hotel: 'accommodation to add', pay_mk_stays: 'Create the missing accommodations' });
+Object.assign(I18N.ar, { pay_night: 'ليلة', pay_no_hotel: 'إقامة للإضافة', pay_mk_stays: 'إنشاء الإقامات الناقصة' });
