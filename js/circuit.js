@@ -137,5 +137,5 @@
     const r = $('#ciReset', root); if (r) r.onclick = () => { if (confirm(t('ci_remove_confirm'))) { S.circuit = null; save('circuit'); h.redraw(); } };
   };
 
-  A.circuit = { html, bind, icon: x => MODE_IC[modeOf(x)] || '🚆', label: x => modeLabel(modeOf(x)) };
+  A.circuit = { html, bind, trCard, icon: x => MODE_IC[modeOf(x)] || '🚆', label: x => modeLabel(modeOf(x)) };
 })();

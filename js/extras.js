@@ -99,9 +99,9 @@
   /* ---------- « Mon séjour » : le circuit, les hôtels et les vols vus depuis l'onglet Omra ---------- */
   const SJ = {
     fr: { title: 'Mon séjour', empty: "Chargez votre circuit (Djeddah, La Mecque, Médine, Riyad…) pour voir ici vos étapes, vos hôtels et vos transports.", load: 'Charger mon circuit', edit: 'Modifier', hotel: 'Hôtel', tbook: "À réserver", booked: 'Réservé', nights: 'nuits', night: 'nuit', here: "Vous êtes ici", day: 'Jour', of: 'sur', left: 'jours avant le départ', flights: 'Vols', out: 'Aller', ret: 'Retour',
-      omra: "Omra : étape principale. Renseignez-vous sur le miqat et le moment de l'ihram avant d'entrer à La Mecque.", nabawi: 'Visite de la Mosquée du Prophète ﷺ, Rawdah (permis Nusuk), Quba, Uhud.', jeddah: 'Arrivée et repos ; Djeddah historique (Al-Balad), Corniche.', riyadh: 'Capitale : Diriyah, Masmak.', see_ihram: "Voir l'étape Ihram" },
+      omra: "Omra : étape principale. Renseignez-vous sur le miqat et le moment de l'ihram avant d'entrer à La Mecque.", nabawi: 'Visite de la Mosquée du Prophète ﷺ, Rawdah (permis Nusuk), Quba, Uhud.', jeddah: 'Arrivée et repos ; Djeddah historique (Al-Balad), Corniche.', riyadh: 'Capitale : Diriyah, Masmak.', see_ihram: "Voir l'étape Ihram", tap: "Touchez pour renseigner l'hôtel et le transport" },
     en: { title: 'My stay', empty: 'Load your itinerary (Jeddah, Makkah, Madinah, Riyadh…) to see your stops, hotels and transport here.', load: 'Load my itinerary', edit: 'Edit', hotel: 'Hotel', tbook: 'To book', booked: 'Booked', nights: 'nights', night: 'night', here: 'You are here', day: 'Day', of: 'of', left: 'days until departure', flights: 'Flights', out: 'Outbound', ret: 'Return',
-      omra: 'Umrah: main stop. Find out about the miqat and when to enter ihram before reaching Makkah.', nabawi: "Prophet's Mosque ﷺ, Rawdah (Nusuk permit), Quba, Uhud.", jeddah: 'Arrival and rest; historic Jeddah (Al-Balad), Corniche.', riyadh: 'Capital: Diriyah, Masmak.', see_ihram: 'See the Ihram step' },
+      omra: 'Umrah: main stop. Find out about the miqat and when to enter ihram before reaching Makkah.', nabawi: "Prophet's Mosque ﷺ, Rawdah (Nusuk permit), Quba, Uhud.", jeddah: 'Arrival and rest; historic Jeddah (Al-Balad), Corniche.', riyadh: 'Capital: Diriyah, Masmak.', see_ihram: 'See the Ihram step', tap: 'Tap to enter the hotel and transport' },
   };
   const ST = k => (SJ[S.lang] || SJ.fr)[k] || SJ.fr[k];
   const pad2 = n => String(n).padStart(2, '0');
@@ -110,38 +110,86 @@
   const nts = (a, b) => Math.round((dd(b) - dd(a)) / 864e5);
   const shortD = s => dd(s).toLocaleDateString(S.lang === 'ar' ? 'ar-SA-u-nu-latn' : S.lang, { day: 'numeric', month: 'short' });
   const cName = id => (typeof CITIES !== 'undefined' && CITIES[id] ? (CITIES[id].n[S.lang] || CITIES[id].n.fr) : id);
+  /* « Mon séjour » : chaque étape se déplie au toucher pour renseigner l'hôtel et choisir/valider le transport, sans quitter l'onglet */
+  let openStage = null, editId = null, formStatus = 'todo';
+  const BKN = { jeddah: 'Jeddah', makkah: 'Mecca', madinah: 'Medina', riyadh: 'Riyadh' };
+  const stageStays = s => (S.stays || []).filter(x => x.city === s.city && x.in && x.out && x.in < s.out && x.out > s.in);
+  const stageTr = (c, s) => c.transports.filter(x => (x.to === s.city && x.date === s.in) || (x.mode === 'leave' && x.date === s.out));
+  const CURS = ['EUR', 'CHF', 'SAR', 'USD', 'GBP'];
+  const hotelForm = x => {
+    const v = x || { name: '', status: 'todo', addr: '', link: '', price: '', cur: 'EUR' };
+    return `<div class="sfact"><label>${A.t('st_name')}</label><input id="ie-name" value="${esc(v.name)}" placeholder="${esc(A.t('st_name_ph'))}" style="width:100%">
+      <div class="chips" style="margin:8px 0"><button type="button" class="chip ${formStatus !== 'booked' ? 'on' : ''}" data-iest="todo">${A.t('st_todo')}</button><button type="button" class="chip ${formStatus === 'booked' ? 'on' : ''}" data-iest="booked">${A.t('st_booked')}</button></div>
+      <label>${A.t('st_addr')}</label><input id="ie-addr" value="${esc(v.addr)}" style="width:100%">
+      <label style="margin-top:8px">${A.t('st_link')}</label><input id="ie-link" inputmode="url" autocapitalize="off" value="${esc(v.link)}" placeholder="https://…" style="width:100%">
+      <div class="row" style="margin-top:8px"><div class="grow"><label>${A.t('st_price')}</label><input id="ie-price" inputmode="decimal" value="${esc(v.price)}" style="width:100%"></div><div><label>${A.t('currency')}</label><select id="ie-cur">${CURS.map(k => `<option ${k === (v.cur || 'EUR') ? 'selected' : ''}>${k}</option>`).join('')}</select></div></div>
+      <div class="row" style="gap:8px;margin-top:10px"><button type="button" id="ie-save">✓ ${A.t('save')}</button><button type="button" class="ghost" id="ie-cancel">${A.t('cancel')}</button>${x ? `<button type="button" class="danger" id="ie-del">${A.t('delete')}</button>` : ''}</div></div>`;
+  };
+  const panel = (c, s) => {
+    const stays = stageStays(s), ex = editId && editId !== 'new' ? S.stays.find(x => x.id === editId) : null;
+    const bk = `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(BKN[s.city] || cName(s.city))}&checkin=${s.in}&checkout=${s.out}&group_adults=2&no_rooms=1`;
+    const hot = editId ? hotelForm(ex)
+      : `${stays.map(x => `<div class="row" style="gap:8px;margin:4px 0;flex-wrap:nowrap"><span class="grow">🏨 <b>${esc(x.name || ST('hotel'))}</b> <span class="pill ${x.status === 'booked' ? 'ok' : ''}">${x.status === 'booked' ? '✓ ' + ST('booked') : ST('tbook')}</span>${x.addr ? `<br><span class="muted" style="font-size:13px">${esc(x.addr)}</span>` : ''}</span><button type="button" class="chip" data-iedit="${x.id}">✏️ ${ST('edit')}</button></div>`).join('')}
+        <div class="row" style="gap:6px;margin-top:6px;flex-wrap:wrap"><button type="button" class="chip on" data-ieadd="1">＋ ${A.t('add_stay')}</button><a class="chip" href="${bk}" target="_blank" rel="noopener">🔎 Booking ↗</a></div>`;
+    const trs = stageTr(c, s).map(x => (A.circuit ? A.circuit.trCard(x) : '')).join('');
+    return `<div class="sbody" style="padding:8px 0 0"><h4 style="margin:6px 0 4px">🏨 ${A.t('ci_stages')}</h4>${hot}${trs ? `<h4 style="margin:12px 0 4px">🚆 ${A.t('ci_transports')}</h4>${trs}` : ''}</div>`;
+  };
   const stayHtml = () => {
     const c = S.circuit;
-    if (!c) return `<div class="card"><h3>🧳 ${ST('title')}</h3><p class="muted">${ST('empty')}</p><a class="btn" href="#/stay">${ST('load')} →</a></div>`;
+    if (!c) return `<div class="card" id="sejCard"><h3>🧳 ${ST('title')}</h3><p class="muted">${ST('empty')}</p><a class="btn" href="#/stay">${ST('load')} →</a></div>`;
     const today = isoD(new Date()), d1 = c.stages[0].in, d2 = c.stages.at(-1).out, tot = nts(d1, d2);
     let head = '';
     if (today < d1) head = `<b>${nts(today, d1)}</b> ${ST('left')}`; else if (today < d2) head = `${ST('here')} · ${ST('day')} <b>${nts(d1, today) + 1}</b> ${ST('of')} ${tot + 1}`;
     const J = S.journey || {};
     const flights = (J.noOut || J.noRet) ? `<div class="muted" style="margin-top:8px">✈️ ${ST('flights')} : ${J.noOut ? `${ST('out')} <b>${esc(J.noOut)}</b>` : ''}${J.noOut && J.noRet ? ' · ' : ''}${J.noRet ? `${ST('ret')} <b>${esc(J.noRet)}</b>` : ''}</div>` : '';
     const rows = c.stages.map((s, i) => {
-      const n = nts(s.in, s.out), cur = today >= s.in && today < s.out;
-      const stays = (S.stays || []).filter(x => x.city === s.city && x.in && x.out && x.in < s.out && x.out > s.in);
-      const hotel = stays.length ? stays.map(x => `🏨 <b>${esc(x.name || ST('hotel'))}</b> <span class="pill ${x.status === 'booked' ? 'ok' : ''}">${x.status === 'booked' ? '✓ ' + ST('booked') : ST('tbook')}</span>`).join('<br>') : `<a href="#/stay" class="muted">🏨 ${ST('hotel')} : ${ST('tbook')} →</a>`;
+      const n = nts(s.in, s.out), cur = today >= s.in && today < s.out, on = openStage === s.id;
+      const stays = stageStays(s);
+      const hotel = stays.length ? stays.map(x => `🏨 <b>${esc(x.name || ST('hotel'))}</b> <span class="pill ${x.status === 'booked' ? 'ok' : ''}">${x.status === 'booked' ? '✓ ' + ST('booked') : ST('tbook')}</span>`).join('<br>') : `<span class="muted">🏨 ${ST('hotel')} : ${ST('tbook')}</span>`;
       const note = s.city === 'makkah' ? ST('omra') : s.city === 'madinah' ? ST('nabawi') : s.city === 'jeddah' ? ST('jeddah') : s.city === 'riyadh' ? ST('riyadh') : '';
       const tr = c.transports.find(x => (x.mode === 'train' || x.mode === 'flight') && x.to === s.city && x.date === s.in && x.from !== s.city);
       return `${tr ? `<div class="muted" style="margin:2px 0 2px 14px;font-size:13px">${A.circuit ? A.circuit.icon(tr) : '🚆'} ${A.circuit ? esc(A.circuit.label(tr)) + ' · ' : ''}${esc(shortD(tr.date))} · ${esc(cName(tr.from))} → ${esc(cName(tr.to))}</div>` : ''}
-        <div class="sitem-tr ${cur ? 'done' : ''}" style="${s.city === 'makkah' ? 'border-color:#c9a227;border-width:2px' : ''}"><div class="row" style="gap:8px;flex-wrap:nowrap"><b class="grow">${s.city === 'makkah' ? '🕋 ' : ''}${i + 1}. ${esc(cName(s.city))}</b>${cur ? `<span class="pill ok">${ST('here')}</span>` : ''}</div>
-          <div class="muted">📅 ${esc(shortD(s.in))} → ${esc(shortD(s.out))} · 🌙 ${n} ${n > 1 ? ST('nights') : ST('night')}</div>
-          <div style="margin:4px 0">${hotel}</div>
-          <div class="row" style="gap:6px;margin:6px 0">${stays.length ? stays.map(x => `<button type="button" class="chip" data-editstay="${x.id}">✏️ ${ST('edit')}${stays.length > 1 ? ' · ' + esc(x.name || ST('hotel')) : ''}</button>`).join('') : `<button type="button" class="chip" data-addstage="${s.id}">＋ ${ST('hotel')}</button>`}</div>${note ? `<div class="muted" style="font-size:13px">${note}${s.city === 'makkah' ? ` <a href="#omraSteps" data-goihram>${ST('see_ihram')} ↓</a>` : ''}</div>` : ''}</div>`;
+        <div class="sitem-tr ${cur ? 'done' : ''}" style="${s.city === 'makkah' ? 'border-color:#c9a227;border-width:2px' : ''}">
+          <div role="button" tabindex="0" data-stage="${s.id}" style="display:block;width:100%;cursor:pointer" aria-expanded="${on}"><div class="row" style="gap:8px;flex-wrap:nowrap"><b class="grow">${s.city === 'makkah' ? '🕋 ' : ''}${i + 1}. ${esc(cName(s.city))}</b>${cur ? `<span class="pill ok">${ST('here')}</span>` : ''}<span class="muted">${on ? '▾' : '▸'}</span></div>
+            <div class="muted">📅 ${esc(shortD(s.in))} → ${esc(shortD(s.out))} · 🌙 ${n} ${n > 1 ? ST('nights') : ST('night')}</div>
+            <div style="margin:4px 0">${hotel}</div>${note ? `<div class="muted" style="font-size:13px">${note}${s.city === 'makkah' ? ` <a href="#omraSteps" data-goihram>${ST('see_ihram')} ↓</a>` : ''}</div>` : ''}
+            ${on ? '' : `<div class="muted" style="font-size:12px;margin-top:4px">✏️ ${ST('tap')}</div>`}</div>
+          ${on ? panel(c, s) : ''}</div>`;
     }).join('');
-    return `<div class="card"><h3 style="margin:0">🧳 ${ST('title')}</h3>
+    return `<div class="card" id="sejCard"><h3 style="margin:0">🧳 ${ST('title')}</h3>
       <p class="muted" style="margin:4px 0 8px">${esc(shortD(d1))} → ${esc(shortD(d2))} · ${tot} ${ST('nights')}${head ? ' · ' + head : ''}</p>${rows}${flights}</div>`;
+  };
+  const mountStay = el => { const box = $('#sejCard', el); if (!box) return; box.outerHTML = stayHtml(); bindStay(el); };
+  const bindStay = el => {
+    const box = $('#sejCard', el); if (!box) return;
+    const redo = () => mountStay(el);
+    $$('[data-stage]', box).forEach(b => b.onclick = ev => { if (ev.target.closest('a')) return; openStage = openStage === b.dataset.stage ? null : b.dataset.stage; editId = null; redo(); });
+    $$('[data-iedit]', box).forEach(b => b.onclick = () => { editId = b.dataset.iedit; const x = S.stays.find(y => y.id === editId); formStatus = (x && x.status) || 'todo'; redo(); });
+    $$('[data-ieadd]', box).forEach(b => b.onclick = () => { editId = 'new'; formStatus = 'todo'; redo(); });
+    $$('[data-iest]', box).forEach(b => b.onclick = () => { formStatus = b.dataset.iest; $$('[data-iest]', box).forEach(x => x.classList.toggle('on', x === b)); });
+    const stage = (S.circuit && S.circuit.stages.find(x => x.id === openStage)) || null;
+    const cancel = $('#ie-cancel', box); if (cancel) cancel.onclick = () => { editId = null; redo(); };
+    const save = $('#ie-save', box);
+    if (save && stage) save.onclick = () => {
+      const val = id => ($('#' + id, box) || { value: '' }).value.trim();
+      let link = val('ie-link'); if (link && !/^[a-z][a-z0-9+.-]*:/i.test(link)) link = 'https://' + link; if (link && !/^https?:\/\//i.test(link)) link = '';
+      const f = { name: val('ie-name'), status: formStatus, addr: val('ie-addr'), link, price: val('ie-price'), cur: val('ie-cur') || 'EUR' };
+      S.stays = S.stays || [];
+      if (editId === 'new') S.stays.push({ id: 's' + Date.now(), city: stage.city, in: stage.in, out: stage.out, phone: '', notes: '', ref: '', ...f });
+      else { const x = S.stays.find(y => y.id === editId); if (x) Object.assign(x, f); }
+      A.save('stays'); editId = null; A.toast('✓ ' + A.t('saved')); redo();
+    };
+    const del = $('#ie-del', box); if (del) del.onclick = () => { if (confirm(A.t('st_delete_confirm'))) { S.stays = S.stays.filter(y => y.id !== editId); A.save('stays'); editId = null; redo(); } };
+    if (A.circuit) A.circuit.bind(box, { redraw: redo, addStay: () => {} });
+    const gi = $('[data-goihram]', box); if (gi) gi.onclick = ev => { ev.preventDefault(); ev.stopPropagation(); const t0 = $('#omraSteps', el); t0 && t0.scrollIntoView({ behavior: 'smooth' }); };
   };
 
   const wrap = A.views.omra;
   A.views.omra = el => {
-    wrap(el);
+    wrap(el); openStage = null; editId = null;
     const w = $('#holyWrap', el); if (!w) return;
     w.insertAdjacentHTML('beforebegin', stayHtml() + duaHtml() + infoHtml());
-    $$('[data-editstay]', el).forEach(b => b.onclick = () => { A.stayEdit = b.dataset.editstay; location.hash = '#/stay'; });
-    $$('[data-addstage]', el).forEach(b => b.onclick = () => { const st = (S.circuit.stages || []).find(x => x.id === b.dataset.addstage); A.circuitPrefill = st; location.hash = '#/stay'; });
-    const gi = $('[data-goihram]', el); if (gi) gi.onclick = ev => { ev.preventDefault(); const t0 = $('#omraSteps', el); t0 && t0.scrollIntoView({ behavior: 'smooth' }); };
+    bindStay(el);
     $$('[data-dua]', el).forEach(b => b.onclick = () => say(b.dataset.dua, { slow: !!b.dataset.slow, rep: +b.dataset.rep || 0 }));
     const leave = () => { if (/^#\/omra/.test(location.hash)) return; window.removeEventListener('hashchange', leave); window.speechSynthesis && speechSynthesis.cancel(); };
     window.addEventListener('hashchange', leave);
