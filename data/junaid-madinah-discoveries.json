@@ -76,7 +76,7 @@
       "category": "history",
       "area": "Centre historique",
       "description_fr": "Ancien musalla lié aux prières de l’Aïd et de demande de pluie",
-      "practical_notes_fr": "Secteur porte 310",
+      "practical_notes_fr": "Dans le centre historique proche du Haram, secteur porte 310 selon une vidéo. Mosquée historique de pierre sombre ; vérifier les horaires et l'accès intérieur avant déplacement.",
       "source": {
         "creator": "Junaid Hussain",
         "channel": "https://www.youtube.com/@junaidhussainmadinah",
@@ -2147,7 +2147,7 @@
       "subcategory": "well",
       "area": "Al-Awali / Qurban Road, à l'est-nord-est de Quba",
       "description_fr": "Puits historique lié à la Sira, cité par les autorités de Médine et distinct de Bir Aris.",
-      "practical_notes_fr": "ATTENTION : fermeture pour maintenance signalée sur le portail officiel Visit Madinah le 14 novembre 2026. Réouverture non annoncée à la date de vérification ; ne pas prévoir d'entrée sans confirmation.",
+      "practical_notes_fr": "Site associé à la Sira, au quartier Al-Awali. Attention : le portail officiel Visit Madinah annonçait une fermeture pour maintenance au dernier contrôle ; l'accès n'est pas garanti. À vérifier avant tout déplacement.",
       "source": {
         "creator": "Autorité touristique de Médine",
         "channel": null,
@@ -2396,6 +2396,1793 @@
           "https://www.youtube.com/watch?v=jPO2w1u_9iw"
         ]
       }
+    },
+    {
+      "id": "jeddah-bayt-matbouli",
+      "name_fr": "Bayt Al-Matbouli — maison musée",
+      "city": "jeddah",
+      "category": "museum",
+      "subcategory": "hidden_place",
+      "area": "Al-Balad, Jeddah Historic District",
+      "description_fr": "Maison traditionnelle de 1613 aux boiseries et intérieurs historiques, citée par un voyageur du Routard.",
+      "practical_notes_fr": "Le voyageur indique 10 SAR et 17h–22h en août 2025 ; ne pas réutiliser comme tarif ou horaires 2027 sans contrôle.",
+      "source": {
+        "creator": "Témoignage forum du Guide du Routard, novembre 2025",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.routard.com/forums/t/retour-de-voyage-2-jours-descale-en-arabie-saoudite-djeddah-et-medine/477639"
+        ]
+      },
+      "verification": {
+        "source_detail": "Témoignage forum du Guide du Routard, novembre 2025",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "jeddah-bayt-baeshen",
+      "name_fr": "Bayt Baeshen — demeure historique",
+      "city": "jeddah",
+      "category": "museum",
+      "subcategory": "hidden_place",
+      "area": "Al-Balad, Djeddah",
+      "description_fr": "Maison du XIXe siècle mentionnée comme petit musée avec artisanat, documents et café.",
+      "practical_notes_fr": "Le contributeur Routard l'a observée depuis l'extérieur, sans la visiter : visite intérieure et café à confirmer.",
+      "source": {
+        "creator": "Témoignage forum du Guide du Routard, novembre 2025",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.routard.com/forums/t/retour-de-voyage-2-jours-descale-en-arabie-saoudite-djeddah-et-medine/477639"
+        ]
+      },
+      "verification": {
+        "source_detail": "Témoignage forum du Guide du Routard, novembre 2025",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "jeddah-bayt-xenel",
+      "name_fr": "Bayt Xenel — patrimoine hedjazi",
+      "city": "jeddah",
+      "category": "museum",
+      "subcategory": "hidden_place",
+      "area": "Al-Balad, Djeddah",
+      "description_fr": "Bâtiment lié autrefois au consulat néerlandais, signalé comme espace d'exposition de photographies et documents sur Djeddah.",
+      "practical_notes_fr": "Adresse d'entrée et calendrier d'exposition à confirmer; visite décrite dans le carnet du Routard.",
+      "source": {
+        "creator": "Témoignage forum du Guide du Routard, novembre 2025",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.routard.com/forums/t/retour-de-voyage-2-jours-descale-en-arabie-saoudite-djeddah-et-medine/477639"
+        ]
+      },
+      "verification": {
+        "source_detail": "Témoignage forum du Guide du Routard, novembre 2025",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "jeddah-bayt-nassif",
+      "name_fr": "Bayt Nassif — maison historique",
+      "city": "jeddah",
+      "category": "museum",
+      "subcategory": "hidden_place",
+      "area": "Al-Balad, Djeddah",
+      "description_fr": "Maison historique restaurée accueillant expositions et éléments archéologiques; point utile pour récupérer un plan du quartier.",
+      "practical_notes_fr": "Selon le voyageur, accès gratuit et certaines salles seules ouvertes en août 2025; vérifier le programme en 2027.",
+      "source": {
+        "creator": "Témoignage forum du Guide du Routard, novembre 2025",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.routard.com/forums/t/retour-de-voyage-2-jours-descale-en-arabie-saoudite-djeddah-et-medine/477639"
+        ]
+      },
+      "verification": {
+        "source_detail": "Témoignage forum du Guide du Routard, novembre 2025",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "jeddah-bayt-jokhdar",
+      "name_fr": "Bayt Jokhdar — façade aux rawashins verts",
+      "city": "jeddah",
+      "category": "history",
+      "subcategory": "hidden_place",
+      "area": "Al-Balad, Djeddah",
+      "description_fr": "Ancienne maison devenue centre d'accueil de pèlerins puis hôtel, remarquable pour ses fenêtres en bois et son entrée sculptée.",
+      "practical_notes_fr": "Bâtiment à admirer depuis la rue; accès intérieur et état actuel non confirmés.",
+      "source": {
+        "creator": "Témoignage forum du Guide du Routard, novembre 2025",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.routard.com/forums/t/retour-de-voyage-2-jours-descale-en-arabie-saoudite-djeddah-et-medine/477639"
+        ]
+      },
+      "verification": {
+        "source_detail": "Témoignage forum du Guide du Routard, novembre 2025",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "jeddah-bayt-batterjee",
+      "name_fr": "Bayt Batterjee — ancienne résidence consulaire",
+      "city": "jeddah",
+      "category": "history",
+      "subcategory": "hidden_place",
+      "area": "Al-Balad, Djeddah",
+      "description_fr": "Maison du XIXe siècle ayant hébergé le consulat des États-Unis selon le carnet de voyage.",
+      "practical_notes_fr": "L'observation extérieure est possible dans le quartier; ne pas supposer que le bâtiment est ouvert au public.",
+      "source": {
+        "creator": "Témoignage forum du Guide du Routard, novembre 2025",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.routard.com/forums/t/retour-de-voyage-2-jours-descale-en-arabie-saoudite-djeddah-et-medine/477639"
+        ]
+      },
+      "verification": {
+        "source_detail": "Témoignage forum du Guide du Routard, novembre 2025",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "jeddah-shona",
+      "name_fr": "Al-Shona — vestiges de l'entrepôt portuaire",
+      "city": "jeddah",
+      "category": "history",
+      "subcategory": "hidden_place",
+      "area": "Al-Balad, Djeddah, non loin de Bayt Nassif",
+      "description_fr": "Ancienne structure historique et site archéologique évoqués dans le parcours Routard d'Al-Balad.",
+      "practical_notes_fr": "Accessibilité, restauration et emplacement de l'entrée à confirmer.",
+      "source": {
+        "creator": "Témoignage forum du Guide du Routard, novembre 2025",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.routard.com/forums/t/retour-de-voyage-2-jours-descale-en-arabie-saoudite-djeddah-et-medine/477639"
+        ]
+      },
+      "verification": {
+        "source_detail": "Témoignage forum du Guide du Routard, novembre 2025",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "jeddah-bab-jadid",
+      "name_fr": "Bab Jadid / Bab Jidat Al-Qadimla",
+      "city": "jeddah",
+      "category": "history",
+      "subcategory": "hidden_place",
+      "area": "Nord d'Al-Balad, Djeddah",
+      "description_fr": "Ancienne porte historique au nord du quartier, point d'intérêt pour une promenade architecturale.",
+      "practical_notes_fr": "Les appellations translittérées peuvent varier; vérifier le bon repère cartographique.",
+      "source": {
+        "creator": "Témoignage forum du Guide du Routard, novembre 2025",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.routard.com/forums/t/retour-de-voyage-2-jours-descale-en-arabie-saoudite-djeddah-et-medine/477639"
+        ]
+      },
+      "verification": {
+        "source_detail": "Témoignage forum du Guide du Routard, novembre 2025",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "jeddah-qabil-gold-souk",
+      "name_fr": "Qabil Trail et Gold Souk",
+      "city": "jeddah",
+      "category": "shopping",
+      "subcategory": "hidden_place",
+      "area": "Qabil Street, Al-Balad, Djeddah",
+      "description_fr": "Passage marchand historique et secteur des bijoutiers, propice à la découverte de boutiques traditionnelles.",
+      "practical_notes_fr": "Comparer les prix et la qualité, ne pas confondre le quartier avec une boutique unique.",
+      "source": {
+        "creator": "Vidéo de promenade et récit de voyage",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.youtube.com/watch?v=lG2xM-_fr8k",
+          "https://www.routard.com/forums/t/retour-de-voyage-2-jours-descale-en-arabie-saoudite-djeddah-et-medine/477639"
+        ]
+      },
+      "verification": {
+        "source_detail": "Vidéo de promenade et récit de voyage",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "jeddah-souq-al-khaskeya",
+      "name_fr": "Souq Al-Khaskeya — souk traditionnel",
+      "city": "jeddah",
+      "category": "shopping",
+      "subcategory": "hidden_place",
+      "area": "Al-Balad, Djeddah",
+      "description_fr": "Marché de commerces populaires, accessoires, vêtements, parfums et articles de souvenir.",
+      "practical_notes_fr": "Secteur et stands variables; comparer sur place les prix, disponibilité non garantie.",
+      "source": {
+        "creator": "Documentation touristique et recherche web",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.visitsaudi.com/"
+        ]
+      },
+      "verification": {
+        "source_detail": "Documentation touristique et recherche web",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "jeddah-souq-al-badu",
+      "name_fr": "Souq Al-Badu — marché traditionnel",
+      "city": "jeddah",
+      "category": "shopping",
+      "subcategory": "hidden_place",
+      "area": "Près de Bab Makkah, Al-Balad, Djeddah",
+      "description_fr": "Marché de tissus et d'articles traditionnels mentionné parmi les secteurs moins touristiques.",
+      "practical_notes_fr": "Le quartier ne garantit pas un commerce précis; privilégier une visite de jour ou en début de soirée.",
+      "source": {
+        "creator": "Documentation touristique et recherche web",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.visitsaudi.com/"
+        ]
+      },
+      "verification": {
+        "source_detail": "Documentation touristique et recherche web",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "jeddah-al-nada-souk",
+      "name_fr": "Souq Al-Nada",
+      "city": "jeddah",
+      "category": "shopping",
+      "subcategory": "hidden_place",
+      "area": "Al-Balad, Djeddah",
+      "description_fr": "Secteur commerçant à intégrer à une marche dans les souks du centre ancien.",
+      "practical_notes_fr": "Repère de quartier, pas une adresse de boutique; itinéraire et activité à confirmer.",
+      "source": {
+        "creator": "Documentation touristique et recherche web",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.visitsaudi.com/"
+        ]
+      },
+      "verification": {
+        "source_detail": "Documentation touristique et recherche web",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "jeddah-bab-makkah",
+      "name_fr": "Bab Makkah — porte historique et souks",
+      "city": "jeddah",
+      "category": "history",
+      "subcategory": "hidden_place",
+      "area": "Extrémité orientale d'Al-Balad, Djeddah",
+      "description_fr": "Porte ancienne et carrefour de marchés historiquement liés aux routes des pèlerins.",
+      "practical_notes_fr": "Visite extérieure; prendre le temps d'explorer les petites ruelles.",
+      "source": {
+        "creator": "Témoignage forum du Guide du Routard, novembre 2025",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.routard.com/forums/t/retour-de-voyage-2-jours-descale-en-arabie-saoudite-djeddah-et-medine/477639"
+        ]
+      },
+      "verification": {
+        "source_detail": "Témoignage forum du Guide du Routard, novembre 2025",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "jeddah-bab-al-bunt-museum",
+      "name_fr": "Musée de la mer Rouge / Bab Al-Bunt",
+      "city": "jeddah",
+      "category": "museum",
+      "subcategory": "hidden_place",
+      "area": "Bâtiment historique Bab Al-Bunt, Djeddah",
+      "description_fr": "Édifice lié à l'histoire du port et des pèlerinages; projet culturel consacré au patrimoine de la mer Rouge.",
+      "practical_notes_fr": "Vérifier programmation effective, exposition ouverte et réservation en 2027.",
+      "source": {
+        "creator": "Recherche web / tourisme institutionnel",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.visitsaudi.com/"
+        ]
+      },
+      "verification": {
+        "source_detail": "Recherche web / tourisme institutionnel",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "jeddah-al-balad-souvenirs",
+      "name_fr": "Al Balad Souvenir — cadeaux patrimoniaux",
+      "city": "jeddah",
+      "category": "shopping",
+      "subcategory": "hidden_place",
+      "area": "Qabil Lane, Al-Balad, Djeddah (adresse mentionnée : 3163 Qabil Lane)",
+      "description_fr": "Boutique de souvenirs et objets inspirés du patrimoine local et des maisons historiques.",
+      "practical_notes_fr": "Adresse publiée dans une fiche commerciale à vérifier avant visite; stock d'artisanat local non garanti.",
+      "source": {
+        "creator": "Fiche commerciale / recherche web",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.google.com/maps/search/?api=1&query=Al+Balad+Souvenir+Qabil+Lane+Jeddah"
+        ]
+      },
+      "verification": {
+        "source_detail": "Fiche commerciale / recherche web",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "jeddah-al-taybat-museum",
+      "name_fr": "Musée Al-Taybat — collection ethnographique",
+      "city": "jeddah",
+      "category": "museum",
+      "subcategory": "hidden_place",
+      "area": "Djeddah, hors Al-Balad",
+      "description_fr": "Musée Al-Taybat et collections du patrimoine saoudien et islamique ; intéressant pour la calligraphie et les objets anciens.",
+      "practical_notes_fr": "La revendication « l'une des plus grandes collections de manuscrits coraniques rares du pays » n'a pas été corroborée ici ; ne pas la présenter comme fait établi. Horaires et accès à vérifier.",
+      "source": {
+        "creator": "Témoignage forum du Guide du Routard, novembre 2025",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.routard.com/forums/t/retour-de-voyage-2-jours-descale-en-arabie-saoudite-djeddah-et-medine/477639"
+        ]
+      },
+      "verification": {
+        "source_detail": "Témoignage forum du Guide du Routard, novembre 2025",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "calligraphy_source_crosscheck",
+        "note": "Musée existant — programmation et manuscrits exposés susceptibles de changer."
+      }
+    },
+    {
+      "id": "jeddah-hassan-enany-mosque",
+      "name_fr": "Mosquée Hassan Enany",
+      "city": "jeddah",
+      "category": "history",
+      "subcategory": "hidden_place",
+      "area": "Corniche / Al Hamra, Djeddah",
+      "description_fr": "Mosquée moderne signalée pour sa forme inspirée du Rub el Hizb.",
+      "practical_notes_fr": "Le voyageur l'a trouvée fermée en août 2025; ne pas prévoir de visite intérieure sans confirmation.",
+      "source": {
+        "creator": "Témoignage forum du Guide du Routard, novembre 2025",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.routard.com/forums/t/retour-de-voyage-2-jours-descale-en-arabie-saoudite-djeddah-et-medine/477639"
+        ]
+      },
+      "verification": {
+        "source_detail": "Témoignage forum du Guide du Routard, novembre 2025",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "madinah-quba-fort",
+      "name_fr": "Château / fort ottoman de Quba",
+      "city": "madinah",
+      "category": "history",
+      "subcategory": "hidden_place",
+      "area": "Village historique de Quba, Médine",
+      "description_fr": "Forteresse de 1916 aperçue par un voyageur en route vers la mosquée de Quba.",
+      "practical_notes_fr": "Travaux observés en août 2025; accès intérieur non confirmé. À privilégier comme point d'observation extérieur.",
+      "source": {
+        "creator": "Témoignage forum du Guide du Routard, novembre 2025",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.routard.com/forums/t/retour-de-voyage-2-jours-descale-en-arabie-saoudite-djeddah-et-medine/477639"
+        ]
+      },
+      "verification": {
+        "source_detail": "Témoignage forum du Guide du Routard, novembre 2025",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "madinah-seven-mosques",
+      "name_fr": "Les Sept Mosquées — site Al-Khandaq",
+      "city": "madinah",
+      "category": "history",
+      "subcategory": "hidden_place",
+      "area": "Quartier Al-Khandaq, Médine",
+      "description_fr": "Ensemble de petites mosquées historiques associé à la bataille de la Tranchée, comprenant notamment Al-Fath et Salman Al-Farsi.",
+      "practical_notes_fr": "Certaines petites mosquées peuvent être fermées; prendre leur accès comme incertain. Taxi négocié à 80 SAR en août 2025 pour plusieurs arrêts, non tarif garanti.",
+      "source": {
+        "creator": "Témoignage forum du Guide du Routard, novembre 2025",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.routard.com/forums/t/retour-de-voyage-2-jours-descale-en-arabie-saoudite-djeddah-et-medine/477639"
+        ]
+      },
+      "verification": {
+        "source_detail": "Témoignage forum du Guide du Routard, novembre 2025",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "madinah-al-mustarah",
+      "name_fr": "Mosquée Al-Mustarah",
+      "city": "madinah",
+      "category": "history",
+      "subcategory": "hidden_place",
+      "area": "Vers la route d'Uhud, Médine",
+      "description_fr": "Petite mosquée historique évoquée dans une vidéo sur des lieux de Médine moins visités.",
+      "practical_notes_fr": "Distinguer l'existence du bâtiment des traditions historiques associées; accès et visites à vérifier.",
+      "source": {
+        "creator": "Vidéo The Hijrah Family",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.youtube.com/watch?v=rvab9tjPges"
+        ]
+      },
+      "verification": {
+        "source_detail": "Vidéo The Hijrah Family",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "madinah-masjid-ad-dira",
+      "name_fr": "Mosquée Ad-Dira",
+      "city": "madinah",
+      "category": "history",
+      "subcategory": "hidden_place",
+      "area": "Secteur nord de Médine, à géolocaliser",
+      "description_fr": "Mosquée citée dans une vidéo sur les sites cachés de Médine.",
+      "practical_notes_fr": "Nom proche d'autres mosquées : vérifier l'identification exacte avant de la placer sur une carte.",
+      "source": {
+        "creator": "Vidéo The Hijrah Family",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.youtube.com/watch?v=rvab9tjPges"
+        ]
+      },
+      "verification": {
+        "source_detail": "Vidéo The Hijrah Family",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "madinah-gift-factory-3d",
+      "name_fr": "Atelier de souvenirs 3D de Médine",
+      "city": "madinah",
+      "category": "shopping",
+      "subcategory": "artisan_souvenirs",
+      "area": "Médine — adresse de l'atelier non identifiée",
+      "description_fr": "Une vidéo présente la fabrication locale de souvenirs 3D inspirés des portes, minarets et monuments de Médine.",
+      "practical_notes_fr": "Adresse commerciale, horaires et vente directe non établis; seulement une piste à investiguer.",
+      "source": {
+        "creator": "Vidéo The Hijrah Family",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.youtube.com/watch?v=rvab9tjPges"
+        ]
+      },
+      "verification": {
+        "source_detail": "Vidéo The Hijrah Family",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "madinah-bir-rumah",
+      "name_fr": "Bir Rumah / puits d'Uthman",
+      "city": "madinah",
+      "category": "history",
+      "subcategory": "hidden_place",
+      "area": "Médine, localisation exacte et accès à confirmer",
+      "description_fr": "Puits historique associé au waqf d'Uthman ibn Affan.",
+      "practical_notes_fr": "L'association historique est documentée dans les ressources de visite de Médine; vérifier la possibilité de s'approcher du puits.",
+      "source": {
+        "creator": "Source touristique de Médine",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://visitmadinahsa.com/en"
+        ]
+      },
+      "verification": {
+        "source_detail": "Source touristique de Médine",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "madinah-careem-bikes",
+      "name_fr": "Location de vélos Careem à Médine",
+      "city": "madinah",
+      "category": "transport",
+      "subcategory": "bike_rental",
+      "area": "Bornes à travers Médine, secteurs variables",
+      "description_fr": "Option de location de vélos mentionnée par un échange sur le forum Routard.",
+      "practical_notes_fr": "La présence de bornes et le fonctionnement du service sont à vérifier pour mars 2027 ; pas une station précise.",
+      "source": {
+        "creator": "Discussion forum du Guide du Routard, décembre 2025",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.routard.com/forums/t/retour-de-voyage-2-jours-descale-en-arabie-saoudite-djeddah-et-medine/477639"
+        ]
+      },
+      "verification": {
+        "source_detail": "Discussion forum du Guide du Routard, décembre 2025",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "makkah-bir-tuwa",
+      "name_fr": "Bi'r Tuwa — ancien puits",
+      "city": "makkah",
+      "category": "history",
+      "subcategory": "hidden_place",
+      "area": "Jarwal / Wadi Dhi Tuwa, La Mecque",
+      "description_fr": "Puits ancien associé aux déplacements du Prophète ﷺ, documenté sur le portail officiel Discover Makkah.",
+      "practical_notes_fr": "Le portail l'indique comme visitable 24 h/24 et à 1,43 km du Haram, information à recontrôler au moment du séjour.",
+      "source": {
+        "creator": "Discover Makkah (site touristique officiel)",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.discovermakkah.sa/en/places-worth-visiting/landmarks/tawa-well"
+        ]
+      },
+      "verification": {
+        "source_detail": "Discover Makkah (site touristique officiel)",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "makkah-al-hudaybiyah",
+      "name_fr": "Al-Hudaybiyah — site du traité",
+      "city": "makkah",
+      "category": "history",
+      "subcategory": "hidden_place",
+      "area": "Environ 22 km du Haram, secteur Hudaybiyah",
+      "description_fr": "Vestiges et ancien puits associés au traité d'Al-Hudaybiyah dans les récits de la Sira.",
+      "practical_notes_fr": "Le portail officiel annonce un site accessible à la visite; prévoir voiture/taxi, eau et chaussures adaptées et confirmer les conditions.",
+      "source": {
+        "creator": "Discover Makkah (site touristique officiel)",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.discovermakkah.sa/en/places-worth-visiting/landmarks/al-hudaybiyah"
+        ]
+      },
+      "verification": {
+        "source_detail": "Discover Makkah (site touristique officiel)",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "makkah-islamic-dinar-museum",
+      "name_fr": "Musée du dinar islamique",
+      "city": "makkah",
+      "category": "museum",
+      "subcategory": "hidden_place",
+      "area": "La Mecque, adresse précise à confirmer",
+      "description_fr": "Musée numismatique rassemblant plus de 4 000 monnaies selon le portail Discover Makkah, ainsi que des manuscrits et objets historiques.",
+      "practical_notes_fr": "Vérifier l'emplacement exact, les horaires et le prix de visite.",
+      "source": {
+        "creator": "Discover Makkah (site touristique officiel)",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.discovermakkah.sa/en/places-worth-visiting/landmarks/islamic-dinar-museum"
+        ]
+      },
+      "verification": {
+        "source_detail": "Discover Makkah (site touristique officiel)",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "makkah-ain-zubaydah",
+      "name_fr": "Aïn Zubaydah — ancien aqueduc",
+      "city": "makkah",
+      "category": "history",
+      "subcategory": "hidden_place",
+      "area": "Vestiges dispersés autour de La Mecque",
+      "description_fr": "Système hydraulique historique d'alimentation en eau associé à Zubaydah.",
+      "practical_notes_fr": "Plusieurs vestiges et tronçons : ne pas afficher une localisation unique sans sélectionner un point attesté. Sites et accès variables.",
+      "source": {
+        "creator": "Recherche documentaire / patrimoine historique",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.google.com/maps/search/?api=1&query=Ain+Zubaydah+Makkah"
+        ]
+      },
+      "verification": {
+        "source_detail": "Recherche documentaire / patrimoine historique",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "makkah-masjid-al-bayah",
+      "name_fr": "Masjid Al-Bay'ah — serments d'Al-Aqabah",
+      "city": "makkah",
+      "category": "history",
+      "subcategory": "hidden_place",
+      "area": "Mina, La Mecque",
+      "description_fr": "Mosquée liée aux serments d'Al-Aqabah dans les récits historiques.",
+      "practical_notes_fr": "Secteur de Mina à accès potentiellement réglementé; vérifier autorisations et accès hors période de Hajj.",
+      "source": {
+        "creator": "Recherche documentaire / patrimoine historique",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.google.com/maps/search/?api=1&query=Masjid+Al+Bayah+Mina+Makkah"
+        ]
+      },
+      "verification": {
+        "source_detail": "Recherche documentaire / patrimoine historique",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Lieu ou activité identifié(e) dans une source; entrée, horaires, adresse GPS et prix non garantis."
+      }
+    },
+    {
+      "id": "makkah-hira-cultural-district",
+      "name_fr": "Hira Cultural District — musée du Coran",
+      "city": "makkah",
+      "category": "museum",
+      "subcategory": "hidden_place",
+      "area": "Au pied du mont Hira / Jabal Al-Nour, La Mecque",
+      "description_fr": "Quartier culturel au pied du mont Hira, comprenant le musée du Saint Coran avec des manuscrits, des pièces historiques, des objets liés à l'écriture et des textiles de la Kiswah.",
+      "practical_notes_fr": "Le musée présente des pièces de Kiswah brodées de fils métalliques et des manuscrits enluminés. La présence du « Coran bleu » précisément n'a pas été confirmée dans les sources officielles consultées ; ne pas le promettre. Confirmer tarifs et expositions lors de la visite.",
+      "source": {
+        "creator": "Site du quartier culturel / recherche touristique",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://hiraculturaldistrict.com/",
+          "https://www.spa.gov.sa/en/N2270359",
+          "https://www.spa.gov.sa/en/N2553685",
+          "https://www.spa.gov.sa/en/N2719079"
+        ]
+      },
+      "verification": {
+        "source_detail": "Site du quartier culturel / recherche touristique",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "calligraphy_source_crosscheck",
+        "note": "Musée existant — programmation et manuscrits exposés susceptibles de changer."
+      }
+    },
+    {
+      "id": "jeddah-abu-al-madafa-caves",
+      "name_fr": "Grottes sous-marines Abu Al Madafa",
+      "city": "jeddah",
+      "category": "nature",
+      "subcategory": "scuba_dive",
+      "area": "En mer Rouge au nord de Djeddah, accès bateau depuis la côte",
+      "description_fr": "Site de grottes sous-marines à environ 30 minutes de bateau, couloirs étroits, coraux et profondeur jusqu'à 60 m selon la Saudi Press Agency.",
+      "practical_notes_fr": "Plongée technique ou avancée uniquement avec centre agréé, qualifications adaptées et conditions vérifiées. Ne jamais entreprendre l'exploration sans guide et équipement spécialisé.",
+      "source": {
+        "creator": "Saudi Press Agency, 1er juillet 2025",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.spa.gov.sa/en/N2350067"
+        ]
+      },
+      "verification": {
+        "source_detail": "Saudi Press Agency, 1er juillet 2025",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Adresse, accès et horaires à contrôler. Ne pas déduire de position GPS d'une indication régionale."
+      }
+    },
+    {
+      "id": "jeddah-island-mosque",
+      "name_fr": "Island Mosque — mosquée de l'Île (Masjid Al-Jazirah)",
+      "city": "jeddah",
+      "category": "history",
+      "subcategory": "mosque",
+      "area": "Corniche nord, Al Kurnaysh Road, Djeddah",
+      "description_fr": "Petite mosquée d'Abdel-Wahed El-Wakil construite sur un îlot artificiel relié par un pont, achevée en mars 1986.",
+      "practical_notes_fr": "Coordonnées patrimoniales publiées : 21.597069, 39.105387. À ne pas confondre avec la mosquée flottante Al-Rahma (1985). Vérifier l'accès actuel au pont et à l'intérieur.",
+      "source": {
+        "creator": "IRCICA et Aga Khan Trust for Culture",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.islamicarchitecturalheritage.com/listings/island-mosque",
+          "https://next.archnet.org/sites/545"
+        ]
+      },
+      "verification": {
+        "source_detail": "IRCICA et Aga Khan Trust for Culture",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Adresse, accès et horaires à contrôler. Ne pas déduire de position GPS d'une indication régionale."
+      }
+    },
+    {
+      "id": "jeddah-mawakeb-alajr",
+      "name_fr": "Mawakeb Alajer — friperie solidaire",
+      "city": "jeddah",
+      "category": "shopping",
+      "subcategory": "charity_secondhand",
+      "area": "Derrière Al Badriyah Building, Al Rawdah Street, Al Khalediyah, Djeddah",
+      "description_fr": "Association de collecte et redistribution d'objets et vêtements d'occasion, citée parmi les œuvres caritatives de Djeddah.",
+      "practical_notes_fr": "Téléphone ancien annuaire : +966 12 6062433 / 6062430 ; cette adresse provient d'un article de 2023. Fonctionnement actuel, vente au public et affectation des bénéfices à un orphelinat non confirmés.",
+      "source": {
+        "creator": "Destination KSA 2023",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://destinationksa.com/en/charities-and-volunteer-initiatives-in-jeddah/"
+        ]
+      },
+      "verification": {
+        "source_detail": "Destination KSA 2023",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Adresse, accès et horaires à contrôler. Ne pas déduire de position GPS d'une indication régionale."
+      }
+    },
+    {
+      "id": "jeddah-al-balad-back-alleys",
+      "name_fr": "Petites ruelles derrière Souq Al-Alawi",
+      "city": "jeddah",
+      "category": "shopping",
+      "subcategory": "heritage_walk",
+      "area": "Al-Balad, derrière Souq Al-Alawi, Djeddah",
+      "description_fr": "Parcours de ruelles historiques, petites boutiques, boiseries roshan et vues sur les maisons anciennes.",
+      "practical_notes_fr": "Les toits des maisons sont privés ou soumis à autorisation : ne monter que dans un espace explicitement ouvert au public. Zone de promenade, sans commerce spécifique garanti.",
+      "source": {
+        "creator": "Vidéo de promenade Al-Balad 2026",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.youtube.com/watch?v=lG2xM-_fr8k"
+        ]
+      },
+      "verification": {
+        "source_detail": "Vidéo de promenade Al-Balad 2026",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Adresse, accès et horaires à contrôler. Ne pas déduire de position GPS d'une indication régionale."
+      }
+    },
+    {
+      "id": "riyadh-al-samhaniya",
+      "name_fr": "Al Samhaniya — quartier patrimonial de Diriyah",
+      "city": "riyadh",
+      "category": "history",
+      "subcategory": "heritage_district",
+      "area": "Diriyah, Riyad",
+      "description_fr": "Secteur historique de Diriyah associé aux ruelles en pisé et à l'hospitalité contemporaine, présenté par Visit Saudi comme une attraction patrimoniale.",
+      "practical_notes_fr": "Nom parfois translittéré Alsamhania ; vérifier les entrées, la programmation et les cafés actuellement ouverts. Ne pas assimiler à l'hôtel Bab Samhan sans preuve.",
+      "source": {
+        "creator": "Visit Saudi — site officiel",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.visitsaudi.com/en/destinations/diriyah/attractions/al-samhaniya"
+        ]
+      },
+      "verification": {
+        "source_detail": "Visit Saudi — site officiel",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Adresse, accès et horaires à contrôler. Ne pas déduire de position GPS d'une indication régionale."
+      }
+    },
+    {
+      "id": "riyadh-ain-heet-cave",
+      "name_fr": "Grotte d'Ain Heet (Heet Cave)",
+      "city": "riyadh",
+      "category": "nature",
+      "subcategory": "cave_high_risk",
+      "area": "Sud-est de Riyad, vers Al-Kharj",
+      "description_fr": "Grande cavité naturelle calcaire contenant un bassin souterrain, dans une zone de terrain instable.",
+      "practical_notes_fr": "Saudipedia signale des éboulements et une descente dangereuse. Ne pas y descendre ni entrer dans l'eau sans encadrement spécialisé et autorisation ; accès susceptible d'être restreint.",
+      "source": {
+        "creator": "Saudipedia — notice de référence",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://saudipedia.com/en/ain-heet-cave"
+        ]
+      },
+      "verification": {
+        "source_detail": "Saudipedia — notice de référence",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Adresse, accès et horaires à contrôler. Ne pas déduire de position GPS d'une indication régionale."
+      }
+    },
+    {
+      "id": "riyadh-camel-souq",
+      "name_fr": "Souq Al-Jamal — marché aux chameaux",
+      "city": "riyadh",
+      "category": "shopping",
+      "subcategory": "animal_market",
+      "area": "Au nord de Dammam Road, vers sortie Thumamah, périphérie de Riyad",
+      "description_fr": "Marché traditionnel de vente et négociation de chameaux, signalé par Lonely Planet.",
+      "practical_notes_fr": "Le marché a été déplacé plusieurs fois. Ne pas utiliser le repère historique comme adresse exacte ; demander l'emplacement actif avant déplacement.",
+      "source": {
+        "creator": "Lonely Planet — guide de voyage",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.lonelyplanet.com/points-of-interest/souq-al-jamal/1307198"
+        ]
+      },
+      "verification": {
+        "source_detail": "Lonely Planet — guide de voyage",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Adresse, accès et horaires à contrôler. Ne pas déduire de position GPS d'une indication régionale."
+      }
+    },
+    {
+      "id": "riyadh-souq-al-zal",
+      "name_fr": "Souq Al-Zal — souk des antiquaires",
+      "city": "riyadh",
+      "category": "shopping",
+      "subcategory": "traditional_souk",
+      "area": "Al Dirah, près du palais Al-Hukm et de la forteresse Al-Masmak",
+      "description_fr": "Marché ancien proposant tapis, oud, encens, objets de collection, bishts et antiquités.",
+      "practical_notes_fr": "Explorer aussi les allées secondaires; comparer l'origine et la légalité des objets anciens. Marché attesté par Visit Saudi et Saudipedia.",
+      "source": {
+        "creator": "Visit Saudi et Saudipedia",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.visitsaudi.com/en/destinations/riyadh/attractions/souq-al-zal-in-riyadh",
+          "https://saudipedia.com/en/souq-al-zal"
+        ]
+      },
+      "verification": {
+        "source_detail": "Visit Saudi et Saudipedia",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Adresse, accès et horaires à contrôler. Ne pas déduire de position GPS d'une indication régionale."
+      }
+    },
+    {
+      "id": "madinah-wadi-al-baida",
+      "name_fr": "Wadi Al-Baida / Wadi Al-Jinn",
+      "city": "madinah",
+      "category": "nature",
+      "subcategory": "gravity_hill",
+      "area": "Nord-ouest de Médine, route de Wadi Al-Baida",
+      "description_fr": "Vallée désertique célèbre pour une illusion d'optique faisant paraître certains tronçons descendants comme montants.",
+      "practical_notes_fr": "Ce n'est pas un phénomène prouvé de magnétisme ou surnaturel. Ne pas arrêter ni laisser rouler un véhicule sur une route ouverte pour tester cette illusion ; prévoir eau, carburant et transport adapté.",
+      "source": {
+        "creator": "Atlas Obscura et guide local",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.atlasobscura.com/places/wadi-e-jinn",
+          "https://medina.city/places/parks/wadi-al-jinn"
+        ]
+      },
+      "verification": {
+        "source_detail": "Atlas Obscura et guide local",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Adresse, accès et horaires à contrôler. Ne pas déduire de position GPS d'une indication régionale."
+      }
+    },
+    {
+      "id": "makkah-jabal-khandamah",
+      "name_fr": "Jabal Khandamah — panorama sur le Haram",
+      "city": "makkah",
+      "category": "nature",
+      "subcategory": "scenic_viewpoint",
+      "area": "Est du centre de La Mecque, montagne de Khandamah",
+      "description_fr": "Point de vue élevé sur le Masjid Al-Haram, les quartiers anciens et la Clock Tower.",
+      "practical_notes_fr": "La Saudi Press Agency décrit le panorama, mais le point exact d'observation et l'accès piéton peuvent varier. Ne pas s'aventurer sur des versants abrupts non aménagés.",
+      "source": {
+        "creator": "Saudi Press Agency et Saudi Film Commission",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://spa.gov.sa/en/N2171393",
+          "https://film.sa/locations-list-page/location-detail-page/?item_id=395"
+        ]
+      },
+      "verification": {
+        "source_detail": "Saudi Press Agency et Saudi Film Commission",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Adresse, accès et horaires à contrôler. Ne pas déduire de position GPS d'une indication régionale."
+      }
+    },
+    {
+      "id": "makkah-wadi-qanuna",
+      "name_fr": "Wadi Qanuna et son barrage — excursion régionale",
+      "city": "makkah",
+      "category": "nature",
+      "subcategory": "regional_excursion",
+      "area": "Al-Qunfudhah / Al-Ardiyat, province de La Mecque, très loin de la ville de La Mecque",
+      "description_fr": "Grande vallée de la province de La Mecque, avec barrage de stockage construit en 2017; paysage saisonnier et relief du sud-ouest saoudien.",
+      "practical_notes_fr": "Ne pas présenter comme destination proche du Haram. Le ministère saoudien met en garde contre les crues soudaines dans le lit des oueds. Vérifier l'état des routes et conditions météo.",
+      "source": {
+        "creator": "Saudipedia et centre national de végétation",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://saudipedia.com/en/list-of-the-largest-dams-in-saudi-arabia",
+          "https://ncvc.gov.sa/en/digitalKnowledge/Pages/Forests-and-Valleys.aspx"
+        ]
+      },
+      "verification": {
+        "source_detail": "Saudipedia et centre national de végétation",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Adresse, accès et horaires à contrôler. Ne pas déduire de position GPS d'une indication régionale."
+      }
+    },
+    {
+      "id": "makkah-masjid-al-jinn",
+      "name_fr": "Masjid Al-Jinn — mosquée des Djinns",
+      "city": "makkah",
+      "category": "history",
+      "subcategory": "historic_mosque",
+      "area": "Al-Ghazzah / Al-Hajun, près du cimetière Al-Mualla, au nord du Haram",
+      "description_fr": "Mosquée historique associée aux récits de la rencontre du Prophète ﷺ avec un groupe de djinns.",
+      "practical_notes_fr": "La dénomination 'Mahbas Al-Jinn' semble confondre cette mosquée avec un secteur routier de La Mecque ; l'adresse validée concerne Masjid Al-Jinn à Al-Ghazzah. Vérifier conditions de visite.",
+      "source": {
+        "creator": "Discover Makkah et Saudipedia",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.discovermakkah.sa/en/places-worth-visiting/landmarks/mosque-of-the-jinn",
+          "https://saudipedia.com/en/al-jinn-mosque"
+        ]
+      },
+      "verification": {
+        "source_detail": "Discover Makkah et Saudipedia",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_specific_addition",
+        "note": "Adresse, accès et horaires à contrôler. Ne pas déduire de position GPS d'une indication régionale."
+      }
+    },
+    {
+      "id": "jeddah-house-islamic-arts",
+      "name_fr": "House of Islamic Arts — musée des arts islamiques",
+      "city": "jeddah",
+      "category": "museum",
+      "subcategory": "islamic_museum",
+      "area": "Jeddah Park Mall, 4e étage, Djeddah",
+      "description_fr": "Musée d'arts islamiques avec espace calligraphie et manuscrits coraniques, textiles de la Kaaba, céramiques et monnaies.",
+      "practical_notes_fr": "Le site officiel indique ouverture quotidienne 10 h–22 h, vendredi 17 h–23 h (horaires 2026, à revérifier pour 2027). Adresse exacte : Jeddah Park Mall, 4e étage.",
+      "source": {
+        "creator": "Site officiel House of Islamic Arts",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.iarts.sa/en/",
+          "https://www.iarts.sa/en/contactus"
+        ]
+      },
+      "verification": {
+        "source_detail": "Site officiel House of Islamic Arts",
+        "independently_verified": true,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_verification",
+        "note": "Vérification de l'existence documentaire, non de l'accès, d'une session 2027, ni du GPS exact."
+      }
+    },
+    {
+      "id": "jeddah-zawiya97",
+      "name_fr": "Zawiya 97 — ateliers d'artisans à Al-Balad",
+      "city": "jeddah",
+      "category": "calligraphy",
+      "subcategory": "craft_workshops",
+      "area": "Près de Bayt Nassif, Al-Balad, Djeddah",
+      "description_fr": "Espace d'artisanat et de création ; ateliers ayant inclus la calligraphie coufique carrée, dorure, broderie, parfums, encens et mosaïques.",
+      "practical_notes_fr": "Programme de l'été 2026 confirmé par l'agence de presse saoudienne et activité documentée en octobre 2026. La tenue d'ateliers en mars–avril 2027 n'est pas garantie : vérifier calendrier et réservation.",
+      "source": {
+        "creator": "Saudi Press Agency et Zawiya 97",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.spa.gov.sa/en/N2638075",
+          "https://www.spa.gov.sa/en/N2705267",
+          "https://linktr.ee/zawiya97"
+        ]
+      },
+      "verification": {
+        "source_detail": "Saudi Press Agency et Zawiya 97",
+        "independently_verified": true,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_verification",
+        "note": "Vérification de l'existence documentaire, non de l'accès, d'une session 2027, ni du GPS exact."
+      }
+    },
+    {
+      "id": "jeddah-wrth-institute",
+      "name_fr": "Institut Wrth — arts traditionnels à Djeddah",
+      "city": "jeddah",
+      "category": "calligraphy",
+      "subcategory": "craft_training",
+      "area": "Djeddah, lieux des cours variables",
+      "description_fr": "Institut royal des arts traditionnels proposant des formations et ateliers sur la décoration géométrique, le bois, l'artisanat et les motifs patrimoniaux.",
+      "practical_notes_fr": "Les cours ont des dates précises, parfois des prérequis, et ne constituent pas une boutique visitable à toute heure. Vérifier la programmation 2027 et l'éligibilité des visiteurs étrangers.",
+      "source": {
+        "creator": "Site officiel Wrth",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://wrth.edu.sa/en/learn/short-courses",
+          "https://wrth.edu.sa/en/learn/short-courses/fundamentals-of-geometric-drawing-in-traditional-ornamentation"
+        ]
+      },
+      "verification": {
+        "source_detail": "Site officiel Wrth",
+        "independently_verified": true,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_verification",
+        "note": "Vérification de l'existence documentaire, non de l'accès, d'une session 2027, ni du GPS exact."
+      }
+    },
+    {
+      "id": "jeddah-athr-gallery",
+      "name_fr": "ATHR Gallery — art contemporain et calligraphie",
+      "city": "jeddah",
+      "category": "calligraphy",
+      "subcategory": "art_gallery",
+      "area": "Tahlia Street, Office Tower 5th Floor, Al Faisaliyah, Djeddah",
+      "description_fr": "Galerie d'art contemporain représentant notamment Nasser Al Salem, artiste originaire de La Mecque travaillant la calligraphie dans des formes contemporaines.",
+      "practical_notes_fr": "Adresse officielle actuelle : Al Faisaliyah, Tahlia St, Office Tower, 5th Floor. Ne pas utiliser par défaut l'ancienne mention Serafi Mega Mall. Expositions variables, œuvres d'Al Salem non garanties à chaque visite.",
+      "source": {
+        "creator": "Site officiel ATHR Gallery",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://athrart.com/contact/",
+          "https://athrart.com/ar/news/142-athr-gallery-presents-nasser-alsalem-by-athr-gallery/"
+        ]
+      },
+      "verification": {
+        "source_detail": "Site officiel ATHR Gallery",
+        "independently_verified": true,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_verification",
+        "note": "Vérification de l'existence documentaire, non de l'accès, d'une session 2027, ni du GPS exact."
+      }
+    },
+    {
+      "id": "riyadh-alajlan-gallery",
+      "name_fr": "Al Ajlan Gallery — Mohammed Al-Ajlan",
+      "city": "riyadh",
+      "category": "calligraphy",
+      "subcategory": "art_gallery",
+      "area": "Riyad, adresse exacte via site officiel",
+      "description_fr": "Galerie de l'artiste Mohammed Al-Ajlan, mélangeant calligraphie, poésie, versets et peinture contemporaine.",
+      "practical_notes_fr": "Galerie fondée en 2018, existence confirmée. Horaires officiels en 2026 : samedi–jeudi 17 h–22 h, vendredi fermé. Gratuité non vérifiée : ne pas promettre l'entrée libre.",
+      "source": {
+        "creator": "Site officiel Al Ajlan Gallery",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://alajlangallery.com/pages/about-us",
+          "https://alajlangallery.com/"
+        ]
+      },
+      "verification": {
+        "source_detail": "Site officiel Al Ajlan Gallery",
+        "independently_verified": true,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_verification",
+        "note": "Vérification de l'existence documentaire, non de l'accès, d'une session 2027, ni du GPS exact."
+      }
+    },
+    {
+      "id": "riyadh-alkhattat-hub",
+      "name_fr": "Plateforme Al Khattat — ateliers de calligraphie",
+      "city": "riyadh",
+      "category": "calligraphy",
+      "subcategory": "scheduled_workshops",
+      "area": "Hub Space, Al-Malaz, Riyad (certaines sessions)",
+      "description_fr": "Plateforme de calligraphie et d'art, avec formations et ateliers en présentiel (Ruq'ah, Diwani, calligraphie et création sur textile).",
+      "practical_notes_fr": "Les ateliers sont programmés à des dates précises, non une activité quotidienne. Exemples de sessions de 2026 publiés sur la plateforme ; contrôler disponibilités et tarifs pour mars 2027.",
+      "source": {
+        "creator": "Plateforme officielle Al Khattat",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://alkhattat.app/en/",
+          "https://alkhattat.app/en/events"
+        ]
+      },
+      "verification": {
+        "source_detail": "Plateforme officielle Al Khattat",
+        "independently_verified": true,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_verification",
+        "note": "Vérification de l'existence documentaire, non de l'accès, d'une session 2027, ni du GPS exact."
+      }
+    },
+    {
+      "id": "riyadh-culture-house-calligraphy",
+      "name_fr": "Maison de la Culture de Riyad — ateliers ponctuels",
+      "city": "riyadh",
+      "category": "calligraphy",
+      "subcategory": "past_workshop",
+      "area": "Riyad — lieu exact des futurs ateliers à vérifier",
+      "description_fr": "La Maison de la Culture a organisé avec Dar Al-Qalam un cours de calligraphie Thuluth du 23 au 27 août 2026.",
+      "practical_notes_fr": "C'est un événement passé, pas une réservation ouverte pour mars 2027. À conserver comme contact à suivre pour une nouvelle session.",
+      "source": {
+        "creator": "Compte rendu de l'événement du 20 août 2026",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.saudiarabiapr.com/travel-tourism-hotels-asp/193581-riyadh-culture-house-organizes-thuluth-calligraphy-training-course"
+        ]
+      },
+      "verification": {
+        "source_detail": "Compte rendu de l'événement du 20 août 2026",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_verification",
+        "note": "Vérification de l'existence documentaire, non de l'accès, d'une session 2027, ni du GPS exact."
+      }
+    },
+    {
+      "id": "madinah-dar-al-qalam",
+      "name_fr": "Dar Al-Qalam — centre international de calligraphie",
+      "city": "madinah",
+      "category": "calligraphy",
+      "subcategory": "calligraphy_training",
+      "area": "First Ring / King Faisal Road, Al Suqya, Médine 42315",
+      "description_fr": "Centre mondial Prince Mohammed bin Salman de calligraphie arabe (Dar Al-Qalam) : musée permanent, ateliers, salles d’exposition et bibliothèque sur les traditions de l'écriture arabe.",
+      "practical_notes_fr": "Site officiel et agence de presse saoudienne confirment un musée permanent avec plus de 56 pièces et des espaces de formation. Les cours 2027 doivent être réservés selon calendrier ; horaires et entrée à reconfirmer.",
+      "source": {
+        "creator": "Ministère saoudien de la Culture",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.moc.gov.sa/en/Modules/Pages/Initiative/Arabic_calligraphy_training_courses_2026",
+          "https://www.spa.gov.sa/en/N2634820",
+          "https://visitmadinahsa.com/en/map?route=museums"
+        ]
+      },
+      "verification": {
+        "source_detail": "Ministère saoudien de la Culture",
+        "independently_verified": true,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "official_web_crosscheck",
+        "note": "Institution et emplacement attestés par source institutionnelle."
+      }
+    },
+    {
+      "id": "riyadh-calligraphy-wood-shadfa",
+      "name_fr": "Shadfa — Calligraphy & Wood",
+      "city": "riyadh",
+      "category": "calligraphy",
+      "subcategory": "custom_gifts",
+      "area": "Riyad — atelier et vente via plateforme Ashl",
+      "description_fr": "Créateur proposant œuvres et cadeaux mêlant calligraphie arabe et bois naturel, avec commandes personnalisées.",
+      "practical_notes_fr": "Boutique en ligne référencée par Ashl, mais magasin physique ouvert au public non établi. Confirmer modalités de retrait ou livraison avant déplacement.",
+      "source": {
+        "creator": "Plateforme commerçants Ashl",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://ashl.sa/en/shop/shadfa"
+        ]
+      },
+      "verification": {
+        "source_detail": "Plateforme commerçants Ashl",
+        "independently_verified": true,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_verification",
+        "note": "Vérification de l'existence documentaire, non de l'accès, d'une session 2027, ni du GPS exact."
+      }
+    },
+    {
+      "id": "riyadh-r-house-thuluth",
+      "name_fr": "R House — atelier Thuluth avec Badr Al-Jafen",
+      "city": "riyadh",
+      "category": "calligraphy",
+      "subcategory": "past_workshop",
+      "area": "Tafaseel Center, Building A, 3e étage, bureau 34, Al Mathar Ash Shamali, Riyad 12332",
+      "description_fr": "Atelier pratique de calligraphie Thuluth documenté avec le calligraphe Badr Al-Jafen.",
+      "practical_notes_fr": "La session documentée date de décembre 2025 et coûtait 600 SAR outils inclus. Ni l'atelier ni ce prix ne sont annoncés pour mars 2027.",
+      "source": {
+        "creator": "Organisateur R House",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://rhouse.co/thuluth-script-workshop-with-calligrapher-bader-aljafen/"
+        ]
+      },
+      "verification": {
+        "source_detail": "Organisateur R House",
+        "independently_verified": true,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_verification",
+        "note": "Vérification de l'existence documentaire, non de l'accès, d'une session 2027, ni du GPS exact."
+      }
+    },
+    {
+      "id": "riyadh-bayt-al-khatt-arabic",
+      "name_fr": "بيت الخط العربي — atelier de lettrage à Al-Rayyan",
+      "city": "riyadh",
+      "category": "calligraphy",
+      "subcategory": "potential_custom_art",
+      "area": "Quartier Al-Rayyan, Riyad — adresse exacte non établie",
+      "description_fr": "Nom signalé par l'utilisateur comme atelier de calligraphie murale et de commandes personnalisées.",
+      "practical_notes_fr": "Existence commerciale et adresse non vérifiées par source indépendante : conserver comme piste, ne pas afficher de point GPS précis ni confirmer les prestations.",
+      "source": {
+        "creator": "Information utilisateur non recoupée",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.google.com/maps/search/?api=1&query=%D8%A8%D9%8A%D8%AA+%D8%A7%D9%84%D8%AE%D8%B7+%D8%A7%D9%84%D8%B9%D8%B1%D8%A8%D9%8A+%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D9%86+%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6"
+        ]
+      },
+      "verification": {
+        "source_detail": "Information utilisateur non recoupée",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_verification",
+        "note": "Vérification de l'existence documentaire, non de l'accès, d'une session 2027, ni du GPS exact."
+      }
+    },
+    {
+      "id": "makkah-ojiz-pop-up",
+      "name_fr": "Ojiz Makkah — pop-up vêtements graphiques",
+      "city": "makkah",
+      "category": "shopping",
+      "subcategory": "pop_up_unconfirmed",
+      "area": "La Mecque — emplacement éphémère non établi",
+      "description_fr": "Collection éphémère de vêtements et t-shirts à motifs saoudiens et graphismes arabes mentionnée comme boutique pop-up.",
+      "practical_notes_fr": "Source commerciale, calendrier et point de vente actif non identifiés : ne pas présenter comme boutique actuellement ouverte.",
+      "source": {
+        "creator": "Information utilisateur non recoupée",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.google.com/search?q=Ojiz+Makkah+pop+up+store"
+        ]
+      },
+      "verification": {
+        "source_detail": "Information utilisateur non recoupée",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "source_verification",
+        "note": "Vérification de l'existence documentaire, non de l'accès, d'une session 2027, ni du GPS exact."
+      }
+    },
+    {
+      "id": "madinah-alassaf-calligrapher",
+      "name_fr": "Alassaf Calligrapher — الخطاط العساف للأختام والدروع",
+      "city": "madinah",
+      "category": "calligraphy",
+      "subcategory": "custom_gifts_stamps",
+      "area": "6480 Al Akhnas Bin Shuraiq, Ad Difa, Madinah 42374",
+      "description_fr": "Atelier et boutique du calligraphe Alassaf spécialisé dans les tampons, plaques commémoratives et objets personnalisés, dont certains tableaux en marbre.",
+      "practical_notes_fr": "Services de personnalisation attestés sur la boutique en ligne. La réalisation d'un tableau manuscrit sur place, le délai et les prix doivent être confirmés auprès de l'atelier.",
+      "source": {
+        "creator": "Boutique Alassaf et fiche commerciale locale",
+        "channel": "https://mahally.com/ar/stores/402335966/about/",
+        "videos": [],
+        "references": [
+          "https://mahally.com/ar/stores/402335966/about/"
+        ]
+      },
+      "verification": {
+        "source_detail": "Boutique Alassaf et fiche commerciale locale",
+        "independently_verified": true,
+        "location_verified": true,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "business_and_web_crosscheck",
+        "note": "Prestations détaillées, horaires et disponibilité en 2027 à contrôler."
+      }
+    },
+    {
+      "id": "madinah-hadaya-al-badr",
+      "name_fr": "Hadayat Al-Badr — هدايا البدر",
+      "city": "madinah",
+      "category": "calligraphy",
+      "subcategory": "personalized_name_jewelry",
+      "area": "Passage piéton de la zone centrale, Bada'ah, Madinah 42311",
+      "description_fr": "Boutique de souvenirs où un avis client signale la réalisation rapide de colliers personnalisés avec un prénom en arabe.",
+      "practical_notes_fr": "Personnalisation attestée uniquement par un témoignage client ; orthographe arabe, prix et disponibilité de ce service à confirmer directement. Pas nécessairement de calligraphie manuscrite.",
+      "source": {
+        "creator": "Fiche commerce et avis client",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://www.google.com/maps/search/?api=1&query=%D9%87%D8%AF%D8%A7%D9%8A%D8%A7+%D8%A7%D9%84%D8%A8%D8%AF%D8%B1+%D8%A8%D8%B6%D8%A7%D8%B9%D8%A9+%D8%A7%D9%84%D9%85%D8%AF%D9%8A%D9%86%D8%A9"
+        ]
+      },
+      "verification": {
+        "source_detail": "Fiche commerce et avis client",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "business_and_web_crosscheck",
+        "note": "Prestations détaillées, horaires et disponibilité en 2027 à contrôler."
+      }
+    },
+    {
+      "id": "madinah-arts-center-king-fahd",
+      "name_fr": "Al-Madinah Arts Center — centre d'arts de Médine",
+      "city": "madinah",
+      "category": "calligraphy",
+      "subcategory": "art_gallery",
+      "area": "Quartier patrimonial du King Fahd Central Park, Médine 42383",
+      "description_fr": "Centre artistique situé dans le quartier patrimonial au King Fahd Central Park, présentant notamment des expositions d'artistes locaux. La calligraphie peut dépendre de la programmation.",
+      "practical_notes_fr": "Expositions variables : vérifier si des œuvres calligraphiques sont présentées pendant le séjour. Centre à vocation artistique, non atelier de commande personnalisée garanti.",
+      "source": {
+        "creator": "Portail officiel Visit Madinah et reportage culturel",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://visitmadinahsa.com/sa-en/destinations/The-Heritage-Quarter",
+          "https://www.listmag.com/en/see-do/art-culture/best-museums-in-medina-madinah"
+        ]
+      },
+      "verification": {
+        "source_detail": "Portail officiel Visit Madinah et reportage culturel",
+        "independently_verified": true,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-14"
+      },
+      "audit": {
+        "reviewed_on": "2026-11-14",
+        "review_type": "business_and_web_crosscheck",
+        "note": "Prestations détaillées, horaires et disponibilité en 2027 à contrôler."
+      }
     }
   ],
   "updated": "2026-11-14",
@@ -2408,6 +4195,11 @@
       "Les identifiants de portes, les repères et les liens vers des cartes ne constituent pas des coordonnées GPS fiables.",
       "Les références de commerces trouvées indépendamment ne prouvent pas que Junaid les ait visités."
     ],
-    "editorial_rule": "Ne pas publier des prix ou horaires comme garantis; distinguer 'vu dans vidéo', 'annuaire', 'source officielle' et 'à confirmer'."
+    "editorial_rule": "Ne pas publier des prix ou horaires comme garantis; distinguer 'vu dans vidéo', 'annuaire', 'source officielle' et 'à confirmer'.",
+    "last_updated": "2026-11-14",
+    "supplement_source": "Routard forum 11/2025, Discover Makkah et recherches web/vidéos",
+    "disclaimer": "Certaines fiches sont des lieux de promenade, idées d'ateliers ou services et non des établissements visitables. Ne pas attribuer un GPS précis sans géolocalisation fiable.",
+    "additional_review": "Sélection utilisateur du 14 novembre 2026 recoupée avec SPA, Saudipedia, Visit Saudi, Archnet, IRCICA et autres sources. Dangers, lieux éloignés et ambiguïtés de noms signalés.",
+    "calligraphy_audit": "12 nouvelles fiches de calligraphie/art, deux musées existants enrichis; expositions temporaires, programmes de formation et commerces non vérifiés clairement distingués."
   }
 }
