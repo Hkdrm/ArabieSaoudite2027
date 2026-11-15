@@ -478,3 +478,7 @@ Object.assign(I18N.ar, { mk_title: 'مكة', mk_sub: 'خريطة تفاعلية 
 Object.assign(I18N.fr, { mn_mk_site: 'Makkah', mn_mk_osm: 'Makkah · carte OpenStreetMap' });
 Object.assign(I18N.en, { mn_mk_site: 'Makkah', mn_mk_osm: 'Makkah · OpenStreetMap map' });
 Object.assign(I18N.ar, { mn_mk_site: 'مكة', mn_mk_osm: 'مكة · خريطة OpenStreetMap' });
+
+Object.assign(I18N.fr, { mn_mk_site: 'Makkah · carte UmrahMap', mn_mk_osm: 'Makkah · notre carte' });
+Object.assign(I18N.en, { mn_mk_site: 'Makkah · UmrahMap', mn_mk_osm: 'Makkah · our map' });
+Object.assign(I18N.ar, { mn_mk_site: 'مكة · خريطة UmrahMap', mn_mk_osm: 'مكة · خريطتنا' });
