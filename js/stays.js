@@ -4,7 +4,7 @@
 (() => {
   const A = window.Omra;
   const { $, esc, S, save, t } = A;
-  const list = A['
+  const list = A[String.fromCharCode(36,36)];
   const Money = window.OmraCurrency;
   const CITY_IDS = ['makkah', 'madinah', 'jeddah', 'riyadh', 'alula', 'taif'];
   const cityName = id => (CITIES[id] ? (CITIES[id].n[S.lang] || CITIES[id].n.fr) : t('st_other_city'));
