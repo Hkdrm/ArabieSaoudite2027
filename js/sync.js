@@ -39,6 +39,7 @@
     error = bad ? message : ''; success = bad ? '' : message; render();
   }
   async function connect(tok, secret) {
+    if (navigator.onLine === false) { status('Connexion Internet requise pour ouvrir une session GitHub',true); return; }
     if (!tok.trim() || secret.length < 12) { status('Jeton requis et phrase secrète de 12 caractères minimum',true); return; }
     token = tok.trim(); pass = secret; gistId = null; previous = null; conflict = false;
     try {
@@ -131,7 +132,7 @@
     if(get('secureConnect')) get('secureConnect').onclick=()=>{
       const tok=get('secureToken').value, pwd=get('securePass').value;
       get('secureToken').value='';get('securePass').value='';
-      connect(tok,pwd);
+      return connect(tok,pwd);
     };
     if(get('secureSave')) get('secureSave').onclick=()=>saveRemote();
     if(get('secureRestore')) get('secureRestore').onclick=()=>restoreRemote();
