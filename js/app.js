@@ -7,7 +7,7 @@
     set(k, v) { try { localStorage.setItem('omra:' + k, JSON.stringify(v)); } catch {} },
   };
 
-  const APP_VERSION = '2026-11-14.50';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
+  const APP_VERSION = '2026-11-15.51';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
 
   /* ---------- état ---------- */
   const detect = () => { const l = (navigator.language || 'fr').slice(0, 2); return LANGS[l] ? l : 'fr'; };
@@ -25,10 +25,10 @@
     budget: store.get('budget', 0),
     rate: store.get('rate', 0.23),
     cur: store.get('cur', 'EUR'),
-    fav: store.get('fav', []), visited: store.get('visited', {}), sira: store.get('sira', {}), notes: store.get('notes', {}), vids: store.get('vids', {}), here: store.get('here', null), journey: store.get('journey', null), stays: store.get('stays', []),
+    fav: store.get('fav', []), visited: store.get('visited', {}), sira: store.get('sira', {}), circuit: store.get('circuit', null), notes: store.get('notes', {}), vids: store.get('vids', {}), here: store.get('here', null), journey: store.get('journey', null), stays: store.get('stays', []),
   };
   const hooks = { onSave: () => {} };
-  const SYNC_KEYS = ['lang', 'city', 'method', 'trip', 'plan', 'checks', 'custom', 'cnt', 'exp', 'budget', 'rate', 'cur', 'fav', 'visited', 'notes', 'vids', 'journey', 'stays', 'sira'];
+  const SYNC_KEYS = ['lang', 'city', 'method', 'trip', 'plan', 'checks', 'custom', 'cnt', 'exp', 'budget', 'rate', 'cur', 'fav', 'visited', 'notes', 'vids', 'journey', 'stays', 'sira', 'circuit'];
   (function migrate() {
     const old = store.get('flights', null);
     if (S.journey || !old) return;
@@ -711,7 +711,7 @@
       $('#imp', el).onclick = () => $('#file', el).click();
       $('#file', el).onchange = async e => {
         try { const d = JSON.parse(await e.target.files[0].text()); if (typeof d !== 'object' || !d) throw 0;
-          for (const k of ['lang', 'city', 'geo', 'method', 'trip', 'plan', 'checks', 'custom', 'cnt', 'exp', 'budget', 'rate', 'cur', 'fav', 'visited', 'notes', 'vids', 'here', 'journey', 'stays', 'sira']) if (k in d) { S[k] = d[k]; save(k); }
+          for (const k of ['lang', 'city', 'geo', 'method', 'trip', 'plan', 'checks', 'custom', 'cnt', 'exp', 'budget', 'rate', 'cur', 'fav', 'visited', 'notes', 'vids', 'here', 'journey', 'stays', 'sira', 'circuit']) if (k in d) { S[k] = d[k]; save(k); }
           applyLang(); toast(t('imported')); draw(); } catch { toast(t('import_err')); }
       };
     };

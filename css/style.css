@@ -193,3 +193,6 @@ button:disabled{opacity:.4;cursor:default}
 #sMapWrap.tall ~ #sList .sitem{scroll-margin-top:calc(62vh + 24px)}
 
 #tabs{border-bottom:0;margin:8px 0 6px;overflow:visible}
+
+.sitem-tr{border:1px solid var(--bd);border-radius:12px;padding:10px 12px;margin:8px 0;background:var(--card)}
+.sitem-tr.done{background:rgba(47,133,90,.08)}

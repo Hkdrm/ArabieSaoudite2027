@@ -67,12 +67,14 @@
       const cv = coverage();
       const list = [...S.stays].sort((a, b) => (a.in || '9').localeCompare(b.in || '9'));
       el.innerHTML = `<h2>${t('stay_title')}</h2>
+        ${A.circuit ? A.circuit.html() : ''}
         ${cv ? `<div class="card"><b>🌙 ${cv.covered} / ${cv.total} ${t('nights')}</b><progress max="${cv.total}" value="${cv.covered}"></progress>
           ${cv.covered < cv.total ? `<p class="muted" style="margin:6px 0 0">⚠️ ${cv.total - cv.covered} ${t('st_uncovered')}</p>` : `<p class="muted" style="margin:6px 0 0">✓ ${t('st_all_covered')}</p>`}</div>` : ''}
         ${list.length ? list.map(stayCard).join('') : `<div class="card" style="text-align:center"><div style="font-size:54px">🏨</div><h3>${t('stay_empty')}</h3><p class="muted">${t('stay_empty_sub')}</p></div>`}
         <button type="button" id="addStay" style="width:100%;padding:14px">＋ ${t('add_stay')}</button>
         <div class="card" style="margin-top:14px"><h3>🔎 ${t('st_search')}</h3>${tripOk ? '' : `<p class="muted">${t('st_nodates_hint')} <a href="#/trip">${t('nav_trip')} →</a></p>`}${searchLinks()}</div>`;
       $('#addStay', el).onclick = () => { f = blank(); editing = 'new'; draw(); scrollTo(0, 0); };
+      if (A.circuit) A.circuit.bind(el, { redraw: () => A.views.stay(el), addStay: st => { A.circuitPrefill = st; A.views.stay(el); scrollTo(0, 0); } });
       $$('[data-edit]', el).forEach(b => b.onclick = () => { f = { ...S.stays.find(x => x.id === b.dataset.edit) }; editing = f.id; draw(); scrollTo(0, 0); });
     };
 
@@ -119,6 +121,8 @@
     };
 
     const draw = () => (editing ? drawForm() : drawList());
+    if (A.circuitPrefill && tripOk) { f = blank(); Object.assign(f, { city: A.circuitPrefill.city, in: A.circuitPrefill.in, out: A.circuitPrefill.out }); editing = 'new'; }
+    A.circuitPrefill = null;
     draw();
   };
 })();
