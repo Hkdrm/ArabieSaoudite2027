@@ -4,7 +4,7 @@
 (() => {
   const A = window.Omra; if (!A) return;
   const { $, $$, esc, S, save, t } = A;
-  const CURS = ['EUR', 'CHF', 'SAR', 'USD', 'GBP'];
+  const CURS = ['CHF', 'EUR', 'SAR', 'USD', 'GBP'];
   const PAYS = ['todo', 'paid', 'partial', 'onsite'];
   const PAY_IC = { todo: '⏳', paid: '✅', partial: '🔸', onsite: '📍' };
   const PAY_KEY = { todo: 'pay_todo', paid: 'pay_paid', partial: 'pay_partial', onsite: 'pay_onsite' };
@@ -18,12 +18,12 @@
   const fields = (p, v = {}) => {
     const pay = PAYS.includes(v.pay) ? v.pay : 'todo';
     return `<div class="row" style="gap:8px;margin-top:6px"><div class="grow"><label>${t('pay_amount')}</label><input id="${p}-amt" inputmode="decimal" value="${esc(v.amount || '')}" style="width:100%"></div>
-      <div><label>${t('currency')}</label><select id="${p}-cur">${CURS.map(c => `<option ${c === (v.cur || 'EUR') ? 'selected' : ''}>${c}</option>`).join('')}</select></div></div>
+      <div><label>${t('currency')}</label><select id="${p}-cur">${CURS.map(c => `<option ${c === (v.cur || 'CHF') ? 'selected' : ''}>${c}</option>`).join('')}</select></div></div>
       <div class="row" style="gap:8px;margin-top:6px"><div class="grow"><label>${t('pay_status')}</label><select id="${p}-pay" style="width:100%">${PAYS.map(k => `<option value="${k}" ${pay === k ? 'selected' : ''}>${PAY_IC[k]} ${esc(t(PAY_KEY[k]))}</option>`).join('')}</select></div>
         <div class="grow" id="${p}-pw" ${pay === 'partial' ? '' : 'hidden'}><label>${t('pay_paid_amt')}</label><input id="${p}-paid" inputmode="decimal" value="${esc(v.paidAmt || '')}" style="width:100%"></div></div>`;
   };
   const wire = (root, p) => { const s = $('#' + p + '-pay', root), w = $('#' + p + '-pw', root); if (s && w) s.onchange = () => { w.hidden = s.value !== 'partial'; }; };
-  const read = (root, p) => ({ amount: num(($('#' + p + '-amt', root) || {}).value), cur: ($('#' + p + '-cur', root) || {}).value || 'EUR', pay: ($('#' + p + '-pay', root) || {}).value || 'todo', paidAmt: num(($('#' + p + '-paid', root) || {}).value) });
+  const read = (root, p) => ({ amount: num(($('#' + p + '-amt', root) || {}).value), cur: ($('#' + p + '-cur', root) || {}).value || 'CHF', pay: ($('#' + p + '-pay', root) || {}).value || 'todo', paidAmt: num(($('#' + p + '-paid', root) || {}).value) });
 
   /* ---- lignes (toutes les sources) ---- */
   S.pays = S.pays || {};
@@ -75,7 +75,10 @@
     const draw = () => {
       const all = lines();
       const by = {};
-      all.forEach(l => { const v = l.read(), s = split(v), c = v.cur || 'EUR'; const b = (by[c] = by[c] || { total: 0, paid: 0, due: 0, onsite: 0 }); Object.keys(s).forEach(k => { b[k] += s[k]; }); });
+      all.forEach(l => { const v = l.read(), s = split(v), c = v.cur || 'CHF'; const b = (by[c] = by[c] || { total: 0, paid: 0, due: 0, onsite: 0 }); Object.keys(s).forEach(k => { b[k] += s[k]; }); });
+      const M = window.OmraCurrency, conv = k => { if (!M) return NaN; let tot = 0; for (const [c, v] of Object.entries(by)) { const x = M.toCHF(v[k], c, S.fxRates); if (!Number.isFinite(x)) return NaN; tot += x; } return tot; };
+      const chfT = conv('total'), chfP = conv('paid');
+      const chfLine = Object.keys(by).some(c => c !== 'CHF') && Number.isFinite(chfT) ? `<p style="margin:8px 0 0;font-size:13px">≈ <b>${nf(Math.round(chfT))} CHF</b> ${t('pay_chf_total')} · ${nf(Math.round(chfP))} CHF ${t('pay_chf_paid')} <span class="muted">(${t('pay_chf_rates')})</span></p>` : '';
       const missing = all.filter(l => !num(l.read().amount) && !l.manual).length;
       const noHotel = all.filter(l => l.key.startsWith('stage-')).length;
       const pass = l => { const v = l.read(); const p = PAYS.includes(v.pay) ? v.pay : 'todo'; return filter === 'all' || (filter === 'paid' && p === 'paid') || (filter === 'due' && (p === 'todo' || p === 'partial')) || (filter === 'onsite' && p === 'onsite'); };
@@ -83,7 +86,7 @@
       const CATS = [['flight', '✈️ ' + t('pay_c_flight')], ['stay', '🏨 ' + t('pay_c_stay')], ['transport', '🚆 ' + t('pay_c_transport')], ['other', '🧾 ' + t('pay_c_other')]];
       const row = l => {
         const v = l.read(), s = split(v), p = PAYS.includes(v.pay) ? v.pay : 'todo', on = openKey === l.key;
-        return `<div class="sitem-tr ${p === 'paid' ? 'done' : ''}"><div role="button" tabindex="0" data-ln="${esc(l.key)}" style="cursor:pointer"><div class="row" style="gap:8px;flex-wrap:nowrap"><b class="grow">${l.icon} ${esc(l.label)}</b><b>${num(v.amount) ? nf(num(v.amount)) + ' ' + esc(v.cur || 'EUR') : '<span class="muted">' + t('pay_set') + '</span>'}</b></div>
+        return `<div class="sitem-tr ${p === 'paid' ? 'done' : ''}"><div role="button" tabindex="0" data-ln="${esc(l.key)}" style="cursor:pointer"><div class="row" style="gap:8px;flex-wrap:nowrap"><b class="grow">${l.icon} ${esc(l.label)}</b><b>${num(v.amount) ? nf(num(v.amount)) + ' ' + esc(v.cur || 'CHF') : '<span class="muted">' + t('pay_set') + '</span>'}</b></div>
           <div class="row" style="gap:6px;margin-top:2px;flex-wrap:nowrap"><span class="muted grow" style="font-size:13px">${esc(l.sub)}</span><span class="pill ${p === 'paid' ? 'ok' : ''}">${PAY_IC[p]} ${esc(t(PAY_KEY[p]))}${p === 'partial' && s.total ? ` · ${nf(s.paid)}/${nf(s.total)}` : ''}</span></div></div>
           ${on ? `<div class="sfact">${l.hasName ? `<label>${t('st_name')}</label><input id="ed-name" value="${esc(l.name || '')}" placeholder="${esc(t('st_name_ph'))}" style="width:100%">` : ''}${fields('ed', v)}<div class="row" style="gap:8px;margin-top:10px"><button type="button" id="ed-save">✓ ${t('save')}</button><button type="button" class="ghost" id="ed-cancel">${t('cancel')}</button>${l.manual ? `<button type="button" class="danger" id="ed-del">${t('delete')}</button>` : ''}</div></div>` : ''}</div>`;
       };
@@ -94,7 +97,7 @@
           <div class="pcard" style="min-height:0"><span class="muted">⏳ ${t('pay_rest')}</span><b>${fmtBy(by, 'due')}</b></div>
           <div class="pcard" style="min-height:0"><span class="muted">📍 ${t('pay_onsite')}</span><b>${fmtBy(by, 'onsite')}</b></div>
           <div class="pcard" style="min-height:0"><span class="muted">Σ ${t('pay_total')}</span><b>${fmtBy(by, 'total')}</b></div></div>
-          ${missing ? `<p class="muted" style="margin:8px 0 0;font-size:13px">ℹ️ ${missing} ${t('pay_missing')}</p>` : ''}${S.circuit ? '' : `<p style="margin:8px 0 0"><a class="btn" href="#/stay">🗺️ ${t('ci_load')} →</a></p>`}<p class="muted" style="margin:6px 0 0;font-size:12px">${t('pay_note')}</p></div>
+          ${chfLine}${missing ? `<p class="muted" style="margin:8px 0 0;font-size:13px">ℹ️ ${missing} ${t('pay_missing')}</p>` : ''}${S.circuit ? '' : `<p style="margin:8px 0 0"><a class="btn" href="#/stay">🗺️ ${t('ci_load')} →</a></p>`}<p class="muted" style="margin:6px 0 0;font-size:12px">${t('pay_note')}</p></div>
         <div class="chips" style="margin:8px 0">${FIL.map(([k, v]) => `<button type="button" class="chip ${filter === k ? 'on' : ''}" data-pf="${k}">${esc(v)}</button>`).join('')}</div>
         ${noHotel ? `<button type="button" class="ghost" id="mkStays" style="width:100%;margin:8px 0">🏨 ${t('pay_mk_stays')} (${noHotel})</button>` : ''}
         ${sections || `<p class="muted">${t('pay_none')}</p>`}
@@ -105,7 +108,7 @@
       $$('[data-ln]', el).forEach(b => b.onclick = () => { openKey = openKey === b.dataset.ln ? null : b.dataset.ln; adding = false; draw(); });
       const cur = all.find(l => l.key === openKey);
       if (cur) { wire(el, 'ed'); $('#ed-cancel', el).onclick = () => { openKey = null; draw(); }; $('#ed-save', el).onclick = () => { { const v = read(el, 'ed'); if (cur.hasName) v.name = ($('#ed-name', el).value || '').trim(); cur.write(v); } openKey = null; A.toast('✓ ' + t('saved')); draw(); }; const d = $('#ed-del', el); if (d) d.onclick = () => { if (confirm(t('pay_del_confirm'))) { cur.remove(); openKey = null; draw(); } }; }
-      const mk = $('#mkStays', el); if (mk) mk.onclick = () => { all.filter(l => l.key.startsWith('stage-')).forEach(l => l.write({ amount: 0, cur: 'EUR', pay: 'todo', paidAmt: 0 })); A.toast('✓ ' + t('saved')); draw(); };
+      const mk = $('#mkStays', el); if (mk) mk.onclick = () => { all.filter(l => l.key.startsWith('stage-')).forEach(l => l.write({ amount: 0, cur: 'CHF', pay: 'todo', paidAmt: 0 })); A.toast('✓ ' + t('saved')); draw(); };
       const add = $('#nw-add', el); if (add) add.onclick = () => { adding = true; openKey = null; draw(); };
       if (adding) { wire(el, 'nw'); $('#nw-cancel', el).onclick = () => { adding = false; draw(); }; $('#nw-save', el).onclick = () => { const v = read(el, 'nw'); const label = ($('#nw-label', el).value || '').trim(); if (!label || !v.amount) { A.toast(t('pay_need')); return; } S.exp.push({ id: 'x' + Date.now(), label, amount: v.amount, cur: v.cur, pay: v.pay, paidAmt: v.paidAmt }); save('exp'); adding = false; draw(); }; }
     };

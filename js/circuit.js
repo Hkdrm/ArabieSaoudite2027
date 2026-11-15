@@ -91,9 +91,9 @@
     const note = info ? tr(info) : (m === 'flight' ? (x.morning ? t('ci_flight_morning') : t('ci_flight_note')) : '');
     const amt = inf.amount != null && inf.amount !== '' ? inf.amount : inf.price;
     const payIc = { todo: '⏳', paid: '✅', partial: '🔸', onsite: '📍' }[inf.pay] || '⏳';
-    const sum = [inf.time, inf.ref, amt ? `${amt} ${inf.cur || 'EUR'} ${payIc}` : ''].filter(Boolean).map(esc).join(' · ');
+    const sum = [inf.time, inf.ref, amt ? `${amt} ${inf.cur || 'CHF'} ${payIc}` : ''].filter(Boolean).map(esc).join(' · ');
     const payRow = `<div class="row" style="gap:8px;margin-top:6px"><div class="grow"><label>${t('pay_amount')}</label><input data-tinfo="${x.id}|amount" inputmode="decimal" value="${esc(amt || '')}" style="width:100%"></div>
-      <div><label>${t('currency')}</label><select data-tinfo="${x.id}|cur">${['EUR', 'CHF', 'SAR', 'USD', 'GBP'].map(k => `<option ${k === (inf.cur || 'EUR') ? 'selected' : ''}>${k}</option>`).join('')}</select></div></div>
+      <div><label>${t('currency')}</label><select data-tinfo="${x.id}|cur">${['CHF', 'EUR', 'SAR', 'USD', 'GBP'].map(k => `<option ${k === (inf.cur || 'CHF') ? 'selected' : ''}>${k}</option>`).join('')}</select></div></div>
       <div class="row" style="gap:8px;margin-top:6px"><div class="grow"><label>${t('pay_status')}</label><select data-tinfo="${x.id}|pay" style="width:100%">${['todo', 'paid', 'partial', 'onsite'].map(k => `<option value="${k}" ${(inf.pay || 'todo') === k ? 'selected' : ''}>${{ todo: '⏳', paid: '✅', partial: '🔸', onsite: '📍' }[k]} ${esc(t({ todo: 'pay_todo', paid: 'pay_paid', partial: 'pay_partial', onsite: 'pay_onsite' }[k]))}</option>`).join('')}</select></div>
         <div class="grow"><label>${t('pay_paid_amt')}</label><input data-tinfo="${x.id}|paidAmt" inputmode="decimal" value="${esc(inf.paidAmt || '')}" style="width:100%"></div></div>`;
     const fld = (k, lbl, ph) => `<label style="margin-top:6px;display:block">${lbl}</label><input data-tinfo="${x.id}|${k}" value="${esc(inf[k] || '')}" placeholder="${esc(ph || '')}" style="width:100%">`;

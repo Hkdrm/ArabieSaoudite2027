@@ -24,7 +24,7 @@ const I18N = {
     map_title: 'Carte', all: 'Tout', c_holy: 'Lieux saints', c_miqat: 'Miqats', c_visit: 'À visiter', c_airport: 'Aéroports',
     open_maps: 'Itinéraire', map_offline: 'La carte nécessite une connexion. La liste ci-dessous reste disponible hors ligne.', approx: 'Positions approximatives.',
     tools_title: 'Outils', checklist: 'Checklist', add_item: 'Ajouter un élément…', budget: 'Budget', label: 'Libellé', amount: 'Montant', currency: 'Devise',
-    rate: '1 SAR =', total: 'Total', spent: 'Dépensé', planned: 'Budget prévu', expenses: 'Dépenses', no_exp: 'Aucune dépense.',
+    rate: '1 SAR =', total: 'Total', spent: 'Dépensé', planned: 'Budget prévu', expenses: 'Dépenses', no_exp: 'Aucune dépense.', estimated_rates: 'Taux indicatifs (modifiables)', rates_disclaimer: 'Conversions approximatives, sans connexion ni taux bancaire en temps réel.', remaining_budget: 'Reste disponible', invalid_amount: 'Montant invalide', invalid_rate: 'Taux invalide',
     settings: 'Réglages', language: 'Langue', backup: 'Sauvegarde', export: 'Exporter', import: 'Importer', imported: 'Données importées', import_err: 'Fichier invalide',
     install: "Installer l'application", g_docs: 'Documents', g_ihram: 'Ihram & Omra', g_bag: 'Valise', g_misc: 'Divers',
     ck_passport: 'Passeport valide (6 mois min.)', ck_visa: 'Visa Omra / e-Visa', ck_nusuk: 'Permis & réservations via l\'app Nusuk', ck_ticket: 'Billets d\'avion',
@@ -55,7 +55,7 @@ const I18N = {
     map_title: 'Map', all: 'All', c_holy: 'Holy sites', c_miqat: 'Miqats', c_visit: 'To visit', c_airport: 'Airports',
     open_maps: 'Directions', map_offline: 'The map needs a connection. The list below stays available offline.', approx: 'Approximate locations.',
     tools_title: 'Tools', checklist: 'Checklist', add_item: 'Add an item…', budget: 'Budget', label: 'Label', amount: 'Amount', currency: 'Currency',
-    rate: '1 SAR =', total: 'Total', spent: 'Spent', planned: 'Planned budget', expenses: 'Expenses', no_exp: 'No expenses.',
+    rate: '1 SAR =', total: 'Total', spent: 'Spent', planned: 'Planned budget', expenses: 'Expenses', no_exp: 'No expenses.', estimated_rates: 'Estimated rates (editable)', rates_disclaimer: 'Approximate conversions, offline, not live bank rates.', remaining_budget: 'Remaining budget', invalid_amount: 'Invalid amount', invalid_rate: 'Invalid exchange rate',
     settings: 'Settings', language: 'Language', backup: 'Backup', export: 'Export', import: 'Import', imported: 'Data imported', import_err: 'Invalid file',
     install: 'Install the app', g_docs: 'Documents', g_ihram: 'Ihram & Umrah', g_bag: 'Luggage', g_misc: 'Misc',
     ck_passport: 'Valid passport (6+ months)', ck_visa: 'Umrah visa / e-Visa', ck_nusuk: 'Permits & bookings via the Nusuk app', ck_ticket: 'Flight tickets',
@@ -86,7 +86,7 @@ const I18N = {
     map_title: 'الخريطة', all: 'الكل', c_holy: 'المشاعر', c_miqat: 'المواقيت', c_visit: 'للزيارة', c_airport: 'المطارات',
     open_maps: 'الاتجاهات', map_offline: 'تحتاج الخريطة إلى اتصال. القائمة أدناه متاحة دون اتصال.', approx: 'المواقع تقريبية.',
     tools_title: 'أدوات', checklist: 'قائمة التحقق', add_item: 'إضافة عنصر…', budget: 'الميزانية', label: 'البيان', amount: 'المبلغ', currency: 'العملة',
-    rate: '١ ريال =', total: 'المجموع', spent: 'المصروف', planned: 'الميزانية المخططة', expenses: 'المصروفات', no_exp: 'لا مصروفات.',
+    rate: '١ ريال =', total: 'المجموع', spent: 'المصروف', planned: 'الميزانية المخططة', expenses: 'المصروفات', no_exp: 'لا مصروفات.', estimated_rates: 'أسعار الصرف التقديرية (قابلة للتعديل)', rates_disclaimer: 'التحويلات تقريبية وتعمل دون اتصال، وليست أسعارًا مصرفية مباشرة.', remaining_budget: 'الميزانية المتبقية', invalid_amount: 'المبلغ غير صحيح', invalid_rate: 'سعر الصرف غير صحيح',
     settings: 'الإعدادات', language: 'اللغة', backup: 'نسخ احتياطي', export: 'تصدير', import: 'استيراد', imported: 'تم استيراد البيانات', import_err: 'ملف غير صالح',
     install: 'تثبيت التطبيق', g_docs: 'الوثائق', g_ihram: 'الإحرام والعمرة', g_bag: 'الأمتعة', g_misc: 'متفرقات',
     ck_passport: 'جواز سفر ساري (6 أشهر فأكثر)', ck_visa: 'تأشيرة العمرة / التأشيرة الإلكترونية', ck_nusuk: 'التصاريح والحجوزات عبر تطبيق نسك', ck_ticket: 'تذاكر الطيران',
@@ -505,3 +505,7 @@ Object.assign(I18N.ar, { pay_title: 'المصروفات', pay_amount: 'السع�
 Object.assign(I18N.fr, { pay_night: 'nuit', pay_no_hotel: 'hébergement à ajouter', pay_mk_stays: 'Créer les hébergements manquants' });
 Object.assign(I18N.en, { pay_night: 'night', pay_no_hotel: 'accommodation to add', pay_mk_stays: 'Create the missing accommodations' });
 Object.assign(I18N.ar, { pay_night: 'ليلة', pay_no_hotel: 'إقامة للإضافة', pay_mk_stays: 'إنشاء الإقامات الناقصة' });
+
+Object.assign(I18N.fr, { pay_chf_total: 'au total', pay_chf_paid: 'déjà payés', pay_chf_rates: 'taux indicatifs modifiables dans Outils' });
+Object.assign(I18N.en, { pay_chf_total: 'in total', pay_chf_paid: 'already paid', pay_chf_rates: 'indicative rates, editable in Tools' });
+Object.assign(I18N.ar, { pay_chf_total: 'إجمالًا', pay_chf_paid: 'مدفوعة', pay_chf_rates: 'أسعار تقريبية قابلة للتعديل في الأدوات' });

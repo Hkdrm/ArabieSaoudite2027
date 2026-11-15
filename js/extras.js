@@ -117,7 +117,7 @@
   const stageTr = (c, s) => c.transports.filter(x => x.stage ? x.stage === s.id : ((x.to === s.city && x.date === s.in) || (x.mode === 'leave' && x.date === s.out)));
   const CURS = ['EUR', 'CHF', 'SAR', 'USD', 'GBP'];
   const hotelForm = x => {
-    const v = x || { name: '', status: 'todo', addr: '', link: '', price: '', cur: 'EUR' };
+    const v = x || { name: '', status: 'todo', addr: '', link: '', price: '', cur: 'CHF' };
     return `<div class="sfact"><label>${A.t('st_name')}</label><input id="ie-name" value="${esc(v.name)}" placeholder="${esc(A.t('st_name_ph'))}" style="width:100%">
       <div class="chips" style="margin:8px 0"><button type="button" class="chip ${formStatus !== 'booked' ? 'on' : ''}" data-iest="todo">${A.t('st_todo')}</button><button type="button" class="chip ${formStatus === 'booked' ? 'on' : ''}" data-iest="booked">${A.t('st_booked')}</button></div>
       <label>${A.t('st_addr')}</label><input id="ie-addr" value="${esc(v.addr)}" style="width:100%">

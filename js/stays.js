@@ -4,6 +4,7 @@
 (() => {
   const A = window.Omra;
   const { $, $$, esc, S, save, t } = A;
+  const Money = window.OmraCurrency;
   const CITY_IDS = ['makkah', 'madinah', 'jeddah', 'riyadh', 'alula', 'taif'];
   const cityName = id => (CITIES[id] ? (CITIES[id].n[S.lang] || CITIES[id].n.fr) : t('st_other_city'));
   const loc = () => S.lang === 'ar' ? 'ar-SA-u-nu-latn' : S.lang;
@@ -16,7 +17,7 @@
   const safeUrl = u => { u = (u || '').trim(); if (!u) return ''; try { const x = new URL(/^[a-z][a-z0-9+.-]*:/i.test(u) ? u : 'https://' + u); return /^https?:$/.test(x.protocol) ? x.href : ''; } catch { return ''; } };
   const tel = v => (v || '').replace(/[^\d+]/g, '');
   const where = s => encodeURIComponent([s.addr || s.name, s.addr ? '' : cityName(s.city)].filter(Boolean).join(' '));
-  const CUR = ['EUR', 'CHF', 'SAR', 'USD', 'GBP'];
+  const CUR = ['CHF', 'USD', 'SAR'];
 
   A.views.stay = el => {
     S.stays = S.stays || [];
@@ -27,7 +28,7 @@
     const dayList = () => { const out = []; if (!tripOk) return out; for (let d = J.date1; d <= J.date2; d = addDay(d, 1)) out.push(d); return out; };
     const lastOut = () => S.stays.filter(s => s.out).map(s => s.out).sort().at(-1);
 
-    const blank = () => ({ id: 's' + Date.now(), city: 'makkah', name: '', status: 'todo', in: tripOk ? (lastOut() && lastOut() < J.date2 ? lastOut() : J.date1) : '', out: tripOk ? J.date2 : '', addr: '', link: '', ref: '', price: '', cur: 'EUR', phone: '', notes: '' });
+    const blank = () => ({ id: 's' + Date.now(), city: 'makkah', name: '', status: 'todo', in: tripOk ? (lastOut() && lastOut() < J.date2 ? lastOut() : J.date1) : '', out: tripOk ? J.date2 : '', addr: '', link: '', ref: '', price: '', cur: 'CHF', phone: '', notes: '' });
 
     /* nuits couvertes / à loger */
     const coverage = () => {
@@ -93,7 +94,7 @@
         ${s.in && s.out ? `<div>📅 ${esc(short(s.in))} → ${esc(short(s.out))}</div>` : ''}
         ${s.addr ? `<div class="muted">${esc(s.addr)}</div>` : ''}
         ${walkHtml(s)}
-        ${s.price ? `<div>💶 ${esc(s.price)} ${esc(s.cur || '')} <span class="pill ${s.pay === 'paid' ? 'ok' : ''}">${A.pay.PAY_IC[s.pay] || '⏳'} ${t({ paid: 'pay_paid', partial: 'pay_partial', onsite: 'pay_onsite' }[s.pay] || 'pay_todo')}</span></div>` : ''}
+        ${s.price ? `<div>💶 ${esc(s.price)} ${esc(s.cur || 'CHF')}${Number.isFinite(Money.toCHF(s.price, s.cur || 'CHF', S.fxRates)) && (s.cur || 'CHF') !== 'CHF' ? ` <span class="muted">≈ ${Money.format(Money.toCHF(s.price, s.cur || 'CHF', S.fxRates), 'CHF', 'fr-CH')}</span>` : ''} <span class="pill ${s.pay === 'paid' ? 'ok' : ''}">${A.pay.PAY_IC[s.pay] || '⏳'} ${t({ paid: 'pay_paid', partial: 'pay_partial', onsite: 'pay_onsite' }[s.pay] || 'pay_todo')}</span></div>` : ''}
         ${s.ref ? `<div class="muted">${t('booking_ref')} : <b>${esc(s.ref)}</b></div>` : ''}
         ${s.notes ? `<div class="muted" style="margin-top:4px">${esc(s.notes)}</div>` : ''}
         <div class="row" style="margin-top:10px">
