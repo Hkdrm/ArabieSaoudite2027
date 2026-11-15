@@ -13,7 +13,7 @@ function fixture({legacy=false, remote=null, online=true, httpStatus=200}={}){
     checks:{},custom:[],cnt:{tawaf:0,sai:0},exp:[],budget:0,rate:0.23,cur:'CHF',
     fav:[],visited:{},notes:{},vids:{},journey:{ref:'ABC123'},stays:[],geo:null,here:null};
   const app={S,SYNC_KEYS:Object.keys(S).filter(x=>!['geo','here'].includes(x)),
-    hooks:{onSave(){}},refresh(){},toast(){},
+    hooks:{onSave(){}},refresh(){},toast(){},t:s=>s,esc:s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),
     store:{get(k,f){return db.has(k)?db.get(k):f},set(k,v){db.set(k,structuredClone(v));return true}}};
   const elements=new Map();
   let html='', confirmed=true;
@@ -110,7 +110,7 @@ test('GitHub errors do not persist token or discard local travel data',async()=>
 });
 test('offline sync never writes GitHub until connectivity is restored',async()=>{
   const f=fixture({online:false});await f.connect();
-  assert.equal(f.server.requests.length,2); // Initial creation is triggered by the explicit connect action.
-  f.app.hooks.onSave();await f.timers.at(-1)();await new Promise(setImmediate);
+  assert.equal(f.server.requests.length,0);
+  assert.match(f.root.innerHTML,/Connexion Internet requise/);
   assert.equal(f.server.requests.filter(x=>x.method==='PATCH').length,0);
 });
