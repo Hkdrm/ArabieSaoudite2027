@@ -84,11 +84,50 @@
     el.innerHTML = `<h2>☰ ${A.t('nav_menu')}</h2>` + MENU.map(([h, items]) => `<h3 class="subh">${A.t(h)}</h3><div class="cards">${items.map(([r, ic, k]) => `<a class="pcard" href="#/${r}" style="text-decoration:none"><span class="ic">${ic}</span><span class="tt">${esc(A.t(k))}</span></a>`).join('')}</div>`).join('');
   };
 
+
+  /* ---------- « Mon séjour » : le circuit, les hôtels et les vols vus depuis l'onglet Omra ---------- */
+  const SJ = {
+    fr: { title: 'Mon séjour', empty: "Chargez votre circuit (Djeddah, La Mecque, Médine, Riyad…) pour voir ici vos étapes, vos hôtels et vos transports.", load: 'Charger mon circuit', edit: 'Modifier', hotel: 'Hôtel', tbook: "À réserver", booked: 'Réservé', nights: 'nuits', night: 'nuit', here: "Vous êtes ici", day: 'Jour', of: 'sur', left: 'jours avant le départ', flights: 'Vols', out: 'Aller', ret: 'Retour',
+      omra: "Omra : étape principale. Renseignez-vous sur le miqat et le moment de l'ihram avant d'entrer à La Mecque.", nabawi: 'Visite de la Mosquée du Prophète ﷺ, Rawdah (permis Nusuk), Quba, Uhud.', jeddah: 'Arrivée et repos ; Djeddah historique (Al-Balad), Corniche.', riyadh: 'Capitale : Diriyah, Masmak.', see_ihram: "Voir l'étape Ihram" },
+    en: { title: 'My stay', empty: 'Load your itinerary (Jeddah, Makkah, Madinah, Riyadh…) to see your stops, hotels and transport here.', load: 'Load my itinerary', edit: 'Edit', hotel: 'Hotel', tbook: 'To book', booked: 'Booked', nights: 'nights', night: 'night', here: 'You are here', day: 'Day', of: 'of', left: 'days until departure', flights: 'Flights', out: 'Outbound', ret: 'Return',
+      omra: 'Umrah: main stop. Find out about the miqat and when to enter ihram before reaching Makkah.', nabawi: "Prophet's Mosque ﷺ, Rawdah (Nusuk permit), Quba, Uhud.", jeddah: 'Arrival and rest; historic Jeddah (Al-Balad), Corniche.', riyadh: 'Capital: Diriyah, Masmak.', see_ihram: 'See the Ihram step' },
+  };
+  const ST = k => (SJ[S.lang] || SJ.fr)[k] || SJ.fr[k];
+  const pad2 = n => String(n).padStart(2, '0');
+  const isoD = d => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+  const dd = s => new Date(s + 'T00:00:00');
+  const nts = (a, b) => Math.round((dd(b) - dd(a)) / 864e5);
+  const shortD = s => dd(s).toLocaleDateString(S.lang === 'ar' ? 'ar-SA-u-nu-latn' : S.lang, { day: 'numeric', month: 'short' });
+  const cName = id => (typeof CITIES !== 'undefined' && CITIES[id] ? (CITIES[id].n[S.lang] || CITIES[id].n.fr) : id);
+  const stayHtml = () => {
+    const c = S.circuit;
+    if (!c) return `<div class="card"><h3>🧳 ${ST('title')}</h3><p class="muted">${ST('empty')}</p><a class="btn" href="#/stay">${ST('load')} →</a></div>`;
+    const today = isoD(new Date()), d1 = c.stages[0].in, d2 = c.stages.at(-1).out, tot = nts(d1, d2);
+    let head = '';
+    if (today < d1) head = `<b>${nts(today, d1)}</b> ${ST('left')}`; else if (today < d2) head = `${ST('here')} · ${ST('day')} <b>${nts(d1, today) + 1}</b> ${ST('of')} ${tot + 1}`;
+    const J = S.journey || {};
+    const flights = (J.noOut || J.noRet) ? `<div class="muted" style="margin-top:8px">✈️ ${ST('flights')} : ${J.noOut ? `${ST('out')} <b>${esc(J.noOut)}</b>` : ''}${J.noOut && J.noRet ? ' · ' : ''}${J.noRet ? `${ST('ret')} <b>${esc(J.noRet)}</b>` : ''}</div>` : '';
+    const rows = c.stages.map((s, i) => {
+      const n = nts(s.in, s.out), cur = today >= s.in && today < s.out;
+      const stays = (S.stays || []).filter(x => x.city === s.city && x.in && x.out && x.in < s.out && x.out > s.in);
+      const hotel = stays.length ? stays.map(x => `🏨 <b>${esc(x.name || ST('hotel'))}</b> <span class="pill ${x.status === 'booked' ? 'ok' : ''}">${x.status === 'booked' ? '✓ ' + ST('booked') : ST('tbook')}</span>`).join('<br>') : `<a href="#/stay" class="muted">🏨 ${ST('hotel')} : ${ST('tbook')} →</a>`;
+      const note = s.city === 'makkah' ? ST('omra') : s.city === 'madinah' ? ST('nabawi') : s.city === 'jeddah' ? ST('jeddah') : s.city === 'riyadh' ? ST('riyadh') : '';
+      const tr = c.transports.find(x => (x.mode === 'train' || x.mode === 'flight') && x.to === s.city && x.date === s.in && x.from !== s.city);
+      return `${tr ? `<div class="muted" style="margin:2px 0 2px 14px;font-size:13px">${tr.mode === 'train' ? '🚆' : '✈️'} ${esc(shortD(tr.date))} · ${esc(cName(tr.from))} → ${esc(cName(tr.to))}</div>` : ''}
+        <div class="sitem-tr ${cur ? 'done' : ''}" style="${s.city === 'makkah' ? 'border-color:#c9a227;border-width:2px' : ''}"><div class="row" style="gap:8px;flex-wrap:nowrap"><b class="grow">${s.city === 'makkah' ? '🕋 ' : ''}${i + 1}. ${esc(cName(s.city))}</b>${cur ? `<span class="pill ok">${ST('here')}</span>` : ''}</div>
+          <div class="muted">📅 ${esc(shortD(s.in))} → ${esc(shortD(s.out))} · 🌙 ${n} ${n > 1 ? ST('nights') : ST('night')}</div>
+          <div style="margin:4px 0">${hotel}</div>${note ? `<div class="muted" style="font-size:13px">${note}${s.city === 'makkah' ? ` <a href="#omraSteps" data-goihram>${ST('see_ihram')} ↓</a>` : ''}</div>` : ''}</div>`;
+    }).join('');
+    return `<div class="card"><div class="row" style="justify-content:space-between;flex-wrap:nowrap"><h3 style="margin:0">🧳 ${ST('title')}</h3><a class="ghost btn" href="#/stay">${ST('edit')}</a></div>
+      <p class="muted" style="margin:4px 0 8px">${esc(shortD(d1))} → ${esc(shortD(d2))} · ${tot} ${ST('nights')}${head ? ' · ' + head : ''}</p>${rows}${flights}</div>`;
+  };
+
   const wrap = A.views.omra;
   A.views.omra = el => {
     wrap(el);
     const w = $('#holyWrap', el); if (!w) return;
-    w.insertAdjacentHTML('beforebegin', duaHtml() + infoHtml());
+    w.insertAdjacentHTML('beforebegin', stayHtml() + duaHtml() + infoHtml());
+    const gi = $('[data-goihram]', el); if (gi) gi.onclick = ev => { ev.preventDefault(); const t0 = $('#omraSteps', el); t0 && t0.scrollIntoView({ behavior: 'smooth' }); };
     $$('[data-dua]', el).forEach(b => b.onclick = () => say(b.dataset.dua, { slow: !!b.dataset.slow, rep: +b.dataset.rep || 0 }));
     const leave = () => { if (/^#\/omra/.test(location.hash)) return; window.removeEventListener('hashchange', leave); window.speechSynthesis && speechSynthesis.cancel(); };
     window.addEventListener('hashchange', leave);
