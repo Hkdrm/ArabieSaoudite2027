@@ -53,3 +53,5 @@ js/trip.js    onglet Départ / Retour (vols)
 
 ## Avertissement
 Les contenus religieux sont un aide-mémoire ; référez-vous à un savant ou au guide de votre agence. Les coordonnées des lieux sont approximatives. Les horaires sont calculés (précision ≈ 1 min) : vérifiez avec les horaires officiels locaux.
+
+- Hôtels de La Mecque et de Médine (`data/hotels-osm.json`) : © contributeurs OpenStreetMap (ODbL), extraction par l'API OSM ; distances estimées.

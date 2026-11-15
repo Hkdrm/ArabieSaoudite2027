@@ -171,6 +171,7 @@
     const draw = () => (editing ? drawForm() : drawList());
     if (A.circuitPrefill && tripOk) { f = blank(); Object.assign(f, { city: A.circuitPrefill.city, in: A.circuitPrefill.in, out: A.circuitPrefill.out }); editing = 'new'; }
     A.circuitPrefill = null;
+    if (A.stayPrefill) { f = blank(); Object.assign(f, A.stayPrefill); editing = 'new'; A.stayPrefill = null; }
     draw();
   };
 })();

@@ -463,3 +463,8 @@ Object.assign(I18N.en, { st_walk_btn: 'Walking distance to the nearest gate', st
   walk_legend: 'Bands: under 300 m · 300–600 m · 600 m–1 km · 1–2 km · over 2 km. Prayer-time crowds lengthen the walk.' });
 Object.assign(I18N.ar, { st_walk_btn: 'المسافة مشيًا إلى أقرب باب', st_walk_haram: 'إلى أقرب باب للحرم', st_walk_nabawi: 'إلى أقرب باب للمسجد النبوي', st_gate: 'باب', st_walk_est: 'تقدير (تعذّر المسار)', st_walk_need: 'أدخل اسم الفندق أو عنوانه (أو الصق إحداثياته).', st_walk_nofound: 'العنوان غير موجود: وضّحه أو الصق الإحداثيات.', st_walk_fail: 'تعذّر القياس الآن (الشبكة).',
   walk_legend: 'الفئات: أقل من ٣٠٠ م · ٣٠٠–٦٠٠ م · ٦٠٠ م–١ كم · ١–٢ كم · أكثر من ٢ كم. الزحام وقت الصلاة يطيل المسير.' });
+
+/* ---- Hôtels sur la carte des lieux saints ---- */
+Object.assign(I18N.fr, { holy_hotels: 'Hôtels', holy_h_add: 'Ajouter à mes logements', holy_h_est: "Hôtels : données OpenStreetMap, incomplètes. Distance estimée (vol d'oiseau × 1,3, 80 m/min) jusqu'à la porte la plus proche ; à vérifier avec le calcul à pied dans l'onglet Logement." });
+Object.assign(I18N.en, { holy_hotels: 'Hotels', holy_h_add: 'Add to my stays', holy_h_est: 'Hotels: OpenStreetMap data, incomplete. Estimated distance (straight line × 1.3, 80 m/min) to the nearest gate; confirm with the walking measure in the Stay tab.' });
+Object.assign(I18N.ar, { holy_hotels: 'الفنادق', holy_h_add: 'أضف إلى إقاماتي', holy_h_est: 'الفنادق: بيانات OpenStreetMap غير مكتملة. المسافة تقديرية إلى أقرب باب؛ تحقق منها في تبويب الإقامة.' });
