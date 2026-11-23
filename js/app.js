@@ -8,7 +8,7 @@
     set(k, v) { try { localStorage.setItem('omra:' + k, JSON.stringify(v)); return true; } catch (e) { console.error('Omra: storage failed', k, e); return false; } },
   };
 
-  const APP_VERSION = '2026-11-15.72';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
+  const APP_VERSION = '2026-11-23.75';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
 
   /* ---------- état ---------- */
   const detect = () => { const l = (navigator.language || 'fr').slice(0, 2); return LANGS[l] ? l : 'fr'; };
@@ -293,6 +293,7 @@
           <label>🌐 ${t('map_lang_label')}</label><select id="mlang" style="width:100%;margin-bottom:8px">${[['fr', 'Français'], ['en', 'English'], ['ar', 'العربية'], ['local', t('ml_local')]].map(([k, v]) => `<option value="${k}" ${mlang === k ? 'selected' : ''}>${esc(v)}</option>`).join('')}</select>
           <label>🗺️ ${t('map_style_label')}</label><select id="mbase" style="width:100%"><option value="plan" ${mbase === 'plan' ? 'selected' : ''}>${t('base_plan')}</option><option value="sat" ${mbase === 'sat' ? 'selected' : ''}>${t('base_sat')}</option></select></div></div>
       <p class="muted" id="posInfo" style="font-size:12px;margin:4px 0 0"></p>
+      <div class="row" style="margin:10px 0"><button type="button" class="ghost" id="perfumeShortcut">🧴 Parfums à La Mecque · vidéos analysées</button></div>
       <div class="tabs" id="tabs" role="tablist"></div>
       <div id="routeBar"></div><div id="list"></div>`;
     const ML = window.maplibregl;
@@ -562,6 +563,7 @@
       } catch (e) { map = null; mapObj = null; }
     }
     if (!map) $('#map', el).outerHTML = `<div class="card muted">${t('map_offline')}</div>`;
+    $('#perfumeShortcut', el).onclick = () => loadDisc().then(() => { items = buildItems(); city = 'makkah'; tab = 'f:perfume'; q = ''; limit = 30; $('#q', el).value = ''; render(); });
     $('#citySel', el).onchange = e => { city = e.target.value; tab = ''; limit = 10; render(); };
     $('#q', el).oninput = e => { q = e.target.value; limit = 10; tab = q.trim() ? 'all' : ''; render(); };
     $('#posBtn', el).onclick = () => (posOn ? stopFollow() : startFollow());
