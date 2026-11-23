@@ -8,7 +8,7 @@
     set(k, v) { try { localStorage.setItem('omra:' + k, JSON.stringify(v)); return true; } catch (e) { console.error('Omra: storage failed', k, e); return false; } },
   };
 
-  const APP_VERSION = '2026-11-23.73';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
+  const APP_VERSION = '2026-11-23.74';   // à incrémenter à chaque publication (même valeur que le cache de sw.js)
 
   /* ---------- état ---------- */
   const detect = () => { const l = (navigator.language || 'fr').slice(0, 2); return LANGS[l] ? l : 'fr'; };
@@ -293,7 +293,7 @@
           <label>🌐 ${t('map_lang_label')}</label><select id="mlang" style="width:100%;margin-bottom:8px">${[['fr', 'Français'], ['en', 'English'], ['ar', 'العربية'], ['local', t('ml_local')]].map(([k, v]) => `<option value="${k}" ${mlang === k ? 'selected' : ''}>${esc(v)}</option>`).join('')}</select>
           <label>🗺️ ${t('map_style_label')}</label><select id="mbase" style="width:100%"><option value="plan" ${mbase === 'plan' ? 'selected' : ''}>${t('base_plan')}</option><option value="sat" ${mbase === 'sat' ? 'selected' : ''}>${t('base_sat')}</option></select></div></div>
       <p class="muted" id="posInfo" style="font-size:12px;margin:4px 0 0"></p>
-      <div class="card" style="margin:12px 0;padding:12px"><b>📌 Vidéo YouTube enregistrée</b><p class="muted" style="margin:6px 0">Short conservé pour les recherches du voyage · détails à identifier</p><a class="btn ghost sm" href="https://youtube.com/shorts/zpRL4F4PUpk?si=IEredBrDI6atibKs" target="_blank" rel="noopener noreferrer">▶ Ouvrir la vidéo</a></div>
+      <div class="card" style="margin:12px 0;padding:12px"><b>📌 Vidéo YouTube enregistrée</b><p class="muted" style="margin:6px 0">Short conservé pour les recherches du voyage · détails à identifier</p><a class="btn ghost sm" href="https://youtube.com/shorts/zpRL4F4PUpk?si=IEredBrDI6atibKs" target="_blank" rel="noopener noreferrer">▶ Ouvrir la vidéo</a> <a class="btn ghost sm" href="https://youtube.com/shorts/A6FEpbhaWzY?is=NNIK3BYCM-uDjzD-" target="_blank" rel="noopener noreferrer">▶ Ouvrir le Short 2</a></div>
       <div class="tabs" id="tabs" role="tablist"></div>
       <div id="routeBar"></div><div id="list"></div>`;
     const ML = window.maplibregl;
