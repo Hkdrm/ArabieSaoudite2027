@@ -78,7 +78,7 @@
   const MENU = [
     ['mn_prepare', [['trip', '✈️', 'nav_trip'], ['stay', '🏨', 'nav_stay'], ['expenses', '💶', 'pay_title'], ['tools', '🧰', 'nav_tools']]],
     ['mn_faith', [['omra', '🕋', 'nav_omra'], ['https://maps.umrahcore.com/', '🕋', 'mn_mk_site'], ['makkah', '🗺️', 'mn_mk_osm'], ['sira', '🌙', 'sira_title'], ['prayer', '🕌', 'nav_prayer'], ['holy', '🗺️', 'holy_title']]],
-    ['mn_discover', [['explore', '🧭', 'nav_explore'], ['discoveries', '🗂️', 'mn_disc']]],
+    ['mn_discover', [['explore', '🧭', 'nav_explore'], ['discoveries', '🗂️', 'mn_disc'], ['perfumes', '🧴', 'mn_perfumes']]],
   ];
   /* ---------- Liens vers UmrahMap (maps.umrahcore.com) : hôtels par temps de marche, carte, portes ---------- */
   A.views.umrah = el => {
