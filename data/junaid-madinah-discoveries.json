@@ -4183,6 +4183,49 @@
         "review_type": "business_and_web_crosscheck",
         "note": "Prestations détaillées, horaires et disponibilité en 2027 à contrôler."
       }
+    },
+    {
+      "id": "surrati-makkah-commercial-center",
+      "name_fr": "Surrati Perfumes — السرتي للعطور (Makkah Commercial Center)",
+      "city": "makkah",
+      "category": "perfume",
+      "subcategory": "oud_attar_bakhoor",
+      "area": "Al Hajlah, Makkah Commercial Center, près du Masjid al-Haram",
+      "description_fr": "Boutique de la maison saoudienne Surrati : huiles parfumées concentrées, oud, bakhoor et parfums. Adresse centrale pratique pendant un séjour à La Mecque.",
+      "practical_notes_fr": "Adresse répertoriée : 6102, Al Hajlah, 4031, Makkah 24231, Makkah Commercial Center, Arabie saoudite. Téléphone : +966 12 535 0777. D'autres points de vente sont annoncés par la marque aux Clock Towers, à Al Safwa et à Al Aziziyah. Vérifier les horaires, les stocks et les références souhaitées avant déplacement.",
+      "official_url": "https://surrati.sa/en/branches/page-1550855718",
+      "source": {
+        "creator": "Annuaire officiel Surrati et fiches commerce locales (consultés le 23 novembre 2026)",
+        "channel": null,
+        "videos": [],
+        "references": [
+          "https://surrati.sa/en/branches/page-1550855718",
+          "https://www.surratiperfumes.com/ksa3/",
+          "https://yalqa.com/en/p/surrati-perfumes-alsrty-lletwr-79093a68",
+          "https://www.google.com/maps/search/?api=1&query=Surrati+Perfumes+Makkah+Commercial+Center+Al+Hajlah"
+        ]
+      },
+      "verification": {
+        "source_detail": "Site officiel de la marque et annuaire local concordants pour l'enseigne et le numéro",
+        "independently_verified": true,
+        "location_verified": true,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-23"
+      },
+      "interest_tags": [
+        "perfume",
+        "oud",
+        "attar",
+        "bakhoor",
+        "near_haram",
+        "shopping"
+      ],
+      "audit": {
+        "reviewed_on": "2026-11-23",
+        "review_type": "official_branch_and_business_crosscheck",
+        "note": "Boutique centrale répertoriée ; horaires, stocks et produits à vérifier avant visite."
+      }
     }
   ],
   "updated": "2026-11-14",
