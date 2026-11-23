@@ -452,9 +452,9 @@ Object.assign(I18N.ar, { ci_title: 'مسار رحلتي', ci_empty: 'جدة ٢٠
   ci_to_plan: 'أضف إلى الدفتر', ci_remove: 'إزالة المسار', ci_remove_confirm: 'إزالة المسار؟ إقاماتك المحفوظة لا تُحذف.', ci_loaded: 'تم تحميل المسار', ci_added: 'أُضيفت إلى الدفتر', ci_already: 'موجود في الدفتر.', ci_replace_dates: 'استبدال تواريخ الرحلة بـ ٢٠ مارس ← ٦ أبريل ٢٠٢٧؟' });
 
 /* ---- Menu ---- */
-Object.assign(I18N.fr, { nav_menu: 'Menu', mn_prepare: 'Préparer le voyage', mn_faith: 'Omra et foi', mn_discover: 'Découvrir', mn_disc: 'Découvertes de Médine' });
-Object.assign(I18N.en, { nav_menu: 'Menu', mn_prepare: 'Plan the trip', mn_faith: 'Umrah and faith', mn_discover: 'Discover', mn_disc: 'Madinah discoveries' });
-Object.assign(I18N.ar, { nav_menu: 'القائمة', mn_prepare: 'تحضير الرحلة', mn_faith: 'العمرة والإيمان', mn_discover: 'اكتشف', mn_disc: 'اكتشافات المدينة' });
+Object.assign(I18N.fr, { mn_perfumes: 'Parfums', nav_menu: 'Menu', mn_prepare: 'Préparer le voyage', mn_faith: 'Omra et foi', mn_discover: 'Découvrir', mn_disc: 'Découvertes de Médine' });
+Object.assign(I18N.en, { mn_perfumes: 'Perfumes', nav_menu: 'Menu', mn_prepare: 'Plan the trip', mn_faith: 'Umrah and faith', mn_discover: 'Discover', mn_disc: 'Madinah discoveries' });
+Object.assign(I18N.ar, { mn_perfumes: 'العطور', nav_menu: 'القائمة', mn_prepare: 'تحضير الرحلة', mn_faith: 'العمرة والإيمان', mn_discover: 'اكتشف', mn_disc: 'اكتشافات المدينة' });
 
 /* ---- Distance à pied hôtel → porte ---- */
 Object.assign(I18N.fr, { st_walk_btn: 'Distance à pied jusqu\'à la porte la plus proche', st_walk_haram: 'jusqu\'à la porte la plus proche du Haram', st_walk_nabawi: 'jusqu\'à la porte la plus proche de la Mosquée du Prophète', st_gate: 'Porte', st_walk_est: 'estimation (itinéraire indisponible)', st_walk_need: "Renseignez le nom ou l'adresse de l'hôtel (ou collez ses coordonnées).", st_walk_nofound: "Adresse introuvable : précisez l'adresse ou collez les coordonnées (ex. 21.4189, 39.8234).", st_walk_fail: 'Mesure impossible pour le moment (réseau).',
