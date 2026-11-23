@@ -4191,13 +4191,15 @@
       "category": "perfume",
       "subcategory": "oud_attar_bakhoor",
       "area": "Al Hajlah, Makkah Commercial Center, près du Masjid al-Haram",
-      "description_fr": "Boutique de la maison saoudienne Surrati : huiles parfumées concentrées, oud, bakhoor et parfums. Adresse centrale pratique pendant un séjour à La Mecque.",
-      "practical_notes_fr": "Adresse répertoriée : 6102, Al Hajlah, 4031, Makkah 24231, Makkah Commercial Center, Arabie saoudite. Téléphone : +966 12 535 0777. D'autres points de vente sont annoncés par la marque aux Clock Towers, à Al Safwa et à Al Aziziyah. Vérifier les horaires, les stocks et les références souhaitées avant déplacement.",
+      "description_fr": "Boutique Surrati à La Mecque : huiles parfumées de oud, encens et grands flacons de parfum. Dans son Short, IbraTalksScents recommande Cuban Latte (vanille gourmande, café, accord beurré) et Fabrica (plus frais et propre).",
+      "practical_notes_fr": "Adresse répertoriée : 6102, Al Hajlah, 4031, Makkah 24231, Makkah Commercial Center, Arabie saoudite. Téléphone : +966 12 535 0777. D'autres points de vente sont annoncés par la marque aux Clock Towers, à Al Safwa et à Al Aziziyah. Vérifier les horaires, les stocks et les références souhaitées avant déplacement. Itinéraire décrit dans le Short : depuis Masjid al-Haram, prendre la porte 79, marcher tout droit, passer devant Rolex ; la boutique filmée est sur la droite. Attention : l'adresse exacte de la boutique filmée n'est pas confirmée comme étant celle du Makkah Commercial Center. Le vidéaste affirme que la marque fournit de l'eau de rose pour la Kaaba : affirmation non vérifiée indépendamment.",
       "official_url": "https://surrati.sa/en/branches/page-1550855718",
       "source": {
-        "creator": "Annuaire officiel Surrati et fiches commerce locales (consultés le 23 novembre 2026)",
-        "channel": null,
-        "videos": [],
+        "creator": "IbraTalksScents (vidéo terrain) + annuaires Surrati",
+        "channel": "IbraTalksScents",
+        "videos": [
+          "https://www.youtube.com/shorts/zpRL4F4PUpk"
+        ],
         "references": [
           "https://surrati.sa/en/branches/page-1550855718",
           "https://www.surratiperfumes.com/ksa3/",
@@ -4219,13 +4221,112 @@
         "attar",
         "bakhoor",
         "near_haram",
-        "shopping"
+        "shopping",
+        "Cuban Latte",
+        "Fabrica",
+        "porte 79",
+        "vidéo terrain"
       ],
       "audit": {
         "reviewed_on": "2026-11-23",
         "review_type": "official_branch_and_business_crosscheck",
-        "note": "Boutique centrale répertoriée ; horaires, stocks et produits à vérifier avant visite."
+        "note": "Boutique centrale répertoriée ; horaires, stocks et produits à vérifier avant visite. Vidéo terrain transcrite le 23-11-2026 ; boutique filmée non géolocalisée avec certitude."
       }
+    },
+    {
+      "city": "makkah",
+      "category": "perfume",
+      "verification": {
+        "source_detail": "Vidéo du créateur IbraTalksScents ; adresse et produits non vérifiés indépendamment",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-23"
+      },
+      "source": {
+        "creator": "IbraTalksScents (Short YouTube)",
+        "channel": "IbraTalksScents",
+        "videos": [
+          "https://www.youtube.com/shorts/A6FEpbhaWzY"
+        ],
+        "references": []
+      },
+      "id": "gissah-saudi-imperial-makkah",
+      "name_fr": "Gissah — قصة · Saudi Imperial",
+      "subcategory": "perfume_saudi_imperial",
+      "area": "Centre commercial de La Mecque (nom non précisé dans la vidéo)",
+      "description_fr": "Boutique de parfums Gissah (قصة) présentée dans une vidéo de shopping. Le créateur achète Saudi Imperial, dans un flacon vert : accord de pamplemousse acidulé et légèrement sucré ; il souligne une bonne tenue et projection de la marque.",
+      "practical_notes_fr": "Parfum à essayer : Saudi Imperial. Selon le vidéaste, il est proposé exclusivement dans les magasins Gissah en Arabie saoudite ; à vérifier auprès de la marque. Adresse précise du centre commercial non précisée.",
+      "interest_tags": [
+        "Gissah",
+        "Saudi Imperial",
+        "pamplemousse",
+        "flacon vert",
+        "Joumou'a"
+      ]
+    },
+    {
+      "city": "makkah",
+      "category": "perfume",
+      "verification": {
+        "source_detail": "Vidéo du créateur IbraTalksScents ; adresse et produits non vérifiés indépendamment",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-23"
+      },
+      "source": {
+        "creator": "IbraTalksScents (Short YouTube)",
+        "channel": "IbraTalksScents",
+        "videos": [
+          "https://www.youtube.com/shorts/A6FEpbhaWzY"
+        ],
+        "references": []
+      },
+      "id": "reef-perfumes-makkah-video",
+      "name_fr": "Reef Perfumes — ريف",
+      "subcategory": "fragrance_shop",
+      "area": "Centre commercial de La Mecque (non identifié)",
+      "description_fr": "Le créateur de la vidéo teste une nouveauté Reef et la juge correcte, sans citer le nom du parfum.",
+      "practical_notes_fr": "Repérage à partir du Short : identifier la référence exacte et l'emplacement de la boutique avant de s'y rendre.",
+      "interest_tags": [
+        "Reef",
+        "nouveauté parfum",
+        "vidéo terrain"
+      ]
+    },
+    {
+      "city": "makkah",
+      "category": "perfume",
+      "verification": {
+        "source_detail": "Vidéo du créateur IbraTalksScents ; adresse et produits non vérifiés indépendamment",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-23"
+      },
+      "source": {
+        "creator": "IbraTalksScents (Short YouTube)",
+        "channel": "IbraTalksScents",
+        "videos": [
+          "https://www.youtube.com/shorts/A6FEpbhaWzY"
+        ],
+        "references": []
+      },
+      "id": "ibrahim-al-qurashi-makkah-video",
+      "name_fr": "Ibrahim Al Qurashi — إبراهيم القرشي",
+      "subcategory": "oud_perfume",
+      "area": "Centre commercial de La Mecque (non identifié)",
+      "description_fr": "Boutique conseillée dans le Short d'IbraTalksScents pour découvrir plusieurs parfums orientaux ; aucune référence précise n'est nommée.",
+      "practical_notes_fr": "Le créateur recommande une visite ; ne pas supposer une adresse spécifique à partir de cette vidéo.",
+      "interest_tags": [
+        "Ibrahim Al Qurashi",
+        "boutique parfum",
+        "vidéo terrain"
+      ]
     }
   ],
   "updated": "2026-11-14",
