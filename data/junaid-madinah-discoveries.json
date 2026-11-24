@@ -535,11 +535,12 @@
       "category": "umrah",
       "area": "Masjid Nabawi",
       "description_fr": "Fonction de recherche de créneaux à proximité",
-      "practical_notes_fr": "Activer la géolocalisation; disponibilité et éligibilité non garanties",
+      "practical_notes_fr": "Activer la géolocalisation; disponibilité et éligibilité non garanties 7alsabe (Instagram) : Le permis Rawdah est gratuit dans Nusuk. Le Reel évoque des réservations répétées, à vérifier selon les règles et les créneaux en vigueur.",
       "source": {
         "creator": "Junaid Hussain",
         "channel": "https://www.youtube.com/@junaidhussainmadinah",
         "videos": [
+          "https://www.instagram.com/reel/Dd65HG5R3bz/",
           "https://www.youtube.com/watch?v=t6Jj0BDEPwI"
         ]
       },
@@ -2247,11 +2248,12 @@
       "subcategory": "hijrah_experience",
       "area": "Parcours historique La Mecque – Médine (plusieurs étapes)",
       "description_fr": "Série de vidéos de Junaid retraçant des stations associées à la route historique de l'Hégire.",
-      "practical_notes_fr": "Le parcours reconstitué est présenté comme 470 km et 11 stations dans une source secondaire; les activités, réservations et autorisations d'accès sont à vérifier. Ne pas présenter l'itinéraire reconstitué comme tracé archéologique certain.",
+      "practical_notes_fr": "Le parcours reconstitué est présenté comme 470 km et 11 stations dans une source secondaire; les activités, réservations et autorisations d'accès sont à vérifier. Ne pas présenter l'itinéraire reconstitué comme tracé archéologique certain. ashfaaqupdates (Instagram) : Le Reel relate une visite de la route de l’Hégire. Disponibilités et inscription à vérifier pour mars 2027.",
       "source": {
         "creator": "Junaid Hussain",
         "channel": "https://www.youtube.com/@junaidhussainmadinah",
         "videos": [
+          "https://www.instagram.com/reel/De_xNHBv1qD/",
           "https://www.youtube.com/watch?v=IDieSjBkSYQ",
           "https://www.youtube.com/watch?v=_OESQl04L-I",
           "https://www.youtube.com/watch?v=I2F2qdQf-rk",
@@ -3749,11 +3751,13 @@
       "subcategory": "craft_workshops",
       "area": "Près de Bayt Nassif, Al-Balad, Djeddah",
       "description_fr": "Espace d'artisanat et de création ; ateliers ayant inclus la calligraphie coufique carrée, dorure, broderie, parfums, encens et mosaïques.",
-      "practical_notes_fr": "Programme de l'été 2026 confirmé par l'agence de presse saoudienne et activité documentée en octobre 2026. La tenue d'ateliers en mars–avril 2027 n'est pas garantie : vérifier calendrier et réservation.",
+      "practical_notes_fr": "Programme de l'été 2026 confirmé par l'agence de presse saoudienne et activité documentée en octobre 2026. La tenue d'ateliers en mars–avril 2027 n'est pas garantie : vérifier calendrier et réservation. lubnahajamjoom (Instagram) : Le Reel présente les produits fabriqués localement. La présence d’un atelier de calligraphie reste à confirmer.",
       "source": {
         "creator": "Saudi Press Agency et Zawiya 97",
         "channel": null,
-        "videos": [],
+        "videos": [
+          "https://www.instagram.com/reel/DdLkXiToYgP/"
+        ],
         "references": [
           "https://www.spa.gov.sa/en/N2638075",
           "https://www.spa.gov.sa/en/N2705267",
@@ -4327,9 +4331,737 @@
         "boutique parfum",
         "vidéo terrain"
       ]
+    },
+    {
+      "id": "instagram-dekwiz4qmc6",
+      "name_fr": "Détaxe à Djeddah pour les achats de voyage",
+      "city": "jeddah",
+      "category": "services",
+      "area": "Aéroport international de Djeddah",
+      "description_fr": "Acheter chez un commerçant participant, demander le formulaire Global Blue et garder reçus et achats à disposition pour la validation au départ. Seuil annoncé de 500 SAR pour les achats éligibles.",
+      "source": {
+        "creator": "saysubhan_ / visite.arabie",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/DekWiz4qMc6/",
+          "https://www.instagram.com/reel/DfXxorONrNv/"
+        ],
+        "references": [
+          "https://frontend-public.st.globalblue.cn/en/shoppers/how-to-shop-tax-free/destinations/saudi-arabia"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-24"
+      }
+    },
+    {
+      "id": "instagram-det5vkrtqkn",
+      "name_fr": "Qamis à partir de 40 SAR",
+      "city": "madinah",
+      "category": "shopping",
+      "area": "Adresse à identifier",
+      "description_fr": "Explore Madinah présente une grande boutique de qamis, chaussures, shemaghs et vêtements pour enfants. Le prix est annoncé dans le Reel et l’adresse figure dans leur guide payant.",
+      "source": {
+        "creator": "exploremedinah",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/Det5vkrtQkN/"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "instagram-decey1mtpeh",
+      "name_fr": "Café insolite dans la région de Médine",
+      "city": "madinah",
+      "category": "cafe_tea",
+      "area": "Adresse à identifier",
+      "description_fr": "Yashab Shaikh situe le café dans la région de Médine. Le nom et l’adresse restent à identifier.",
+      "source": {
+        "creator": "yashab_sk",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/DecEy1MtpEH/"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "instagram-dfay-1nizcz",
+      "name_fr": "Guide des parfumeries à Médine",
+      "city": "madinah",
+      "category": "perfume",
+      "area": "Médine",
+      "description_fr": "La légende d’Akhi Fragrance ne détaille pas les boutiques. Les commentaires citent Arabian Oud, Al Majed Oud, Assaf, Swiss Arabian et Deerah.",
+      "source": {
+        "creator": "akhifragrance",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/DfAy-1NIZcZ/"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "instagram-dduae2hkgfe",
+      "name_fr": "Lieu insolite à La Mecque",
+      "city": "makkah",
+      "category": "leisure",
+      "area": "Adresse à identifier",
+      "description_fr": "Umrah Companion ne nomme pas le lieu dans la légende et indique communiquer l’adresse en privé.",
+      "source": {
+        "creator": "umrahcompanion",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/DdUAE2hKGFe/"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "instagram-dfg9edix_7w",
+      "name_fr": "Bagages du train Haramain",
+      "city": "makkah",
+      "category": "transport",
+      "area": "Réseau Haramain",
+      "description_fr": "Grand bagage de 65 × 55 × 35 cm maximum selon le règlement cité. Les sources convergent sur la limite de 25 kg, mais vérifier son application au petit bagage avec le billet. Une valise de 81 cm dépasse la limite de taille.",
+      "source": {
+        "creator": "theumrahblueprint",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/Dfg9eDix_7w/"
+        ],
+        "references": [
+          "https://d-albait.sa/en/terms"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-24"
+      }
+    },
+    {
+      "id": "instagram-ddj1il-o8mu",
+      "name_fr": "Reel de 1imec — lieu à identifier",
+      "city": "Sans ville précisée",
+      "category": "umrah",
+      "area": "",
+      "description_fr": "La légende dit « Le plus beau des sentiments ». La ville et le lieu restent à confirmer.",
+      "source": {
+        "creator": "1imec",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/DdJ1il-O8mU/"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "instagram-dd85owrcb_n",
+      "name_fr": "Furni by Chai Karak",
+      "city": "madinah",
+      "category": "cafe_tea",
+      "area": "Abu Ubaidah ibn al-Jarrah, Bada’ah, Médine 42311",
+      "description_fr": "Karak et parathas à emporter. Le café annonce une ouverture 24 h/24, à 350 m de la porte 329 du Masjid an-Nabawi.",
+      "source": {
+        "creator": "ahsanajab / furni.cafe",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/Dd85OWRCb_N/",
+          "https://www.instagram.com/reel/DfXZT_4Mt2U/"
+        ],
+        "references": [
+          "https://furni.cafe/visit-us/"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": true,
+        "location_verified": true,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-24"
+      }
+    },
+    {
+      "id": "instagram-dfu4yt7rj-j",
+      "name_fr": "Hajj 2027 — aménagements pour les pèlerins",
+      "city": "makkah",
+      "category": "umrah",
+      "area": "",
+      "description_fr": "Hajj Collective présente des aménagements destinés aux pèlerins du Hajj. La légende ne donne pas de détail applicable à l’Omra de mars.",
+      "source": {
+        "creator": "hajjcollectivehq",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/Dfu4yt7RJ-j/"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "instagram-deyfuuknmjf",
+      "name_fr": "Prière près d’un pilier — lieu à identifier",
+      "city": "Sans ville précisée",
+      "category": "umrah",
+      "area": "",
+      "description_fr": "Les commentaires évoquent une prière près d’un pilier. Le nom du pilier et le lieu restent à confirmer.",
+      "source": {
+        "creator": "mktravelshajj",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/DeyfuuKNMjF/"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "instagram-derym2xmbks",
+      "name_fr": "Applications saoudiennes pour les nouveaux résidents",
+      "city": "Sans ville précisée",
+      "category": "services",
+      "area": "Arabie saoudite",
+      "description_fr": "La publication évoque des applications administratives, de transport et de livraison. La légende ne donne pas la liste complète et le sujet concerne surtout les résidents.",
+      "source": {
+        "creator": "life_by_jarin",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/Derym2xMBKs/"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "instagram-de-tj6poikk",
+      "name_fr": "Prier dans le Hijr Ismaïl (Hateem)",
+      "city": "makkah",
+      "category": "umrah",
+      "area": "Masjid al-Haram",
+      "description_fr": "Créneaux annoncés en juin 2026 : hommes 22 h–1 h, femmes 6 h–9 h. Les portes 74–75 et l’attente évoquées par le Reel sont à confirmer auprès du personnel du Haram pendant le séjour.",
+      "source": {
+        "creator": "haram.journey.travels",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/De-TJ6poiKk/"
+        ],
+        "references": [
+          "https://saudigazette.com.sa/article/662429/saudi-arabia/haram-authority-sets-hijr-ismail-entry-times-for-male-and-female-worshipers"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-24"
+      }
+    },
+    {
+      "id": "instagram-deqi1u7nrcs",
+      "name_fr": "Espace de prière près de la porte 75",
+      "city": "makkah",
+      "category": "umrah",
+      "area": "Masjid al-Haram",
+      "description_fr": "Le Reel signale un espace climatisé et une fontaine de Zamzam. Affluence variable selon les commentaires. Accès au tawaf à confirmer.",
+      "source": {
+        "creator": "that_yousuf",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/Deqi1U7NRcS/"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "instagram-dfubwzgx5m8",
+      "name_fr": "Brûleur de bakhoor USB-C R833",
+      "city": "Sans ville précisée",
+      "category": "perfume",
+      "area": "Vendeur à Oman",
+      "description_fr": "iBstore annonce 7,50 rials omanais, 8 à 10 utilisations par charge et une garantie d’un an. Aucune boutique saoudienne identifiée.",
+      "source": {
+        "creator": "ib_store70",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/DfUBwzgx5m8/"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "instagram-dfbkpnzs4f8",
+      "name_fr": "Appartement dans le quartier Al-Aziziyah",
+      "city": "makkah",
+      "category": "services",
+      "area": "Al-Aziziyah",
+      "description_fr": "Makka Stays montre un appartement. Adresse, tarif et temps de trajet vers le Haram à confirmer.",
+      "source": {
+        "creator": "baitul_makkah",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/DfBKPNzs4f8/"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "instagram-ddhqksuocpg",
+      "name_fr": "Lieu insolite au Haram de Médine",
+      "city": "madinah",
+      "category": "history",
+      "area": "Masjid an-Nabawi",
+      "description_fr": "La légende de Séjour à Médine ne nomme pas le lieu montré.",
+      "source": {
+        "creator": "sejour.a.medine",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/DdHqKsUOcPG/"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "instagram-dfx-aufn77_",
+      "name_fr": "Guide des rites et invocations de l’Omra",
+      "city": "makkah",
+      "category": "umrah",
+      "area": "Guide en français",
+      "description_fr": "Arabe Simplement propose un guide avec arabe vocalisé, phonétique et français. Selon la légende, commenter OMRA permet de le recevoir en privé.",
+      "source": {
+        "creator": "arabesimplement",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/Dfx-aufN77_/"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "instagram-dyu7omqiqij",
+      "name_fr": "Sadu Al-Gamal — سدو الجمال للعطور",
+      "city": "jeddah",
+      "category": "perfume",
+      "area": "Ahmad Al-Attas, Al-Zahra",
+      "description_fr": "Parfums de niche, grandes marques et bakhoor. Le Reel précise centre Gold Moor et +966 50 152 5055. La boutique confirme la rue et le quartier.",
+      "source": {
+        "creator": "jedahere",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/DYu7OMQIqIj/"
+        ],
+        "references": [
+          "https://sadu-algamal.com/ar/"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": true,
+        "location_verified": true,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-24"
+      }
+    },
+    {
+      "id": "instagram-dde6u6ormlq",
+      "name_fr": "Huiles parfumées Swiss Arabian",
+      "city": "Sans ville précisée",
+      "category": "perfume",
+      "area": "",
+      "description_fr": "Le Reel recommande les huiles Swiss Arabian. Références, boutique et prix à identifier.",
+      "source": {
+        "creator": "zamz.am3239",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/Dde6u6oRMlq/"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "instagram-dal3acwobf5",
+      "name_fr": "Reel de @aussie_g_in_saudi — sujet à identifier",
+      "city": "Sans ville précisée",
+      "category": "services",
+      "area": "",
+      "description_fr": "Instagram demande une connexion en raison d’une restriction d’âge. Sujet et lieu à confirmer.",
+      "source": {
+        "creator": "aussie_g_in_saudi",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/DAl3AcWoBf5/"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "instagram-dfnavuaitgv",
+      "name_fr": "Haramain Move — transferts privés",
+      "city": "jeddah",
+      "category": "transport",
+      "area": "Djeddah, La Mecque et Médine",
+      "description_fr": "Transferts aéroport, gare et hôtel, dont La Mecque–Médine via Badr. Prix affiché avant réservation. Annulation gratuite plus de 12 h avant la prise en charge, selon les conditions du service.",
+      "source": {
+        "creator": "haramain_info / haramain_move",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/DfnAvuaItGv/"
+        ],
+        "references": [
+          "https://haramain.com/introducing-haramain-move-umrah-transport/"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": true,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-24"
+      }
+    },
+    {
+      "id": "instagram-c_ncktnohyd",
+      "name_fr": "Dar Al-Makkiyah — maison de Sami Angawi",
+      "city": "jeddah",
+      "category": "history",
+      "area": "Djeddah",
+      "description_fr": "Maison privée consacrée au patrimoine architectural saoudien. Visite avec l’architecte proposée sur réservation. Disponibilité en mars 2027 à vérifier.",
+      "source": {
+        "creator": "discoverjeddah",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/C_nCktnohYD/"
+        ],
+        "references": [
+          "https://experiencesbyroam.com/packages/dar-al-makkiyah-with-dr-sami"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": true,
+        "location_verified": true,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-24"
+      }
+    },
+    {
+      "id": "instagram-dmnenwyi6t6",
+      "name_fr": "Club Sandwich & Bowl",
+      "city": "jeddah",
+      "category": "food",
+      "area": "Al Sawary Mall, Al-Zahra",
+      "description_fr": "Brunch, sandwiches et bowls. Le Reel ne donne pas les prix.",
+      "source": {
+        "creator": "leconcierge.ksa",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/DMneNwYI6t6/"
+        ],
+        "references": [
+          "https://www.arabnews.com/food-health/where-we-are-going-today-club-sandwich-bowl-in-jeddah-2646701"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": true,
+        "location_verified": true,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-24"
+      }
+    },
+    {
+      "id": "instagram-dndmmllo3hr",
+      "name_fr": "Hokkaido — hotpot et grill japonais",
+      "city": "jeddah",
+      "category": "food",
+      "area": "Rue Al-Rawdah",
+      "description_fr": "Hotpot, grill et buffet de sushis. Boissons incluses d’après le Reel. Vérifier la composition des sauces et bouillons pour un repas sans alcool.",
+      "source": {
+        "creator": "leconcierge.ksa",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/DNDmMlLo3hr/"
+        ],
+        "references": [
+          "https://www.arabnews.com/food-health/where-we-are-going-today-hokkaido-japanese-restaurant-in-jeddah-2600756"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": true,
+        "location_verified": true,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-24"
+      }
+    },
+    {
+      "id": "instagram-ddwuirpiq_8",
+      "name_fr": "Arrivée à l’aéroport de Djeddah",
+      "city": "jeddah",
+      "category": "transport",
+      "area": "Aéroport international de Djeddah",
+      "description_fr": "Saudia Keys conseille une carte SIM, quelques espèces en SAR et l’application HHR pour réserver le Haramain.",
+      "source": {
+        "creator": "saudiakeys.fr",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/DDwUiRpIQ_8/"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "instagram-dcmim6wt-ir",
+      "name_fr": "Excursion Al-Balad et mosquée Al-Rahma",
+      "city": "jeddah",
+      "category": "history",
+      "area": "Djeddah",
+      "description_fr": "Lands of Islam propose de combiner le quartier historique classé à l’UNESCO et la mosquée dite flottante dans une visite guidée.",
+      "source": {
+        "creator": "landsofislam",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/DcmiM6Wt-iR/"
+        ],
+        "references": [
+          "https://whc.unesco.org/en/list/1361/"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-24"
+      }
+    },
+    {
+      "id": "instagram-dfn5zlssjh4",
+      "name_fr": "Parfums au duty-free de Djeddah",
+      "city": "jeddah",
+      "category": "perfume",
+      "area": "Terminal 1, départs internationaux",
+      "description_fr": "Rayon parfums ouvert 24 h/24 selon l’aéroport. Le Reel montre une sélection de niche. Vérifier références et prix avant le vol retour.",
+      "source": {
+        "creator": "badshahscents1",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/DfN5ZLSsjh4/"
+        ],
+        "references": [
+          "https://www.kaia.sa/en/Shop-and-Dine/Duty-Free"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": true,
+        "location_verified": true,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-24"
+      }
+    },
+    {
+      "id": "instagram-do0-8msdnyb",
+      "name_fr": "Al Rehab — الرحاب للعطور",
+      "city": "madinah",
+      "category": "perfume",
+      "area": "Rue Al Imam Al Boukhari, Médine",
+      "description_fr": "L’adresse est confirmée par la marque. Le Reel publicitaire évoque des prix de gros sans tarif précis. Succursale également disponible à Al-Khasikiyah dans Al-Balad, Djeddah.",
+      "source": {
+        "creator": "xmhoa_1",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/DO0-8MsDNyb/"
+        ],
+        "references": [
+          "https://www.alrehab.com/find-us/"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": true,
+        "location_verified": true,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-24"
+      }
+    },
+    {
+      "id": "instagram-dco_cavoyip",
+      "name_fr": "Cinq parfums saoudiens — Akhi Fragrance",
+      "city": "Sans ville précisée",
+      "category": "perfume",
+      "area": "Arabie saoudite",
+      "description_fr": "Les commentaires évoquent Wild Cot et Black Carbon Diamond. Le classement complet et les points de vente restent à identifier.",
+      "source": {
+        "creator": "akhifragrance",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/DcO_CAVoYIP/"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
+    },
+    {
+      "id": "instagram-dgi-jk1mvhd",
+      "name_fr": "Parfumeries d’Al-Balad",
+      "city": "jeddah",
+      "category": "perfume",
+      "area": "Bab Sharif, à confirmer",
+      "description_fr": "Bab Sharif, Anfar Al Oud et Surrati sont des indices des commentaires. La boutique exacte montrée reste à identifier.",
+      "source": {
+        "creator": "theyasminnuur",
+        "channel": null,
+        "videos": [
+          "https://www.instagram.com/reel/DGI-Jk1Mvhd/"
+        ]
+      },
+      "verification": {
+        "source_detail": "caption",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
     }
   ],
-  "updated": "2026-11-14",
+  "updated": "2026-11-24",
   "audit_metadata": {
     "audit_date": "2026-11-14",
     "scope": "Vérification documentaire du catalogue existant et extraction complémentaire d'adresses depuis vidéos indexées de Junaid, annuaires locaux et sites officiels",
