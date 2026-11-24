@@ -5251,6 +5251,33 @@
         "access_verified": false,
         "last_verified": null
       }
+    },
+    {
+      "id": "kuwait-brule-encens-verre-acacia",
+      "name_fr": "Brûle-encens en verre ambré « ACACIA » — مبخرة زجاجية",
+      "city": "Sans ville précisée",
+      "category": "perfume",
+      "area": "Reel d’un compte koweïtien · achat en ligne",
+      "description_fr": "Le Reel de Mazad Ala Kaifak montre un brûle-encens en verre ambré en forme de lampe, avec un socle effet bois, une coupelle métallique et une bougie chauffe-plat. Le mot ACACIA apparaît en surimpression. Il pourrait désigner le bois plutôt qu’une marque.",
+      "practical_notes_fr": "Modèle exact, prix et disponibilité à confirmer auprès du compte @mazad_alakaifak. En Arabie saoudite, Trendyol affiche un modèle similaire Tazweeq en verre fumé à 203,30 SAR au 24 novembre 2026. Chercher : مبخرة زجاجية للعود والبخور تعمل بشمعة.",
+      "source": {
+        "creator": "Mazad Ala Kaifak (@mazad_alakaifak)",
+        "channel": "https://www.instagram.com/mazad_alakaifak/",
+        "videos": [
+          "https://www.instagram.com/reel/DewNNtMthHw/"
+        ],
+        "references": [
+          "https://www.trendyol.sa/tazweeq/glass-incense-burner-oud-bakhoor-warmer-candle-diffuser-p-1244605384"
+        ]
+      },
+      "verification": {
+        "source_detail": "Reel et fiche du modèle comparable",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-24"
+      }
     }
   ],
   "updated": "2026-11-24",
