@@ -5306,6 +5306,35 @@
         "access_verified": false,
         "last_verified": "2026-11-24"
       }
+    },
+    {
+      "id": "makkah-dkhoun-al-arabia",
+      "name_fr": "Dkhoun Al Arabia (دخون العربية) — parfums et oud",
+      "city": "makkah",
+      "category": "perfume",
+      "subcategory": "perfume_shop",
+      "area": "Makkah Towers, rue Ibrahim Al-Khalil, quartier Al-Hajlah, La Mecque 24231",
+      "description_fr": "Enseigne saoudienne de parfums, oud, huiles de oud et encens. Le Reel de Hadiqa Amjad est consacré à la makhmaria (مخمرية), une préparation parfumée. La référence exacte à demander en boutique reste à confirmer.",
+      "practical_notes_fr": "Succursale Makkah Towers, au rez-de-chaussée selon l’annuaire Yalqa. Autres adresses officielles : Al-Sitteen, quartier Al-Nuzha, à La Mecque ; Al Manar Mall et Al Rashid Mall à Médine ; Andalus Mall et Al-Rawdah notamment à Djeddah. Vérifier la disponibilité de la makhmaria souhaitée auprès de la boutique.",
+      "source": {
+        "creator": "Hadiqa Amjad et Dkhoun",
+        "channel": "https://www.instagram.com/hadiqa__amjad/",
+        "videos": [
+          "https://www.instagram.com/reel/DgHlmRkRUU6/"
+        ],
+        "references": [
+          "https://dkhoun.com/en/pages/%D8%A7%D9%84%D9%81%D8%B1%D9%88%D8%B9-%D9%88%D8%A7%D9%84%D9%85%D8%B9%D8%A7%D8%B1%D8%B6",
+          "https://yalqa.com/p/dkhoun-dkhwn-0d26851b"
+        ]
+      },
+      "verification": {
+        "source_detail": "Reel, annuaire officiel des succursales et fiche locale",
+        "independently_verified": true,
+        "location_verified": true,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-24"
+      }
     }
   ],
   "updated": "2026-11-24",
