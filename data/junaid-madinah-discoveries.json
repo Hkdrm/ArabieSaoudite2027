@@ -5278,6 +5278,34 @@
         "access_verified": false,
         "last_verified": "2026-11-24"
       }
+    },
+    {
+      "id": "makkah-shumos-tailleur-qamis",
+      "name_fr": "Shumos (شموس) — qamis sur mesure à La Mecque",
+      "city": "makkah",
+      "category": "shopping",
+      "area": "Rue Hussein Serhan, quartier Jabal An Nur, La Mecque 24238",
+      "description_fr": "Tailleur pour hommes spécialisé dans les thobes (qamis) sur mesure et les tissus. Le Reel montre le tissu et les finitions d’un qamis.",
+      "practical_notes_fr": "Adresse à retenir pour le voyage. Branche Jabal An Nur : +966 50 350 4838. Le profil de Shumos annonce aussi une branche Al-Mansour : +966 55 761 7799, adresse exacte à confirmer. Demander le prix, la composition du tissu (coton si souhaité) et le délai de confection avant de commander.",
+      "source": {
+        "creator": "Shumos (@shumoss6)",
+        "channel": "https://www.instagram.com/shumoss6/",
+        "videos": [
+          "https://www.instagram.com/reel/DfHoX-YtDeF/"
+        ],
+        "references": [
+          "https://maps.app.goo.gl/Zmzt3RmBvraT4yRu9?g_st=ic",
+          "https://magicpin.com/saudi-arabia/Mecca/Jabal-Al-Nour/Other/%D8%B4%D9%85%D9%88%D8%B3-%D9%84%D9%84%D8%AE%D9%8A%D8%A7%D8%B7%D8%A9-%D9%88%D8%A7%D9%84%D9%85%D9%84%D8%A7%D8%A8%D8%B3-%D8%A7%D9%84%D8%B1%D8%AC%D8%A7%D9%84%D9%8A%D8%A9/store/22939a1"
+        ]
+      },
+      "verification": {
+        "source_detail": "Profil du tailleur et annuaire local",
+        "independently_verified": true,
+        "location_verified": true,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-24"
+      }
     }
   ],
   "updated": "2026-11-24",
