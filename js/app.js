@@ -658,6 +658,11 @@
       const expCurs = ['CHF', 'EUR', 'SAR', 'USD', 'GBP'];
       el.innerHTML = `<h2>${t('tools_title')}</h2>
         <div class="card"><h3>✅ ${t('checklist')} <span class="pill">${done}/${total}</span></h3><progress max="${total}" value="${done}"></progress>
+          <p><a class="btn ghost sm" href="https://www.instagram.com/p/Df6_6hJEU_H/?img_index=6" target="_blank" rel="noopener noreferrer">${esc(L({
+            fr: 'Checklist valise Omra · Al Zowar Travel (Instagram, en anglais)',
+            en: 'Umrah packing checklist · Al Zowar Travel (Instagram)',
+            ar: 'قائمة تجهيز حقيبة العمرة · Al Zowar Travel (إنستغرام، بالإنجليزية)'
+          }))} ↗</a></p>
           ${all.map(([g, a]) => `<h3 style="margin-top:14px;font-size:14px;color:var(--mut)">${esc(g)}</h3>${a.map(i => `<div class="item ${S.checks[i.id] ? 'done' : ''}"><input type="checkbox" data-ck="${i.id}" ${S.checks[i.id] ? 'checked' : ''}><span class="tx">${esc(i.label)}</span></div>`).join('')}`).join('')}
           ${cust.length ? `<h3 style="margin-top:14px;font-size:14px;color:var(--mut)">★</h3>` + cust.map(i => `<div class="item ${S.checks[i.id] ? 'done' : ''}"><input type="checkbox" data-ck="${i.id}" ${S.checks[i.id] ? 'checked' : ''}><span class="tx">${esc(i.label)}</span><button class="danger" data-cdel="${i.id}">✕</button></div>`).join('') : ''}
           <form class="row" id="cf" style="margin-top:10px"><input class="grow" name="l" placeholder="${t('add_item')}" required><button>${t('add')}</button></form></div>
