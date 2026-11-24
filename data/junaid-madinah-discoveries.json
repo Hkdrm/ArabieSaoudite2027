@@ -5059,6 +5059,31 @@
         "access_verified": false,
         "last_verified": null
       }
+    },
+    {
+      "id": "instagram-dfu39_di2f_",
+      "name_fr": "Portes du Masjid an-Nabawi — repères à Médine",
+      "city": "madinah",
+      "category": "umrah",
+      "area": "Masjid an-Nabawi",
+      "description_fr": "Repères indiqués par The Alpha Travels : portes 304–305, musée et centre de santé As-Safiyyah, marché aux dattes ; 310, point de distribution de Zamzam et mosquées Al-Ghamamah et Abu Bakr ; 328, centre de distribution de Corans et commerces ; 330, point de prise en charge Careem, bus, voiturettes électriques, stationnement vélos et centre commercial Taiba ; 338, commerces ; 340, cafés et marché alimentaire.",
+      "practical_notes_fr": "Photographie le numéro de ta porte pour retrouver ton chemin après la prière. Guide non officiel : vérifie la signalétique et l’accès aux services sur place.",
+      "source": {
+        "creator": "The Alpha Travels",
+        "channel": "https://www.instagram.com/thealphatravelspk/",
+        "videos": [],
+        "references": [
+          "https://www.instagram.com/p/DfU39_dI2f_/"
+        ]
+      },
+      "verification": {
+        "source_detail": "image",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
     }
   ],
   "updated": "2026-11-24",
