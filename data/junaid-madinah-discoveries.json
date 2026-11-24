@@ -5111,6 +5111,33 @@
         "access_verified": false,
         "last_verified": "2026-11-24"
       }
+    },
+    {
+      "id": "madinah-sadaqat-az-zubayr",
+      "name_fr": "Mosquée Sadaqat az-Zoubayr — مسجد صدقة الزبير",
+      "city": "madinah",
+      "category": "history",
+      "area": "Secteur historique des Zoubaïrât, Médine",
+      "description_fr": "Une chronique de Médine rapporte que le Prophète ﷺ aurait prié sur ce site, à l’ouest de Mashrabat Umm Ibrahim.",
+      "practical_notes_fr": "Le Reel de Visite Arabie évoque la révélation d’un verset sur place. Cette affirmation, l’identification du bâtiment filmé et l’accès actuel restent à confirmer.",
+      "source": {
+        "creator": "Visite Arabie",
+        "channel": "https://www.instagram.com/visite.arabie/",
+        "videos": [
+          "https://www.instagram.com/reel/DgGMV3CtpfK/"
+        ],
+        "references": [
+          "https://www.masaha.org/book/view/3233/page/219"
+        ]
+      },
+      "verification": {
+        "source_detail": "Reel et chronique historique",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
     }
   ],
   "updated": "2026-11-24",
