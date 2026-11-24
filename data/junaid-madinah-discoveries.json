@@ -5084,6 +5084,33 @@
         "access_verified": false,
         "last_verified": null
       }
+    },
+    {
+      "id": "jeddah-dar-azzam",
+      "name_fr": "Dar Azzam — دار عزام",
+      "city": "jeddah",
+      "category": "perfume",
+      "area": "Al-Balad, Djeddah — emplacement de l’atelier à confirmer",
+      "description_fr": "Maison de parfumerie proposant du bois de oud, des huiles de oud naturelles, de la rose de Taïf et du bakhoor. Dar Azzam propose aussi un atelier de distillation de plantes aromatiques et de fabrication de parfum.",
+      "practical_notes_fr": "Atelier affiché à 250 SAR sur le site de Dar Azzam le 24 novembre 2026. Confirmer le lieu exact et les créneaux avant de réserver. Contact : +966 56 140 8971. Reel de Lubna Jamjoom tourné à Zawiya 97, à Al-Balad.",
+      "source": {
+        "creator": "Lubna Jamjoom et Dar Azzam",
+        "channel": "https://www.instagram.com/lubnahajamjoom/",
+        "videos": [
+          "https://www.instagram.com/reel/DdLkXiToYgP/"
+        ],
+        "references": [
+          "https://darazzam.com/"
+        ]
+      },
+      "verification": {
+        "source_detail": "Reel et site de Dar Azzam",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": true,
+        "access_verified": false,
+        "last_verified": "2026-11-24"
+      }
     }
   ],
   "updated": "2026-11-24",
