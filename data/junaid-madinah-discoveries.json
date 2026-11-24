@@ -5224,6 +5224,33 @@
         "access_verified": false,
         "last_verified": "2026-11-24"
       }
+    },
+    {
+      "id": "kuwait-tamour-al-nasser-preparation-the",
+      "name_fr": "Préparation pour le thé — Tamour Al-Nasser (تمور الناصر)",
+      "city": "Sans ville précisée",
+      "category": "regional_products",
+      "area": "Souk Al-Mubarakiya, Koweït-ville",
+      "description_fr": "Le Reel de @nasse5300 montre une poudre blanche et une préparation de thé. Les commentaires l’appellent parfois شاي أبيض (« thé blanc »), mais la composition et le nom commercial exact ne sont pas confirmés.",
+      "practical_notes_fr": "Un annuaire local situe Tamour Al-Nasser au souk Al-Mubarakiya, repère 9XFF+J2W à Koweït-ville. Pour demander le produit exact, montrer le Reel au vendeur. Aucun prix ni point de vente saoudien de cette préparation n’a été confirmé.",
+      "source": {
+        "creator": "Tamour Al-Nasser (@nasse5300)",
+        "channel": "https://www.instagram.com/nasse5300/",
+        "videos": [
+          "https://www.instagram.com/reel/DfPfKdiIkuH/"
+        ],
+        "references": [
+          "https://kuwaitarticles.com/ar/%D8%A3%D9%88%D9%82%D8%A7%D8%AA-%D8%B9%D9%85%D9%84-%D8%B3%D9%88%D9%82-%D8%A7%D9%84%D9%85%D8%A8%D8%A7%D8%B1%D9%83%D9%8A%D8%A9/"
+        ]
+      },
+      "verification": {
+        "source_detail": "Reel et annuaire local",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
     }
   ],
   "updated": "2026-11-24",
