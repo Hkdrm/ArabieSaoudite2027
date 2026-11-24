@@ -5335,6 +5335,34 @@
         "access_verified": false,
         "last_verified": "2026-11-24"
       }
+    },
+    {
+      "id": "riyadh-atyab-al-jawhara",
+      "name_fr": "Atyab Al Jawhara (أطياب الجوهرة) — parfums et bakhoor",
+      "city": "riyadh",
+      "category": "perfume",
+      "subcategory": "perfume_shop",
+      "area": "Riyad · boutique en ligne",
+      "description_fr": "Vendeur de parfums, de oud et de bakhoor basé à Riyad selon son catalogue Mahally, qui référence notamment Bakhoor Al Anbar et Oud Al Molouk.",
+      "practical_notes_fr": "Le Reel indique le WhatsApp +966 56 657 8154 pour les commandes et annonce la livraison dans les régions saoudiennes et les pays du Golfe. Confirmer les frais, le délai de livraison à l’hôtel et la disponibilité du produit souhaité. Adresse de boutique physique non confirmée.",
+      "source": {
+        "creator": "Atyab Al Jawhara (@atyabaljawharh)",
+        "channel": "https://www.instagram.com/atyabaljawharh/",
+        "videos": [
+          "https://www.instagram.com/reel/DfXYoBRoZvS/"
+        ],
+        "references": [
+          "https://mahally.com/ar/stores/653633515/"
+        ]
+      },
+      "verification": {
+        "source_detail": "Reel du vendeur et catalogue Mahally",
+        "independently_verified": true,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": "2026-11-24"
+      }
     }
   ],
   "updated": "2026-11-24",
