@@ -184,8 +184,14 @@
 
   /* ---------- Guide Omra ---------- */
   views.omra = el => {
+    const reelLabel = L({
+      fr: 'La Omra pour hommes en 10 étapes · OmraDeals (Instagram)',
+      en: 'Umrah for men in 10 steps · OmraDeals (Instagram, in French)',
+      ar: 'العمرة للرجال في ١٠ خطوات · OmraDeals (إنستغرام، بالفرنسية)'
+    });
     const MAP_STEPS = ['ihram', 'haram', 'tawaf', 'maqam', 'sai', 'halq'];
     el.innerHTML = `<h2>${t('omra_title')}</h2><p class="muted">⚠️ ${t('omra_disclaimer')}</p>
+      <div class="card"><a class="btn ghost" href="https://www.instagram.com/reel/DgASxiqu9NF/" target="_blank" rel="noopener noreferrer">▶ ${esc(reelLabel)} ↗</a></div>
       <details class="card"><summary><b>📎 ${t('off_title')}</b></summary><p class="muted" style="margin:8px 0">${t('off_note')}</p>
         ${[['off_guide', 'https://umrah.nusuk.sa/Journey'], ['off_nusuk', 'https://www.nusuk.sa/'], ['off_permit', 'https://my.gov.sa/en/services/24401'], ['off_rawdah', 'https://my.gov.sa/en/services/24395'],
           ['off_v_haram', 'https://www.visitsaudi.com/en/makkah/attractions/al-masjed-al-haram'], ['off_v_nabawi', 'https://www.visitsaudi.com/en/madinah/attractions/the-prophet-mosque']].map(([k, u]) => `<div class="item"><a class="tx" href="${u}" target="_blank" rel="noopener">${t(k)} ↗</a></div>`).join('')}</details>
