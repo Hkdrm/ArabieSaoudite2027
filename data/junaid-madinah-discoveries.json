@@ -5165,6 +5165,35 @@
         "access_verified": false,
         "last_verified": null
       }
+    },
+    {
+      "id": "makkah-musc-solide-et-poudre",
+      "name_fr": "Musc solide en cubes et poudre de musc — مسك جامد وتراب المسك",
+      "city": "makkah",
+      "category": "perfume",
+      "area": "Abraj Al Bait et Jabal Omar pour les cubes",
+      "description_fr": "Le Reel de Sikander Zari montre des cubes blancs de musc solide (مكعبات مسك جامد) et une poudre parfumée dont l’étiquette indique تراب المسك. La marque et le magasin filmés restent à confirmer.",
+      "practical_notes_fr": "Abdul Samad Al Qurashi propose des cubes de musc blanc à 60 SAR en ligne lors de la vérification du 24 novembre 2026. La marque liste des boutiques à Abraj Al Bait et à Jabal Omar, à La Mecque. Prix et stock en boutique à vérifier. Pour la poudre, Sama Al Kaif référence 250 g à 27,50 SAR, indiqués indisponibles. Demander en parfumerie : عندكم مكعبات مسك جامد أو تراب المسك؟",
+      "source": {
+        "creator": "Sikander Zari (@naazperfumes)",
+        "channel": "https://www.instagram.com/naazperfumes/",
+        "videos": [
+          "https://www.instagram.com/reel/DgCamvIKyd1/"
+        ],
+        "references": [
+          "https://sa.abdulsamadalqurashi.com/ar/sold-musk-cubes/p1409315890",
+          "https://sa.abdulsamadalqurashi.com/ar/%D9%81%D8%B1%D9%88%D8%B9-%D8%B9%D8%A8%D8%AF%D8%A7%D9%84%D8%B5%D9%85%D8%AF-%D8%A7%D9%84%D9%82%D8%B1%D8%B4%D9%8A/page-1540636943",
+          "https://samaalkaif.com.sa/products/%D8%AA%D8%B1%D8%A7%D8%A8-%D9%85%D8%B3%D9%83-%D8%A8%D9%88%D8%AF%D8%B1%D8%A9"
+        ]
+      },
+      "verification": {
+        "source_detail": "Reel et catalogues des vendeurs",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": true,
+        "access_verified": false,
+        "last_verified": "2026-11-24"
+      }
     }
   ],
   "updated": "2026-11-24",
