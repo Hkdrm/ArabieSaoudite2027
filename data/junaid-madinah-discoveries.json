@@ -5195,6 +5195,35 @@
         "access_verified": false,
         "last_verified": "2026-11-24"
       }
+    },
+    {
+      "id": "cuilleres-miel-sidr-spoon-of-honey",
+      "name_fr": "Cuillères de miel de sidr — Spoon of Honey (ملاعق عسل السدر)",
+      "city": "Sans ville précisée",
+      "category": "regional_products",
+      "area": "Al-Aïn, Émirats arabes unis · achat en ligne",
+      "description_fr": "Le Reel de Spoon of Honey (Organic World LLC) présente des portions individuelles de miel de sidr en cuillères. Le fabricant indique une production à Al-Aïn.",
+      "practical_notes_fr": "Le fabricant affiche 12 cuillères à 90 AED, 50 à 145 AED et 100 à 285 AED. Sa boutique annonce la livraison aux Émirats. Aucun revendeur saoudien de cette marque n’a été confirmé. Pour le séjour, le vendeur saoudien Al Shahrani Honey affiche une autre référence de cuillères au miel de sidr du Cachemire à 40 SAR les 14. Vérifier la livraison à l’adresse choisie.",
+      "source": {
+        "creator": "Spoon of Honey (@spoon_honey)",
+        "channel": "https://www.instagram.com/spoon_honey/",
+        "videos": [
+          "https://www.instagram.com/reel/DfDIbkwRiEr/"
+        ],
+        "references": [
+          "https://honeyspoon.ae/collections/all",
+          "https://honeyspoon.ae/products/premium-sidr-honey-spoons-box-of-100",
+          "https://alshahranihoney.com/%D9%85%D9%84%D8%A7%D8%B9%D9%82-%D8%B9%D8%B3%D9%84-%D8%B3%D8%AF%D8%B1-%D9%83%D8%B4%D9%85%D9%8A%D8%B1%D9%8A/p1608103457"
+        ]
+      },
+      "verification": {
+        "source_detail": "Reel et catalogues des vendeurs",
+        "independently_verified": true,
+        "location_verified": false,
+        "price_verified": true,
+        "access_verified": false,
+        "last_verified": "2026-11-24"
+      }
     }
   ],
   "updated": "2026-11-24",
