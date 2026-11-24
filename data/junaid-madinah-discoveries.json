@@ -5138,6 +5138,33 @@
         "access_verified": false,
         "last_verified": null
       }
+    },
+    {
+      "id": "makkah-tapis-priere-al-kaakiyah",
+      "name_fr": "Tapis de prière à Al-Kaakiyah — الكعكية",
+      "city": "makkah",
+      "category": "shopping",
+      "area": "Al-Kaakiyah, La Mecque",
+      "description_fr": "Dans l’épisode 18 de Hidden Gems Makkah, @middleeastsam montre une boutique de tapis de prière et indique le quartier d’Al-Kaakiyah, à environ 20 minutes du Haram selon la vidéo.",
+      "practical_notes_fr": "Le marché de gros d’Al-Kaakiyah est un repère pour trouver des tapis de prière. Le nom, l’étage et les prix de la boutique filmée restent à confirmer.",
+      "source": {
+        "creator": "Sam (@middleeastsam)",
+        "channel": "https://www.instagram.com/middleeastsam/",
+        "videos": [
+          "https://www.instagram.com/reel/DfLLGCOseu3/"
+        ],
+        "references": [
+          "https://maps.yango.com/ar-sa/org/236282471772/"
+        ]
+      },
+      "verification": {
+        "source_detail": "Reel et fiche du marché",
+        "independently_verified": false,
+        "location_verified": false,
+        "price_verified": false,
+        "access_verified": false,
+        "last_verified": null
+      }
     }
   ],
   "updated": "2026-11-24",
