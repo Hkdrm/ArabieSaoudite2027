@@ -52,6 +52,7 @@
     <h4 style="margin:12px 0 4px">📱 ${T('apps')}</h4>
     <ul style="margin:0;padding-inline-start:18px;line-height:1.6">
       <li><a href="https://www.nusuk.sa/" target="_blank" rel="noopener"><b>Nusuk</b> ↗</a> : ${S.lang === 'en' ? 'Umrah permits, Rawdah and bookings' : 'permis Omra, Rawdah et réservations'}</li>
+      <li><a href="https://guide.haramain.com/" target="_blank" rel="noopener"><b>Haramain Guide</b> ↗</a> : ${S.lang === 'en' ? 'Guide to the Two Holy Mosques' : S.lang === 'ar' ? 'دليل الحرمين الشريفين' : 'Guide des deux saintes mosquées'}</li>
       <li><a href="https://hhr.sa/" target="_blank" rel="noopener"><b>Haramain</b> ↗</a> : ${S.lang === 'en' ? 'high-speed train tickets' : 'billets du train à grande vitesse'}</li>
       <li><b>Tawakkalna</b> : ${S.lang === 'en' ? 'official Saudi government services app' : "application officielle de services gouvernementaux saoudiens"}</li>
       <li><b>Careem</b> / <b>Uber</b> : ${S.lang === 'en' ? 'ride-hailing' : 'VTC'}</li>
